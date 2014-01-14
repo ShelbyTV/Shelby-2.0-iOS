@@ -197,10 +197,16 @@
                                                         <action selector="toggleLike:" destination="Ctu-El-3f2" eventType="touchUpInside" id="Exd-44-J6B"/>
                                                     </connections>
                                                 </button>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rA7-HP-ljj">
+                                                    <rect key="frame" x="64" y="138" width="201" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="description" destination="LMM-Qu-KZy" id="ruE-uw-yhL"/>
+                                            <outlet property="likersView" destination="rA7-HP-ljj" id="kCQ-Gr-D72"/>
                                             <outlet property="userAvatar" destination="ZqB-Qf-jKa" id="2K5-DP-GZ3"/>
                                             <outlet property="videoThumbnail" destination="Itb-fg-U9c" id="0bl-9Q-WKt"/>
                                             <outlet property="videoTitle" destination="lbe-qQ-nS2" id="2Zf-fI-Mo4"/>
