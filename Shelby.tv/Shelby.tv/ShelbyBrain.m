@@ -1103,8 +1103,9 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 {
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     ShelbyUserProfileViewController *userProfileVC = nil;
+    __block ShelbyUserInfoViewController *userInfoVC = nil;
     if (DEVICE_IPAD) {
-        ShelbyUserInfoViewController *userInfoVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
+        userInfoVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
         [self.topContainerVC pushUserProfileViewController:userInfoVC];
     } else {
         userProfileVC = [[ShelbyUserProfileViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
@@ -1122,6 +1123,11 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     
     [[ShelbyDataMediator sharedInstance] fetchUserWithID:userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(User *fetchedUser) {
         DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:fetchedUser.publicRollID];
+        if (DEVICE_IPAD) {
+            userInfoVC.user = fetchedUser;
+            [userInfoVC setupStreamInfoDisplayChannel:rollChannel];
+        }
+ 
         if (!rollChannel) {
             rollChannel = [DisplayChannel channelForTransientEntriesWithID:fetchedUser.publicRollID title:fetchedUser.nickname inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             Roll *userRoll = [Roll rollForDictionary:@{@"id" : fetchedUser.publicRollID} inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];

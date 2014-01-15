@@ -11,5 +11,7 @@
 
 @interface ShelbyUserInfoViewController : UIViewController
 @property (nonatomic, strong) ShelbyStreamInfoViewController *streamInfoVC;
+@property (nonatomic, strong) User *user;
 
+- (void)setupStreamInfoDisplayChannel:(DisplayChannel *)displayChannel;
 @end

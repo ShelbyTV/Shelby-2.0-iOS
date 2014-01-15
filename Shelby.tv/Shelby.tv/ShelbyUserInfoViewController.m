@@ -17,7 +17,6 @@
 @property (nonatomic, strong) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, strong) IBOutlet UILabel *userNickname;
 @property (nonatomic, strong) IBOutlet UILabel *userName;
-@property (nonatomic, strong) User *user;
 
 - (IBAction)ActivityFollowingToggle:(id)sender;
 - (IBAction)toggleFollowUser:(id)sender;
@@ -38,15 +37,11 @@
 {
     [super viewDidLoad];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(setEntriesNotification:)
-                                                 name:kShelbyBrainSetEntriesNotification object:nil];
-    
-
     [self.streamInfoVC willMoveToParentViewController:self];
     [self addChildViewController:self.streamInfoVC];
     [self.switchContainer addSubview:self.streamInfoVC.view];
     [self.streamInfoVC didMoveToParentViewController:self];
+    [self setupUserDisplay];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,14 +50,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setEntriesNotification:(NSNotification *)notification
+- (void)setupStreamInfoDisplayChannel:(DisplayChannel *)displayChannel
 {
-    NSDictionary *userInfo = notification.userInfo;
-    
-    NSMutableArray *channelEntries = userInfo[kShelbyBrainChannelEntriesKey];
-    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
-    
-    self.user = userInfo[kShelbyBrainFetchedUserKey];
+    self.streamInfoVC.displayChannel = displayChannel;
+}
+
+- (void)setupUserDisplay
+{
     self.userName.text = self.user.name;
     self.userNickname.text = self.user.nickname;
     
@@ -73,8 +67,6 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         //
     }];
-    
-    [self.streamInfoVC setEntries:channelEntries forChannel:channel];
 }
 
 - (IBAction)ActivityFollowingToggle:(id)sender
