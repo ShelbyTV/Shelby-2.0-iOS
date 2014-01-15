@@ -110,6 +110,9 @@
 		1C38259118806234002177C6 /* ShelbyUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */; };
 		1C38259218806234002177C6 /* ShelbyUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */; };
 		1C38259318806234002177C6 /* ShelbyUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */; };
+		1C3A7ED6188717D900458718 /* ShelbyShareView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */; };
+		1C3A7ED7188717D900458718 /* ShelbyShareView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */; };
+		1C3A7ED8188717D900458718 /* ShelbyShareView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -914,6 +917,7 @@
 		1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyStreamEntryCell.m; sourceTree = "<group>"; };
 		1C38258F18806234002177C6 /* ShelbyUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyUserInfoViewController.h; sourceTree = "<group>"; };
 		1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyUserInfoViewController.m; sourceTree = "<group>"; };
+		1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyShareView-iPad.xib"; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1457,6 +1461,7 @@
 				1C382560187DE387002177C6 /* Main.Storyboard */,
 				910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */,
 				910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */,
+				1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -2481,6 +2486,7 @@
 				1CDCA6A1179F3FB80098C4E1 /* play-standard.png in Resources */,
 				1CD8111617CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
 				1C56F13717BABD8C00EE9206 /* .gitignore in Resources */,
+				1C3A7ED7188717D900458718 /* ShelbyShareView-iPad.xib in Resources */,
 				1CDCA6A4179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
 				1CE5585317DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				1CDCA6A9179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
@@ -2600,6 +2606,7 @@
 				1CDCA6A2179F3FB80098C4E1 /* play-standard.png in Resources */,
 				1CD8111717CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
 				1C56F13817BABD8C00EE9206 /* .gitignore in Resources */,
+				1C3A7ED8188717D900458718 /* ShelbyShareView-iPad.xib in Resources */,
 				1CDCA6A5179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
 				1CE5585417DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				1CDCA6AA179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
@@ -2679,6 +2686,7 @@
 				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
 				91BEC8941762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA191491774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
+				1C3A7ED6188717D900458718 /* ShelbyShareView-iPad.xib in Resources */,
 				91CE07491779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 				9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C2178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,

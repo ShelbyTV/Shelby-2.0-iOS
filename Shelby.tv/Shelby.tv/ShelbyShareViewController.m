@@ -89,6 +89,8 @@
     [super viewWillAppear:animated];
     
     [self updateSocialButtons];
+
+    [self.message becomeFirstResponder];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -96,8 +98,6 @@
     [super viewDidAppear:animated];
 
     [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenShelbyShare];
-    
-    [self.message becomeFirstResponder];
     
     self.videoTitle.text = self.frame.video.title;
 }

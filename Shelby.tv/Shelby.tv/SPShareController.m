@@ -126,13 +126,16 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 {
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
    
-    if (user && ![user.userID isEqualToString:frame.creator.userID]) {
-        ShelbyShareViewController *shelbyShare = [[ShelbyShareViewController alloc] initWithNibName:@"ShelbyShareView" bundle:nil];
+    if (!user && ![user.userID isEqualToString:frame.creator.userID]) {
+        NSString *shareNibName = DEVICE_IPAD ? @"ShelbyShareView-iPad" : @"ShelbyShareView";
+        ShelbyShareViewController *shelbyShare = [[ShelbyShareViewController alloc] initWithNibName:shareNibName bundle:nil];
         [shelbyShare setupShareWith:frame link:link andShareController:self];
         if (DEVICE_IPAD) {
-               shelbyShare.modalPresentationStyle = UIModalPresentationFormSheet;
-        } else {
-            [self.viewController presentViewController:shelbyShare animated:YES completion:nil];
+            shelbyShare.modalPresentationStyle = UIModalPresentationFormSheet;
+        }
+        [self.viewController presentViewController:shelbyShare animated:YES completion:nil];
+        if (DEVICE_IPAD) {
+            shelbyShare.view.superview.bounds = CGRectMake(0, 0, 600, 350);
         }
     } else {
         [self shareOnSocialNetworks:frame message:message andLink:link fromViewController:self.viewController];
