@@ -177,6 +177,7 @@
                 <outlet property="currentTimeLabel" destination="lIL-ec-drI" id="RVL-Jv-edr"/>
                 <outlet property="durationLabel" destination="Vvc-Q4-lWi" id="4o4-7P-J5F"/>
                 <outlet property="iPadAirPlayViewWidthConstraint" destination="RJu-2b-Wx1" id="SaG-ne-sI0"/>
+                <outlet property="ipadShareButton" destination="HhG-MP-RAy" id="43V-Nr-oLm"/>
                 <outlet property="likeButton" destination="T5R-EZ-t1c" id="KxB-IU-5nv"/>
                 <outlet property="playPauseButton" destination="0Od-uW-uSl" id="wtc-Xr-raA"/>
                 <outlet property="scrubheadButton" destination="TlI-Ii-uTV" id="cdG-fp-iOK"/>

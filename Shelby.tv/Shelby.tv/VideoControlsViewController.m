@@ -55,14 +55,17 @@
                                   self.controlsView.bufferProgressView,
                                   self.controlsView.scrubheadButton
                                   ];
-    self.playbackActionViews = @[self.controlsView.likeButton,
-                                 self.controlsView.unlikeButton,
-                                 ];
+    
     if (DEVICE_IPAD) {
         self.nonplaybackActionViews = @[];
+        self.playbackActionViews = @[self.controlsView.likeButton,
+                                     self.controlsView.unlikeButton,
+                                     self.controlsView.ipadShareButton];
     } else {
         self.nonplaybackActionViews = @[self.controlsView.nonplaybackLikeButton,
                                         self.controlsView.nonplaybackUnlikeButton];
+        self.playbackActionViews = @[self.controlsView.likeButton,
+                                     self.controlsView.unlikeButton];
     }
     
     self.controlsView.likeButton.hidden = YES;

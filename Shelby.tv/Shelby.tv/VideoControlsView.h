@@ -27,6 +27,7 @@
 //-- action buttons --
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (weak, nonatomic) IBOutlet UIButton *unlikeButton;
+@property (weak, nonatomic) IBOutlet UIButton *ipadShareButton;
 
 //-- nonplayback action buttons --
 // NB: not hooked up on iPad
