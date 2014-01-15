@@ -15,7 +15,7 @@
 #import "SPVideoReel.h"
 #import "User+Helper.h"
 
-NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVideReelNotification";
+NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnVideoReelNotification";
 
 @interface ShelbyVideoReelViewController ()
 @property (nonatomic, strong) SPVideoReel *videoReel;
@@ -188,7 +188,7 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
 
 - (void)singleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySingleTapOnVideReelNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySingleTapOnVideoReelNotification object:self];
 }
 
 #pragma mark - VideoControlsDelegate
