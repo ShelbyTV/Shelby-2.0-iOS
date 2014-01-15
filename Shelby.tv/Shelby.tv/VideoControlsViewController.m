@@ -293,6 +293,18 @@
 
 #pragma mark - XIB actions
 
+- (IBAction)backgroundTapped:(id)sender {
+    //on iPad, in full screen, we keep the view on screen (but transparent)
+    //this allows users to bring up controls in full screen
+    [UIView animateWithDuration:0.5 animations:^{
+        if (self.displayMode == VideoControlsDisplayShowingForIPadFullScreen) {
+            [self setDisplayMode:VideoControlsDisplayHiddenForIPadFullScreen];
+        } else if (self.displayMode == VideoControlsDisplayHiddenForIPadFullScreen) {
+            [self setDisplayMode:VideoControlsDisplayShowingForIPadFullScreen];
+        }
+    }];
+}
+
 - (IBAction)playPauseButtonTapped:(id)sender
 {
     if (self.videoIsPlaying) {
@@ -463,6 +475,20 @@
             [self setPlaybackControlViewsAlpha:1.0 userInteractionEnabled:YES];
             self.controlsView.overlay.hidden = NO;
             self.separator.hidden = NO;
+            if (DEVICE_IPAD) {
+                self.controlsView.backgroundColor = [UIColor blackColor];
+            }
+            break;
+        case VideoControlsDisplayHiddenForIPadFullScreen:
+            [self setPlaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
+            self.controlsView.backgroundColor = [UIColor clearColor];
+            break;
+        case VideoControlsDisplayShowingForIPadFullScreen:
+            [self setPlaybackActionViewsAlpha:1.0 userInteractionEnabled:YES];
+            [self setPlaybackControlViewsAlpha:1.0 userInteractionEnabled:YES];
+            self.controlsView.backgroundColor = [UIColor blackColor];
+            break;
     }
 }
 

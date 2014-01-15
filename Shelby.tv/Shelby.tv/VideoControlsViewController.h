@@ -14,12 +14,19 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 {
     //nothing is shown
     VideoControlsDisplayDefault,
+    
     //just the lower bar of action buttons is shown
     VideoControlsDisplayActionsOnly,
+    
     //upper playback controls and lower action bar are shown
     VideoControlsDisplayActionsAndPlaybackControls,
+
     //VideoControlsDisplayActionsAndPlaybackControls + alterations for AirPlay
-    VideoControlsDisplayForAirPlay
+    VideoControlsDisplayForAirPlay,
+    
+    //allowing for controls to be shown when fullscreen on iPad
+    VideoControlsDisplayHiddenForIPadFullScreen,
+    VideoControlsDisplayShowingForIPadFullScreen
 };
 
 @class VideoControlsViewController;

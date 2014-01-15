@@ -12,6 +12,13 @@
 #import "ShelbyVideoReelViewController.h"
 #import "SPShareController.h"
 
+#define FULLSCREEN_ANIMATION_DURATION 0.75
+#define FULLSCREEN_ANIMATION_DELAY 0.f
+#define FULLSCREEN_ANIMATION_CONTROLS_DELAY 1.0f
+#define FULLSCREEN_ANIMATION_DAMPING .75
+#define FULLSCREEN_ANIMATION_VELOCITY 7.f
+#define FULLSCREEN_ANIMATION_OPTIONS UIViewAnimationCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState
+
 @interface ShelbyTopContainerViewController ()
 //container Views
 @property (weak, nonatomic) IBOutlet UIView *navigationViewContainer;
@@ -66,27 +73,45 @@
 
 - (void)toggleFullscreenVideo
 {
-    CGFloat newWidth, videoOverlaysAlpha;
+    CGFloat newWidth, videoOverlaysAlpha, controlsDelay;
     CGAffineTransform navTransform;
-    if ([self isVideoFullscreen]) {
+    VideoControlsDisplayMode controlsDisplayMode;
+    if ([self isVideoFullscreen] && self.videoReelVC.videoControlsVC.displayMode != VideoControlsDisplayShowingForIPadFullScreen) {
         newWidth = _smallscreenVideoWidth;
         navTransform = CGAffineTransformIdentity;
         videoOverlaysAlpha = 1.f;
+        controlsDisplayMode = VideoControlsDisplayActionsAndPlaybackControls;
+        controlsDelay = 0.f;
     } else {
         newWidth = _fullscreenVideoWidth;
         navTransform = CGAffineTransformMakeScale(0.8, 0.8);
         videoOverlaysAlpha = 0.f;
+        controlsDisplayMode = VideoControlsDisplayHiddenForIPadFullScreen;
+        if (self.videoReelVC.videoControlsVC.displayMode == VideoControlsDisplayShowingForIPadFullScreen) {
+            controlsDelay = 0.f;
+        } else {
+            //fading the video controls slower to give users a hint that they can still bring them up
+            controlsDelay = FULLSCREEN_ANIMATION_CONTROLS_DELAY;
+        }
     }
     
-    [UIView animateWithDuration:.75 delay:0 usingSpringWithDamping:.75 initialSpringVelocity:7.f options:UIViewAnimationCurveEaseIn animations:^{
+    //most controls react immediately
+    [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION delay:FULLSCREEN_ANIMATION_DELAY usingSpringWithDamping:FULLSCREEN_ANIMATION_DAMPING initialSpringVelocity:FULLSCREEN_ANIMATION_VELOCITY options:FULLSCREEN_ANIMATION_OPTIONS animations:^{
         
         self.navigationViewContainer.transform = navTransform;
         self.currentlyOnViewContainer.transform = navTransform;
         self.videoReelWidthConstraint.constant = newWidth;
-        self.videoReelVC.videoControlsVC.view.alpha = videoOverlaysAlpha;
         self.videoReelVC.videoOverlayView.alpha = videoOverlaysAlpha;
         [self.view layoutIfNeeded];
 
+    } completion:nil];
+    
+    //controsl may be different (see above)
+    [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION delay:FULLSCREEN_ANIMATION_DELAY + controlsDelay usingSpringWithDamping:FULLSCREEN_ANIMATION_DAMPING initialSpringVelocity:FULLSCREEN_ANIMATION_VELOCITY options:FULLSCREEN_ANIMATION_OPTIONS animations:^{
+        
+        [self.videoReelVC.videoControlsVC setDisplayMode:controlsDisplayMode];
+        [self.view layoutIfNeeded];
+        
     } completion:nil];
 }
 
