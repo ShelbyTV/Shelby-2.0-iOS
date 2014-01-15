@@ -64,15 +64,19 @@
     }
 }
 
-//to allow touch events to pass through the background
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    for (UIView *v in self.subviews) {
-        if (v.userInteractionEnabled && [v pointInside:[self convertPoint:point toView:v] withEvent:event]){
-            return YES;
+    if (DEVICE_IPAD) {
+        return [super pointInside:point withEvent:event];
+    } else {
+        //to allow touch events to pass through the background
+        for (UIView *v in self.subviews) {
+            if (v.userInteractionEnabled && [v pointInside:[self convertPoint:point toView:v] withEvent:event]){
+                return YES;
+            }
         }
+        return NO;
     }
-    return NO;
 }
 
 // Implementation note for the Scrubhead related methods...

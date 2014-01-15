@@ -123,7 +123,7 @@
     [self fetchEntriesWasSuccessful:NO hadEntries:NO];
 }
 
-#pragma mark UITableDataSource
+#pragma mark - UITableDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -146,7 +146,7 @@
     return cell;
 }
 
-#pragma mark UITableViewDelegate
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -155,7 +155,7 @@
                           atIndex:indexPath.row];
 }
 
-#pragma mark UIScrollViewDelegate
+#pragma mark - UIScrollViewDelegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -170,7 +170,7 @@
     }
 }
 
-#pragma mark ShelbyStreamEntryProtocol
+#pragma mark - ShelbyStreamEntryProtocol
 
 - (void)shareVideoWasTappedForFrame:(Frame *)videoFrame
 {

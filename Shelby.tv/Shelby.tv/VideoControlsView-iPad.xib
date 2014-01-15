@@ -14,9 +14,13 @@
             <rect key="frame" x="0.0" y="0.0" width="687" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Od-uW-uSl" userLabel="PlayPauseButton">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Od-uW-uSl" userLabel="PlayPauseButton">
                     <rect key="frame" x="20" y="33" width="28" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="28" id="dtN-GA-ugF"/>
+                        <constraint firstAttribute="height" constant="34" id="wGy-aN-d4Z"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                     <state key="normal" image="pause.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -29,30 +33,40 @@
                         <action selector="playPauseButtonTapped:" destination="-1" eventType="touchUpInside" id="0Qm-cY-e67"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1RZ-fh-4Ar" userLabel="airPlayView">
-                    <rect key="frame" x="516" y="38" width="31" height="23"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1RZ-fh-4Ar" userLabel="airPlayView">
+                    <rect key="frame" x="441" y="38" width="38" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.98668005520000002" green="0.37692075400000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="2KH-cN-r6b"/>
+                        <constraint firstAttribute="width" constant="38" id="RJu-2b-Wx1"/>
+                    </constraints>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="00:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lIL-ec-drI" userLabel="current time Label - 00:00:00">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="00:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lIL-ec-drI" userLabel="current time Label - 00:00:00">
                     <rect key="frame" x="56" y="41" width="47" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="47" id="z2M-Vs-BWa"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="-00:00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vvc-Q4-lWi" userLabel="duration Label - -00:00:00">
-                    <rect key="frame" x="457" y="41" width="51" height="18"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-00:00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vvc-Q4-lWi" userLabel="duration Label - -00:00:00">
+                    <rect key="frame" x="382" y="41" width="51" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="51" id="bHo-jb-DDl"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </label>
-                <progressView opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mrq-Jq-azG" userLabel="scrub track / progress view">
-                    <rect key="frame" x="111" y="49" width="338" height="2"/>
+                <progressView opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mrq-Jq-azG" userLabel="scrub track / progress view">
+                    <rect key="frame" x="111" y="49" width="263" height="2"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <gestureRecognizers/>
                     <color key="progressTintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
@@ -61,32 +75,6 @@
                         <outletCollection property="gestureRecognizers" destination="pLZ-L7-ahs" appends="YES" id="nBT-Ak-HOY"/>
                     </connections>
                 </progressView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5R-EZ-t1c">
-                    <rect key="frame" x="614" y="20" width="31" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
-                    <state key="normal" title="LIKE">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="highlighted">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="likeTapped:" destination="-1" eventType="touchUpInside" id="ZFT-0R-ihO"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Bi-cM-tPw">
-                    <rect key="frame" x="614" y="48" width="53" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
-                    <state key="normal" title="UNLIKE"/>
-                    <state key="highlighted">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="unlikeTapped:" destination="-1" eventType="touchUpInside" id="XUW-Re-XgS"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlI-Ii-uTV" userLabel="Button - scrubber">
                     <rect key="frame" x="126" y="34" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -105,16 +93,82 @@
                         <action selector="scrubberTouchUpOutside:" destination="-1" eventType="touchUpOutside" id="Jqz-YB-5cq"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhG-MP-RAy">
-                    <rect key="frame" x="555" y="35" width="51" height="30"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tys-dE-Ff9" userLabel="like holder">
+                    <rect key="frame" x="587" y="0.0" width="100" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="SHARE">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5R-EZ-t1c">
+                            <rect key="frame" x="35" y="34" width="31" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                            <state key="normal" title="LIKE">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="likeTapped:" destination="-1" eventType="touchUpInside" id="ZFT-0R-ihO"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Bi-cM-tPw">
+                            <rect key="frame" x="24" y="34" width="53" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                            <state key="normal" title="UNLIKE"/>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="unlikeTapped:" destination="-1" eventType="touchUpInside" id="XUW-Re-XgS"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.86345981279999995" green="1" blue="0.1213597505" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="ZYn-z0-6JC"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="raZ-lS-VpX" userLabel="share holder">
+                    <rect key="frame" x="487" y="0.0" width="100" height="100"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhG-MP-RAy">
+                            <rect key="frame" x="25" y="35" width="51" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="SHARE">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.37635210200000002" green="1" blue="0.24793598310000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="IwP-Re-YE7"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="0Od-uW-uSl" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="3Ap-1y-owh"/>
+                <constraint firstAttribute="centerY" secondItem="1RZ-fh-4Ar" secondAttribute="centerY" id="8TJ-XO-KE9"/>
+                <constraint firstAttribute="bottom" secondItem="Vvc-Q4-lWi" secondAttribute="bottom" constant="41" id="9Kb-Dz-8Nz"/>
+                <constraint firstItem="raZ-lS-VpX" firstAttribute="leading" secondItem="1RZ-fh-4Ar" secondAttribute="trailing" constant="8" id="CTL-is-geQ"/>
+                <constraint firstAttribute="centerY" secondItem="0Od-uW-uSl" secondAttribute="centerY" id="J7o-oy-trg"/>
+                <constraint firstAttribute="centerY" secondItem="lIL-ec-drI" secondAttribute="centerY" id="KF6-Xt-qDP"/>
+                <constraint firstItem="Vvc-Q4-lWi" firstAttribute="leading" secondItem="Mrq-Jq-azG" secondAttribute="trailing" constant="8" symbolic="YES" id="McP-7Q-UCG"/>
+                <constraint firstItem="Tys-dE-Ff9" firstAttribute="top" secondItem="1" secondAttribute="top" id="QsX-ST-WwG"/>
+                <constraint firstItem="raZ-lS-VpX" firstAttribute="top" secondItem="1" secondAttribute="top" id="UrG-70-K43"/>
+                <constraint firstAttribute="bottom" secondItem="raZ-lS-VpX" secondAttribute="bottom" id="Y10-5Y-icK"/>
+                <constraint firstItem="Mrq-Jq-azG" firstAttribute="leading" secondItem="lIL-ec-drI" secondAttribute="trailing" constant="8" id="ZPe-Pk-5uP"/>
+                <constraint firstAttribute="trailing" secondItem="Tys-dE-Ff9" secondAttribute="trailing" id="ajA-lu-hJn"/>
+                <constraint firstAttribute="centerY" secondItem="Mrq-Jq-azG" secondAttribute="centerY" id="eL9-Ci-Yhy"/>
+                <constraint firstAttribute="bottom" secondItem="Tys-dE-Ff9" secondAttribute="bottom" id="eaM-EA-aXI"/>
+                <constraint firstItem="Vvc-Q4-lWi" firstAttribute="top" secondItem="1" secondAttribute="top" constant="41" id="mYe-Sd-xDV"/>
+                <constraint firstItem="lIL-ec-drI" firstAttribute="leading" secondItem="0Od-uW-uSl" secondAttribute="trailing" constant="8" id="pgX-It-TzG"/>
+                <constraint firstItem="1RZ-fh-4Ar" firstAttribute="leading" secondItem="Vvc-Q4-lWi" secondAttribute="trailing" constant="8" id="ygn-lc-7lc"/>
+                <constraint firstItem="Tys-dE-Ff9" firstAttribute="leading" secondItem="raZ-lS-VpX" secondAttribute="trailing" id="zMq-FE-MMd"/>
+            </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -122,6 +176,7 @@
                 <outlet property="bufferProgressView" destination="Mrq-Jq-azG" id="CTI-hb-2Lx"/>
                 <outlet property="currentTimeLabel" destination="lIL-ec-drI" id="RVL-Jv-edr"/>
                 <outlet property="durationLabel" destination="Vvc-Q4-lWi" id="4o4-7P-J5F"/>
+                <outlet property="iPadAirPlayViewWidthConstraint" destination="RJu-2b-Wx1" id="SaG-ne-sI0"/>
                 <outlet property="likeButton" destination="T5R-EZ-t1c" id="KxB-IU-5nv"/>
                 <outlet property="playPauseButton" destination="0Od-uW-uSl" id="wtc-Xr-raA"/>
                 <outlet property="scrubheadButton" destination="TlI-Ii-uTV" id="cdG-fp-iOK"/>

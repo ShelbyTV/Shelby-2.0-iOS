@@ -49,7 +49,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(toggleFullscreenVideo)
-                                                 name:kShelbySingleTapOnVideReelNotification
+                                                 name:kShelbySingleTapOnVideoReelNotification
                                                object:nil];
 }
 

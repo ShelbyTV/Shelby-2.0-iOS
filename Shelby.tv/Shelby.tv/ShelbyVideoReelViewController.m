@@ -11,10 +11,11 @@
 //TODO: refactor these out of brain?
 #import "ShelbyBrain.h"
 #import "ShelbyDataMediator.h"
+#import "SPVideoExtractor.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
 
-NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVideReelNotification";
+NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnVideoReelNotification";
 
 @interface ShelbyVideoReelViewController ()
 @property (nonatomic, strong) SPVideoReel *videoReel;
@@ -22,6 +23,7 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
 //we track the current channel and deduped entries for when airplay takes over from video reel
 @property (nonatomic, strong) DisplayChannel *currentChannel;
 @property (nonatomic, strong) NSArray *currentDeduplicatedEntries;
+@property (nonatomic, assign) NSUInteger currentlyPlayingIndexInChannel;
 @end
 
 @implementation ShelbyVideoReelViewController
@@ -30,8 +32,7 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _airPlayController = [[ShelbyAirPlayController alloc] init];
-        _airPlayController.delegate = self;
+        
     }
     return self;
 }
@@ -40,23 +41,16 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
 {
     [super viewDidLoad];
     
+    self.currentlyPlayingIndexInChannel = 0;
+    
     [self setupVideoControls];
     [self setupVideoOverlay];
+    [self setupAirPlay];
     
     //we listen to current video changes same as everybody else (even tho we create the video reel)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(videoReelDidChangePlaybackEntityNotification:)
                                                  name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
-    
-    //airplay cares when we become/resign active
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleDidBecomeActiveNotification:)
-                                                 name:kShelbyBrainDidBecomeActiveNotification object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleWillResignActiveNotification:)
-                                                 name:kShelbyBrainWillResignActiveNotification object:nil];
 }
 
 -(void)dealloc
@@ -84,6 +78,7 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
 {
     self.currentChannel = channel;
     self.currentDeduplicatedEntries = deduplicatedEntries;
+    self.currentlyPlayingIndexInChannel = idx;
     
     if (self.videoReel) {
         //A) currently playing via VideReel
@@ -95,14 +90,15 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
         }
         [self.videoReel scrollForPlaybackAtIndex:idx forcingPlayback:YES];
         
-    } else if (self.airPlayController) {
+    } else if ([self.airPlayController isAirPlayActive]) {
         //B) currently playing via AirPlay (simply play index requested, it has no queue)
         [self.airPlayController playEntity:deduplicatedEntries[idx]];
         
     } else {
         //C) haven't started playing anything yet (bootup)
-        [self presentVideoReelWithChannel:channel deduplicatedEntries:deduplicatedEntries atIndex:idx];
-        
+        [self presentVideoReelWithChannel:channel
+                      deduplicatedEntries:deduplicatedEntries
+                                  atIndex:idx];
     }
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
@@ -127,9 +123,6 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
     [self.videoControlsVC didMoveToParentViewController:self];
     
     self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
-    
-    //if and when airPlayController takes control (from SPVideoReel), it will update video controls w/ current state of SPVideoPlayer
-    self.airPlayController.videoControlsVC = _videoControlsVC;
 }
 
 - (void)setupVideoOverlay
@@ -148,6 +141,25 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
                                                                         views:@{@"overlay":self.videoOverlayView}]];
 }
 
+- (void)setupAirPlay
+{
+    self.airPlayController = [[ShelbyAirPlayController alloc] init];
+    self.airPlayController.delegate = self;
+    //if and when airPlayController takes control (from SPVideoReel),
+    //it will update video controls w/ current state of SPVideoPlayer
+    self.airPlayController.videoControlsVC = _videoControlsVC;
+    
+    //airplay cares when we become/resign active
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleDidBecomeActiveNotification:)
+                                                 name:kShelbyBrainDidBecomeActiveNotification object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleWillResignActiveNotification:)
+                                                 name:kShelbyBrainWillResignActiveNotification object:nil];
+}
+
 #pragma mark - Notification Handlers
 
 - (void)videoReelDidChangePlaybackEntityNotification:(NSNotification *)notification
@@ -159,6 +171,7 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
     id<ShelbyVideoContainer> entity = userInfo[kShelbyVideoReelEntityKey];
     self.videoControlsVC.currentEntity = entity;
     self.videoOverlayView.currentEntity = entity;
+    self.currentlyPlayingIndexInChannel = [self.currentDeduplicatedEntries indexOfObject:entity];
 }
 
 - (void)handleDidBecomeActiveNotification:(NSNotification *)notification
@@ -175,7 +188,7 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
 
 - (void)singleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySingleTapOnVideReelNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySingleTapOnVideoReelNotification object:self];
 }
 
 #pragma mark - VideoControlsDelegate
@@ -322,7 +335,7 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
 
 - (void)airPlayControllerDidBeginAirPlay:(ShelbyAirPlayController *)airPlayController
 {
-    // current SPVideoPlayer has a new owner: _airPlayController
+    // current player has a new owner: _airPlayController, we can kill the reel
     if (self.videoReel) {
         // current SPVideoPlayer will not reset itself b/c it's in external playback mode
         [self dismissCurrentVideoReel];
@@ -334,31 +347,32 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
 
 - (void)airPlayControllerDidEndAirPlay:(ShelbyAirPlayController *)airPlayController
 {
-    //NB: _airPlayController handles shutdown of SPVideoPlayer
+    // _airPlayController handles shutdown of SPVideoPlayer
+    // we present a video reel for continuity
+    [self presentVideoReelWithChannel:self.currentChannel
+                  deduplicatedEntries:self.currentDeduplicatedEntries
+                              atIndex:self.currentlyPlayingIndexInChannel];
+    
     [self showAirPlayViewMode:NO];
 }
 
 - (void)airPlayControllerShouldAutoadvance:(ShelbyAirPlayController *)airPlayController
 {
-    DLog(@"AIR PLAY TODO");
-
-    //TODO iPad TODO AirPlay
+    if ([self.currentDeduplicatedEntries count] > self.currentlyPlayingIndexInChannel+1) {
+        //we're not on the last video, advance!
+        self.currentlyPlayingIndexInChannel++;
+        [self playChannel:self.currentChannel withDeduplicatedEntries:self.currentDeduplicatedEntries atIndex:self.currentlyPlayingIndexInChannel];
+    }
     
-//XXX - below is slightly modified code from HomeVC
-//    if ([self.currentDeduplicatedEntries count] > (NSUInteger)self.currentlyPlayingIndexInChannel+1) {
-//        [self playChannel:self.currentlyPlayingChannel atIndex:self.currentlyPlayingIndexInChannel+1];
-//        //self.currentlyPlayingIndexInChannel is now ++
-//    }
-//    
-//    //fetch more if we're now on the last video in the channel
-//    if ([self.currentDeduplicatedEntries count] <= (NSUInteger)self.currentlyPlayingIndexInChannel+1) {
-//        [self loadMoreEntriesInChannel:self.currentChannel
-//                            sinceEntry:[self.currentDeduplicatedEntries lastObject]];
-//    } else {
-//        //TODO iPad
-//        //TODO - warm video extraction cache for the next entity
-//        //       this is why AirPlay doesn't rock on iPhone when we advance beyond cached URLs
-//    }
+    // Do something based on the *next* video (after advancing)
+    if ([self.currentDeduplicatedEntries count] == (NSUInteger)self.currentlyPlayingIndexInChannel+1) {
+        //fetch more if we're now on the last entity in our array
+        [self loadMoreEntriesInChannel:self.currentChannel
+                            sinceEntry:[self.currentDeduplicatedEntries lastObject]];
+    } else {
+        //otherwise, warm cache for the next entity
+        [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:self.currentDeduplicatedEntries[self.currentlyPlayingIndexInChannel+1]];
+    }
 }
 
 #pragma mark - Helpers
