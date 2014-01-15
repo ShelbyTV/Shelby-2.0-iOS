@@ -195,8 +195,15 @@
     }
     
     if (DEVICE_IPAD) {
-        //TODO - stuff for airplay on iPad
-        return;
+        if (airplayVisible) {
+            //TODO iPad: get rid of magic numbers with final layout
+            self.controlsView.iPadAirPlayViewWidthConstraint.constant = 23;
+        } else {
+            self.controlsView.iPadAirPlayViewWidthConstraint.constant = 0;
+        }
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.controlsView layoutIfNeeded];
+        }];
         
     } else {
         //iPhone
