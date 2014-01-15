@@ -85,9 +85,15 @@
         }
     }
 
-    *insertedIndexPaths = inserted;
-    *updatedIndexPaths = updated;
-    *deletedIndexPaths = deleted;
+    if (insertedIndexPaths) {
+        *insertedIndexPaths = inserted;
+    }
+    if (updatedIndexPaths) {
+        *updatedIndexPaths = updated;
+    }
+    if (deletedIndexPaths) {
+        *deletedIndexPaths = deleted;
+    }
     return mergedDeduplicatedEntities;
 }
 
