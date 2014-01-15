@@ -8,7 +8,6 @@
 
 #import "ShelbyTopLevelNavigationViewController.h"
 #import "DisplayChannel+Helper.h"
-#import "SettingsViewController.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyNavigationViewController.h"
 
@@ -17,6 +16,7 @@
 
 @interface ShelbyTopLevelNavigationViewController ()
 @property (nonatomic, weak) IBOutlet UITableView *topLevelTable;
+@property (nonatomic, strong) SettingsViewController *settingsVC;
 @end
 
 
@@ -43,6 +43,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setCurrentUser:(User *)currentUser
+{
+    if (_currentUser != currentUser) {
+        _currentUser = currentUser;
+        [self.topLevelTable reloadData];
+    }
 }
 
 #pragma mark UITableDataSource
@@ -83,18 +91,59 @@
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (indexPath.row == 4) {
-        SettingsViewController *settingsVC = [[SettingsViewController alloc] initWithNibName:@"SettingsView-iPhone" bundle:nil];
-        [(ShelbyNavigationViewController *)self.navigationController pushViewController:settingsVC];
+    if (self.currentUser) {
+        if (indexPath.row == 0) {
+        } else if (indexPath.row == 1) {
+            DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.publicRollID
+                                                                            inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+            [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
+        } else if (indexPath.row == 2) {
+            [self goToFeaturedChannel];
+        } else if (indexPath.row == 4) {
+            self.settingsVC = [[SettingsViewController alloc] initWithNibName:@"SettingsView-iPhone" bundle:nil];
+            self.settingsVC.delegate = self;
+            [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.settingsVC];
+        }
     } else {
-        DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
-                                             
-                                                                              inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel];
+        if (indexPath.row == 0) {
+        } else if (indexPath.row == 1) {
+            [self goToFeaturedChannel];
+        } else {
+            [((ShelbyNavigationViewController *)self.navigationController).topContainerDelegate loginUser];
+
+        }
     }
+
 }
 
+- (void)goToFeaturedChannel
+{
+    DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
+                                         
+                                                                          inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel];
+ 
+}
 
+#pragma mark - SettingsViewDelegate
+- (void)logoutUser
+{
+    self.currentUser = nil;
+    [((ShelbyNavigationViewController *)self.navigationController).topContainerDelegate logoutUser];
+}
 
+- (void)connectToFacebook
+{
+    
+}
+
+- (void)connectToTwitter
+{
+    
+}
+
+- (void)enablePushNotifications:(BOOL)enable
+{
+    
+}
 @end

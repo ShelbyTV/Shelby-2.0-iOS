@@ -36,7 +36,9 @@
         _currentUser = currentUser;
     
         ShelbyTopLevelNavigationViewController *topLevelNavigationVC = (ShelbyTopLevelNavigationViewController *)self.topViewController;
-        topLevelNavigationVC.currentUser = self.currentUser;
+        if ([topLevelNavigationVC respondsToSelector:@selector(currentUser)]) {
+            topLevelNavigationVC.currentUser = self.currentUser;
+        }
     }
 }
 

@@ -113,6 +113,9 @@
 		1C3A7ED6188717D900458718 /* ShelbyShareView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */; };
 		1C3A7ED7188717D900458718 /* ShelbyShareView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */; };
 		1C3A7ED8188717D900458718 /* ShelbyShareView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */; };
+		1C3A7EDA1887354C00458718 /* LoginView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3A7ED91887354C00458718 /* LoginView-iPad.xib */; };
+		1C3A7EDB1887354C00458718 /* LoginView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3A7ED91887354C00458718 /* LoginView-iPad.xib */; };
+		1C3A7EDC1887354C00458718 /* LoginView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3A7ED91887354C00458718 /* LoginView-iPad.xib */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -918,6 +921,7 @@
 		1C38258F18806234002177C6 /* ShelbyUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyUserInfoViewController.h; sourceTree = "<group>"; };
 		1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyUserInfoViewController.m; sourceTree = "<group>"; };
 		1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyShareView-iPad.xib"; sourceTree = "<group>"; };
+		1C3A7ED91887354C00458718 /* LoginView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LoginView-iPad.xib"; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1495,6 +1499,7 @@
 				1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */,
 				910F5BEE1884D1A00069E380 /* VideoOverlayView.h */,
 				910F5BEF1884D1A00069E380 /* VideoOverlayView.m */,
+				1C3A7ED91887354C00458718 /* LoginView-iPad.xib */,
 			);
 			name = "Views - iPad";
 			sourceTree = "<group>";
@@ -2494,6 +2499,7 @@
 				1CE5586317DE73CA00C18A30 /* share-large@2x.png in Resources */,
 				1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CE5586B17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
+				1C3A7EDB1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9192ED0F17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
@@ -2614,6 +2620,7 @@
 				1CE5586417DE73CA00C18A30 /* share-large@2x.png in Resources */,
 				1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CE5586C17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
+				1C3A7EDC1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9192ED1017C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
@@ -2716,6 +2723,7 @@
 				1CDCA67E179DCE190098C4E1 /* play.png in Resources */,
 				1CDCA681179DCE190098C4E1 /* play@2x.png in Resources */,
 				1CDCA684179DCE190098C4E1 /* scrubber.png in Resources */,
+				1C3A7EDA1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				1CDCA687179DCE190098C4E1 /* scrubber@2x.png in Resources */,
 				1C56F13617BABD8C00EE9206 /* .gitignore in Resources */,
 				912261D617B97F070092AF30 /* overlay-likers@2x.png in Resources */,

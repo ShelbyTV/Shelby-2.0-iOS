@@ -243,13 +243,21 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)presentLoginVC
 {
-    UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-    UINavigationController *loginNav = [loginStoryboard instantiateInitialViewController];
-    self.loginVC = loginNav.viewControllers[0];
-    self.loginVC.delegate = self;
 
-    [self.mainWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
-    
+    if (DEVICE_IPAD) {
+        self.loginVC = [[LoginViewController alloc] initWithNibName:@"LoginView-iPad" bundle:nil];
+        self.loginVC.modalPresentationStyle = UIModalPresentationFormSheet;
+        self.loginVC.delegate = self;
+        [self.topContainerVC presentViewController:self.loginVC animated:YES completion:^{
+            self.loginVC.view.superview.bounds = CGRectMake(0, 0, 600, 350);
+        }];
+    } else {
+        UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        UINavigationController *loginNav = [loginStoryboard instantiateInitialViewController];
+        self.loginVC = loginNav.viewControllers[0];
+        self.loginVC.delegate = self;
+        [self.mainWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
+    }
     // When user goes to login, reset signup status.
     if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
         [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
@@ -258,7 +266,14 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)dismissLoginVCCompletion:(void (^)(void))completion
 {
-    [self.mainWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
+    UIViewController *viewController = nil;
+    if (DEVICE_IPAD) {
+        viewController = self.topContainerVC;
+    } else {
+        viewController = self.mainWindow.rootViewController;
+    }
+
+    [viewController dismissViewControllerAnimated:YES completion:^{
         self.loginVC = nil;
         if (completion) {
             completion();
@@ -870,8 +885,11 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)setCurrentUser:(User *)user
 {
-    [self.homeVC setCurrentUser:user];
-    
+    if (DEVICE_IPAD) {
+        [self.homeVC setCurrentUser:user];
+    } else {
+        self.topContainerVC.currentUser = user;
+    }
     if (user) {
         [[ShelbyDataMediator sharedInstance] syncLikes];
         [[ShelbyDataMediator sharedInstance] userLoggedIn];
@@ -963,7 +981,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [[ShelbyDataMediator sharedInstance] updateUserPreferenesForCurrentUser];   
 }
 
-#pragma mark - ShelbyHomeDelegate
+#pragma mark - ShelbyHomeDelegate/ShelbyTopContainerDelegate
 - (void)presentUserLogin
 {
     [self presentLoginVC];
@@ -979,8 +997,11 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [User sessionDidPause];
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
-    [self.homeVC logoutUser];
-
+    if (DEVICE_IPAD) {
+        self.topContainerVC.currentUser = nil;
+    } else {
+        [self.homeVC logoutUser];
+    }
     [self deleteDeviceToken];
     
     [self goToCommunityChannel];

@@ -123,6 +123,14 @@
     [self.sideNavigationVC pushUserProfileViewController:viewController];
 }
 
+- (void)setCurrentUser:(User *)currentUser
+{
+    if (_currentUser != currentUser) {
+        _currentUser = currentUser;
+        self.sideNavigationVC.currentUser = currentUser;
+    }
+}
+
 #pragma mark - ShelbyNavigationProtocol
 - (void)userProfileWasTapped:(NSString *)userID
 {
@@ -141,5 +149,16 @@
     [shareController shareWithCompletionHandler:^(BOOL completed) {
         // do stuff!;
     }];
+}
+
+- (void)loginUser
+{
+    [self.masterDelegate presentUserLogin];
+}
+
+- (void)logoutUser
+{
+    [self.masterDelegate logoutUser];
+
 }
 @end

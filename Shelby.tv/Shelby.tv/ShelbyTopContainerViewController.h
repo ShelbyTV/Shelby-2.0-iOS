@@ -16,6 +16,8 @@
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
 //- (void)shareVideoFrame:(Frame *)videoFrame;
+- (void)presentUserLogin;
+- (void)logoutUser;
 @end
 
 @interface ShelbyTopContainerViewController : UIViewController <ShelbyNavigationProtocol>
