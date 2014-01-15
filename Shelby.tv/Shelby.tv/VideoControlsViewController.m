@@ -391,7 +391,11 @@
 - (void)updateScrubheadForCurrentTime
 {
     if (!self.currentlyScrubbing) {
-        [self.controlsView positionScrubheadForPercent:(CMTimeGetSeconds(self.currentTime)/CMTimeGetSeconds(self.duration))];
+        if (CMTimeGetSeconds(self.currentTime) == 0) {
+            [self.controlsView positionScrubheadForPercent:0];
+        } else {
+            [self.controlsView positionScrubheadForPercent:(CMTimeGetSeconds(self.currentTime)/CMTimeGetSeconds(self.duration))];
+        }
     } else {
         //when user is scrubbing, scrubhead is kept under their finger
     }
