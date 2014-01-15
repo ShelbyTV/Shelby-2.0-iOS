@@ -116,9 +116,9 @@
 
     if (notedPlayer.videoFrame != [Frame frameForEntity:self.videoControlsVC.currentEntity]) {
         // *why* do we get a notification from the wrong player?  no idea.  but we handle it...
+        // can cause errors to change entity at this point, trying "just let it be" approach, see if
+        // AVFoundation is more forgiving
         DLog(@"Wrong player on init of airplay, controls have:%@, player has:%@", [Frame frameForEntity:self.videoControlsVC.currentEntity].video.title, notedPlayer.videoFrame.video.title);
-        self.videoPlayer = notedPlayer;
-        [self playEntity:self.videoControlsVC.currentEntity];
     }
 
     self.videoPlayer = notedPlayer;
