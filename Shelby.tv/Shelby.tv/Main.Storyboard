@@ -187,14 +187,24 @@
                                                         <action selector="shareVideo:" destination="Ctu-El-3f2" eventType="touchUpInside" id="fMq-ad-NVd"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ail-yt-Qbe">
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ail-yt-Qbe" userLabel="UnLikeButton">
                                                     <rect key="frame" x="273" y="143" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" image="heart-large.png">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="toggleLike:" destination="Ctu-El-3f2" eventType="touchUpInside" id="Exd-44-J6B"/>
+                                                        <action selector="unLikeVideo:" destination="Ctu-El-3f2" eventType="touchUpInside" id="QT8-tb-h81"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4do-PM-WFN" userLabel="LikeButton">
+                                                    <rect key="frame" x="273" y="143" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="heart-large.png">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="likeVideo:" destination="Ctu-El-3f2" eventType="touchUpInside" id="ih4-PU-5jB"/>
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rA7-HP-ljj">
@@ -216,7 +226,9 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="description" destination="LMM-Qu-KZy" id="ruE-uw-yhL"/>
+                                            <outlet property="likeButton" destination="4do-PM-WFN" id="dKi-WL-SYc"/>
                                             <outlet property="likersView" destination="rA7-HP-ljj" id="kCQ-Gr-D72"/>
+                                            <outlet property="unlikeButton" destination="ail-yt-Qbe" id="Cpg-fj-8JH"/>
                                             <outlet property="userAvatar" destination="ZqB-Qf-jKa" id="2K5-DP-GZ3"/>
                                             <outlet property="videoThumbnail" destination="Itb-fg-U9c" id="0bl-9Q-WKt"/>
                                             <outlet property="videoTitle" destination="lbe-qQ-nS2" id="2Zf-fI-Mo4"/>

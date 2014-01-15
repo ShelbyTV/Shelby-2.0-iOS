@@ -11,7 +11,8 @@
 
 @protocol ShelbyStreamEntryProtocol <NSObject>
 - (void)shareVideoWasTappedForFrame:(Frame *)videoFrame;
-- (void)toggleLikeForFrame:(Frame *)videoFrame;
+- (void)likeFrame:(Frame *)videoFrame;
+- (void)unLikeFrame:(Frame *)videoFrame;
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
 @end

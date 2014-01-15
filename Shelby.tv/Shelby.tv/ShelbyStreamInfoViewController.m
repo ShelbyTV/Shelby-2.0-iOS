@@ -131,12 +131,19 @@
 
 - (void)shareVideoWasTappedForFrame:(Frame *)videoFrame
 {
-    
 }
 
-- (void)toggleLikeForFrame:(Frame *)videoFrame
+- (void)likeFrame:(Frame *)videoFrame
 {
-    
+    BOOL didLike = [videoFrame doLike];
+    if (didLike) {
+        [self.delegate userLikedVideoFrame:videoFrame];
+    }
+}
+
+- (void)unLikeFrame:(Frame *)videoFrame
+{
+    [videoFrame doUnlike];
 }
 
 - (void)userProfileWasTapped:(NSString *)userID

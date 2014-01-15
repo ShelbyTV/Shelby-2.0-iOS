@@ -18,11 +18,14 @@
 @property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, weak) IBOutlet UILabel *description;
 @property (nonatomic, weak) IBOutlet UIView *likersView;
+@property (nonatomic, weak) IBOutlet UIButton *likeButton;
+@property (nonatomic, weak) IBOutlet UIButton *unlikeButton;
 @property (nonatomic, strong) NSMutableArray *likerImageViews;
 @property (nonatomic, strong) NSMutableOrderedSet *likers;
 
 - (IBAction)shareVideo:(id)sender;
-- (IBAction)toggleLike:(id)sender;
+- (IBAction)likeVideo:(id)sender;
+- (IBAction)unLikeVideo:(id)sender;
 - (IBAction)openUserProfile:(id)sender;
 - (IBAction)openLikersView:(id)sender;
 @end
@@ -146,9 +149,18 @@
     [self.delegate shareVideoWasTappedForFrame:self.videoFrame];
 }
 
-- (IBAction)toggleLike:(id)sender
+- (IBAction)likeVideo:(id)sender
 {
-    [self.delegate toggleLikeForFrame:self.videoFrame];
+    self.likeButton.hidden = YES;
+    self.unlikeButton.hidden = NO;
+    [self.delegate likeFrame:self.videoFrame];
+}
+
+- (IBAction)unLikeVideo:(id)sender
+{
+    self.likeButton.hidden = NO;
+    self.unlikeButton.hidden = YES;
+    [self.delegate unLikeFrame:self.videoFrame];
 }
 
 - (IBAction)openUserProfile:(id)sender
