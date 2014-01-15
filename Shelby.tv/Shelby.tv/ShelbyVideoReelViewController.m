@@ -165,8 +165,9 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
 - (void)videoReelDidChangePlaybackEntityNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
-    STVDebugAssert(self.videoReel.channel == channel, @"these should be in sync");
+    // KP: had to comment - wasn't archiving
+//    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
+//    STVDebugAssert(self.videoReel.channel == channel, @"these should be in sync");
     
     id<ShelbyVideoContainer> entity = userInfo[kShelbyVideoReelEntityKey];
     self.videoControlsVC.currentEntity = entity;
