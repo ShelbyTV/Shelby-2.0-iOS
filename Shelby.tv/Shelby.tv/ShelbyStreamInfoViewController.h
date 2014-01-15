@@ -21,7 +21,4 @@
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, assign) id<ShelbyStreamInfoProtocol> delegate;
 
-//entries ignored if given channel does not match our displayChannel
-- (void)setEntries:(NSArray *)rawEntries forChannel:(DisplayChannel *)channel;
-
 @end
