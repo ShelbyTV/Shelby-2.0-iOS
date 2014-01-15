@@ -35,6 +35,7 @@
 {
     [super viewDidLoad];
 
+    self.title = @"Settings";
     [self.topLevelTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TopLevelNavigationCell"];
 }
 
