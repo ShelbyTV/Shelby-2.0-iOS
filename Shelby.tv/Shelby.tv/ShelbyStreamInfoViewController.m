@@ -174,6 +174,7 @@
 
 - (void)shareVideoWasTappedForFrame:(Frame *)videoFrame
 {
+    [self.delegate shareVideoFrame:videoFrame];
 }
 
 - (void)likeFrame:(Frame *)videoFrame

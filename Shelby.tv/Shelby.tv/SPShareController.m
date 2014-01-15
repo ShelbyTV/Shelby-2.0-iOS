@@ -71,7 +71,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 - (void)shareWithCompletionHandler:(SPShareCompletionHandler)completionHandler
 {
     self.completionHandler = completionHandler;
-    [self setupMaskView];
+    if (!DEVICE_IPAD) {
+        [self setupMaskView];
+    }
     
     [UIView animateWithDuration:0.5f
                      animations:^{
@@ -127,7 +129,11 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     if (user && ![user.userID isEqualToString:frame.creator.userID]) {
         ShelbyShareViewController *shelbyShare = [[ShelbyShareViewController alloc] initWithNibName:@"ShelbyShareView" bundle:nil];
         [shelbyShare setupShareWith:frame link:link andShareController:self];
-        [self.viewController presentViewController:shelbyShare animated:YES completion:nil];
+        if (DEVICE_IPAD) {
+               shelbyShare.modalPresentationStyle = UIModalPresentationFormSheet;
+        } else {
+            [self.viewController presentViewController:shelbyShare animated:YES completion:nil];
+        }
     } else {
         [self shareOnSocialNetworks:frame message:message andLink:link fromViewController:self.viewController];
     }

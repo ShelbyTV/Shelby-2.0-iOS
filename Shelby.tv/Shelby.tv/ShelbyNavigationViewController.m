@@ -88,4 +88,9 @@
 {
     // Here is where we might want to let the currently playing video to animate the heart if that's the currently played video
 }
+
+- (void)shareVideoFrame:(Frame *)videoFrame
+{
+    [self.topContainerDelegate shareVideoFrame:videoFrame];
+}
 @end

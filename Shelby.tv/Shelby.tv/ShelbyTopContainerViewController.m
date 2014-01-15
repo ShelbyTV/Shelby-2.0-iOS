@@ -10,6 +10,7 @@
 #import "ShelbyCurrentlyOnViewController.h"
 #import "ShelbyNavigationViewController.h"
 #import "ShelbyVideoReelViewController.h"
+#import "SPShareController.h"
 
 @interface ShelbyTopContainerViewController ()
 //container Views
@@ -106,6 +107,7 @@
     }
     
     if (self.sideNavigationVC && self.videoReelVC) {
+        self.sideNavigationVC.topContainerDelegate = self;
         self.sideNavigationVC.currentUser = self.currentUser;
         self.sideNavigationVC.videoReelVC = self.videoReelVC;
     }
@@ -134,6 +136,10 @@
 
 - (void)shareVideoFrame:(Frame *)videoFrame
 {
-    
+    // Might decide to move this to the brain, but for now, leaving here.
+    SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:videoFrame fromViewController:self atRect:CGRectZero];
+    [shareController shareWithCompletionHandler:^(BOOL completed) {
+        // do stuff!;
+    }];
 }
 @end
