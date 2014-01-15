@@ -44,13 +44,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(fetchEntriesDidCompleteForChannelWithErrorNotification:)
                                                  name:kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fetchEntriesDidCompleteForChannelNotification:)
-                                                 name:kShelbyBrainSetEntriesNotification object:nil];
-    
-    
-
 }
 
 - (void)didReceiveMemoryWarning

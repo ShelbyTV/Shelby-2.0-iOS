@@ -1123,10 +1123,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     
     [[ShelbyDataMediator sharedInstance] fetchUserWithID:userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(User *fetchedUser) {
         DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:fetchedUser.publicRollID];
-        if (DEVICE_IPAD) {
-            userInfoVC.user = fetchedUser;
-            [userInfoVC setupStreamInfoDisplayChannel:rollChannel];
-        }
  
         if (!rollChannel) {
             rollChannel = [DisplayChannel channelForTransientEntriesWithID:fetchedUser.publicRollID title:fetchedUser.nickname inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
@@ -1138,24 +1134,26 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
             
             rollChannel.roll = userRoll;
         }
-        
-        [[ShelbyDataMediator sharedInstance] fetchFramesInChannel:rollChannel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
-            if (DEVICE_IPAD) {
-                // KP KP: TODO
-            } else {
+
+        if (DEVICE_IPAD) {
+            // Setting the Channel on the userInfoVC will make the request to fetch entries. So in the case of the iPad, no need to do it again.
+            userInfoVC.user = fetchedUser;
+            [userInfoVC setupStreamInfoDisplayChannel:rollChannel];
+        } else {
+            [[ShelbyDataMediator sharedInstance] fetchFramesInChannel:rollChannel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
                 userProfileVC.channels = @[displayChannel];
                 userProfileVC.profileUser = fetchedUser;
                 
-                 [userProfileVC focusOnChannel:displayChannel];
+                [userProfileVC focusOnChannel:displayChannel];
                 [userProfileVC setIsLoading:NO];
-            }
-
-            entries = entries ? entries : @[];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
-                                                                object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
-                                                                                       kShelbyBrainChannelEntriesKey : entries,
-                                                                                       kShelbyBrainFetchedUserKey : fetchedUser}];
-       }];
+                
+                entries = entries ? entries : @[];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                                    object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
+                                                                                           kShelbyBrainChannelEntriesKey : entries,
+                                                                                           kShelbyBrainFetchedUserKey : fetchedUser}];
+            }];
+        }
     }];
 }
 
