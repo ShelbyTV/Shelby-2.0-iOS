@@ -40,11 +40,6 @@
     }
 }
 
-- (void)setMasterDelegate:(id<ShelbyNavigationProtocol>)masterDelegate
-{
-    _masterDelegate = masterDelegate;
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -81,12 +76,12 @@
 #pragma mark - ShelbyStreamInfoProtocol
 - (void)userProfileWasTapped:(NSString *)userID
 {
-    [self.masterDelegate userProfileWasTapped:userID];
+    [self.topContainerDelegate userProfileWasTapped:userID];
 }
 
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers
 {
-    [self.masterDelegate openLikersViewForVideo:video withLikers:likers];
+    [self.topContainerDelegate openLikersViewForVideo:video withLikers:likers];
 }
 
 - (void)userLikedVideoFrame:(Frame *)videoFrame

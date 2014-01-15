@@ -19,6 +19,7 @@
 #import "ShelbyABTestManager.h"
 #import "ShelbyModel.h"
 #import "ShelbyNotificationManager.h"
+#import "ShelbyNavigationViewController.h"
 #import "ShelbySingleVideoViewController.h"
 #import "ShelbyUserProfileViewController.h"
 #import "ShelbyUserInfoViewController.h"
@@ -211,7 +212,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         self.topContainerVC = (ShelbyTopContainerViewController *)[self.mainStoryboard instantiateInitialViewController];
         // Passing delegate to the top level navigation
-        self.topContainerVC.topNavigationDelegate = self;
+        self.topContainerVC.masterDelegate = self;
         self.topContainerVC.currentUser = currentUser;
         self.mainWindow.rootViewController = self.topContainerVC;
     } else {

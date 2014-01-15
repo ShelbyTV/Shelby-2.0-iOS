@@ -108,7 +108,6 @@
     if (self.sideNavigationVC && self.videoReelVC) {
         self.sideNavigationVC.currentUser = self.currentUser;
         self.sideNavigationVC.videoReelVC = self.videoReelVC;
-        self.sideNavigationVC.masterDelegate = self.topNavigationDelegate;
     }
 }
 
@@ -122,4 +121,19 @@
     [self.sideNavigationVC pushUserProfileViewController:viewController];
 }
 
+#pragma mark - ShelbyNavigationProtocol
+- (void)userProfileWasTapped:(NSString *)userID
+{
+    [self.masterDelegate userProfileWasTapped:userID];
+}
+
+- (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers
+{
+    [self.masterDelegate openLikersViewForVideo:video withLikers:likers];
+}
+
+- (void)shareVideoFrame:(Frame *)videoFrame
+{
+    
+}
 @end

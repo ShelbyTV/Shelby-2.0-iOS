@@ -16,12 +16,13 @@
 @protocol ShelbyNavigationProtocol <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
+- (void)shareVideoFrame:(Frame *)videoFrame;
 @end
 
 @interface ShelbyNavigationViewController : UINavigationController <ShelbyStreamInfoProtocol>
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, strong) User *currentUser;
-@property (nonatomic, weak) id<ShelbyNavigationProtocol> masterDelegate;
+@property (nonatomic, weak) id<ShelbyNavigationProtocol> topContainerDelegate;
 
 - (void)pushViewController:(UIViewController *)viewController;
 - (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController;

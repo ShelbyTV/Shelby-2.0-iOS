@@ -12,11 +12,16 @@
 #import "ShelbyUserInfoViewController.h"
 #import "User.h"
 
-@interface ShelbyTopContainerViewController : UIViewController
+@protocol ShelbyTopContainerProtocol <NSObject>
+- (void)userProfileWasTapped:(NSString *)userID;
+- (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
+//- (void)shareVideoFrame:(Frame *)videoFrame;
+@end
+
+@interface ShelbyTopContainerViewController : UIViewController <ShelbyNavigationProtocol>
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, assign) id<ShelbyTopContainerProtocol> masterDelegate;
 
 - (void)pushViewController:(UIViewController *)viewController;
 - (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController;
-
-@property (nonatomic, assign) id<ShelbyNavigationProtocol> topNavigationDelegate;
 @end

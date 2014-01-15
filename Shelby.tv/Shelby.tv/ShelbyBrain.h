@@ -15,8 +15,8 @@
 #import "SignupFlowNavigationViewController.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyLikersViewController.h"
-#import "ShelbyNavigationViewController.h"
 #import "ShelbyUserProfileViewController.h"
+#import "ShelbyTopContainerViewController.h"
 #import "SPVideoReel.h"
 #import "TwitterHandler.h"
 #import "WelcomeViewController.h"
@@ -39,7 +39,7 @@ extern NSString * const kShelbyBrainEntityKey;
 extern NSString *const kShelbyDeviceToken;
 
 // KP KP: TODO: Once ShelbyDataM takes care of TwitterHandler, there would be no need for the TwitterHandlerDelegate. It would be part of the ShelbyDataMediatorProtocol
-@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyStreamBrowseManagementDelegate, SPVideoReelDelegate, ShelbyHomeDelegate, ShelbyUserProfileDelegate, TwitterHandlerDelegate, SignupFlowNavigationViewDelegate, UIActionSheetDelegate, LoginViewControllerDelegate, SettingsViewDelegate, WelcomeViewDelegate, ShelbyLikersViewDelegate, ShelbyNavigationProtocol>
+@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyStreamBrowseManagementDelegate, SPVideoReelDelegate, ShelbyHomeDelegate, ShelbyUserProfileDelegate, TwitterHandlerDelegate, SignupFlowNavigationViewDelegate, UIActionSheetDelegate, LoginViewControllerDelegate, SettingsViewDelegate, WelcomeViewDelegate, ShelbyLikersViewDelegate, ShelbyTopContainerProtocol>
 
 @property (nonatomic) UIWindow *mainWindow;
 
