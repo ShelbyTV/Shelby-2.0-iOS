@@ -14,10 +14,19 @@
 #import "ShelbyModelArrayUtility.h"
 #import "SPVideoExtractor.h"
 
+#define LOAD_MORE_ACTIVATION_HEIGHT 200
+#define NOT_LOADING_MORE -1
+#define LOAD_MORE_SPINNER_AREA_HEIGHT 100
+
 @interface ShelbyStreamInfoViewController ()
 @property (nonatomic, strong) NSArray *channelEntries;
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 @property (nonatomic, weak) IBOutlet UITableView *entriesTable;
+//refresh and load more
+@property (nonatomic, strong) UITableViewController *entriesTableVC;
+@property (nonatomic, strong) UIActivityIndicatorView *loadMoreSpinner;
+@property (nonatomic, assign) BOOL moreEntriesMayBeAvailable;
+@property (nonatomic, assign) CGFloat activationPointOfCurrentLoadMoreRequest;
 @end
 
 @implementation ShelbyStreamInfoViewController
@@ -36,6 +45,20 @@
     [super viewDidLoad];
 
     self.channelEntries = @[];
+    //refresh (need a UITableViewController to use the standard ios refresh control)
+    self.entriesTableVC = [[UITableViewController alloc] init];
+    [self.entriesTableVC willMoveToParentViewController:self];
+    self.entriesTableVC.tableView = self.entriesTable;
+    [self addChildViewController:self.entriesTableVC];
+    self.entriesTableVC.refreshControl = ({
+        UIRefreshControl *rc = [[UIRefreshControl alloc] init];
+        [rc addTarget:self action:@selector(refreshEntries) forControlEvents:UIControlEventValueChanged];
+        rc;
+    });
+    //load more
+    self.loadMoreSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activationPointOfCurrentLoadMoreRequest = NOT_LOADING_MORE;
+    self.moreEntriesMayBeAvailable = NO; // <-- set to yes once we do initial load
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(fetchEntriesDidCompleteForChannelNotification:)
@@ -88,11 +111,16 @@
             [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:receivedChannelEntries[0]];
         }
     }
+    
+    //API returns the element represented by the sinceID (therefore we need count > 1)
+    [self fetchEntriesWasSuccessful:YES hadEntries:[receivedChannelEntries count] > 1];
 }
 
 - (void)fetchEntriesDidCompleteForChannelWithErrorNotification:(NSNotification *)notification
 {
     // TODO iPad - simple standard notice of fetch error?
+    
+    [self fetchEntriesWasSuccessful:NO hadEntries:NO];
 }
 
 #pragma mark UITableDataSource
@@ -127,6 +155,21 @@
                           atIndex:indexPath.row];
 }
 
+#pragma mark UIScrollViewDelegate
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    STVAssert(scrollView == self.entriesTable);
+    
+    if (self.moreEntriesMayBeAvailable &&
+        self.activationPointOfCurrentLoadMoreRequest == NOT_LOADING_MORE &&
+        scrollView.contentOffset.y + scrollView.bounds.size.height + LOAD_MORE_ACTIVATION_HEIGHT > scrollView.contentSize.height) {
+        
+        self.activationPointOfCurrentLoadMoreRequest = scrollView.contentOffset.y;
+        [self loadMoreEntries];
+    }
+}
+
 #pragma mark ShelbyStreamEntryProtocol
 
 - (void)shareVideoWasTappedForFrame:(Frame *)videoFrame
@@ -156,7 +199,57 @@
     [self.delegate openLikersViewForVideo:video withLikers:likers];
 }
 
-#pragma mark - entries helpers (set & merge entries)
+#pragma mark - Load More & Refresh Helpers
+
+- (void)loadMoreEntries
+{
+    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:self.displayChannel
+                                                    sinceEntry:[self.channelEntries lastObject]];
+    //show spinner in bottom offset
+    self.entriesTable.contentInset = UIEdgeInsetsMake(self.entriesTable.contentInset.top,
+                                                      self.entriesTable.contentInset.left,
+                                                      self.entriesTable.contentInset.bottom + LOAD_MORE_SPINNER_AREA_HEIGHT,
+                                                      self.entriesTable.contentInset.right);
+    [self.entriesTable addSubview:self.loadMoreSpinner];
+    self.loadMoreSpinner.center = CGPointMake(self.entriesTable.bounds.size.width/2.0f - (self.loadMoreSpinner.bounds.size.width/2.f),
+                                              self.entriesTable.contentSize.height + LOAD_MORE_SPINNER_AREA_HEIGHT/2.f);
+    self.loadMoreSpinner.hidden = NO;
+    [self.loadMoreSpinner startAnimating];
+}
+
+- (void)refreshEntries
+{
+    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:self.displayChannel
+                                                    sinceEntry:nil];
+}
+
+- (void)fetchEntriesWasSuccessful:(BOOL)loadSuccess hadEntries:(BOOL)fetchReturnedEntries
+{
+    if (self.activationPointOfCurrentLoadMoreRequest != NOT_LOADING_MORE) {
+        //LOAD MORE was the request
+        if (loadSuccess && !fetchReturnedEntries) {
+            self.moreEntriesMayBeAvailable = NO;
+        }
+        self.activationPointOfCurrentLoadMoreRequest = NOT_LOADING_MORE;
+        
+        //remove spinner
+        [self.loadMoreSpinner stopAnimating];
+        [self.loadMoreSpinner removeFromSuperview];
+        self.entriesTable.contentInset = UIEdgeInsetsMake(self.entriesTable.contentInset.top,
+                                                          self.entriesTable.contentInset.left,
+                                                          self.entriesTable.contentInset.bottom - LOAD_MORE_SPINNER_AREA_HEIGHT,
+                                                          self.entriesTable.contentInset.right);
+        
+    } else if (self.entriesTableVC.refreshControl.refreshing) {
+        //REFRESH was the request
+        [self.entriesTableVC.refreshControl endRefreshing];
+        
+    } else {
+        //fetch requested via non-user mechanism (ie. -[setDisplayChannel:])
+    }
+}
+
+#pragma mark - Entries Helpers (set & merge entries)
 
 - (void)setEntries:(NSArray *)rawEntries
 {
@@ -171,6 +264,8 @@
         [self.videoReelVC setDeduplicatedEntries:self.deduplicatedEntries
                                       forChannel:self.displayChannel];
         [self.entriesTable reloadData];
+        
+        self.moreEntriesMayBeAvailable = YES;
     }
 }
 
