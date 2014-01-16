@@ -299,13 +299,13 @@
 - (IBAction)backgroundTapped:(id)sender {
     //on iPad, in full screen, we keep the view on screen (but transparent)
     //this allows users to bring up controls in full screen
-    [UIView animateWithDuration:0.5 animations:^{
-        if (self.displayMode == VideoControlsDisplayShowingForIPadFullScreen) {
-            [self setDisplayMode:VideoControlsDisplayHiddenForIPadFullScreen];
-        } else if (self.displayMode == VideoControlsDisplayHiddenForIPadFullScreen) {
+    if (self.displayMode == VideoControlsDisplayHiddenForIPadFullScreen) {
+        [UIView animateWithDuration:0.5 animations:^{
+            
             [self setDisplayMode:VideoControlsDisplayShowingForIPadFullScreen];
-        }
-    }];
+            
+        }];
+    }
 }
 
 - (IBAction)playPauseButtonTapped:(id)sender
