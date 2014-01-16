@@ -94,7 +94,7 @@
     if (self.currentUser) {
         if (indexPath.row == 0) {
         } else if (indexPath.row == 1) {
-            DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.publicRollID
+            DisplayChannel *userStream =  [DisplayChannel fetchChannelWithRollID:self.currentUser.publicRollID
                                                                             inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
         } else if (indexPath.row == 2) {
