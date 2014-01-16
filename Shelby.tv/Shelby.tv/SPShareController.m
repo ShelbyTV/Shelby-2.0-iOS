@@ -36,6 +36,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 @property (nonatomic, strong) UIViewController *viewController;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 @property (strong, nonatomic) UIView *mask;
+@property (nonatomic, strong) ShelbyShareViewController *shelbyShare;
 
 @property (nonatomic, strong) SPShareCompletionHandler completionHandler;
 
@@ -109,11 +110,24 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     if (selected) {
         if (facebook) {
             if (![[FacebookHandler sharedInstance] allowPublishActions]) {
-                [self.delegate shareControllerRequestsFacebookPublishPermissions:self];
+                if (DEVICE_IPAD) {
+                    [[ShelbyDataMediator sharedInstance] userAskForFacebookPublishPermissions];
+                } else {
+                    [self.delegate shareControllerRequestsFacebookPublishPermissions:self];
+                }
                 return NO;
             }
         } else if (!currentUser.twitterNickname) {
-            [self.delegate shareControllerRequestsTwitterPublishPermissions:self];
+            if (DEVICE_IPAD) {
+                User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+                NSString *token = nil;
+                if (user) {
+                    token = user.token;
+                }
+                [[TwitterHandler sharedInstance] authenticateWithViewController:self.shelbyShare withDelegate:self.delegate andAuthToken:token];
+            } else {
+                [self.delegate shareControllerRequestsTwitterPublishPermissions:self];
+            }
             return NO;
         }
     }
@@ -128,15 +142,15 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
    
     if (user && ![user.userID isEqualToString:frame.creator.userID]) {
         NSString *shareNibName = DEVICE_IPAD ? @"ShelbyShareView-iPad" : @"ShelbyShareView";
-        ShelbyShareViewController *shelbyShare = [[ShelbyShareViewController alloc] initWithNibName:shareNibName bundle:nil];
-        [shelbyShare setupShareWith:frame link:link andShareController:self];
+        self.shelbyShare = [[ShelbyShareViewController alloc] initWithNibName:shareNibName bundle:nil];
+        [self.shelbyShare setupShareWith:frame link:link andShareController:self];
         if (DEVICE_IPAD) {
-            shelbyShare.modalPresentationStyle = UIModalPresentationFormSheet;
+            self.shelbyShare.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyWillPresentModalViewNotification object:self];
-        [self.viewController presentViewController:shelbyShare animated:YES completion:nil];
+        [self.viewController presentViewController:self.shelbyShare animated:YES completion:nil];
         if (DEVICE_IPAD) {
-            shelbyShare.view.superview.bounds = CGRectMake(0, 0, 600, 350);
+            self.shelbyShare.view.superview.bounds = CGRectMake(0, 0, 600, 350);
         }
     } else {
         [self shareOnSocialNetworks:frame message:message andLink:link fromViewController:self.viewController];

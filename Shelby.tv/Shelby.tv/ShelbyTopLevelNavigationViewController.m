@@ -8,6 +8,7 @@
 
 #import "ShelbyTopLevelNavigationViewController.h"
 #import "DisplayChannel+Helper.h"
+#import "ShelbyBrain.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyNavigationViewController.h"
 
@@ -17,6 +18,7 @@
 @interface ShelbyTopLevelNavigationViewController ()
 @property (nonatomic, weak) IBOutlet UITableView *topLevelTable;
 @property (nonatomic, strong) SettingsViewController *settingsVC;
+@property (nonatomic, strong) ShelbyNotificationCenterViewController *notificationCenterVC;
 @end
 
 
@@ -37,6 +39,11 @@
 
     self.title = @"Settings";
     [self.topLevelTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TopLevelNavigationCell"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchNotificationEntriesDidCompletelNotification:) name:kShelbyBrainFetchNotificationEntriesDidCompleteNotification object:nil];
+    
+    self.notificationCenterVC = [[ShelbyNotificationCenterViewController alloc] initWithNibName:@"ShelbyNotificationCenterView" bundle:nil];
+    self.notificationCenterVC.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,6 +58,15 @@
         _currentUser = currentUser;
         [self.topLevelTable reloadData];
     }
+}
+
+- (void)fetchNotificationEntriesDidCompletelNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    
+    NSArray *notificationEntries = userInfo[kShelbyBrainChannelEntriesKey];
+    
+    [self.notificationCenterVC setNotificationEntries:notificationEntries];
 }
 
 #pragma mark UITableDataSource
@@ -93,14 +109,18 @@
 {
     if (self.currentUser) {
         if (indexPath.row == 0) {
+            DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+            [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
         } else if (indexPath.row == 1) {
             DisplayChannel *userStream =  [DisplayChannel fetchChannelWithRollID:self.currentUser.publicRollID
                                                                             inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
         } else if (indexPath.row == 2) {
             [self goToFeaturedChannel];
+        } else if (indexPath.row == 3) {
+            [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.notificationCenterVC];
         } else if (indexPath.row == 4) {
-            self.settingsVC = [[SettingsViewController alloc] initWithNibName:@"SettingsView-iPhone" bundle:nil];
+            self.settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser];
             self.settingsVC.delegate = self;
             [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.settingsVC];
         }
@@ -136,16 +156,37 @@
 
 - (void)connectToFacebook
 {
-    
+    [[ShelbyDataMediator sharedInstance] userAskForFacebookPublishPermissions];
 }
 
 - (void)connectToTwitter
 {
-    
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    NSString *token = nil;
+    if (user) {
+        token = user.token;
+    }
+    [[TwitterHandler sharedInstance] authenticateWithViewController:self.navigationController withDelegate:self andAuthToken:token];
 }
 
 - (void)enablePushNotifications:(BOOL)enable
 {
     
+}
+
+#pragma mark - ShelbyNotificationDelegate Methods
+- (void)unseenNotificationCountChanged
+{
+//    [self.navBarVC setUnseenNotificationCount:self.notificationCenterVC.unseenNotifications];
+}
+
+- (void)userProfileWasTapped:(NSString *)userID
+{
+    [((ShelbyNavigationViewController *)self.navigationController).topContainerDelegate userProfileWasTapped:userID];
+}
+
+- (void)videoWasTapped:(NSString *)videoID
+{
+//    [((ShelbyNavigationViewController *)self.navigationController).topContainerDelegate  openVideoViewForDashboardID:videoID];
 }
 @end

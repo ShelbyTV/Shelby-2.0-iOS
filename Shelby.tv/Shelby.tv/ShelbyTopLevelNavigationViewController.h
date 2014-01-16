@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SettingsViewController.h"
+#import "ShelbyNotificationCenterViewController.h"
 #import "User.h"
 
-@interface ShelbyTopLevelNavigationViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SettingsViewDelegate>
+@interface ShelbyTopLevelNavigationViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SettingsViewDelegate, ShelbyNotificationDelegate>
 @property (nonatomic, strong) User *currentUser;
 @end
