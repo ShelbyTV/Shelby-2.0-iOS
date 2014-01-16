@@ -106,6 +106,8 @@
         }
     } else {
         if (indexPath.row == 0) {
+            DisplayChannel *userStream =  [DisplayChannel channelForOfflineLikesInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+            [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
         } else if (indexPath.row == 1) {
             [self goToFeaturedChannel];
         } else {
