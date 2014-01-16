@@ -503,7 +503,6 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
             self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
         }];
         
-        //TODO iPad - put the video reel back in place?
     }
 }
 
