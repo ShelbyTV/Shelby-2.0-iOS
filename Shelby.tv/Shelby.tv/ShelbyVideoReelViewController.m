@@ -11,6 +11,7 @@
 //TODO: refactor these out of brain?
 #import "ShelbyBrain.h"
 #import "ShelbyDataMediator.h"
+#import "SPShareController.h"
 #import "SPVideoExtractor.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
@@ -24,6 +25,10 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
 @property (nonatomic, strong) DisplayChannel *currentChannel;
 @property (nonatomic, strong) NSArray *currentDeduplicatedEntries;
 @property (nonatomic, assign) NSUInteger currentlyPlayingIndexInChannel;
+//sharing
+@property (nonatomic, strong) SPShareController *shareController;
+@property (nonatomic, assign) BOOL wasPlayingBeforeModalViewWasPresented;
+@property (nonatomic, assign) NSUInteger presentedModalViewCount;
 @end
 
 @implementation ShelbyVideoReelViewController
@@ -42,6 +47,7 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
     [super viewDidLoad];
     
     self.currentlyPlayingIndexInChannel = 0;
+    self.presentedModalViewCount = 0;
     
     [self setupVideoControls];
     [self setupVideoOverlay];
@@ -51,6 +57,15 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(videoReelDidChangePlaybackEntityNotification:)
                                                  name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+    
+    //adjust play/pause when modal views obscure video
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(willPresentModalViewNotification:)
+                                                 name:kShelbyWillPresentModalViewNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didDismissModalViewNotification:)
+                                                 name:kShelbyDidDismissModalViewNotification object:nil];
+    
 }
 
 -(void)dealloc
@@ -185,6 +200,35 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
     [self videoControlsPauseCurrentVideo:nil];
 }
 
+- (void)willPresentModalViewNotification:(NSNotification *)notification
+{
+    self.presentedModalViewCount++;
+    
+    if (self.presentedModalViewCount > 1) {
+        //only care about playback state when first modal view was presented
+        return;
+    }
+    
+    self.wasPlayingBeforeModalViewWasPresented = self.videoReel ? [self.videoReel isCurrentPlayerPlaying] : NO;
+    if (self.wasPlayingBeforeModalViewWasPresented) {
+        [self videoControlsPauseCurrentVideo:nil];
+    }
+}
+
+- (void)didDismissModalViewNotification:(NSNotification *)notification
+{
+    self.presentedModalViewCount--;
+    
+    if (self.presentedModalViewCount > 0) {
+        //only resetting playback state when all modals are removed
+        return;
+    }
+    
+    if (self.wasPlayingBeforeModalViewWasPresented) {
+        [self videoControlsPlayCurrentVideo:nil];
+    }
+}
+
 #pragma mark - custom gesture recognizers on video reel
 
 - (void)singleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
@@ -276,6 +320,16 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
     if (!didUnlike) {
         DLog(@"***ERROR*** Tried to unlike '%@', but action resulted in LIKE of the video", vcvc.currentEntity.containedVideo.title);
     }
+}
+
+- (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc
+{
+    self.shareController = [[SPShareController alloc] initWithVideoFrame:[Frame frameForEntity:vcvc.currentEntity]
+                                                      fromViewController:self
+                                                                  atRect:CGRectZero];
+    [self.shareController shareWithCompletionHandler:^(BOOL completed) {
+        self.shareController = nil;
+    }];
 }
 
 #pragma mark - SPVideoReelDelegate

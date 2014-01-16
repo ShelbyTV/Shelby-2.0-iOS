@@ -12,6 +12,7 @@
 #import "Frame.h"
 #import "ShelbyBrain.h"
 #import "ShelbyModelArrayUtility.h"
+#import "SPShareController.h"
 #import "SPVideoExtractor.h"
 
 #define LOAD_MORE_ACTIVATION_HEIGHT 200
@@ -27,6 +28,8 @@
 @property (nonatomic, strong) UIActivityIndicatorView *loadMoreSpinner;
 @property (nonatomic, assign) BOOL moreEntriesMayBeAvailable;
 @property (nonatomic, assign) CGFloat activationPointOfCurrentLoadMoreRequest;
+//sharing
+@property (nonatomic, strong) SPShareController *shareController;
 @end
 
 @implementation ShelbyStreamInfoViewController
@@ -174,20 +177,28 @@
 
 - (void)shareVideoWasTappedForFrame:(Frame *)videoFrame
 {
-    [self.delegate shareVideoFrame:videoFrame];
+    self.shareController = [[SPShareController alloc] initWithVideoFrame:videoFrame
+                                                      fromViewController:self
+                                                                  atRect:CGRectZero];
+    [self.shareController shareWithCompletionHandler:^(BOOL completed) {
+        self.shareController = nil;
+    }];
 }
 
 - (void)likeFrame:(Frame *)videoFrame
 {
     BOOL didLike = [videoFrame doLike];
     if (didLike) {
-        [self.delegate userLikedVideoFrame:videoFrame];
+        //TODO iPad -- change state, view, etc.
     }
 }
 
 - (void)unLikeFrame:(Frame *)videoFrame
 {
-    [videoFrame doUnlike];
+    BOOL didUnlike = [videoFrame doUnlike];
+    if (didUnlike) {
+        //TODO iPad -- change state, view, etc.
+    }
 }
 
 - (void)userProfileWasTapped:(NSString *)userID

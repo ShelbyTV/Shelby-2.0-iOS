@@ -132,7 +132,9 @@
 
     [self.shareController shelbyShareWithMessage:self.message.text withFacebook:!self.facebookCheck.hidden andWithTwitter:!self.twitterCheck.hidden];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyDidDismissModalViewNotification object:self];
+    }];
 }
 
 - (IBAction)toggleFacebook:(id)sender
@@ -186,6 +188,7 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self dismissViewControllerAnimated:YES completion:^{
             [self.shareController shareComplete:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyDidDismissModalViewNotification object:self];
         }];
     });
 }
@@ -194,6 +197,7 @@
 {
     [self dismissViewControllerAnimated:YES completion:^{
         [self.shareController shareComplete:NO];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyDidDismissModalViewNotification object:self];
     }];
 }
 

@@ -593,6 +593,9 @@
 		910F5BF01884D1A00069E380 /* VideoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5BEF1884D1A00069E380 /* VideoOverlayView.m */; };
 		910F5BF11884D1A00069E380 /* VideoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5BEF1884D1A00069E380 /* VideoOverlayView.m */; };
 		910F5BF21884D1A00069E380 /* VideoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5BEF1884D1A00069E380 /* VideoOverlayView.m */; };
+		910F5BF5188832920069E380 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5BF4188832920069E380 /* Constants.m */; };
+		910F5BF6188832920069E380 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5BF4188832920069E380 /* Constants.m */; };
+		910F5BF7188832920069E380 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5BF4188832920069E380 /* Constants.m */; };
 		9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
 		9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
 		9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
@@ -1178,6 +1181,7 @@
 		910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "VideoOverlayView-iPad.xib"; sourceTree = "<group>"; };
 		910F5BEE1884D1A00069E380 /* VideoOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoOverlayView.h; sourceTree = "<group>"; };
 		910F5BEF1884D1A00069E380 /* VideoOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoOverlayView.m; sourceTree = "<group>"; };
+		910F5BF4188832920069E380 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		9119AB6D17821133001C9190 /* VideoControlsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoControlsView.xib; sourceTree = "<group>"; };
 		9119AB71178211D5001C9190 /* VideoControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoControlsViewController.h; sourceTree = "<group>"; };
 		9119AB72178211D6001C9190 /* VideoControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoControlsViewController.m; sourceTree = "<group>"; };
@@ -2178,6 +2182,7 @@
 			isa = PBXGroup;
 			children = (
 				8EF5C35C162F431B0075C35F /* Constants.h */,
+				910F5BF4188832920069E380 /* Constants.m */,
 				8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */,
 			);
 			name = Constants;
@@ -2863,6 +2868,7 @@
 				1C38257D187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */,
 				91F0CC01172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
 				91C4444918576B6F00A8F438 /* Frame.m in Sources */,
+				910F5BF6188832920069E380 /* Constants.m in Sources */,
 				91F0CC061730154E008B5B34 /* User+Helper.m in Sources */,
 				91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */,
 				91D03F081731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
@@ -3016,6 +3022,7 @@
 				1C38257E187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */,
 				91F0CC02172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
 				91C4444A18576B6F00A8F438 /* Frame.m in Sources */,
+				910F5BF7188832920069E380 /* Constants.m in Sources */,
 				91F0CC071730154E008B5B34 /* User+Helper.m in Sources */,
 				91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */,
 				91D03F091731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
@@ -3169,6 +3176,7 @@
 				1C38257C187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */,
 				91F0CC00172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
 				91C4444818576B6F00A8F438 /* Frame.m in Sources */,
+				910F5BF5188832920069E380 /* Constants.m in Sources */,
 				91F0CC051730154E008B5B34 /* User+Helper.m in Sources */,
 				91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */,
 				91D03F071731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,

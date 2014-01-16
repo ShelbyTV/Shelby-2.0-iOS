@@ -167,15 +167,6 @@
     [self.masterDelegate openLikersViewForVideo:video withLikers:likers];
 }
 
-- (void)shareVideoFrame:(Frame *)videoFrame
-{
-    // Might decide to move this to the brain, but for now, leaving here.
-    SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:videoFrame fromViewController:self atRect:CGRectZero];
-    [shareController shareWithCompletionHandler:^(BOOL completed) {
-        // do stuff!;
-    }];
-}
-
 - (void)loginUser
 {
     [self.masterDelegate presentUserLogin];

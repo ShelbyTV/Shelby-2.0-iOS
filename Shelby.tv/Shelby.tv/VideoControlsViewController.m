@@ -354,13 +354,25 @@
 }
 
 - (IBAction)likeTapped:(id)sender {
-    [self.delegate videoControlsLikeCurrentVideo:self];
-    [self updateViewForCurrentEntity];
+    if (self.currentEntity) {
+        [self.delegate videoControlsLikeCurrentVideo:self];
+        [self updateViewForCurrentEntity];
+    }
 }
 
 - (IBAction)unlikeTapped:(id)sender {
-    [self.delegate videoControlsUnlikeCurrentVideo:self];
-    [self updateViewForCurrentEntity];
+    if (self.currentEntity) {
+        [self.delegate videoControlsUnlikeCurrentVideo:self];
+        [self updateViewForCurrentEntity];
+    }
+}
+
+- (IBAction)shareTapped:(id)sender {
+    //iPad only right now
+    if (self.currentEntity &&
+        [self.delegate respondsToSelector:@selector(videoControlsShareCurrentVideo:)]) {
+        [self.delegate videoControlsShareCurrentVideo:self];
+    }
 }
 
 #pragma mark - VideoPlaybackDelegate

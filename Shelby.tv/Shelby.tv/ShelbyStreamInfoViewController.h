@@ -14,8 +14,6 @@
 @protocol ShelbyStreamInfoProtocol <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
-- (void)userLikedVideoFrame:(Frame *)videoFrame;
-- (void)shareVideoFrame:(Frame *)videoFrame;
 @end
 
 @interface ShelbyStreamInfoViewController : UIViewController <ShelbyStreamEntryProtocol, UITableViewDataSource, UITableViewDelegate>

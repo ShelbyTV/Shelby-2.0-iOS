@@ -32,14 +32,14 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 @class VideoControlsViewController;
 
 @protocol VideoControlsDelegate <NSObject>
-
 - (void)videoControlsPlayCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct;
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControlsUnlikeCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControls:(VideoControlsViewController *)vcvc isScrubbing:(BOOL)isScrubbing;
-
+@optional
+- (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc;
 @end
 
 @interface VideoControlsViewController : ShelbyViewController<VideoPlaybackDelegate>

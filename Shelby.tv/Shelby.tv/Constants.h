@@ -26,6 +26,8 @@
 //#define kShelbyNotificationUserSignupDidSucceed             @"User Signup Succeed"
 //#define kShelbyNotificationUserSignupDidFail                @"User Signup Failed"
 #define kShelbyNotificationFetchingOlderVideosFailed        @"Fetching Older Videos Failed"
+extern NSString * const kShelbyWillPresentModalViewNotification;
+extern NSString * const kShelbyDidDismissModalViewNotification;
 
 /// Colors - deprecated
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]

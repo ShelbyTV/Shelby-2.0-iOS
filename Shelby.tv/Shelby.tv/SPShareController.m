@@ -133,6 +133,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         if (DEVICE_IPAD) {
             shelbyShare.modalPresentationStyle = UIModalPresentationFormSheet;
         }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyWillPresentModalViewNotification object:self];
         [self.viewController presentViewController:shelbyShare animated:YES completion:nil];
         if (DEVICE_IPAD) {
             shelbyShare.view.superview.bounds = CGRectMake(0, 0, 600, 350);
@@ -172,8 +173,10 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyiOSNativeShareCancelled object:nil];
         }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyDidDismissModalViewNotification object:self];
     }];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyWillPresentModalViewNotification object:self];
     [viewController presentViewController:activityController animated:YES completion:nil];
 }
 
@@ -186,6 +189,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         if (self.completionHandler) {
             self.completionHandler(completed);
         }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyDidDismissModalViewNotification object:self];
         
 //        if (completed) {
 //            [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
@@ -202,6 +206,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 //                                                       animated:YES];
 //        }
 //    } else {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyWillPresentModalViewNotification object:self];
     [viewController presentViewController:activityController animated:YES completion:nil];
 //    }
 }
