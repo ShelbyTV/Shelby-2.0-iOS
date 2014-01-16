@@ -60,6 +60,8 @@
     self.userName.text = self.user.name;
     self.userNickname.text = self.user.nickname;
     
+    self.title = self.user.nickname;
+    
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.user avatarURL]];
     __weak ShelbyUserInfoViewController *weakSelf = self;
     [self.userAvatar setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
