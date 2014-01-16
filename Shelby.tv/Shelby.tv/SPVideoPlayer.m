@@ -9,6 +9,7 @@
 #import "SPVideoPlayer.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import "AFNetworking.h"
 #import "ShelbyAPIClient.h"
 #import "ShelbyErrorUtility.h"
 #import "SPVideoDownloader.h"
@@ -33,6 +34,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) UIActivityIndicatorView *videoLoadingIndicator;
+@property (nonatomic, strong) UIImageView *thumbnailImageView;
 
 @property (nonatomic) AVPlayer *player;
 //on reset, this is set to NO which prevents from loading (is reset by -prepareFor...Playback)
@@ -85,6 +87,37 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     self.isPlayable = NO;
     self.isPlaying = NO;
     self.shouldAutoplay = NO;
+    
+    if (DEVICE_IPAD) {
+        //iPad has thunbnail overlay
+        self.thumbnailImageView = [UIImageView new];
+        self.thumbnailImageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.thumbnailImageView.clipsToBounds = YES;
+        [self.view addSubview:self.thumbnailImageView];
+        self.thumbnailImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=1)-[thumb(500)]-(>=1)-|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"thumb":self.thumbnailImageView}]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=1)-[thumb(250)]-(>=1)-|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"thumb":self.thumbnailImageView}]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.thumbnailImageView
+                                                              attribute:NSLayoutAttributeCenterX
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeCenterX
+                                                             multiplier:1.0
+                                                               constant:0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.thumbnailImageView
+                                                              attribute:NSLayoutAttributeCenterY
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeCenterY
+                                                             multiplier:1.0
+                                                               constant:0]];
+    }
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -145,6 +178,9 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         self.playerLayer.position = CGPointMake(self.view.frame.size.width/2.f, self.view.frame.size.height/2.f);
 
         [self.view.layer addSublayer:self.playerLayer];
+        if (DEVICE_IPAD) {
+            self.playerLayer.hidden = YES;
+        }
 
         if(CMTIME_IS_VALID(self.lastPlayheadPosition)){
             [self.player seekToTime:self.lastPlayheadPosition];
@@ -152,6 +188,12 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     }
     
     self.isPlayable = YES;
+    
+    if (DEVICE_IPAD) {
+        //iPad has a thumbnail overlay
+        [self.view addSubview:self.thumbnailImageView];
+        [self tryMaxResThumbnail];
+    }
 }
 
 - (void)playerItemReplacedWith:(AVPlayerItem *)newPlayerItem
@@ -351,6 +393,8 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         self.player = nil;
 
         _lastPlaybackUpdateIntervalEnd = CMTimeMake(0, NSEC_PER_MSEC);
+        
+        self.thumbnailImageView.alpha = 1.f;
     }
 }
 
@@ -358,7 +402,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (BOOL)shouldBePlaying
 {
-    return self.isPlayable && (self.isPlaying || self.shouldAutoplay);
+    return self.canBecomePlayable && (self.isPlaying || self.shouldAutoplay);
 }
 
 - (void)togglePlayback
@@ -372,6 +416,13 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)play
 {
+    if (DEVICE_IPAD && self.player.status == AVPlayerItemStatusReadyToPlay) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.playerLayer.hidden = NO;
+            self.thumbnailImageView.alpha = 0.f;
+        }];
+    }
+    
     currentPlayingVideoFrame = self.videoFrame;
     [self.player play];
     self.isPlaying = YES;
@@ -476,7 +527,16 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
 
     } else if ([keyPath isEqualToString:kShelbySPAVPlayerStatus]) {
-        if ([change[NSKeyValueChangeNewKey]  isEqual:@(AVPlayerItemStatusFailed)]) {
+        if ([change[NSKeyValueChangeNewKey] isEqual:@(AVPlayerItemStatusReadyToPlay)]) {
+            //TODO finish up
+            if (self.shouldBePlaying) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.playerLayer.hidden = NO;
+                    self.thumbnailImageView.alpha = 0.f;
+                }];
+            }
+            
+        } else if ([change[NSKeyValueChangeNewKey] isEqual:@(AVPlayerItemStatusFailed)]) {
             //XXX so far this seems to be the correct thing to do
             //    (ie. haven't seen Fail unless you have no connection)
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNoInternetConnectionNotification object:nil];
@@ -523,6 +583,33 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
                                      from:[NSString stringWithFormat:@"%01d", from]
                                        to:[NSString stringWithFormat:@"%01d", to]];
     _lastPlaybackUpdateIntervalEnd = toTime;
+}
+
+#pragma mark - Get Thumbnails Helpers
+
+- (void)tryMaxResThumbnail
+{
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.videoFrame.video maxResThumbnailURL]];
+    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest imageProcessingBlock:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        [self setThumbnailImage:image];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        [self tryNormalThumbnail];
+    }] start];
+}
+
+- (void)tryNormalThumbnail
+{
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.videoFrame.video.thumbnailURL]];
+    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest imageProcessingBlock:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        [self setThumbnailImage:image];
+    } failure:nil] start];
+}
+
+- (void)setThumbnailImage:(UIImage *)image
+{
+    self.thumbnailImageView.image = image;
+    self.thumbnailImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.thumbnailImageView.layer.borderWidth = 8.f;
 }
 
 @end

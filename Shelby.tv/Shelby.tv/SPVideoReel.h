@@ -9,6 +9,7 @@
 #import "DisplayChannel+Helper.h"
 #import "ShelbyViewController.h"
 #import "SPVideoPlayer.h"
+#import "VideoReelBackdropView.h"
 
 //notifications
 extern NSString * const kShelbyVideoReelDidChangePlaybackEntityNotification;
@@ -45,6 +46,8 @@ extern NSString * const kShelbyVideoReelChannelKey;
 @property (nonatomic, weak) UIView *airPlayView;
 @property (nonatomic, strong) DisplayChannel *channel;
 @property (nonatomic) UIButton *airPlayButton;
+//set on iPad only (we adjust state of showing yes/no)
+@property (nonatomic, strong) VideoReelBackdropView *backdropView;
 
 - (id)initWithChannel:(DisplayChannel *)channel
      andVideoEntities:(NSArray *)videoEntities

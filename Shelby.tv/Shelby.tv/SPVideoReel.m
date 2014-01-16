@@ -661,6 +661,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     if (self.currentPlayer == player) {
         [self.videoPlaybackDelegate setVideoIsPlaying:isPlaying];
+        self.backdropView.showBackdropImage = !isPlaying;
     }
 }
 

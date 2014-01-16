@@ -15,11 +15,13 @@
 #import "SPVideoExtractor.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
+#import "VideoReelBackdropView.h"
 
 NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnVideoReelNotification";
 
 @interface ShelbyVideoReelViewController ()
 @property (nonatomic, strong) SPVideoReel *videoReel;
+@property (nonatomic, strong) VideoReelBackdropView *videoReelBackdropView;
 @property (nonatomic, strong) ShelbyAirPlayController *airPlayController;
 //we track the current channel and deduped entries for when airplay takes over from video reel
 @property (nonatomic, strong) DisplayChannel *currentChannel;
@@ -49,6 +51,7 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
     self.currentlyPlayingIndexInChannel = 0;
     self.presentedModalViewCount = 0;
     
+    [self setupBackdrop];
     [self setupVideoControls];
     [self setupVideoOverlay];
     [self setupAirPlay];
@@ -104,19 +107,38 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
             [self presentVideoReelWithChannel:channel deduplicatedEntries:deduplicatedEntries atIndex:idx];
         }
         [self.videoReel scrollForPlaybackAtIndex:idx forcingPlayback:YES];
+        self.videoReelBackdropView.backdropImageEntity = deduplicatedEntries[idx];
         
     } else if ([self.airPlayController isAirPlayActive]) {
         //B) currently playing via AirPlay (simply play index requested, it has no queue)
         [self.airPlayController playEntity:deduplicatedEntries[idx]];
+        self.videoReelBackdropView.backdropImageEntity = deduplicatedEntries[idx];
         
     } else {
         //C) haven't started playing anything yet (bootup)
         [self presentVideoReelWithChannel:channel
                       deduplicatedEntries:deduplicatedEntries
                                   atIndex:idx];
+        self.videoReelBackdropView.backdropImageEntity = deduplicatedEntries[idx];
     }
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+}
+
+-(void)setupBackdrop
+{
+    self.videoReelBackdropView = [[VideoReelBackdropView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:self.videoReelBackdropView];
+    self.videoReelBackdropView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[backdrop]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"backdrop":self.videoReelBackdropView}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[backdrop]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"backdrop":self.videoReelBackdropView}]];
+    self.videoReelBackdropView.showBackdropImage = NO;
 }
 
 - (void)setupVideoControls
@@ -187,6 +209,7 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
     id<ShelbyVideoContainer> entity = userInfo[kShelbyVideoReelEntityKey];
     self.videoControlsVC.currentEntity = entity;
     self.videoOverlayView.currentEntity = entity;
+    self.videoReelBackdropView.backdropImageEntity = entity;
     self.currentlyPlayingIndexInChannel = [self.currentDeduplicatedEntries indexOfObject:entity];
 }
 
@@ -473,6 +496,9 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
         reel.delegate = self;
         reel.videoPlaybackDelegate = self.videoControlsVC;
         reel.view.frame = self.view.bounds;
+        //iPad only modifications to SPVideoReel
+        reel.view.backgroundColor = [UIColor clearColor];
+        reel.backdropView = self.videoReelBackdropView;
         reel;
     });
     
@@ -482,6 +508,9 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnVideoReelDetected:)];
     [self.videoReel addGestureRecognizer:singleTap];
+    
+    //to allow SPVideoReel controls the hidden state of backdrop image
+    self.videoReelBackdropView.showBackdropImage = YES;
 }
 
 - (void)showAirPlayViewMode:(BOOL)airplayMode
