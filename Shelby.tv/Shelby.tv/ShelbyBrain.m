@@ -886,9 +886,9 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 - (void)setCurrentUser:(User *)user
 {
     if (DEVICE_IPAD) {
-        [self.homeVC setCurrentUser:user];
-    } else {
         self.topContainerVC.currentUser = user;
+    } else {
+        [self.homeVC setCurrentUser:user];
     }
     if (user) {
         [[ShelbyDataMediator sharedInstance] syncLikes];
