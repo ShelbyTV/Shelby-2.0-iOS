@@ -6,8 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShelbyShareViewController">
             <connections>
+                <outlet property="facebookSwitch" destination="bqr-oO-M2h" id="CUv-c7-DOg"/>
                 <outlet property="message" destination="cAB-j5-akY" id="nv9-rH-gT8"/>
                 <outlet property="sendButton" destination="8Zx-d2-jU2" id="hVz-tz-P7G"/>
+                <outlet property="twitterSwitch" destination="2tm-41-SNX" id="QjH-CT-efU"/>
                 <outlet property="videoTitle" destination="JbD-7h-5MN" id="26b-At-Ok7"/>
                 <outlet property="view" destination="1" id="pqk-rK-Heu"/>
             </connections>

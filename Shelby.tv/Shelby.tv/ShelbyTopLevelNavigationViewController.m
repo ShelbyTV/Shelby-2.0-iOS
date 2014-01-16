@@ -156,12 +156,17 @@
 
 - (void)connectToFacebook
 {
-    
+    [[ShelbyDataMediator sharedInstance] userAskForFacebookPublishPermissions];
 }
 
 - (void)connectToTwitter
 {
-    
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    NSString *token = nil;
+    if (user) {
+        token = user.token;
+    }
+    [[TwitterHandler sharedInstance] authenticateWithViewController:self.navigationController withDelegate:self andAuthToken:token];
 }
 
 - (void)enablePushNotifications:(BOOL)enable

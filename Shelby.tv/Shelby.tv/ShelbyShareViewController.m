@@ -24,6 +24,9 @@
 @property (nonatomic, weak) IBOutlet UIButton *facebookButton;
 @property (nonatomic, weak) IBOutlet UIButton *twitterButton;
 
+@property (nonatomic, weak) IBOutlet UISwitch *facebookSwitch;
+@property (nonatomic, weak) IBOutlet UISwitch *twitterSwitch;
+
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
 @property (nonatomic, weak) IBOutlet UITextView *message;
 
@@ -139,27 +142,39 @@
 
 - (IBAction)toggleFacebook:(id)sender
 {
-    self.facebookCheck.hidden = !self.facebookCheck.hidden;
-    self.facebookButton.selected = !self.facebookCheck.hidden;
-    self.facebookButton.enabled = !self.facebookButton.selected;
-    
-    BOOL waitingForPermissionsNotNeeded = [self.shareController toggleSocialFacebookButton:YES selected:!self.facebookCheck.hidden];
-    
-    if (waitingForPermissionsNotNeeded) {
-        self.facebookButton.enabled = YES;
+    if (DEVICE_IPAD) {
+        if (self.facebookSwitch.on) {
+            [self.shareController toggleSocialFacebookButton:YES selected:YES];
+        }
+    } else {
+        self.facebookCheck.hidden = !self.facebookCheck.hidden;
+        self.facebookButton.selected = !self.facebookCheck.hidden;
+        self.facebookButton.enabled = !self.facebookButton.selected;
+        
+        BOOL waitingForPermissionsNotNeeded = [self.shareController toggleSocialFacebookButton:YES selected:!self.facebookCheck.hidden];
+        
+        if (waitingForPermissionsNotNeeded) {
+            self.facebookButton.enabled = YES;
+        }
     }
 }
 
 
 - (IBAction)toggleTwitter:(id)sender
 {
-    self.twitterCheck.hidden = !self.twitterCheck.hidden;
-    self.twitterButton.selected = !self.twitterCheck.hidden;
-    self.twitterButton.enabled = !self.twitterButton.selected;
-    
-    BOOL waitingForPermissionsNotNeeded = [self.shareController toggleSocialFacebookButton:NO selected:!self.twitterCheck.hidden];
-    if (waitingForPermissionsNotNeeded) {
-        self.twitterButton.enabled = YES;
+    if (DEVICE_IPAD) {
+        if (self.twitterSwitch.on) {
+            [self.shareController toggleSocialFacebookButton:NO selected:YES];
+        }
+    } else {
+        self.twitterCheck.hidden = !self.twitterCheck.hidden;
+        self.twitterButton.selected = !self.twitterCheck.hidden;
+        self.twitterButton.enabled = !self.twitterButton.selected;
+        
+        BOOL waitingForPermissionsNotNeeded = [self.shareController toggleSocialFacebookButton:NO selected:!self.twitterCheck.hidden];
+        if (waitingForPermissionsNotNeeded) {
+            self.twitterButton.enabled = YES;
+        }
     }
 }
 
@@ -221,8 +236,13 @@
 {
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
    if (user) {
-        self.facebookConnected = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] ? YES : NO;
-        self.twitterConnected = user.twitterNickname ? YES : NO;
+       if (DEVICE_IPAD) {
+           self.facebookSwitch.on = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] ? YES : NO;
+           self.twitterSwitch.on = user.twitterNickname ? YES : NO;
+       } else {
+           self.facebookConnected = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] ? YES : NO;
+           self.twitterConnected = user.twitterNickname ? YES : NO;
+       }
     } else {
         self.facebookConnected = NO;
         self.twitterConnected = NO;
