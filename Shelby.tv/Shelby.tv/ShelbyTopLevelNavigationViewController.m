@@ -120,7 +120,7 @@
         } else if (indexPath.row == 3) {
             [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.notificationCenterVC];
         } else if (indexPath.row == 4) {
-            self.settingsVC = [[SettingsViewController alloc] initWithNibName:@"SettingsView-iPhone" bundle:nil];
+            self.settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser];
             self.settingsVC.delegate = self;
             [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.settingsVC];
         }

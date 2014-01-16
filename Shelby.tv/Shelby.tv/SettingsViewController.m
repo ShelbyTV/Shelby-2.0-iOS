@@ -39,7 +39,7 @@
 
 - (id)initWithUser:(User *)user
 {
-    return [self initWithUser:user andNibName:@"SettingsView"];
+    return [self initWithUser:user andNibName:@"SettingsView-iPhone"];
 }
 
 - (id)initWithUser:(User *)user andNibName:(NSString *)nibName
