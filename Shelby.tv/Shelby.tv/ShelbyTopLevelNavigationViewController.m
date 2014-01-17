@@ -44,6 +44,8 @@
     
     self.notificationCenterVC = [[ShelbyNotificationCenterViewController alloc] initWithNibName:@"ShelbyNotificationCenterView" bundle:nil];
     self.notificationCenterVC.delegate = self;
+    
+    self.topLevelTable.backgroundColor = kShelbyColorDarkGray;
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,6 +84,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TopLevelNavigationCell" forIndexPath:indexPath];
+    cell.contentView.backgroundColor = kShelbyColorDarkGray;
+    cell.textLabel.backgroundColor = kShelbyColorDarkGray;
+    cell.textLabel.textColor = kShelbyColorWhite;
+    cell.textLabel.font = kShelbyFontH3Bold;
+    
     if (!self.currentUser) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"My Activity";
