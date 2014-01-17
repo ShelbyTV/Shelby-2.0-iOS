@@ -37,6 +37,7 @@
 {
     [super viewDidLoad];
 
+    self.streamInfoVC.view.frame = CGRectMake(self.streamInfoVC.view.frame.origin.x, self.streamInfoVC.view.frame.origin.y, self.streamInfoVC.view.frame.size.width, 459);
     [self.streamInfoVC willMoveToParentViewController:self];
     [self addChildViewController:self.streamInfoVC];
     [self.switchContainer addSubview:self.streamInfoVC.view];
