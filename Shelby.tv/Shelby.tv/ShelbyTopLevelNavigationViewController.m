@@ -145,6 +145,7 @@
         }
     }
 
+    [self.topLevelTable deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)goToFeaturedChannel
