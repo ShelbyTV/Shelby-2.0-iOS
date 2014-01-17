@@ -12,7 +12,9 @@
 
 @interface VideoOverlayView()
 @property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *userGenericImage;
 @property (weak, nonatomic) IBOutlet UILabel *userLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *likesGenericImage;
 @property (weak, nonatomic) IBOutlet UILabel *likesCountLabel;
 @end
 
@@ -42,28 +44,33 @@
     // Title
     self.videoTitleLabel.text = f.video.title;
     
-    //avatar badge + via network
-    UIImage *badgeImage;
-    NSString *viaNetwork = nil;
+    //via network
+    NSString *viaNetwork;
     if ([f typeOfFrame] == FrameTypeLightWeight) {
-        badgeImage = [UIImage imageNamed:@"avatar-badge-heart"];
     } else if ([f.creator isNonShelbyFacebookUser]) {
-        badgeImage = [UIImage imageNamed:@"avatar-badge-facebook"];
         viaNetwork = @"facebook";
     } else if ([f.creator isNonShelbyTwitterUser]) {
-        badgeImage = [UIImage imageNamed:@"avatar-badge-twitter"];
         viaNetwork = @"twitter";
     } else {
-        badgeImage = nil;
+        viaNetwork = nil;
     }
-    
-    //TODO: show the badge (or kill it)
     
     //user
     self.userLabel.attributedText = [self usernameStringFor:f withNetwork:viaNetwork];
     
     //likes
-    self.likesCountLabel.text = [NSString stringWithFormat:@"%i likes", [f.video.trackedLikerCount intValue]];
+    if ([f.video.trackedLikerCount intValue] == 0) {
+        self.likesCountLabel.hidden = YES;
+        self.likesGenericImage.hidden = YES;
+    } else {
+        self.likesCountLabel.hidden = NO;
+        self.likesGenericImage.hidden = NO;
+    }
+    if ([f.video.trackedLikerCount intValue] == 1) {
+        self.likesCountLabel.text = @"1 Like";
+    } else if ([f.video.trackedLikerCount intValue] > 1) {
+        self.likesCountLabel.text = [NSString stringWithFormat:@"%i Likes", [f.video.trackedLikerCount intValue]];
+    }
 }
 
 - (NSAttributedString *)usernameStringFor:(Frame *)f withNetwork:(NSString *)viaNetwork
