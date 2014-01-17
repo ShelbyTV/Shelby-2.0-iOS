@@ -11,6 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "User+Helper.h"
 #import "Video.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ShelbyStreamEntryCell()
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
@@ -173,4 +174,13 @@
     [self.delegate openLikersViewForVideo:self.videoFrame.video withLikers:self.likers];
 }
 
+- (void)setSelected:(BOOL)selected
+{
+    if (selected) {
+        self.layer.borderColor = kShelbyColorGreen.CGColor;
+        self.layer.borderWidth = 5;
+    } else {
+        self.layer.borderWidth = 0;
+    }
+}
 @end

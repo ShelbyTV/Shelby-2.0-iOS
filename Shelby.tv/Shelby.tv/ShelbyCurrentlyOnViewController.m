@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyCurrentlyOnViewController.h"
+#import "AFNetworking.h"
 #import "DisplayChannel+Helper.h"
 //TODO Refactor kShelbyVideoReelDidChangePlaybackEntityNotification out of SPVideoReel.h?
 #import "SPVideoReel.h"
@@ -14,7 +15,8 @@
 
 @interface ShelbyCurrentlyOnViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
-
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+@property (strong, nonatomic) id<ShelbyVideoContainer> currentEntity;
 @end
 
 @implementation ShelbyCurrentlyOnViewController
@@ -46,10 +48,25 @@
 - (void)playbackEntityDidChangeNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    //DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
-    id<ShelbyVideoContainer> entity = userInfo[kShelbyVideoReelEntityKey];
+    self.currentEntity = userInfo[kShelbyVideoReelEntityKey];
 
-    self.videoTitleLabel.text = [entity containedVideo].title;
+    self.videoTitleLabel.text = [self.currentEntity containedVideo].title;
+    [self tryNormalThumbnailForCurrentEntity];
+}
+
+- (void)tryNormalThumbnailForCurrentEntity
+{
+    id<ShelbyVideoContainer> entityRequested = self.currentEntity;
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[self.currentEntity containedVideo].thumbnailURL]];
+    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest imageProcessingBlock:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        if (self.currentEntity == entityRequested) {
+            self.thumbnailImageView.image = image;
+        } else {
+            //currently on changed
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        //do anything?
+    }] start];
 }
 
 @end
