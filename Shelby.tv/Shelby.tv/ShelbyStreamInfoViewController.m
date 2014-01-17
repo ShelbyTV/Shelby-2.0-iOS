@@ -30,6 +30,8 @@
 @property (nonatomic, assign) CGFloat activationPointOfCurrentLoadMoreRequest;
 //sharing
 @property (nonatomic, strong) SPShareController *shareController;
+
+@property (nonatomic, strong) ShelbyStreamEntryCell *selectedCell;
 @end
 
 @implementation ShelbyStreamInfoViewController
@@ -143,16 +145,23 @@
     } else if ([streamEntry isKindOfClass:[Frame class]]) {
         videoFrame = (Frame *)streamEntry;
     }
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.videoFrame = videoFrame;
     cell.delegate = self;
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ShelbyStreamEntryCell *cell = (ShelbyStreamEntryCell *)[tableView cellForRowAtIndexPath:indexPath];
+    cell.selected = YES;
+    
+    if (self.selectedCell) {
+        self.selectedCell.selected = NO;
+    }
+    self.selectedCell = cell;
+    
     [self.videoReelVC playChannel:self.displayChannel
           withDeduplicatedEntries:self.deduplicatedEntries
                           atIndex:indexPath.row];
