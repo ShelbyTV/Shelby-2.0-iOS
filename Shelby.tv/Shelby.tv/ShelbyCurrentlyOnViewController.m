@@ -37,6 +37,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
                                                  name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+    self.view.alpha = 0.f;
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,6 +53,11 @@
 
     self.videoTitleLabel.text = [self.currentEntity containedVideo].title;
     [self tryNormalThumbnailForCurrentEntity];
+    
+    //first time entity is set, we need to become visible
+    [UIView animateWithDuration:0.5 animations:^{
+        self.view.alpha = 1.f;
+    }];
 }
 
 - (void)tryNormalThumbnailForCurrentEntity

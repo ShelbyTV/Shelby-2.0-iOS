@@ -15,9 +15,11 @@
 
 @interface ShelbyStreamEntryCell()
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
+@property (nonatomic, weak) IBOutlet UIImageView *currentlyOn;
 @property (nonatomic, weak) IBOutlet UIImageView *videoThumbnail;
 @property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, weak) IBOutlet UILabel *description;
+@property (nonatomic, weak) IBOutlet UILabel *detailNoLikersLabel;
 @property (nonatomic, weak) IBOutlet UIView *likersView;
 @property (nonatomic, weak) IBOutlet UIButton *likeButton;
 @property (nonatomic, weak) IBOutlet UIButton *unlikeButton;
@@ -76,9 +78,8 @@
 //    [self.videoFrame addObserver:self forKeyPath:@"upvoters" options:NSKeyValueObservingOptionNew context:nil];
     if ([self.videoFrame.upvoters count]) {
         [self processLikersAndSharers];
-        
-        [self updateLikersAndSharersVisuals];
     }
+    [self updateLikersAndSharersVisuals];
     
     self.videoTitle.text = self.videoFrame.video.title;
     NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
@@ -130,19 +131,18 @@
     }
     
     if ([self.likers count]) {
-        //        self.detailNoLikersLabel.hidden = YES;
+        self.detailNoLikersLabel.hidden = YES;
         for (NSUInteger i = 0; i < MIN([self.likers count], [self.likerImageViews count]); i++) {
             User *liker = self.likers[i];
             [((UIImageView *)self.likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
         }
     } else if ([self.videoFrame.video.trackedLikerCount intValue]) {
-        //        self.detailNoLikersLabel.hidden = NO;
-        //        self.detailNoLikersLabel.text = @"See all who liked this...";
+        self.detailNoLikersLabel.hidden = NO;
+        self.detailNoLikersLabel.text = @"See all who liked this...";
     } else {
-        //        self.detailNoLikersLabel.hidden = NO;
-        //        self.detailNoLikersLabel.text = @"Be the first to like this!";
+        self.detailNoLikersLabel.hidden = NO;
+        self.detailNoLikersLabel.text = @"Be the first to like this!";
     }
-
 }
 
 - (IBAction)shareVideo:(id)sender
@@ -179,8 +179,10 @@
     if (selected) {
         self.layer.borderColor = kShelbyColorGreen.CGColor;
         self.layer.borderWidth = 5;
+        self.currentlyOn.hidden = NO;
     } else {
         self.layer.borderWidth = 0;
+        self.currentlyOn.hidden = YES;
     }
 }
 @end

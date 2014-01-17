@@ -492,7 +492,7 @@
             self.separator.hidden = NO;
             if (DEVICE_IPAD) {
                 [self setIpadSeparatorViewsAlpha:1.0f];
-                self.controlsView.backgroundColor = kShelbyColorDarkGray;
+                self.controlsView.backgroundColor = kShelbyColorVeryDarkGray;
             }
             break;
         case VideoControlsDisplayHiddenForIPadFullScreen:
