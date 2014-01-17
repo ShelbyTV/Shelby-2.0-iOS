@@ -154,8 +154,8 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </view>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="lbe-qQ-nS2">
-                                                    <rect key="frame" x="10" y="20" width="300" height="40"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="275" translatesAutoresizingMaskIntoConstraints="NO" id="lbe-qQ-nS2">
+                                                    <rect key="frame" x="10" y="20" width="275" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -234,9 +234,14 @@
                                                         <action selector="openLikersView:" destination="Ctu-El-3f2" eventType="touchUpInside" id="AwF-ch-rCd"/>
                                                     </connections>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="currently-large" translatesAutoresizingMaskIntoConstraints="NO" id="VQG-S0-D65">
+                                                    <rect key="frame" x="282" y="8" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="currentlyOn" destination="VQG-S0-D65" id="uQL-r7-kuZ"/>
                                             <outlet property="description" destination="LMM-Qu-KZy" id="ruE-uw-yhL"/>
                                             <outlet property="detailNoLikersLabel" destination="aK6-7g-ADU" id="GWs-Jy-mht"/>
                                             <outlet property="likeButton" destination="4do-PM-WFN" id="dKi-WL-SYc"/>
@@ -489,6 +494,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="currently-large" width="30" height="30"/>
         <image name="currently-on-thumb-overlay" width="18" height="18"/>
         <image name="like-card" width="22" height="20"/>
         <image name="like-card-on" width="22" height="20"/>

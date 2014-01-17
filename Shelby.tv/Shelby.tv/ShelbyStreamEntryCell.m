@@ -15,6 +15,7 @@
 
 @interface ShelbyStreamEntryCell()
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
+@property (nonatomic, weak) IBOutlet UIImageView *currentlyOn;
 @property (nonatomic, weak) IBOutlet UIImageView *videoThumbnail;
 @property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, weak) IBOutlet UILabel *description;
@@ -178,8 +179,10 @@
     if (selected) {
         self.layer.borderColor = kShelbyColorGreen.CGColor;
         self.layer.borderWidth = 5;
+        self.currentlyOn.hidden = NO;
     } else {
         self.layer.borderWidth = 0;
+        self.currentlyOn.hidden = YES;
     }
 }
 @end
