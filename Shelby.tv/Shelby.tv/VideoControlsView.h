@@ -35,10 +35,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *nonplaybackUnlikeButton;
 
 
-//---overlay
+//---additional elements
 @property (weak, nonatomic) IBOutlet UIView *overlay;
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
-// Adding a view? Be sure to update the controllers -viewDidLoad
+@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *iPadSeparatorViews;
 
 - (void)positionScrubheadForPercent:(CGFloat)pct;
 - (void)positionScrubheadForTouch:(UITouch *)touch;
