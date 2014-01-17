@@ -46,6 +46,7 @@ extern NSString * const kShelbyDidDismissModalViewNotification;
 #define kShelbyColorLightGray                               [UIColor colorWithHex:@"aaaaaa" andAlpha:1.0f]
 #define kShelbyColorMediumGray                              [UIColor colorWithHex:@"555555" andAlpha:1.0f]
 #define kShelbyColorDarkGray                                [UIColor colorWithHex:@"333333" andAlpha:1.0f]
+#define kShelbyColorVeryDarkGray                            [UIColor colorWithHex:@"212121" andAlpha:1.0f]
 #define kShelbyColorGreen                                   [UIColor colorWithHex:@"6fbe47" andAlpha:1.0f]
 #define kShelbyColorTwitterBlue                             [UIColor colorWithHex:@"2ba9e1" andAlpha:1.0f]
 #define kShelbyColorFacebookBlue                            [UIColor colorWithHex:@"3b5998" andAlpha:1.0f]
