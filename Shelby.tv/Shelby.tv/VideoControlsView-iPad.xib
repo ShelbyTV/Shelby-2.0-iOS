@@ -10,16 +10,16 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view alpha="0.89999999999999991" contentMode="scaleToFill" id="1" customClass="VideoControlsView">
-            <rect key="frame" x="0.0" y="0.0" width="687" height="100"/>
+        <view contentMode="scaleToFill" id="1" customClass="VideoControlsView">
+            <rect key="frame" x="0.0" y="0.0" width="687" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Od-uW-uSl" userLabel="PlayPauseButton">
-                    <rect key="frame" x="20" y="33" width="28" height="34"/>
+                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="28" id="dtN-GA-ugF"/>
-                        <constraint firstAttribute="height" constant="34" id="wGy-aN-d4Z"/>
+                        <constraint firstAttribute="width" constant="60" id="dtN-GA-ugF"/>
+                        <constraint firstAttribute="height" constant="60" id="wGy-aN-d4Z"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                     <state key="normal" image="pause.png">
@@ -34,17 +34,17 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1RZ-fh-4Ar" userLabel="airPlayView">
-                    <rect key="frame" x="441" y="38" width="38" height="23"/>
+                    <rect key="frame" x="499" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.98668005520000002" green="0.37692075400000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="23" id="2KH-cN-r6b"/>
-                        <constraint firstAttribute="width" constant="38" id="RJu-2b-Wx1"/>
+                        <constraint firstAttribute="height" constant="60" id="2KH-cN-r6b"/>
+                        <constraint firstAttribute="width" constant="60" id="RJu-2b-Wx1"/>
                     </constraints>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="00:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lIL-ec-drI" userLabel="current time Label - 00:00:00">
-                    <rect key="frame" x="56" y="41" width="47" height="18"/>
+                    <rect key="frame" x="60" y="21" width="47" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="47" id="z2M-Vs-BWa"/>
@@ -55,7 +55,7 @@
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-00:00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vvc-Q4-lWi" userLabel="duration Label - -00:00:00">
-                    <rect key="frame" x="382" y="41" width="51" height="18"/>
+                    <rect key="frame" x="440" y="21" width="51" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="51" id="bHo-jb-DDl"/>
@@ -66,7 +66,7 @@
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </label>
                 <progressView opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mrq-Jq-azG" userLabel="scrub track / progress view">
-                    <rect key="frame" x="111" y="49" width="263" height="2"/>
+                    <rect key="frame" x="123" y="29" width="301" height="2"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <gestureRecognizers/>
                     <color key="progressTintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,7 +76,7 @@
                     </connections>
                 </progressView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlI-Ii-uTV" userLabel="Button - scrubber">
-                    <rect key="frame" x="126" y="34" width="32" height="32"/>
+                    <rect key="frame" x="115" y="14" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                     <state key="normal" image="scrubber.png">
@@ -94,14 +94,14 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tys-dE-Ff9" userLabel="like holder">
-                    <rect key="frame" x="587" y="0.0" width="100" height="100"/>
+                    <rect key="frame" x="627" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5R-EZ-t1c">
-                            <rect key="frame" x="35" y="34" width="31" height="32"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5R-EZ-t1c" userLabel="like button">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
-                            <state key="normal" title="LIKE">
+                            <state key="normal" image="player-controls-like">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <state key="highlighted">
@@ -111,11 +111,11 @@
                                 <action selector="likeTapped:" destination="-1" eventType="touchUpInside" id="ZFT-0R-ihO"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Bi-cM-tPw">
-                            <rect key="frame" x="24" y="34" width="53" height="32"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Bi-cM-tPw" userLabel="unlike button">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
-                            <state key="normal" title="UNLIKE"/>
+                            <state key="normal" image="player-controls-unlike"/>
                             <state key="highlighted">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -123,52 +123,85 @@
                                 <action selector="unlikeTapped:" destination="-1" eventType="touchUpInside" id="XUW-Re-XgS"/>
                             </connections>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u6d-NO-cGF" userLabel="separator">
+                            <rect key="frame" x="0.0" y="0.0" width="1" height="60"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="Pd4-Oz-687"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="100" id="ZYn-z0-6JC"/>
+                        <constraint firstAttribute="trailing" secondItem="1Bi-cM-tPw" secondAttribute="trailing" id="0th-v6-bwm"/>
+                        <constraint firstAttribute="trailing" secondItem="T5R-EZ-t1c" secondAttribute="trailing" id="1Go-My-IGg"/>
+                        <constraint firstItem="u6d-NO-cGF" firstAttribute="top" secondItem="Tys-dE-Ff9" secondAttribute="top" id="6rP-Pd-lC7"/>
+                        <constraint firstAttribute="bottom" secondItem="u6d-NO-cGF" secondAttribute="bottom" id="9Za-9e-DIE"/>
+                        <constraint firstItem="u6d-NO-cGF" firstAttribute="leading" secondItem="Tys-dE-Ff9" secondAttribute="leading" id="BRE-ea-VdE"/>
+                        <constraint firstItem="T5R-EZ-t1c" firstAttribute="top" secondItem="Tys-dE-Ff9" secondAttribute="top" id="Dnq-MW-Llz"/>
+                        <constraint firstItem="1Bi-cM-tPw" firstAttribute="top" secondItem="Tys-dE-Ff9" secondAttribute="top" id="GXn-F0-5tR"/>
+                        <constraint firstAttribute="bottom" secondItem="1Bi-cM-tPw" secondAttribute="bottom" id="Re7-PZ-h6E"/>
+                        <constraint firstItem="T5R-EZ-t1c" firstAttribute="leading" secondItem="Tys-dE-Ff9" secondAttribute="leading" id="VD9-Dq-Eq8"/>
+                        <constraint firstAttribute="width" constant="60" id="ZYn-z0-6JC"/>
+                        <constraint firstItem="1Bi-cM-tPw" firstAttribute="leading" secondItem="Tys-dE-Ff9" secondAttribute="leading" id="emE-Rt-2e7"/>
+                        <constraint firstAttribute="bottom" secondItem="T5R-EZ-t1c" secondAttribute="bottom" id="xtX-Q5-VsB"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="raZ-lS-VpX" userLabel="share holder">
-                    <rect key="frame" x="487" y="0.0" width="100" height="100"/>
+                    <rect key="frame" x="567" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhG-MP-RAy">
-                            <rect key="frame" x="25" y="35" width="51" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhG-MP-RAy">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="SHARE">
+                            <state key="normal" image="player-controls-share">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="shareTapped:" destination="-1" eventType="touchUpInside" id="Hw0-Jj-N67"/>
                             </connections>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pgj-3G-foN" userLabel="separator">
+                            <rect key="frame" x="0.0" y="0.0" width="1" height="60"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="hZo-z2-SQ4"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="100" id="IwP-Re-YE7"/>
+                        <constraint firstAttribute="width" constant="60" id="IwP-Re-YE7"/>
+                        <constraint firstItem="HhG-MP-RAy" firstAttribute="leading" secondItem="raZ-lS-VpX" secondAttribute="leading" id="KmR-av-DDF"/>
+                        <constraint firstItem="pgj-3G-foN" firstAttribute="leading" secondItem="raZ-lS-VpX" secondAttribute="leading" id="Lok-Vp-t0q"/>
+                        <constraint firstAttribute="bottom" secondItem="HhG-MP-RAy" secondAttribute="bottom" id="SAS-BS-Anz"/>
+                        <constraint firstItem="pgj-3G-foN" firstAttribute="top" secondItem="raZ-lS-VpX" secondAttribute="top" id="Shp-OE-L7I"/>
+                        <constraint firstAttribute="bottom" secondItem="pgj-3G-foN" secondAttribute="bottom" id="TAO-xl-she"/>
+                        <constraint firstAttribute="trailing" secondItem="HhG-MP-RAy" secondAttribute="trailing" id="iZK-yv-Apq"/>
+                        <constraint firstItem="HhG-MP-RAy" firstAttribute="top" secondItem="raZ-lS-VpX" secondAttribute="top" id="mP7-kE-CeU"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="0Od-uW-uSl" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="3Ap-1y-owh"/>
+                <constraint firstItem="0Od-uW-uSl" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="3Ap-1y-owh"/>
                 <constraint firstAttribute="centerY" secondItem="1RZ-fh-4Ar" secondAttribute="centerY" id="8TJ-XO-KE9"/>
-                <constraint firstAttribute="bottom" secondItem="Vvc-Q4-lWi" secondAttribute="bottom" constant="41" id="9Kb-Dz-8Nz"/>
                 <constraint firstItem="raZ-lS-VpX" firstAttribute="leading" secondItem="1RZ-fh-4Ar" secondAttribute="trailing" constant="8" id="CTL-is-geQ"/>
                 <constraint firstAttribute="centerY" secondItem="0Od-uW-uSl" secondAttribute="centerY" id="J7o-oy-trg"/>
                 <constraint firstAttribute="centerY" secondItem="lIL-ec-drI" secondAttribute="centerY" id="KF6-Xt-qDP"/>
-                <constraint firstItem="Vvc-Q4-lWi" firstAttribute="leading" secondItem="Mrq-Jq-azG" secondAttribute="trailing" constant="8" symbolic="YES" id="McP-7Q-UCG"/>
-                <constraint firstItem="Tys-dE-Ff9" firstAttribute="top" secondItem="1" secondAttribute="top" id="QsX-ST-WwG"/>
-                <constraint firstItem="raZ-lS-VpX" firstAttribute="top" secondItem="1" secondAttribute="top" id="UrG-70-K43"/>
-                <constraint firstAttribute="bottom" secondItem="raZ-lS-VpX" secondAttribute="bottom" id="Y10-5Y-icK"/>
-                <constraint firstItem="Mrq-Jq-azG" firstAttribute="leading" secondItem="lIL-ec-drI" secondAttribute="trailing" constant="8" id="ZPe-Pk-5uP"/>
+                <constraint firstItem="Vvc-Q4-lWi" firstAttribute="leading" secondItem="Mrq-Jq-azG" secondAttribute="trailing" constant="16" id="McP-7Q-UCG"/>
+                <constraint firstAttribute="bottom" secondItem="Tys-dE-Ff9" secondAttribute="bottom" id="QYh-tr-rnX"/>
+                <constraint firstAttribute="bottom" secondItem="raZ-lS-VpX" secondAttribute="bottom" id="WN9-EL-Y1j"/>
+                <constraint firstAttribute="centerY" secondItem="Vvc-Q4-lWi" secondAttribute="centerY" id="XXs-h0-w5h"/>
+                <constraint firstItem="Mrq-Jq-azG" firstAttribute="leading" secondItem="lIL-ec-drI" secondAttribute="trailing" constant="16" id="ZPe-Pk-5uP"/>
                 <constraint firstAttribute="trailing" secondItem="Tys-dE-Ff9" secondAttribute="trailing" id="ajA-lu-hJn"/>
+                <constraint firstItem="Tys-dE-Ff9" firstAttribute="top" secondItem="1" secondAttribute="top" id="bkp-Ki-xnN"/>
                 <constraint firstAttribute="centerY" secondItem="Mrq-Jq-azG" secondAttribute="centerY" id="eL9-Ci-Yhy"/>
-                <constraint firstAttribute="bottom" secondItem="Tys-dE-Ff9" secondAttribute="bottom" id="eaM-EA-aXI"/>
-                <constraint firstItem="Vvc-Q4-lWi" firstAttribute="top" secondItem="1" secondAttribute="top" constant="41" id="mYe-Sd-xDV"/>
-                <constraint firstItem="lIL-ec-drI" firstAttribute="leading" secondItem="0Od-uW-uSl" secondAttribute="trailing" constant="8" id="pgX-It-TzG"/>
+                <constraint firstItem="lIL-ec-drI" firstAttribute="leading" secondItem="0Od-uW-uSl" secondAttribute="trailing" id="pgX-It-TzG"/>
+                <constraint firstItem="raZ-lS-VpX" firstAttribute="top" secondItem="1" secondAttribute="top" id="w8J-8D-MEv"/>
                 <constraint firstItem="1RZ-fh-4Ar" firstAttribute="leading" secondItem="Vvc-Q4-lWi" secondAttribute="trailing" constant="8" id="ygn-lc-7lc"/>
                 <constraint firstItem="Tys-dE-Ff9" firstAttribute="leading" secondItem="raZ-lS-VpX" secondAttribute="trailing" id="zMq-FE-MMd"/>
             </constraints>
@@ -186,6 +219,8 @@
                 <outlet property="scrubheadButton" destination="TlI-Ii-uTV" id="cdG-fp-iOK"/>
                 <outlet property="unlikeButton" destination="1Bi-cM-tPw" id="YaX-XQ-LS8"/>
                 <outletCollection property="gestureRecognizers" destination="zc4-gh-gXH" appends="YES" id="toN-da-KWg"/>
+                <outletCollection property="iPadSeparatorViews" destination="pgj-3G-foN" id="NtT-pF-1uH"/>
+                <outletCollection property="iPadSeparatorViews" destination="u6d-NO-cGF" id="wlD-Od-jQR"/>
             </connections>
         </view>
         <tapGestureRecognizer id="pLZ-L7-ahs" userLabel="scrubber - Tap Gesture Recognizer">
@@ -201,6 +236,9 @@
     </objects>
     <resources>
         <image name="pause.png" width="14" height="16"/>
+        <image name="player-controls-like" width="27" height="24"/>
+        <image name="player-controls-share" width="21" height="28"/>
+        <image name="player-controls-unlike" width="22" height="20"/>
         <image name="scrubber.png" width="32" height="32"/>
     </resources>
 </document>

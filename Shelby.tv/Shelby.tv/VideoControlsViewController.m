@@ -200,7 +200,7 @@
     if (DEVICE_IPAD) {
         if (airplayVisible) {
             //TODO iPad: get rid of magic numbers with final layout
-            self.controlsView.iPadAirPlayViewWidthConstraint.constant = 23;
+            self.controlsView.iPadAirPlayViewWidthConstraint.constant = 60;
         } else {
             self.controlsView.iPadAirPlayViewWidthConstraint.constant = 0;
         }
@@ -491,18 +491,21 @@
             self.controlsView.overlay.hidden = NO;
             self.separator.hidden = NO;
             if (DEVICE_IPAD) {
-                self.controlsView.backgroundColor = [UIColor blackColor];
+                [self setIpadSeparatorViewsAlpha:1.0f];
+                self.controlsView.backgroundColor = kShelbyColorDarkGray;
             }
             break;
         case VideoControlsDisplayHiddenForIPadFullScreen:
             [self setPlaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setIpadSeparatorViewsAlpha:0.0];
             self.controlsView.backgroundColor = [UIColor clearColor];
             break;
         case VideoControlsDisplayShowingForIPadFullScreen:
             [self setPlaybackActionViewsAlpha:1.0 userInteractionEnabled:YES];
             [self setPlaybackControlViewsAlpha:1.0 userInteractionEnabled:YES];
-            self.controlsView.backgroundColor = [UIColor blackColor];
+            [self setIpadSeparatorViewsAlpha:1.0f];
+            self.controlsView.backgroundColor = kShelbyColorDarkGray;
             break;
     }
 }
@@ -528,6 +531,13 @@
     for (UIView *v in self.nonplaybackActionViews) {
         v.alpha = a;
         v.userInteractionEnabled = interactionEnabled;
+    }
+}
+
+- (void)setIpadSeparatorViewsAlpha:(CGFloat)a
+{
+    for (UIView *v in self.controlsView.iPadSeparatorViews) {
+        v.alpha = a;
     }
 }
 

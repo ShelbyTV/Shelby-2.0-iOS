@@ -152,7 +152,7 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"controls":self.videoControlsVC.view}]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(100)]|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(60)]|"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"controls":self.videoControlsVC.view}]];
