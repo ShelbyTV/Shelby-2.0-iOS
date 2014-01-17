@@ -7,6 +7,8 @@
 //
 
 #import "ShelbyNavigationViewController.h"
+#import "Dashboard.h"
+#import "Roll.h"
 #import "ShelbyTopLevelNavigationViewController.h"
 
 @interface ShelbyNavigationViewController ()
@@ -72,6 +74,8 @@
 - (void)pushViewControllerForChannel:(DisplayChannel *)channel
 {
     ShelbyStreamInfoViewController *streamInfoVC = [self setupStreamInfoViewControllerWithChannel:channel];
+    NSString *description = channel.dashboard ? channel.dashboard.displayTitle : channel.roll.displayTitle;
+    streamInfoVC.title = description;
     [self pushViewController:streamInfoVC animated:YES];
 }
 

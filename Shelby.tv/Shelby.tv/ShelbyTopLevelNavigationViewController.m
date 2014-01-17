@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
 
-    self.title = @"Settings";
+    self.title = @"Shelby TV";
     [self.topLevelTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TopLevelNavigationCell"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchNotificationEntriesDidCompletelNotification:) name:kShelbyBrainFetchNotificationEntriesDidCompleteNotification object:nil];
@@ -118,9 +118,11 @@
         } else if (indexPath.row == 2) {
             [self goToFeaturedChannel];
         } else if (indexPath.row == 3) {
+            self.notificationCenterVC.title = @"Notifications";
             [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.notificationCenterVC];
         } else if (indexPath.row == 4) {
             self.settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser];
+            self.settingsVC.title = @"Settings";
             self.settingsVC.delegate = self;
             [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.settingsVC];
         }
