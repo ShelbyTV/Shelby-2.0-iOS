@@ -17,6 +17,8 @@
 #import "User+Helper.h"
 #import "VideoReelBackdropView.h"
 
+#define OVERLAY_PEEK_TIME 5.0
+
 NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnVideoReelNotification";
 
 @interface ShelbyVideoReelViewController ()
@@ -31,6 +33,8 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
 @property (nonatomic, strong) SPShareController *shareController;
 @property (nonatomic, assign) BOOL wasPlayingBeforeModalViewWasPresented;
 @property (nonatomic, assign) NSUInteger presentedModalViewCount;
+//overlay hiding with smart delay from last interaction
+@property (nonatomic, strong) NSTimer *hidePeekingOverlayTimer;
 @end
 
 @implementation ShelbyVideoReelViewController
@@ -121,6 +125,8 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
                                   atIndex:idx];
         self.videoReelBackdropView.backdropImageEntity = deduplicatedEntries[idx];
     }
+
+    self.videoOverlayView.hidden = NO;
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
@@ -176,6 +182,7 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"overlay":self.videoOverlayView}]];
+    self.videoOverlayView.hidden = YES;
 }
 
 - (void)setupAirPlay
@@ -211,6 +218,9 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
     self.videoOverlayView.currentEntity = entity;
     self.videoReelBackdropView.backdropImageEntity = entity;
     self.currentlyPlayingIndexInChannel = [self.currentDeduplicatedEntries indexOfObject:entity];
+    
+    //peek andhide if we're in full screen mode
+    [self peekAndHideOverlay];
 }
 
 - (void)handleDidBecomeActiveNotification:(NSNotification *)notification
@@ -389,8 +399,8 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
 
 - (void)videoDidAutoadvance
 {
-    //TODO iPad TODO
-    // on iPhone this does the peek-and-hide of the overlay
+    //peek and hide if we're in fullscreen mode (otherwise overlay is still on screen)
+    [self peekAndHideOverlay];
 }
 
 - (void)userDidSwitchChannelForDirectionUp:(BOOL)up
@@ -532,6 +542,36 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
             self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
         }];
         
+    }
+}
+
+- (void)peekAndHideOverlay
+{
+    if (self.videoControlsVC.displayMode == VideoControlsDisplayHiddenForIPadFullScreen ||
+        self.videoControlsVC.displayMode == VideoControlsDisplayShowingForIPadFullScreen) {
+        //peek the basic info
+        [UIView animateWithDuration:0.5 animations:^{
+            self.videoOverlayView.alpha = 1.0;
+        }];
+        
+        //and hide it w/ delay from the last peek
+        if (self.hidePeekingOverlayTimer) {
+            [self.hidePeekingOverlayTimer invalidate];
+        }
+        self.hidePeekingOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:OVERLAY_PEEK_TIME
+                                                                        target:self
+                                                                      selector:@selector(hidePeekingOverlay) userInfo:nil
+                                                                       repeats:NO];
+    }
+}
+
+- (void)hidePeekingOverlay
+{
+    if (self.videoControlsVC.displayMode == VideoControlsDisplayHiddenForIPadFullScreen ||
+        self.videoControlsVC.displayMode == VideoControlsDisplayShowingForIPadFullScreen) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.videoOverlayView.alpha = 0.f;
+        }];
     }
 }
 
