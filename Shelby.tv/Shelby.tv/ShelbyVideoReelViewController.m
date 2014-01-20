@@ -106,11 +106,11 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
         //A) currently playing via VideReel
         if (self.videoReel.channel == channel) {
             [self.videoReel setDeduplicatedEntries:deduplicatedEntries];
+            [self.videoReel scrollForPlaybackAtIndex:idx forcingPlayback:YES];
         } else {
             [self dismissCurrentVideoReel];
             [self presentVideoReelWithChannel:channel deduplicatedEntries:deduplicatedEntries atIndex:idx];
         }
-        [self.videoReel scrollForPlaybackAtIndex:idx forcingPlayback:YES];
         self.videoReelBackdropView.backdropImageEntity = deduplicatedEntries[idx];
         
     } else if ([self.airPlayController isAirPlayActive]) {
