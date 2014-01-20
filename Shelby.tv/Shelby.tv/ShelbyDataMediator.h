@@ -62,8 +62,13 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 
 +(ShelbyDataMediator *)sharedInstance;
 
-//fetching
+//---fetching---
+// returns the channels shown to all users (ie. "featured-users channel", soon to be called "explore")
 - (void)fetchGlobalChannels;
+// returns the editorialized channel selection we provide users to allow easy following to get content
+// NB: following status for current user is included when authenticated
+- (void)fetchFeaturedChannelsWithCompletionHandler:(void (^)(NSArray *channels, NSError *error))completionHandler;
+
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel withCompletionHandler:(shelby_data_mediator_complete_block_t)completionHandler;
 - (void)fetchFramesInChannel:(DisplayChannel *)channel withCompletionHandler:(shelby_data_mediator_complete_block_t)completionHandler

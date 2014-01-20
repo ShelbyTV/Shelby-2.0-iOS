@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyTopLevelNavigationViewController.h"
+#import "BrowseChannelsTableViewController.h"
 #import "DisplayChannel+Helper.h"
 #import "ShelbyBrain.h"
 #import "ShelbyDataMediator.h"
@@ -77,7 +78,7 @@
     if (!self.currentUser) {
         return 3;
     } else {
-        return 5;
+        return 6;
     }
 }
 
@@ -93,7 +94,7 @@
         if (indexPath.row == 0) {
             cell.textLabel.text = @"My Activity";
         } else if (indexPath.row == 1) {
-            cell.textLabel.text = @"Featured";
+            cell.textLabel.text = @"Explore";
         } else {
             cell.textLabel.text = @"Login";
         }
@@ -102,8 +103,10 @@
     } else if (indexPath.row == 1) {
         cell.textLabel.text = @"My Activity";
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = @"Featured";
+        cell.textLabel.text = @"Explore";
     } else if (indexPath.row == 3) {
+        cell.textLabel.text = @"Channels";
+    } else if (indexPath.row == 4) {
         cell.textLabel.text = @"Notifications";
     } else {
         cell.textLabel.text = @"Settings";
@@ -125,9 +128,13 @@
         } else if (indexPath.row == 2) {
             [self goToFeaturedChannel];
         } else if (indexPath.row == 3) {
+            BrowseChannelsTableViewController *channelsVC = [[UIStoryboard storyboardWithName:@"BrowseChannels" bundle:nil] instantiateInitialViewController];
+            [self.navigationController pushViewController:channelsVC animated:YES];
+            
+        } else if (indexPath.row == 4) {
             self.notificationCenterVC.title = @"Notifications";
             [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.notificationCenterVC];
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == 5) {
             self.settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser];
             self.settingsVC.title = @"Settings";
             self.settingsVC.delegate = self;
