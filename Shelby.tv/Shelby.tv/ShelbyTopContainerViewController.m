@@ -76,6 +76,7 @@
     CGFloat newWidth, videoOverlaysAlpha, controlsDelay;
     CGAffineTransform navTransform;
     VideoControlsDisplayMode controlsDisplayMode;
+    BOOL hideStatusBar = NO;
     if ([self isVideoFullscreen] && self.videoReelVC.videoControlsVC.displayMode != VideoControlsDisplayShowingForIPadFullScreen) {
         newWidth = _smallscreenVideoWidth;
         navTransform = CGAffineTransformIdentity;
@@ -83,6 +84,7 @@
         controlsDisplayMode = VideoControlsDisplayActionsAndPlaybackControls;
         controlsDelay = 0.f;
     } else {
+        hideStatusBar = YES;
         newWidth = _fullscreenVideoWidth;
         navTransform = CGAffineTransformMakeScale(0.8, 0.8);
         videoOverlaysAlpha = 0.f;
@@ -102,6 +104,7 @@
         self.currentlyOnViewContainer.transform = navTransform;
         self.videoReelWidthConstraint.constant = newWidth;
         self.videoReelVC.videoOverlayView.alpha = videoOverlaysAlpha;
+        [[UIApplication sharedApplication] setStatusBarHidden:hideStatusBar];
         [self.view layoutIfNeeded];
 
     } completion:nil];
