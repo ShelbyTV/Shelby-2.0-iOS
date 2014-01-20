@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
@@ -17,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginWithFacebookButton;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+@property (weak, nonatomic) IBOutlet UILabel *orLabel;
 @end
 
 @implementation LoginViewController
@@ -62,6 +64,9 @@
     UIImage *secondaryButtonBackground = [[UIImage imageNamed:@"secondary-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
     [self.forgotPasswordButton setBackgroundImage:secondaryButtonBackground forState:UIControlStateNormal];
     [self.signupButton setBackgroundImage:secondaryButtonBackground forState:UIControlStateNormal];
+    
+    self.orLabel.layer.cornerRadius = self.orLabel.frame.size.height/2;
+    self.orLabel.layer.masksToBounds = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,6 +75,10 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    if (DEVICE_IPAD) {
+        [self.usernameField becomeFirstResponder];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated

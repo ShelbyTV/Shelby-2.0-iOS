@@ -224,13 +224,9 @@
 
 - (void)setupAppAppearanceProxies
 {
-    if (DEVICE_IPAD){
-        //nothing
-    } else {
-        //navigation bars
-        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top-nav-bkgd"] forBarMetrics:UIBarMetricsDefault];
-        [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Ubuntu-Medium" size:20.0], NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    }
+    //navigation bars
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top-nav-bkgd"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Ubuntu-Medium" size:20.0], NSForegroundColorAttributeName: [UIColor whiteColor]}];
 }
 
 - (void)setupCrashHandling
