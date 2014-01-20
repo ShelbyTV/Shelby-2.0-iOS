@@ -563,7 +563,7 @@ NSString *const kGPUImageJFAVoronoiFragmentShaderString = SHADER_STRING
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
-    for (int pass = 1; pass <= numPasses + 1; pass++) {
+    for (NSUInteger pass = 1; pass <= numPasses + 1; pass++) {
         currentPass = pass;
         [self setOutputFBO];
         

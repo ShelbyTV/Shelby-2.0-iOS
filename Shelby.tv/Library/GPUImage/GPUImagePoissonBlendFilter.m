@@ -344,7 +344,7 @@ NSString *const kGPUImagePoissonBlendFragmentShaderString = SHADER_STRING
     
     [super renderToTextureWithVertices:vertices textureCoordinates:textureCoordinates sourceTexture:sourceTexture];
     
-    for (int pass = 1; pass < self.numIterations; pass++) {
+    for (NSUInteger pass = 1; pass < self.numIterations; pass++) {
         
         if (pass % 2 == 0) {
             

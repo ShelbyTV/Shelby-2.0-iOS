@@ -262,7 +262,7 @@ NSString *const kGPUImageToneCurveFragmentShaderString = SHADER_STRING
                 
         // Convert from (0, 1) to (0, 255).
         NSMutableArray *convertedPoints = [NSMutableArray arrayWithCapacity:[sortedPoints count]];
-        for (int i=0; i<[points count]; i++){
+        for (NSUInteger i=0; i<[points count]; i++){
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
             CGPoint point = [[sortedPoints objectAtIndex:i] CGPointValue];
 #else
@@ -324,7 +324,7 @@ NSString *const kGPUImageToneCurveFragmentShaderString = SHADER_STRING
         
         // Prepare the spline points.
         NSMutableArray *preparedSplinePoints = [NSMutableArray arrayWithCapacity:[splinePoints count]];
-        for (int i=0; i<[splinePoints count]; i++) 
+        for (NSUInteger i=0; i<[splinePoints count]; i++)
         {
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
             CGPoint newPoint = [[splinePoints objectAtIndex:i] CGPointValue];

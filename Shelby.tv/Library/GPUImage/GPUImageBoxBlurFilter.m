@@ -11,7 +11,7 @@
     }
 
     // From these weights we calculate the offsets to read interpolated values from
-    NSUInteger numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), 7);
+    NSUInteger numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), (NSUInteger)7);
     
     NSMutableString *shaderString = [[NSMutableString alloc] init];
     // Header
@@ -54,7 +54,7 @@
         return kGPUImagePassthroughFragmentShaderString;
     }
 
-    NSUInteger numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), 7);
+    NSUInteger numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), (NSUInteger)7);
     NSUInteger trueNumberOfOptimizedOffsets = blurRadius / 2 + (blurRadius % 2);
     
     NSMutableString *shaderString = [[NSMutableString alloc] init];

@@ -239,8 +239,8 @@ NSString *const kGPUImageHarrisCornerDetectionFragmentShaderString = SHADER_STRI
             cornersArray[cornerStorageIndex++] = (CGFloat)(yCoordinate) / imageSize.height;
             numberOfCorners++;
             
-            numberOfCorners = MIN(numberOfCorners, 511);
-            cornerStorageIndex = MIN(cornerStorageIndex, 1021);
+            numberOfCorners = MIN(numberOfCorners, (NSUInteger)511);
+            cornerStorageIndex = MIN(cornerStorageIndex, (NSUInteger)1021);
         }
         currentByte +=4;
     }

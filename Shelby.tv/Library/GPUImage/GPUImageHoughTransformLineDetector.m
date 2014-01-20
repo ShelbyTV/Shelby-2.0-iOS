@@ -184,8 +184,8 @@
             
             numberOfLines++;
             
-            numberOfLines = MIN(numberOfLines, 1023);
-            cornerStorageIndex = MIN(cornerStorageIndex, 2040);
+            numberOfLines = MIN(numberOfLines, (NSUInteger)1023);
+            cornerStorageIndex = MIN(cornerStorageIndex, (NSUInteger)2040);
         }
         currentByte +=4;
     }
