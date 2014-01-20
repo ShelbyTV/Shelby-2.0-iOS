@@ -81,6 +81,20 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }];
 }
 
+- (void)fetchFeaturedChannelsWithCompletionHandler:(void (^)(NSArray *channels, NSError *error))completionHandler
+{
+    [ShelbyAPIClient fetchFeaturedChannelsWithBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            // doing all on main thread, seems premature to optimize here
+            NSArray *channels = [self findOrCreateChannelsForJSON:JSON inContext:[self mainThreadContext]];
+            completionHandler(channels, nil);
+        } else {
+            [self postNotificationForError:error];
+            completionHandler(nil, error);
+        }
+    }];
+}
+
 - (void)fetchAllUnsyncedLikes
 {
     DisplayChannel *likesChannel = [DisplayChannel channelForOfflineLikesInContext:[self mainThreadContext]];
@@ -1212,6 +1226,9 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         return nil;
     }
     
+    //current user for following calculations
+    User *currentUser = [User currentAuthenticatedUserInContext:context forceRefresh:NO];
+    
     NSMutableArray *resultDisplayChannels = [@[] mutableCopy];
     
     for (NSDictionary *category in categoriesDictArray) {
@@ -1226,6 +1243,16 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                     DisplayChannel *channel = [DisplayChannel channelForRollDictionary:roll
                                                                              withOrder:order
                                                                              inContext:context];
+
+                    id following = [roll objectForKey:@"following"];
+                    if (currentUser && following && [following respondsToSelector:@selector(boolValue)]) {
+                        if ([following boolValue]) {
+                            [currentUser didFollowRoll:channel.roll.rollID];
+                        } else {
+                            [currentUser didUnfollowRoll:channel.roll.rollID];
+                        }
+                    }
+                    
                     order++;
                     [resultDisplayChannels addObject:channel];
                 }
