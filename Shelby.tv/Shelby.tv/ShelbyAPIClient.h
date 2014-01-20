@@ -67,7 +67,12 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 + (void)fetchAllLikersOfVideo:(NSString *)videoID withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 // -- Channels
+// returns the channels shown to all users (ie. "featured-users channel", soon to be called "explore")
 + (void)fetchGlobalChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;
+
+// returns the editorialized channel selection we provide users to allow easy following to get content
+// NB: following status for current user is included when authenticated
++ (void)fetchFeaturedChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 + (void)fetchDashboardEntriesForDashboardID:(NSString *)dashboardID
                                  sinceEntry:(DashboardEntry *)sinceEntry

@@ -1113,6 +1113,15 @@
 		9124A66E18886E2300175A9C /* GPUImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A49018886E2300175A9C /* GPUImageView.m */; };
 		9124A66F18886E2300175A9C /* GPUImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A49018886E2300175A9C /* GPUImageView.m */; };
 		9124A67018886E2300175A9C /* GPUImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A49018886E2300175A9C /* GPUImageView.m */; };
+		9124A67B188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */; };
+		9124A67C188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */; };
+		9124A67D188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */; };
+		9124A680188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */; };
+		9124A681188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */; };
+		9124A682188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */; };
+		9124A685188DAB0F00175A9C /* BrowseChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A684188DAB0F00175A9C /* BrowseChannelCell.m */; };
+		9124A686188DAB0F00175A9C /* BrowseChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A684188DAB0F00175A9C /* BrowseChannelCell.m */; };
+		9124A687188DAB0F00175A9C /* BrowseChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A684188DAB0F00175A9C /* BrowseChannelCell.m */; };
 		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
@@ -2005,6 +2014,11 @@
 		9124A48E18886E2300175A9C /* GPUImagePicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImagePicture.m; sourceTree = "<group>"; };
 		9124A48F18886E2300175A9C /* GPUImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageView.h; sourceTree = "<group>"; };
 		9124A49018886E2300175A9C /* GPUImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageView.m; sourceTree = "<group>"; };
+		9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BrowseChannels.storyboard; sourceTree = "<group>"; };
+		9124A67E188D903100175A9C /* BrowseChannelsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseChannelsTableViewController.h; sourceTree = "<group>"; };
+		9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseChannelsTableViewController.m; sourceTree = "<group>"; };
+		9124A683188DAB0F00175A9C /* BrowseChannelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseChannelCell.h; sourceTree = "<group>"; };
+		9124A684188DAB0F00175A9C /* BrowseChannelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseChannelCell.m; sourceTree = "<group>"; };
 		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
 		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
@@ -2280,6 +2294,7 @@
 				910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */,
 				910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */,
 				1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */,
+				9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -2316,6 +2331,10 @@
 				1C3A7ED91887354C00458718 /* LoginView-iPad.xib */,
 				910F5BF818884F300069E380 /* VideoReelBackdropView.h */,
 				910F5BF918884F300069E380 /* VideoReelBackdropView.m */,
+				9124A67E188D903100175A9C /* BrowseChannelsTableViewController.h */,
+				9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */,
+				9124A683188DAB0F00175A9C /* BrowseChannelCell.h */,
+				9124A684188DAB0F00175A9C /* BrowseChannelCell.m */,
 			);
 			name = "Views - iPad";
 			sourceTree = "<group>";
@@ -3626,6 +3645,7 @@
 				1C56F13D17BABD8C00EE9206 /* Appirater.podspec in Resources */,
 				9192ED0C17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */,
 				91F16826179840FF00AF8A2E /* Login.storyboard in Resources */,
+				9124A67C188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */,
 				1CD8111317CCF6C0002FD84B /* play-airplay.png in Resources */,
 				1CDCA679179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67C179DCE190098C4E1 /* pause@2x.png in Resources */,
@@ -3747,6 +3767,7 @@
 				1C56F13E17BABD8C00EE9206 /* Appirater.podspec in Resources */,
 				9192ED0D17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */,
 				91F16827179840FF00AF8A2E /* Login.storyboard in Resources */,
+				9124A67D188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */,
 				1CD8111417CCF6C0002FD84B /* play-airplay.png in Resources */,
 				1CDCA67A179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67D179DCE190098C4E1 /* pause@2x.png in Resources */,
@@ -3894,6 +3915,7 @@
 				1CDCA698179F34BC0098C4E1 /* overlay-landscape.png in Resources */,
 				1C100DCF185F8E01002ADAF2 /* FollowNotificationViewCell.xib in Resources */,
 				1CDCA69B179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
+				9124A67B188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */,
 				1CDCA6A0179F3FB80098C4E1 /* play-standard.png in Resources */,
 				1CDCA6A3179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
 				1CDCA6A8179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
@@ -4169,6 +4191,7 @@
 				910933091743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				9124A55B18886E2300175A9C /* GPUImageLanczosResamplingFilter.m in Sources */,
 				9124A5A318886E2300175A9C /* GPUImageNonMaximumSuppressionFilter.m in Sources */,
+				9124A681188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9124A53D18886E2300175A9C /* GPUImageHistogramFilter.m in Sources */,
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
@@ -4190,6 +4213,7 @@
 				9124A5F118886E2300175A9C /* GPUImageSepiaFilter.m in Sources */,
 				914FEA7C175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
+				9124A686188DAB0F00175A9C /* BrowseChannelCell.m in Sources */,
 				91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */,
 				9124A66018886E2300175A9C /* GPUImageXYDerivativeFilter.m in Sources */,
 				1C836DDA17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
@@ -4484,6 +4508,7 @@
 				9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				9124A55C18886E2300175A9C /* GPUImageLanczosResamplingFilter.m in Sources */,
 				9124A5A418886E2300175A9C /* GPUImageNonMaximumSuppressionFilter.m in Sources */,
+				9124A682188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9124A53E18886E2300175A9C /* GPUImageHistogramFilter.m in Sources */,
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
@@ -4505,6 +4530,7 @@
 				9124A5F218886E2300175A9C /* GPUImageSepiaFilter.m in Sources */,
 				914FEA7D175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
+				9124A687188DAB0F00175A9C /* BrowseChannelCell.m in Sources */,
 				91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */,
 				9124A66118886E2300175A9C /* GPUImageXYDerivativeFilter.m in Sources */,
 				1C836DDB17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
@@ -4799,6 +4825,7 @@
 				910933081743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				9124A55A18886E2300175A9C /* GPUImageLanczosResamplingFilter.m in Sources */,
 				9124A5A218886E2300175A9C /* GPUImageNonMaximumSuppressionFilter.m in Sources */,
+				9124A680188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9124A53C18886E2300175A9C /* GPUImageHistogramFilter.m in Sources */,
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
@@ -4820,6 +4847,7 @@
 				9124A5F018886E2300175A9C /* GPUImageSepiaFilter.m in Sources */,
 				914FEA7B175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
+				9124A685188DAB0F00175A9C /* BrowseChannelCell.m in Sources */,
 				91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */,
 				9124A65F18886E2300175A9C /* GPUImageXYDerivativeFilter.m in Sources */,
 				1C836DD917F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,

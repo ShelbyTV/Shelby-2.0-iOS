@@ -59,15 +59,11 @@
         likerX += likerSharerHeight + 10;
     }
     
+    [self deselectStreamEntry];
+    
     self.likerImageViews = likerViews;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 
 - (void)setVideoFrame:(Frame *)videoFrame
 {
@@ -174,15 +170,16 @@
     [self.delegate openLikersViewForVideo:self.videoFrame.video withLikers:self.likers];
 }
 
-- (void)setSelected:(BOOL)selected
+- (void)selectStreamEntry
 {
-    if (selected) {
-        self.layer.borderColor = kShelbyColorGreen.CGColor;
-        self.layer.borderWidth = 5;
-        self.currentlyOn.hidden = NO;
-    } else {
-        self.layer.borderWidth = 0;
-        self.currentlyOn.hidden = YES;
-    }
+    self.layer.borderColor = kShelbyColorGreen.CGColor;
+    self.layer.borderWidth = 5;
+    self.currentlyOn.hidden = NO;
+}
+
+- (void)deselectStreamEntry
+{
+    self.layer.borderWidth = 0;
+    self.currentlyOn.hidden = YES;
 }
 @end

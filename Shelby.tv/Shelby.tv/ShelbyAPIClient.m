@@ -379,24 +379,31 @@ static AFHTTPClient *httpClient = nil;
 #pragma mark - Channels
 + (void)fetchGlobalChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-
-    NSString *route = nil;
-#ifdef SHELBY_ENTERPRISE
-    route = @"ipad_vertical_one";
-#else
-    route = @"ipad_standard";
-#endif
-
-//    if (!DEVICE_IPAD) {
-    route = @"iphone_standard";
-//    }
-    
-    NSDictionary *channelsParams = @{kShelbyAPIParamChannelsSegment:route
+    static NSString *segmentForGlobalChannels = @"iphone_standard";
+    NSDictionary *channelsParams = @{kShelbyAPIParamChannelsSegment:segmentForGlobalChannels
                                      };
     NSURLRequest *request = [self requestWithMethod:GET
                                             forPath:kShelbyAPIGetAllChannelsPath
                                 withQueryParameters:channelsParams
                                       shouldAddAuth:NO];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+    [operation start];
+}
+
++ (void)fetchFeaturedChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    static NSString *segmentForFeaturedChannels = @"onboarding";
+    NSDictionary *channelsParams = @{kShelbyAPIParamChannelsSegment:segmentForFeaturedChannels
+                                     };
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:kShelbyAPIGetAllChannelsPath
+                                withQueryParameters:channelsParams
+                                      shouldAddAuth:YES];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         completionBlock(JSON, nil);

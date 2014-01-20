@@ -249,7 +249,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         self.loginVC.modalPresentationStyle = UIModalPresentationFormSheet;
         self.loginVC.delegate = self;
         [self.topContainerVC presentViewController:self.loginVC animated:YES completion:^{
-            self.loginVC.view.superview.bounds = CGRectMake(0, 0, 600, 350);
         }];
     } else {
         UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];

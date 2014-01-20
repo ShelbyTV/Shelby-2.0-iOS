@@ -21,4 +21,6 @@
 @property (nonatomic, strong) Frame *videoFrame;
 @property (nonatomic, weak) id<ShelbyStreamEntryProtocol> delegate;
 
+- (void)selectStreamEntry;
+- (void)deselectStreamEntry;
 @end
