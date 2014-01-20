@@ -70,7 +70,7 @@
     // not yet re-implemented
 //    [self setupOfflineMode];
 
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:(!DEVICE_IPAD)];
     
     if ([DeviceUtilities isGTEiOS7]) {
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
