@@ -19,6 +19,8 @@
 #define NOT_LOADING_MORE -1
 #define LOAD_MORE_SPINNER_AREA_HEIGHT 100
 
+NSString * const kShelbyStreamEntryCell = @"StreamEntry";
+
 @interface ShelbyStreamInfoViewController ()
 @property (nonatomic, strong) NSArray *channelEntries;
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
@@ -31,7 +33,7 @@
 //sharing
 @property (nonatomic, strong) SPShareController *shareController;
 
-@property (nonatomic, strong) ShelbyStreamEntryCell *selectedCell;
+@property (nonatomic, strong) NSIndexPath *selectedRowIndexPath;
 @end
 
 @implementation ShelbyStreamInfoViewController
@@ -49,6 +51,7 @@
 {
     [super viewDidLoad];
 
+    self.selectedRowIndexPath = nil;
     self.channelEntries = @[];
     //refresh (need a UITableViewController to use the standard ios refresh control)
     self.entriesTableVC = [[UITableViewController alloc] init];
@@ -72,6 +75,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(fetchEntriesDidCompleteForChannelWithErrorNotification:)
                                                  name:kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playbackEntityDidChangeNotification:)
+                                                 name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,6 +100,46 @@
 }
 
 #pragma mark - Notification Handling
+- (void)playbackEntityDidChangeNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
+    if (channel != self.displayChannel) {
+        return;
+    }
+
+    id currentEntity = userInfo[kShelbyVideoReelEntityKey];
+    NSInteger row = [self.deduplicatedEntries indexOfObject:currentEntity];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    
+    self.selectedRowIndexPath = indexPath;
+    if ([[self.entriesTable indexPathsForVisibleRows] containsObject:indexPath]) {
+        [self.entriesTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+    } else {
+        [self.entriesTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+
+    [self visualizeSelectedRow:indexPath];
+}
+
+- (void)visualizeSelectedRow:(NSIndexPath *)indexPath
+{
+    ShelbyStreamEntryCell *cell = (ShelbyStreamEntryCell *)[self.entriesTable cellForRowAtIndexPath:indexPath];
+    
+    if (!cell) {
+        return;
+    }
+    
+    [self visualizeSelectedCell:cell];
+}
+
+- (void)visualizeSelectedCell:(ShelbyStreamEntryCell *)cell
+{
+    NSArray *visibleCells = [self.entriesTable visibleCells];
+    [visibleCells makeObjectsPerformSelector:@selector(deselectStreamEntry)];
+    
+    [cell selectStreamEntry];
+}
 
 - (void)fetchEntriesDidCompleteForChannelNotification:(NSNotification *)notification
 {
@@ -137,7 +184,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StreamEntry" forIndexPath:indexPath];
+    ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:kShelbyStreamEntryCell forIndexPath:indexPath];
     id streamEntry = self.deduplicatedEntries[indexPath.row];
     Frame *videoFrame = nil;
     if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
@@ -148,19 +195,19 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.videoFrame = videoFrame;
     cell.delegate = self;
+    
+    if (self.selectedRowIndexPath.row == indexPath.row) {
+        [self visualizeSelectedCell:cell];
+    }
+    
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ShelbyStreamEntryCell *cell = (ShelbyStreamEntryCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.selected = YES;
-    
-    if (self.selectedCell) {
-        self.selectedCell.selected = NO;
-    }
-    self.selectedCell = cell;
+    self.selectedRowIndexPath = indexPath;
+    [self visualizeSelectedRow:indexPath];
     
     [self.videoReelVC playChannel:self.displayChannel
           withDeduplicatedEntries:self.deduplicatedEntries
