@@ -638,6 +638,9 @@
 		9124A685188DAB0F00175A9C /* BrowseChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A684188DAB0F00175A9C /* BrowseChannelCell.m */; };
 		9124A686188DAB0F00175A9C /* BrowseChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A684188DAB0F00175A9C /* BrowseChannelCell.m */; };
 		9124A687188DAB0F00175A9C /* BrowseChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A684188DAB0F00175A9C /* BrowseChannelCell.m */; };
+		9124A68A188DDA4300175A9C /* TopLevelNavigationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A689188DDA4300175A9C /* TopLevelNavigationCell.m */; };
+		9124A68B188DDA4300175A9C /* TopLevelNavigationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A689188DDA4300175A9C /* TopLevelNavigationCell.m */; };
+		9124A68C188DDA4300175A9C /* TopLevelNavigationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A689188DDA4300175A9C /* TopLevelNavigationCell.m */; };
 		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
@@ -1210,6 +1213,8 @@
 		9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseChannelsTableViewController.m; sourceTree = "<group>"; };
 		9124A683188DAB0F00175A9C /* BrowseChannelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseChannelCell.h; sourceTree = "<group>"; };
 		9124A684188DAB0F00175A9C /* BrowseChannelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseChannelCell.m; sourceTree = "<group>"; };
+		9124A688188DDA4300175A9C /* TopLevelNavigationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopLevelNavigationCell.h; sourceTree = "<group>"; };
+		9124A689188DDA4300175A9C /* TopLevelNavigationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopLevelNavigationCell.m; sourceTree = "<group>"; };
 		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
 		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
@@ -1523,6 +1528,8 @@
 				9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */,
 				9124A683188DAB0F00175A9C /* BrowseChannelCell.h */,
 				9124A684188DAB0F00175A9C /* BrowseChannelCell.m */,
+				9124A688188DDA4300175A9C /* TopLevelNavigationCell.h */,
+				9124A689188DDA4300175A9C /* TopLevelNavigationCell.m */,
 			);
 			name = "Views - iPad";
 			sourceTree = "<group>";
@@ -2840,6 +2847,7 @@
 				1C81099316EE2CBF0030077C /* PageControl.m in Sources */,
 				1C81099716EE2CBF0030077C /* SPShareController.m in Sources */,
 				1C81099816EE2CBF0030077C /* DeviceUtilities.m in Sources */,
+				9124A68B188DDA4300175A9C /* TopLevelNavigationCell.m in Sources */,
 				1C0C7E0B185A19AD008F5506 /* ShelbySingleVideoViewController.m in Sources */,
 				1C81099916EE2CBF0030077C /* SPVideoDownloader.m in Sources */,
 				1C81099A16EE2CBF0030077C /* ImageUtilities.m in Sources */,
@@ -2996,6 +3004,7 @@
 				1C810A4916EE5EED0030077C /* PageControl.m in Sources */,
 				1C810A4D16EE5EED0030077C /* SPShareController.m in Sources */,
 				1C810A4E16EE5EED0030077C /* DeviceUtilities.m in Sources */,
+				9124A68C188DDA4300175A9C /* TopLevelNavigationCell.m in Sources */,
 				1C0C7E0C185A19AD008F5506 /* ShelbySingleVideoViewController.m in Sources */,
 				1C810A4F16EE5EED0030077C /* SPVideoDownloader.m in Sources */,
 				1C810A5016EE5EED0030077C /* ImageUtilities.m in Sources */,
@@ -3152,6 +3161,7 @@
 				1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */,
 				8E7C341A16D58252007494DF /* SPShareController.m in Sources */,
 				1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */,
+				9124A68A188DDA4300175A9C /* TopLevelNavigationCell.m in Sources */,
 				1C0C7E0A185A19AD008F5506 /* ShelbySingleVideoViewController.m in Sources */,
 				8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */,
 				1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */,

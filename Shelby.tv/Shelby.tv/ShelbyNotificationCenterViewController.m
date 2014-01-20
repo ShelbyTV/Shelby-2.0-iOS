@@ -13,6 +13,7 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface ShelbyNotificationCenterViewController ()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopSpaceConstraint;
 @property (nonatomic, weak) IBOutlet UITableView *notificationTable;
 @property (nonatomic, strong) NSMutableArray *notifications;
 @property (nonatomic, assign) NSInteger unseenNotifications;
@@ -37,6 +38,10 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
     
     [self.notificationTable registerNib:[UINib nibWithNibName:@"LikeNotificationViewCell" bundle:nil] forCellReuseIdentifier:@"LikeNotificationCell"];
     [self.notificationTable registerNib:[UINib nibWithNibName:@"FollowNotificationViewCell" bundle:nil] forCellReuseIdentifier:@"FollowNotificationCell"];
+    
+    if (DEVICE_IPAD) {
+        self.tableViewTopSpaceConstraint.constant = 0;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
