@@ -104,12 +104,16 @@
 - (void)doFollow:(DisplayChannel *)channelToFollow
 {
     [[ShelbyDataMediator sharedInstance] followRoll:channelToFollow.roll.rollID];
+    //fire and forget (although actual request will update this correctly)
+    [self.currentUser didFollowRoll:channelToFollow.roll.rollID];
     self.followCount++;
 }
 
 - (void)doUnfollow:(DisplayChannel *)channelToUnfollow
 {
     [[ShelbyDataMediator sharedInstance] unfollowRoll:channelToUnfollow.roll.rollID];
+    //fire and forget (although actual request will update this correctly)
+    [self.currentUser didUnfollowRoll:channelToUnfollow.roll.rollID];
     self.followCount--;
 }
 

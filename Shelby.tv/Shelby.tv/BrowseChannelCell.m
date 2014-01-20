@@ -31,6 +31,8 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+    
     self.followButton.backgroundColor = kShelbyColorGreen;
     self.followButton.layer.cornerRadius = self.followButton.bounds.size.height / 8.f;
     self.thumbnailImageView.layer.cornerRadius = self.thumbnailImageView.bounds.size.width / 2.f;

@@ -196,7 +196,7 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     cell.videoFrame = videoFrame;
     cell.delegate = self;
     
-    if (self.selectedRowIndexPath.row == indexPath.row) {
+    if (self.selectedRowIndexPath && self.selectedRowIndexPath.row == indexPath.row) {
         [self visualizeSelectedCell:cell];
     }
     

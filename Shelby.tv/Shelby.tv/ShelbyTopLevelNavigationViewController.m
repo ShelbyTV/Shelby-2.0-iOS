@@ -12,6 +12,7 @@
 #import "ShelbyBrain.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyNavigationViewController.h"
+#import "TopLevelNavigationCell.h"
 
 // TODO: DRY
 //NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
@@ -39,9 +40,11 @@
     [super viewDidLoad];
 
     self.title = @"Shelby TV";
-    [self.topLevelTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"TopLevelNavigationCell"];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchNotificationEntriesDidCompletelNotification:) name:kShelbyBrainFetchNotificationEntriesDidCompleteNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchNotificationEntriesDidCompletelNotification:)
+                                                 name:kShelbyBrainFetchNotificationEntriesDidCompleteNotification
+                                               object:nil];
     
     self.notificationCenterVC = [[ShelbyNotificationCenterViewController alloc] initWithNibName:@"ShelbyNotificationCenterView" bundle:nil];
     self.notificationCenterVC.delegate = self;
@@ -84,32 +87,29 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TopLevelNavigationCell" forIndexPath:indexPath];
-    cell.contentView.backgroundColor = kShelbyColorDarkGray;
-    cell.textLabel.backgroundColor = kShelbyColorDarkGray;
-    cell.textLabel.textColor = kShelbyColorWhite;
-    cell.textLabel.font = kShelbyFontH3Bold;
+    TopLevelNavigationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TopLevelNavigationCell" forIndexPath:indexPath];
     
     if (!self.currentUser) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"My Activity";
+            cell.titleLabel.text = @"My Activity";
         } else if (indexPath.row == 1) {
-            cell.textLabel.text = @"Explore";
+            cell.titleLabel.text = @"Explore";
         } else {
-            cell.textLabel.text = @"Login";
+            cell.titleLabel.text = @"Login";
         }
     } else if (indexPath.row == 0) {
-        cell.textLabel.text = @"Stream";
+        cell.titleLabel.text = @"Stream";
     } else if (indexPath.row == 1) {
-        cell.textLabel.text = @"My Activity";
+        cell.titleLabel.text = @"My Activity";
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = @"Explore";
+        cell.titleLabel.text = @"Explore";
     } else if (indexPath.row == 3) {
-        cell.textLabel.text = @"Channels";
+        cell.titleLabel.text = @"Channels";
     } else if (indexPath.row == 4) {
-        cell.textLabel.text = @"Notifications";
+        cell.titleLabel.text = @"Notifications";
+        [cell setBadge:self.notificationCenterVC.unseenNotifications];
     } else {
-        cell.textLabel.text = @"Settings";
+        cell.titleLabel.text = @"Settings";
     }
     return cell;
 }
@@ -194,7 +194,7 @@
 #pragma mark - ShelbyNotificationDelegate Methods
 - (void)unseenNotificationCountChanged
 {
-//    [self.navBarVC setUnseenNotificationCount:self.notificationCenterVC.unseenNotifications];
+    [self.topLevelTable reloadData];
 }
 
 - (void)userProfileWasTapped:(NSString *)userID
