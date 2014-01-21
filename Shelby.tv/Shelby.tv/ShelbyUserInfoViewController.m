@@ -86,4 +86,17 @@
 {
     
 }
+
+#pragma mark - ShelbyVideoContentBrowsingViewControllerProtocol
+
+- (void)scrollCurrentlyPlayingIntoView
+{
+    [self.streamInfoVC scrollCurrentlyPlayingIntoView];
+}
+
+- (DisplayChannel *)displayChannel
+{
+    return self.streamInfoVC.displayChannel;
+}
+
 @end

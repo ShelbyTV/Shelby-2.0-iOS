@@ -647,6 +647,9 @@
 		9124A69D188ED0D500175A9C /* BrowseChannelsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A69C188ED0D500175A9C /* BrowseChannelsHeaderView.m */; };
 		9124A69E188ED0D500175A9C /* BrowseChannelsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A69C188ED0D500175A9C /* BrowseChannelsHeaderView.m */; };
 		9124A69F188ED0D500175A9C /* BrowseChannelsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A69C188ED0D500175A9C /* BrowseChannelsHeaderView.m */; };
+		9124A6A2188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */; };
+		9124A6A3188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */; };
+		9124A6A4188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */; };
 		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
@@ -1224,6 +1227,8 @@
 		9124A697188ECF2100175A9C /* BrowseChannelsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseChannelsHeaderView.xib; sourceTree = "<group>"; };
 		9124A69B188ED0D500175A9C /* BrowseChannelsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseChannelsHeaderView.h; sourceTree = "<group>"; };
 		9124A69C188ED0D500175A9C /* BrowseChannelsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseChannelsHeaderView.m; sourceTree = "<group>"; };
+		9124A6A0188ED9DB00175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoContentBrowsingViewControllerProtocol.h; sourceTree = "<group>"; };
+		9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyVideoContentBrowsingViewControllerProtocol.m; sourceTree = "<group>"; };
 		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
 		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
@@ -1521,6 +1526,8 @@
 				1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */,
 				910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */,
 				910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */,
+				9124A6A0188ED9DB00175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.h */,
+				9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */,
 			);
 			name = "View Controllers - iPad";
 			sourceTree = "<group>";
@@ -2870,6 +2877,7 @@
 				1C8109A016EE2CBF0030077C /* AFHTTPClient.m in Sources */,
 				91AA342618194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B70184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
+				9124A6A3188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */,
 				1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C38259218806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
 				1C253B7D184E468C00FBE054 /* LikerCell.m in Sources */,
@@ -3028,6 +3036,7 @@
 				1C810A5616EE5EED0030077C /* AFHTTPClient.m in Sources */,
 				91AA342718194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B71184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
+				9124A6A4188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */,
 				1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C38259318806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
 				1C253B7E184E468C00FBE054 /* LikerCell.m in Sources */,
@@ -3186,6 +3195,7 @@
 				8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */,
 				91AA342518194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B6F184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
+				9124A6A2188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */,
 				8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */,
 				1C38259118806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
 				1C253B7C184E468C00FBE054 /* LikerCell.m in Sources */,
