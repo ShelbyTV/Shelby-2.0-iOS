@@ -86,10 +86,14 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)didReceiveMemoryWarning
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.userEducationVC referenceViewWillAppear:self.view.frame animated:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.userEducationVC referenceViewWillDisappear:animated];
 }
 
 #pragma mark - public API
@@ -122,6 +126,9 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     self.selectedRowIndexPath = indexPath;
 
     [self visualizeSelectedRow:indexPath];
+    
+    //playing a video == "user educated"
+    [self.userEducationVC userHasBeenEducatedAndViewShouldHide:YES];
 }
 
 - (void)visualizeSelectedRow:(NSIndexPath *)indexPath

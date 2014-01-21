@@ -12,10 +12,8 @@
 #import "ShelbyBrain.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyNavigationViewController.h"
+#import "ShelbyUserEducationViewController.h"
 #import "TopLevelNavigationCell.h"
-
-// TODO: DRY
-//NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 
 @interface ShelbyTopLevelNavigationViewController ()
 @property (nonatomic, weak) IBOutlet UITableView *topLevelTable;
@@ -119,22 +117,34 @@
 {
     if (self.currentUser) {
         if (indexPath.row == 0) {
+            //Stream
             DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-            [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
+            ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
+            userStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
+            
         } else if (indexPath.row == 1) {
+            //Me
             DisplayChannel *userStream =  [DisplayChannel fetchChannelWithRollID:self.currentUser.publicRollID
                                                                             inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
+            
         } else if (indexPath.row == 2) {
+            //Explore
             [self goToFeaturedChannel];
+            
         } else if (indexPath.row == 3) {
+            //Channels
             BrowseChannelsTableViewController *channelsVC = [[UIStoryboard storyboardWithName:@"BrowseChannels" bundle:nil] instantiateInitialViewController];
             [self.navigationController pushViewController:channelsVC animated:YES];
+            channelsVC.userEducationVC = [ShelbyUserEducationViewController newChannelsUserEducationViewController];
             
         } else if (indexPath.row == 4) {
+            //Notifications
             self.notificationCenterVC.title = @"Notifications";
             [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.notificationCenterVC];
+            
         } else if (indexPath.row == 5) {
+            //Settings
             self.settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser];
             self.settingsVC.title = @"Settings";
             self.settingsVC.delegate = self;

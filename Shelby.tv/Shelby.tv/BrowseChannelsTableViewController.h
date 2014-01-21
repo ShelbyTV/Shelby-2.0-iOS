@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShelbyUserEducationViewController.h"
 
 @interface BrowseChannelsTableViewController : UITableViewController
-
+@property (strong, nonatomic) ShelbyUserEducationViewController *userEducationVC;
 @end
