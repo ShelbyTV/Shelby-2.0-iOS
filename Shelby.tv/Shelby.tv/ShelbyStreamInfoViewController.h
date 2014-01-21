@@ -10,15 +10,15 @@
 #import "DisplayChannel.h"
 #import "ShelbyStreamEntryCell.h"
 #import "ShelbyVideoReelViewController.h"
+#import "ShelbyVideoContentBrowsingViewControllerProtocol.h"
 
 @protocol ShelbyStreamInfoProtocol <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
 @end
 
-@interface ShelbyStreamInfoViewController : UIViewController <ShelbyStreamEntryProtocol, UITableViewDataSource, UITableViewDelegate>
+@interface ShelbyStreamInfoViewController : UIViewController <ShelbyStreamEntryProtocol, UITableViewDataSource, UITableViewDelegate, ShelbyVideoContentBrowsingViewControllerProtocol>
 @property (nonatomic, strong) DisplayChannel *displayChannel;
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, assign) id<ShelbyStreamInfoProtocol> delegate;
-
 @end

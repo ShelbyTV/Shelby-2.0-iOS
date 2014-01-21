@@ -81,6 +81,11 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
                                                  name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -105,6 +110,8 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     NSDictionary *userInfo = notification.userInfo;
     DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
     if (channel != self.displayChannel) {
+        self.selectedRowIndexPath = nil;
+        [self visualizeSelectedCell:nil];
         return;
     }
 
@@ -256,6 +263,13 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers
 {
     [self.delegate openLikersViewForVideo:video withLikers:likers];
+}
+
+#pragma mark - ShelbyVideoContentBrowsingViewControllerProtocol
+
+- (void)scrollCurrentlyPlayingIntoView
+{
+    [self.entriesTable scrollToRowAtIndexPath:self.selectedRowIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 #pragma mark - Load More & Refresh Helpers
