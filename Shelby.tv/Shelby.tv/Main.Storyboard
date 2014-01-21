@@ -89,7 +89,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ynf-C6-QiH">
-                                <rect key="frame" x="0.0" y="44" width="320" height="664"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="644"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -508,15 +508,19 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="el3-Vt-9nI" firstAttribute="top" secondItem="6oG-N1-p9Q" secondAttribute="bottom" constant="16" id="35r-hX-NV2"/>
                             <constraint firstItem="t0y-Xx-5iq" firstAttribute="top" secondItem="el3-Vt-9nI" secondAttribute="bottom" id="ApA-AO-YSG"/>
-                            <constraint firstItem="rq8-DU-i9H" firstAttribute="top" secondItem="6oG-N1-p9Q" secondAttribute="bottom" id="TGb-2X-fZ3"/>
                             <constraint firstItem="rq8-DU-i9H" firstAttribute="leading" secondItem="VfA-Qb-X04" secondAttribute="leading" id="abS-Rv-zKS"/>
+                            <constraint firstItem="u4k-vI-QTw" firstAttribute="top" secondItem="el3-Vt-9nI" secondAttribute="bottom" constant="32" id="diw-dc-185"/>
                             <constraint firstItem="t0y-Xx-5iq" firstAttribute="leading" secondItem="el3-Vt-9nI" secondAttribute="leading" id="e7Z-63-kwU"/>
+                            <constraint firstItem="u4k-vI-QTw" firstAttribute="top" secondItem="rq8-DU-i9H" secondAttribute="bottom" id="lpW-Xf-aef"/>
                             <constraint firstItem="el3-Vt-9nI" firstAttribute="leading" secondItem="VfA-Qb-X04" secondAttribute="leading" constant="68" id="xpG-kU-A1i"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="KPv-gw-AO2" appends="YES" id="4RK-h5-DqI"/>
+                        </connections>
                     </view>
                     <toolbarItems/>
                     <connections>
@@ -525,6 +529,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hyz-EY-NI2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="KPv-gw-AO2">
+                    <connections>
+                        <action selector="viewTapped:" destination="KoD-Bu-FZH" id="rn8-Hx-G4D"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1421" y="-2831"/>
         </scene>

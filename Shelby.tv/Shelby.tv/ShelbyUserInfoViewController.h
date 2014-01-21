@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ShelbyStreamInfoViewController.h"
+#import "ShelbyVideoContentBrowsingViewControllerProtocol.h"
 
-@interface ShelbyUserInfoViewController : UIViewController
+@interface ShelbyUserInfoViewController : UIViewController <ShelbyVideoContentBrowsingViewControllerProtocol>
 @property (nonatomic, strong) ShelbyStreamInfoViewController *streamInfoVC;
 @property (nonatomic, strong) User *user;
 

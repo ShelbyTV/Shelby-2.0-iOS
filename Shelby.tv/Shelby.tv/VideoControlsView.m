@@ -32,14 +32,6 @@
                                                                                                         resizingMode:UIImageResizingModeStretch];
     self.bufferProgressView.progressImage = [[UIImage imageNamed:@"scrub-track-progress"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 2, 0, 2)
                                                                                                          resizingMode:UIImageResizingModeStretch];
-
-    if ([DeviceUtilities isGTEiOS7]) {
-        //a horizontal motion effect doesn't play very nicely w/ the parallax sliding, so we just do vertical
-        UIInterpolatingMotionEffect *motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-        motionEffect.minimumRelativeValue = kShelbyMotionForegroundYMin;
-        motionEffect.maximumRelativeValue = kShelbyMotionForegroundYMax;
-        [self addMotionEffect:motionEffect];
-    }
     
     _normalLikeButtons = @[self.likeButton, self.unlikeButton];
     if (DEVICE_IPAD) {

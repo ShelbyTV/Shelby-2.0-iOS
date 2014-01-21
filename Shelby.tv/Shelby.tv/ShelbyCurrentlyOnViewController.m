@@ -11,6 +11,7 @@
 #import "DisplayChannel+Helper.h"
 //TODO Refactor kShelbyVideoReelDidChangePlaybackEntityNotification out of SPVideoReel.h?
 #import "SPVideoReel.h"
+#import "ShelbyVideoContentBrowsingViewControllerProtocol.h"
 #import "ShelbyVideoContainer.h"
 
 @interface ShelbyCurrentlyOnViewController ()
@@ -44,6 +45,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)viewTapped:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyRequestToShowCurrentlyOnNotification
+                                                        object:self];
 }
 
 - (void)playbackEntityDidChangeNotification:(NSNotification *)notification

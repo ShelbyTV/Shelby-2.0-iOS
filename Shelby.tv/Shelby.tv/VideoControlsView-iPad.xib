@@ -41,14 +41,13 @@
                         <action selector="playPauseButtonTapped:" destination="-1" eventType="touchUpInside" id="0Qm-cY-e67"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1RZ-fh-4Ar" userLabel="airPlayView">
-                    <rect key="frame" x="499" y="0.0" width="60" height="60"/>
+                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="1RZ-fh-4Ar" userLabel="airPlayView">
+                    <rect key="frame" x="559" y="19" width="0.0" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.98668005520000002" green="0.37692075400000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="2KH-cN-r6b"/>
-                        <constraint firstAttribute="width" constant="60" id="RJu-2b-Wx1"/>
+                        <constraint firstAttribute="height" constant="23" id="2KH-cN-r6b"/>
+                        <constraint firstAttribute="width" id="RJu-2b-Wx1"/>
                     </constraints>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="00:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lIL-ec-drI" userLabel="current time Label - 00:00:00">
@@ -63,7 +62,7 @@
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-00:00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vvc-Q4-lWi" userLabel="duration Label - -00:00:00">
-                    <rect key="frame" x="440" y="21" width="51" height="18"/>
+                    <rect key="frame" x="500" y="21" width="51" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="51" id="bHo-jb-DDl"/>
@@ -74,7 +73,7 @@
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </label>
                 <progressView opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mrq-Jq-azG" userLabel="scrub track / progress view">
-                    <rect key="frame" x="123" y="29" width="301" height="2"/>
+                    <rect key="frame" x="123" y="29" width="361" height="2"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <gestureRecognizers/>
                     <color key="progressTintColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>

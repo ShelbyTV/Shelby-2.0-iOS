@@ -81,6 +81,11 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
                                                  name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -105,6 +110,8 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     NSDictionary *userInfo = notification.userInfo;
     DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
     if (channel != self.displayChannel) {
+        self.selectedRowIndexPath = nil;
+        [self visualizeSelectedCell:nil];
         return;
     }
 
@@ -113,11 +120,6 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
     self.selectedRowIndexPath = indexPath;
-    if ([[self.entriesTable indexPathsForVisibleRows] containsObject:indexPath]) {
-        [self.entriesTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-    } else {
-        [self.entriesTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
 
     [self visualizeSelectedRow:indexPath];
 }
@@ -125,10 +127,6 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 - (void)visualizeSelectedRow:(NSIndexPath *)indexPath
 {
     ShelbyStreamEntryCell *cell = (ShelbyStreamEntryCell *)[self.entriesTable cellForRowAtIndexPath:indexPath];
-    
-    if (!cell) {
-        return;
-    }
     
     [self visualizeSelectedCell:cell];
 }
@@ -265,6 +263,13 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers
 {
     [self.delegate openLikersViewForVideo:video withLikers:likers];
+}
+
+#pragma mark - ShelbyVideoContentBrowsingViewControllerProtocol
+
+- (void)scrollCurrentlyPlayingIntoView
+{
+    [self.entriesTable scrollToRowAtIndexPath:self.selectedRowIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 #pragma mark - Load More & Refresh Helpers
