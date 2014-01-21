@@ -15,3 +15,11 @@ profile
 *.moved-aside
 .DS_Store
 */.DS_Store
+
+####
+# Cocoa Pods
+#
+# No need to add the Pods themselves, but be sure the Pods.lock file is not ignored
+
+Pods/
+!Podfile.lock
