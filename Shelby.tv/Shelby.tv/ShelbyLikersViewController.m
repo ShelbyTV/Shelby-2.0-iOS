@@ -17,6 +17,7 @@
 @property (nonatomic, weak) IBOutlet UIView *noLikersView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingSpinner;
 @property (nonatomic, weak) IBOutlet UIView *topbar;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *tableViewTopSpaceConstraint;
 
 - (IBAction)close:(id)sender;
 @end
@@ -42,6 +43,11 @@
     self.topbar.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
 
     [self updateViewPerLikerCount];
+    
+    if (DEVICE_IPAD) {
+        self.tableViewTopSpaceConstraint.constant = 22;
+    }
+
 }
 
 - (void)updateViewPerLikerCount
