@@ -10,6 +10,7 @@
 #import "SignupUserInfoCell.h"
 #import "ShelbyViewController.h"
 #import "STVTextField.h"
+#import "ShelbyValidationUtility.h"
 
 extern NSString * const kShelbySignupAvatarKey;
 extern NSString * const kShelbySignupEmailKey;

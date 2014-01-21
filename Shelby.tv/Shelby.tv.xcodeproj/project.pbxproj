@@ -311,6 +311,9 @@
 		1CC32450188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */; };
 		1CC32451188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */; };
 		1CC32452188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */; };
+		1CC32455188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */; };
+		1CC32456188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */; };
+		1CC32457188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */; };
 		1CC5763C178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
 		1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
 		1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
@@ -1019,6 +1022,8 @@
 		1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SignupView-iPad.xib"; sourceTree = "<group>"; };
 		1CC3244E188EF2D000D72CCA /* ShelbySignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbySignupViewController.h; sourceTree = "<group>"; };
 		1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbySignupViewController.m; sourceTree = "<group>"; };
+		1CC32453188F15AA00D72CCA /* ShelbyValidationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyValidationUtility.h; sourceTree = "<group>"; };
+		1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyValidationUtility.m; sourceTree = "<group>"; };
 		1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupUserInfoViewCell.xib; sourceTree = "<group>"; };
 		1CC77A4E174AA48700AD7F05 /* ShelbyActivityItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyActivityItemProvider.h; sourceTree = "<group>"; };
 		1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyActivityItemProvider.m; sourceTree = "<group>"; };
@@ -1643,6 +1648,8 @@
 				91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */,
 				91AA342318194A2B00B8F558 /* STVVimeoExtractor.h */,
 				91AA342418194A2B00B8F558 /* STVVimeoExtractor.m */,
+				1CC32453188F15AA00D72CCA /* ShelbyValidationUtility.h */,
+				1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2914,6 +2921,7 @@
 				8E7024C61715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				1C382582187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */,
 				8E7024C91715E71500E8DE46 /* hmac.c in Sources */,
+				1CC32456188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CC1715E71500E8DE46 /* sha1.c in Sources */,
 				8E7024CF1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D21715E71500E8DE46 /* OACall.m in Sources */,
@@ -3074,6 +3082,7 @@
 				8E7024C71715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				1C382583187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */,
 				8E7024CA1715E71500E8DE46 /* hmac.c in Sources */,
+				1CC32457188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CD1715E71500E8DE46 /* sha1.c in Sources */,
 				8E7024D01715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D31715E71500E8DE46 /* OACall.m in Sources */,
@@ -3234,6 +3243,7 @@
 				8E7024C51715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				1C382581187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */,
 				8E7024C81715E71500E8DE46 /* hmac.c in Sources */,
+				1CC32455188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CB1715E71500E8DE46 /* sha1.c in Sources */,
 				8E7024CE1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D11715E71500E8DE46 /* OACall.m in Sources */,
