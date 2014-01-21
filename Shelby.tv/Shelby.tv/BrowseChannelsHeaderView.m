@@ -33,6 +33,11 @@
     self.progressView.clipsToBounds = YES;
 }
 
+- (BOOL)hitTargetFollowCount
+{
+    return self.followCount > TARGET_FOLLOW_COUNT;
+}
+
 - (void)resetFollowCount
 {
     self.followCount = 0;
@@ -55,7 +60,7 @@
 {
     self.progressView.progress = MAX(1.0, self.followCount/TARGET_FOLLOW_COUNT);
     
-    if (self.followCount > TARGET_FOLLOW_COUNT) {
+    if ([self hitTargetFollowCount]) {
         self.label.text = @"Nice!  Head back to your stream to start watching.";
     } else {
         self.label.text = @"For great content, follow a few of our curated channels.";

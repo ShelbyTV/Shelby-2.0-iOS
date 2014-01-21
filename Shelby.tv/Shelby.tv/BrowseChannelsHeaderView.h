@@ -13,5 +13,6 @@
 - (void)resetFollowCount;
 - (void)increaseFollowCount;
 - (void)decreaseFollowCount;
+- (BOOL)hitTargetFollowCount;
 
 @end

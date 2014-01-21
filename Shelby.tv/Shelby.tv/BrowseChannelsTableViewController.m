@@ -49,6 +49,16 @@
     }];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.userEducationVC referenceViewWillAppear:self.view.frame animated:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.userEducationVC referenceViewWillDisappear:animated];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -119,6 +129,7 @@
     //fire and forget (although actual request will update this correctly)
     [self.currentUser didFollowRoll:channelToFollow.roll.rollID];
     [self.headerView increaseFollowCount];
+    [self updateUserEducation];
 }
 
 - (void)doUnfollow:(DisplayChannel *)channelToUnfollow
@@ -136,6 +147,14 @@
         if ([self.currentUser isFollowing:ch.roll.rollID]) {
             [self.headerView increaseFollowCount];
         }
+    }
+    [self updateUserEducation];
+}
+
+- (void)updateUserEducation
+{
+    if ([self.headerView hitTargetFollowCount]) {
+        [self.userEducationVC userHasBeenEducatedAndViewShouldHide:YES];
     }
 }
 

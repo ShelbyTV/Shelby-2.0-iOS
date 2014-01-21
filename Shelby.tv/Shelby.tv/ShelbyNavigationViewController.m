@@ -101,12 +101,13 @@
     return streamInfoVC;
 }
 
-- (void)pushViewControllerForChannel:(DisplayChannel *)channel
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel
 {
     ShelbyStreamInfoViewController *streamInfoVC = [self setupStreamInfoViewControllerWithChannel:channel];
     NSString *description = channel.dashboard ? channel.dashboard.displayTitle : channel.roll.displayTitle;
     streamInfoVC.title = description;
     [self pushViewController:streamInfoVC animated:YES];
+    return streamInfoVC;
 }
 
 #pragma mark - ShelbyStreamInfoProtocol

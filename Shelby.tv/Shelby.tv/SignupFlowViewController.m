@@ -11,6 +11,7 @@
 #import "ShelbyDataMediator.h"
 #import "User.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ShelbyValidationUtility.h"
 
 NSString * const kShelbySignupAvatarKey          = @"SignupAvatar";
 NSString * const kShelbySignupEmailKey           = @"SignupEmail";
@@ -385,7 +386,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         if (textField == self.email) {
             email = [email stringByReplacingCharactersInRange:range withString:string];
         }
-        nextEnabled = [self isNameValid:name] && [self isEmailValid:email];
+        nextEnabled = [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isEmailValid:email];
 
     } else {
         NSString *username = self.username.text;
@@ -396,7 +397,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         if (textField == self.password) {
             password = [password stringByReplacingCharactersInRange:range withString:string];
         }
-        nextEnabled = [self isUsernameValid:username] && [self isPasswordValid:password];
+        nextEnabled = [ShelbyValidationUtility isUsernameValid:username] && [ShelbyValidationUtility isPasswordValid:password];
     }
     self.nextButton.enabled = nextEnabled;
 
@@ -430,54 +431,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     imagePickerController.sourceType = sourceType;
     imagePickerController.delegate = self;
     [self presentViewController:imagePickerController animated:YES completion:nil];
-}
-
-#pragma mark - Validity Helpers
-
-- (BOOL)isNameValid:(NSString *)name
-{
-    NSString *trimmedName = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    BOOL isValid = YES;
-
-    //test length
-    isValid &= [trimmedName length] > 1;
-
-    return isValid;
-}
-
-- (BOOL)isEmailValid:(NSString *)email
-{
-    NSString *trimmedEmail = [email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    BOOL isValid = YES;
-
-    //test email regex
-    static NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
-    isValid &= [emailTest evaluateWithObject:trimmedEmail];
-
-    return isValid;
-}
-
-- (BOOL)isUsernameValid:(NSString *)username
-{
-    NSString *trimmedUsername = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    BOOL isValid = YES;
-
-    //test length
-    isValid &= [trimmedUsername length] > 1;
-
-    return isValid;
-}
-
-- (BOOL)isPasswordValid:(NSString *)password
-{
-    NSString *trimmedPassword = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    BOOL isValid = YES;
-
-    //test length
-    isValid &= [trimmedPassword length] > 1;
-
-    return isValid;
 }
 
 @end

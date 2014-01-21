@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
 #import "ShelbyStreamEntryCell.h"
+#import "ShelbyUserEducationViewController.h"
 #import "ShelbyVideoReelViewController.h"
 #import "ShelbyVideoContentBrowsingViewControllerProtocol.h"
 
@@ -21,4 +22,5 @@
 @property (nonatomic, strong) DisplayChannel *displayChannel;
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, assign) id<ShelbyStreamInfoProtocol> delegate;
+@property (strong, nonatomic) ShelbyUserEducationViewController *userEducationVC;
 @end

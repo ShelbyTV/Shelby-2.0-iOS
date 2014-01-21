@@ -306,6 +306,15 @@
 		1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
 		1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
 		1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
+		1CC3244B188EEEC200D72CCA /* SignupView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */; };
+		1CC3244C188EEEC200D72CCA /* SignupView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */; };
+		1CC3244D188EEEC200D72CCA /* SignupView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */; };
+		1CC32450188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */; };
+		1CC32451188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */; };
+		1CC32452188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */; };
+		1CC32455188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */; };
+		1CC32456188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */; };
+		1CC32457188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */; };
 		1CC5763C178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
 		1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
 		1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
@@ -657,6 +666,15 @@
 		9124A6A2188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */; };
 		9124A6A3188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */; };
 		9124A6A4188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */; };
+		9124A6A8188F0F0F00175A9C /* ShelbyUserEducationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6A6188F0F0F00175A9C /* ShelbyUserEducationViewController.m */; };
+		9124A6A9188F0F0F00175A9C /* ShelbyUserEducationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6A6188F0F0F00175A9C /* ShelbyUserEducationViewController.m */; };
+		9124A6AA188F0F0F00175A9C /* ShelbyUserEducationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6A6188F0F0F00175A9C /* ShelbyUserEducationViewController.m */; };
+		9124A6AF188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */; };
+		9124A6B0188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */; };
+		9124A6B1188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */; };
+		9124A6B3188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */; };
+		9124A6B4188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */; };
+		9124A6B5188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */; };
 		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
@@ -1017,6 +1035,11 @@
 		1CB709081862320B00D1C803 /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
 		1CB709091862320B00D1C803 /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyHomeView-iPhone.xib"; sourceTree = "<group>"; };
+		1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SignupView-iPad.xib"; sourceTree = "<group>"; };
+		1CC3244E188EF2D000D72CCA /* ShelbySignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbySignupViewController.h; sourceTree = "<group>"; };
+		1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbySignupViewController.m; sourceTree = "<group>"; };
+		1CC32453188F15AA00D72CCA /* ShelbyValidationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyValidationUtility.h; sourceTree = "<group>"; };
+		1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyValidationUtility.m; sourceTree = "<group>"; };
 		1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupUserInfoViewCell.xib; sourceTree = "<group>"; };
 		1CC77A4E174AA48700AD7F05 /* ShelbyActivityItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyActivityItemProvider.h; sourceTree = "<group>"; };
 		1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyActivityItemProvider.m; sourceTree = "<group>"; };
@@ -1240,6 +1263,10 @@
 		9124A69C188ED0D500175A9C /* BrowseChannelsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseChannelsHeaderView.m; sourceTree = "<group>"; };
 		9124A6A0188ED9DB00175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoContentBrowsingViewControllerProtocol.h; sourceTree = "<group>"; };
 		9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyVideoContentBrowsingViewControllerProtocol.m; sourceTree = "<group>"; };
+		9124A6A5188F0F0F00175A9C /* ShelbyUserEducationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyUserEducationViewController.h; sourceTree = "<group>"; };
+		9124A6A6188F0F0F00175A9C /* ShelbyUserEducationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyUserEducationViewController.m; sourceTree = "<group>"; };
+		9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamUserEducationView.xib; sourceTree = "<group>"; };
+		9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelsUserEducationView.xib; sourceTree = "<group>"; };
 		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
 		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
@@ -1517,10 +1544,13 @@
 			children = (
 				1C382560187DE387002177C6 /* Main.Storyboard */,
 				910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */,
+				1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */,
 				910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */,
 				1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */,
 				9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */,
 				9124A697188ECF2100175A9C /* BrowseChannelsHeaderView.xib */,
+				9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */,
+				9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -1540,10 +1570,14 @@
 				1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */,
 				1C38257F187F033D002177C6 /* ShelbyVideoReelViewController.h */,
 				1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */,
+				1CC3244E188EF2D000D72CCA /* ShelbySignupViewController.h */,
+				1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */,
 				910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */,
 				910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */,
 				9124A6A0188ED9DB00175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.h */,
 				9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */,
+				9124A6A5188F0F0F00175A9C /* ShelbyUserEducationViewController.h */,
+				9124A6A6188F0F0F00175A9C /* ShelbyUserEducationViewController.m */,
 			);
 			name = "View Controllers - iPad";
 			sourceTree = "<group>";
@@ -1651,6 +1685,8 @@
 				91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */,
 				91AA342318194A2B00B8F558 /* STVVimeoExtractor.h */,
 				91AA342418194A2B00B8F558 /* STVVimeoExtractor.m */,
+				1CC32453188F15AA00D72CCA /* ShelbyValidationUtility.h */,
+				1CC32454188F15AA00D72CCA /* ShelbyValidationUtility.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2525,6 +2561,7 @@
 				91CE074A1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 				1CCE4C4D17E226F700F0BF5A /* user_default_avatar.png in Resources */,
 				1C253B78184E452D00FBE054 /* LikerViewCell.xib in Resources */,
+				1CC3244C188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
 				9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C3178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
 				1C7B63DF178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
@@ -2581,6 +2618,7 @@
 				1CE5586B17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
 				1C3A7EDB1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9192ED0F17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
+				9124A6B0188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
 				1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3E17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
@@ -2604,6 +2642,7 @@
 				91B7DC4317B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				1CE5584317DE1E1300C18A30 /* button-off@2x.png in Resources */,
 				912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */,
+				9124A6B4188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585A17DE73CA00C18A30 /* heart-large.png in Resources */,
@@ -2648,6 +2687,7 @@
 				91CE074B1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 				1CCE4C4E17E226F700F0BF5A /* user_default_avatar.png in Resources */,
 				1C253B79184E452D00FBE054 /* LikerViewCell.xib in Resources */,
+				1CC3244D188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
 				9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C4178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
 				1C7B63E0178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
@@ -2704,6 +2744,7 @@
 				1CE5586C17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
 				1C3A7EDC1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9192ED1017C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
+				9124A6B1188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
 				1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3F17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
@@ -2727,6 +2768,7 @@
 				91B7DC4417B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				1CE5584417DE1E1300C18A30 /* button-off@2x.png in Resources */,
 				912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */,
+				9124A6B5188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585B17DE73CA00C18A30 /* heart-large.png in Resources */,
@@ -2752,6 +2794,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CC3244B188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
 				8E20971C162F3A61000A2DFD /* InfoPlist.strings in Resources */,
 				91AEFE2117F126D000B2598B /* welcome-1.mov in Resources */,
 				912261D317B97F070092AF30 /* overlay-likers.png in Resources */,
@@ -2773,6 +2816,7 @@
 				1C100DE1185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */,
 				912261D917B97F070092AF30 /* overlay-sharers.png in Resources */,
 				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
+				9124A6AF188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
 				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
 				91BEC8941762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA191491774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
@@ -2780,6 +2824,7 @@
 				91CE07491779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 				9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C2178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
+				9124A6B3188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				1C382561187DE387002177C6 /* Main.Storyboard in Resources */,
 				1CE5585217DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				1C7B63DE178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
@@ -3000,6 +3045,7 @@
 				91AA342618194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B70184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
 				9124A6A3188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */,
+				9124A6A9188F0F0F00175A9C /* ShelbyUserEducationViewController.m in Sources */,
 				1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C38259218806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
 				1C253B7D184E468C00FBE054 /* LikerCell.m in Sources */,
@@ -3009,6 +3055,7 @@
 				1C8109A416EE2CBF0030077C /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1C8109A516EE2CBF0030077C /* AFPropertyListRequestOperation.m in Sources */,
 				1C8109A616EE2CBF0030077C /* AFURLConnectionOperation.m in Sources */,
+				1CC32451188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */,
 				1C8109A716EE2CBF0030077C /* AFXMLRequestOperation.m in Sources */,
 				1C8109A816EE2CBF0030077C /* UIImageView+AFNetworking.m in Sources */,
 				1C8109A916EE2CBF0030077C /* NSString+HMAC.m in Sources */,
@@ -3020,6 +3067,7 @@
 				8E7024C61715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				1C382582187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */,
 				8E7024C91715E71500E8DE46 /* hmac.c in Sources */,
+				1CC32456188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CC1715E71500E8DE46 /* sha1.c in Sources */,
 				8E7024CF1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D21715E71500E8DE46 /* OACall.m in Sources */,
@@ -3160,6 +3208,7 @@
 				91AA342718194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B71184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
 				9124A6A4188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */,
+				9124A6AA188F0F0F00175A9C /* ShelbyUserEducationViewController.m in Sources */,
 				1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C38259318806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
 				1C253B7E184E468C00FBE054 /* LikerCell.m in Sources */,
@@ -3169,6 +3218,7 @@
 				1C810A5A16EE5EED0030077C /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1C810A5B16EE5EED0030077C /* AFPropertyListRequestOperation.m in Sources */,
 				1C810A5C16EE5EED0030077C /* AFURLConnectionOperation.m in Sources */,
+				1CC32452188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */,
 				1C810A5D16EE5EED0030077C /* AFXMLRequestOperation.m in Sources */,
 				1C810A5E16EE5EED0030077C /* UIImageView+AFNetworking.m in Sources */,
 				1C810A5F16EE5EED0030077C /* NSString+HMAC.m in Sources */,
@@ -3180,6 +3230,7 @@
 				8E7024C71715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				1C382583187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */,
 				8E7024CA1715E71500E8DE46 /* hmac.c in Sources */,
+				1CC32457188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CD1715E71500E8DE46 /* sha1.c in Sources */,
 				8E7024D01715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D31715E71500E8DE46 /* OACall.m in Sources */,
@@ -3320,6 +3371,7 @@
 				91AA342518194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B6F184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
 				9124A6A2188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m in Sources */,
+				9124A6A8188F0F0F00175A9C /* ShelbyUserEducationViewController.m in Sources */,
 				8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */,
 				1C38259118806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
 				1C253B7C184E468C00FBE054 /* LikerCell.m in Sources */,
@@ -3329,6 +3381,7 @@
 				8E01AFBF16E67365000567D4 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				8E01AFC016E67365000567D4 /* AFPropertyListRequestOperation.m in Sources */,
 				8E01AFC116E67365000567D4 /* AFURLConnectionOperation.m in Sources */,
+				1CC32450188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */,
 				8E01AFC216E67365000567D4 /* AFXMLRequestOperation.m in Sources */,
 				8E01AFC316E67365000567D4 /* UIImageView+AFNetworking.m in Sources */,
 				8E3DCC8216E8F6F5000AF8A2 /* NSString+HMAC.m in Sources */,
@@ -3340,6 +3393,7 @@
 				8E7024C51715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				1C382581187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */,
 				8E7024C81715E71500E8DE46 /* hmac.c in Sources */,
+				1CC32455188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CB1715E71500E8DE46 /* sha1.c in Sources */,
 				8E7024CE1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D11715E71500E8DE46 /* OACall.m in Sources */,

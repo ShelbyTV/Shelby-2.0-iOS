@@ -53,7 +53,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="Igh-bX-Plx" secondAttribute="centerX" constant="352" id="5os-gV-pIm"/>
                             <constraint firstAttribute="centerY" secondItem="4r1-5u-tvJ" secondAttribute="centerY" constant="-354" id="b7B-ta-YNr"/>
@@ -143,6 +143,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
@@ -168,7 +169,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="250" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9cm-1S-le1">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="668"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="648"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -300,7 +301,7 @@
                         <constraints>
                             <constraint firstItem="9cm-1S-le1" firstAttribute="leading" secondItem="9gY-Ld-XSu" secondAttribute="leading" id="MrQ-5k-Ty4"/>
                             <constraint firstItem="ndb-Gc-EZ0" firstAttribute="top" secondItem="9cm-1S-le1" secondAttribute="bottom" id="S6S-JD-Fpz"/>
-                            <constraint firstItem="9cm-1S-le1" firstAttribute="top" secondItem="9gY-Ld-XSu" secondAttribute="top" id="mu5-JH-1Lu"/>
+                            <constraint firstItem="9cm-1S-le1" firstAttribute="top" secondItem="9gY-Ld-XSu" secondAttribute="top" constant="20" id="mu5-JH-1Lu"/>
                             <constraint firstAttribute="trailing" secondItem="9cm-1S-le1" secondAttribute="trailing" id="omi-xZ-jFs"/>
                         </constraints>
                     </view>
@@ -438,7 +439,7 @@
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="bKk-gY-EZJ">
                         <rect key="frame" x="0.0" y="0.0" width="704" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
