@@ -199,8 +199,7 @@
     
     if (DEVICE_IPAD) {
         if (airplayVisible) {
-            //TODO iPad: get rid of magic numbers with final layout
-            self.controlsView.iPadAirPlayViewWidthConstraint.constant = 60;
+            self.controlsView.iPadAirPlayViewWidthConstraint.constant = 44;
         } else {
             self.controlsView.iPadAirPlayViewWidthConstraint.constant = 0;
         }
