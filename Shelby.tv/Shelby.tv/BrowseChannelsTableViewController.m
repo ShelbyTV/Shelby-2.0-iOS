@@ -8,6 +8,7 @@
 
 #import "BrowseChannelsTableViewController.h"
 #import "BrowseChannelCell.h"
+#import "BrowseChannelsHeaderView.h"
 #import "DisplayChannel+Helper.h"
 #import "Roll+Helper.h"
 #import "ShelbyDataMediator.h"
@@ -16,7 +17,7 @@
 @interface BrowseChannelsTableViewController ()
 @property (strong, nonatomic) NSArray *channels;
 @property (strong, nonatomic) User *currentUser;
-@property (assign, nonatomic) NSUInteger followCount;
+@property (strong, nonatomic) BrowseChannelsHeaderView *headerView;
 @end
 
 @implementation BrowseChannelsTableViewController
@@ -33,8 +34,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.followCount = 0;
-
+    
+    self.headerView = [[NSBundle mainBundle] loadNibNamed:@"BrowseChannelsHeaderView" owner:self options:nil][0];
+    
     [[ShelbyDataMediator sharedInstance] fetchFeaturedChannelsWithCompletionHandler:^(NSArray *channels, NSError *error) {
         if (channels) {
             self.channels = [channels copy];
@@ -81,6 +83,16 @@
     [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:selectedChannel];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return self.headerView.bounds.size.height;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return self.headerView;
+}
+
 #pragma mark - Target-Action
 
 - (IBAction)followTappedInCell:(UIView *)sender {
@@ -106,7 +118,7 @@
     [[ShelbyDataMediator sharedInstance] followRoll:channelToFollow.roll.rollID];
     //fire and forget (although actual request will update this correctly)
     [self.currentUser didFollowRoll:channelToFollow.roll.rollID];
-    self.followCount++;
+    [self.headerView increaseFollowCount];
 }
 
 - (void)doUnfollow:(DisplayChannel *)channelToUnfollow
@@ -114,14 +126,15 @@
     [[ShelbyDataMediator sharedInstance] unfollowRoll:channelToUnfollow.roll.rollID];
     //fire and forget (although actual request will update this correctly)
     [self.currentUser didUnfollowRoll:channelToUnfollow.roll.rollID];
-    self.followCount--;
+    [self.headerView decreaseFollowCount];
 }
 
 - (void)calculateFollowCount
 {
+    [self.headerView resetFollowCount];
     for (DisplayChannel *ch in self.channels) {
         if ([self.currentUser isFollowing:ch.roll.rollID]) {
-            self.followCount++;
+            [self.headerView increaseFollowCount];
         }
     }
 }
