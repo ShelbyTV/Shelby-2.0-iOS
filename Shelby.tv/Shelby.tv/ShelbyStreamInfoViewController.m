@@ -113,11 +113,6 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
     self.selectedRowIndexPath = indexPath;
-    if ([[self.entriesTable indexPathsForVisibleRows] containsObject:indexPath]) {
-        [self.entriesTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-    } else {
-        [self.entriesTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
 
     [self visualizeSelectedRow:indexPath];
 }
@@ -125,10 +120,6 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 - (void)visualizeSelectedRow:(NSIndexPath *)indexPath
 {
     ShelbyStreamEntryCell *cell = (ShelbyStreamEntryCell *)[self.entriesTable cellForRowAtIndexPath:indexPath];
-    
-    if (!cell) {
-        return;
-    }
     
     [self visualizeSelectedCell:cell];
 }
