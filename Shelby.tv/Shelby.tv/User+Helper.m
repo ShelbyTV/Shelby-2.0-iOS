@@ -32,8 +32,16 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         user = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityUser
                                               inManagedObjectContext:context];
         user.userID = userID;
-        user.userImage = [dict[@"user_image"] nilOrSelfWhenNotNull];
-        user.userType = [dict[@"user_type"] nilOrSelfWhenNotNull];
+    }
+    
+    NSString *userImage = [dict[@"user_image"] nilOrSelfWhenNotNull];
+    if (userImage) {
+        user.userImage = userImage;
+    }
+    
+    NSNumber *userType = [dict[@"user_type"] nilOrSelfWhenNotNull];
+    if (userType) {
+        user.userType = userType;
     }
     
     NSString *publicRollID = dict[@"personal_roll_id"];

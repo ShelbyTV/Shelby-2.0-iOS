@@ -715,7 +715,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         if (newUser) {
             [Intercom beginSessionForUserWithUserId:newUser.userID andEmail:newUser.email];
             [Intercom updateAttributes:@{@"ios" : @1,
-                                         @"name" : newUser.name}];
+                                         @"name" : newUser.name ? newUser.name : newUser.nickname}];
             [self updateRollFollowingsForCurrentUser];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed
                                                                 object:nil];
@@ -735,6 +735,13 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
         
     }
+}
+
+- (void)createAnonymousUser
+{
+    [ShelbyAPIClient postCreateAnonymousUser:^(id JSON, NSError *error) {
+        [self handleCreateUserWithJSON:JSON andError:error];
+    }];
 }
 
 - (void)createUserWithName:(NSString *)name andEmail:(NSString *)email

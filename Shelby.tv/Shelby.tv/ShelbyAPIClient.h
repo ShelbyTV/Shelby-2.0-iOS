@@ -22,6 +22,8 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 @interface ShelbyAPIClient : NSObject
 
 // -- User
++ (void)postCreateAnonymousUser:(shelby_api_request_complete_block_t)completionBlock;
+
 + (void)postSignupWithName:(NSString *)name
                   nickname:(NSString *)nickname
                   password:(NSString *)password

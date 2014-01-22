@@ -170,11 +170,6 @@
     [self.masterDelegate openLikersViewForVideo:video withLikers:likers];
 }
 
-- (void)loginUser
-{
-    [self.masterDelegate presentUserLogin];
-}
-
 - (void)logoutUser
 {
     [self.masterDelegate logoutUser];
