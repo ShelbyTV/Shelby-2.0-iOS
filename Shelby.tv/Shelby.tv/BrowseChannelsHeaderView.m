@@ -35,7 +35,7 @@
 
 - (BOOL)hitTargetFollowCount
 {
-    return self.followCount > TARGET_FOLLOW_COUNT;
+    return self.followCount >= TARGET_FOLLOW_COUNT;
 }
 
 - (void)resetFollowCount
@@ -58,7 +58,7 @@
 
 - (void)followCountUpdated
 {
-    self.progressView.progress = MAX(1.0, self.followCount/TARGET_FOLLOW_COUNT);
+    self.progressView.progress = MIN(1.0, self.followCount/TARGET_FOLLOW_COUNT);
     
     if ([self hitTargetFollowCount]) {
         self.label.text = @"Nice!  Head back to your stream to start watching.";
