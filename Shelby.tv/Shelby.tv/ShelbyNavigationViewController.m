@@ -146,8 +146,7 @@
     if ([self.viewControllers containsObject:self.currentlyOnVC]) {
         [self popToViewController:self.currentlyOnVC animated:YES];
     } else {
-        //otehrwise, pop to navigation and push currently on
-        [self popToViewController:self.viewControllers[0] animated:NO];
+        //otehrwise, just push it
         [self pushViewController:self.currentlyOnVC animated:YES];
     }
     
