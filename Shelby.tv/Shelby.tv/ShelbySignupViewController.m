@@ -9,6 +9,7 @@
 #import "ShelbySignupViewController.h"
 #import "ShelbyAnalyticsClient.h"
 #import "ShelbyDataMediator.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ShelbySignupViewController ()
 @property (nonatomic, weak) IBOutlet UIView *stepOneView;
@@ -17,6 +18,7 @@
 @property (nonatomic, weak) IBOutlet UITextField *stepOnePassword;
 @property (nonatomic, weak) IBOutlet UIButton *stepOneSignUpWithFacebook;
 @property (nonatomic, weak) IBOutlet UIButton *stepOneSignUpWithEmail;
+@property (nonatomic, weak) IBOutlet UILabel *stepOneOr;
 
 @property (nonatomic, weak) IBOutlet UIView *stepTwoView;
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoUsername;
@@ -24,6 +26,8 @@
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoEmail;
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoPassword;
 @property (nonatomic, weak) IBOutlet UIButton *stepTwoSaveProfile;
+
+@property (nonatomic, assign) BOOL stepOneActive;
 
 - (IBAction)signupWithFacebook:(id)sender;
 - (IBAction)signupWithEmail:(id)sender;
@@ -37,6 +41,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        _stepOneActive = YES;
         // Custom initialization
     }
     return self;
@@ -45,7 +50,40 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
+    if (self.stepOneActive) {
+        self.stepTwoView.alpha = 0;
+       [self.stepOneName becomeFirstResponder];
+    } else {
+        self.stepOneView.alpha = 0;
+        self.stepTwoView.frame = self.stepOneView.frame;
+        [self.stepTwoUsername becomeFirstResponder];
+    }
+    
+    //title font
+//    self.titleLabel.font = kShelbyFontH1Bold;
+    
+    //text field backgrounds
+    UIImage *textFieldBackground = [[UIImage imageNamed:@"textfield-outline-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+    [self.stepOneName setBackground:textFieldBackground];
+    [self.stepOnePassword setBackground:textFieldBackground];
+    [self.stepOneEmail setBackground:textFieldBackground];
+    [self.stepTwoEmail setBackground:textFieldBackground];
+    [self.stepTwoName setBackground:textFieldBackground];
+    [self.stepTwoPassword setBackground:textFieldBackground];
+    [self.stepTwoUsername setBackground:textFieldBackground];
+    
+    //button backgrounds
+    [self.stepOneSignUpWithEmail setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+    [self.stepOneSignUpWithFacebook setBackgroundImage:[[UIImage imageNamed:@"facebook-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+    [self.stepTwoSaveProfile setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+ 
+//    UIImage *secondaryButtonBackground = [[UIImage imageNamed:@"secondary-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+//    [self.forgotPasswordButton setBackgroundImage:secondaryButtonBackground forState:UIControlStateNormal];
+//    [self.signupButton setBackgroundImage:secondaryButtonBackground forState:UIControlStateNormal];
+    
+    self.stepOneOr.layer.cornerRadius = self.stepOneOr.frame.size.height/2;
+    self.stepOneOr.layer.masksToBounds = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,6 +107,7 @@
 {
     [self addObserversForSignup:YES withEmail:YES];
 
+    [self goToStepTwo];
 //     [[ShelbyDataMediator sharedInstance] createUserWithName:name andEmail:email];
 }
 
@@ -87,6 +126,17 @@
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)goToStepTwo
+{
+    self.stepTwoView.alpha = 0;
+    self.stepTwoView.frame = CGRectMake(0, 44, 768, 350);
+    
+    [UIView animateWithDuration:1 animations:^{
+        self.stepTwoView.alpha = 1;
+        self.stepOneView.alpha = 0;
+    }];
 }
 
 - (void)userSignupDidFail:(NSNotification *)notification
