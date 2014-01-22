@@ -10,6 +10,8 @@
 //for the constant kShelbyVideoReelDidChangePlaybackEntityNotification :-/
 #import "SPVideoReel.h"
 
+static NSString * const kShelbyUserEducationDefaultsKeyPrefix = @"userEd-";
+
 @interface ShelbyUserEducationViewController ()
 
 @end
@@ -43,12 +45,23 @@ static BOOL videoHasPlayed = NO;
 
 + (BOOL)userIsEducatedFor:(NSString *)educationNibName
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"userEd-%@", educationNibName]];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, educationNibName]];
 }
 
 + (void)setVideoHasPlayed:(BOOL)played
 {
     videoHasPlayed = played;
+}
+
++ (void)reset
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    for (NSString *defaultsKey in [[defaults dictionaryRepresentation] keyEnumerator]) {
+        if ([defaultsKey rangeOfString:kShelbyUserEducationDefaultsKeyPrefix].location != NSNotFound) {
+            [defaults removeObjectForKey:defaultsKey];
+        }
+    }
+    [defaults synchronize];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -101,7 +114,7 @@ static BOOL videoHasPlayed = NO;
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:YES
-               forKey:[NSString stringWithFormat:@"userEd-%@", self.nibName]];
+               forKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, self.nibName]];
     [defaults synchronize];
     
     if (shouldHide) {

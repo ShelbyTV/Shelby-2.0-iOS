@@ -161,6 +161,12 @@ static AFHTTPClient *httpClient = nil;
     [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
 
++ (void)postCreateAnonymousUser:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSDictionary *userParams = @{@"anonymous": @(YES)};
+    [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
+}
+
 + (void)putUserWithParams:(NSDictionary *)params
                  andBlock:(shelby_api_request_complete_block_t)completionBlock
 {

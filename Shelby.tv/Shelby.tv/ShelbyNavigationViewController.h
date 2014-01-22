@@ -16,7 +16,6 @@
 @protocol ShelbyNavigationProtocol <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
-- (void)loginUser;
 - (void)logoutUser;
 @end
 

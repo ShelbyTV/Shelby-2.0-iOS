@@ -17,6 +17,7 @@
 #import "ShelbyModelArrayUtility.h"
 #import "Roll+Helper.h"
 #import "ShelbyABTestManager.h"
+#import "ShelbyEntranceViewController.h"
 #import "ShelbyModel.h"
 #import "ShelbyNotificationManager.h"
 #import "ShelbyNavigationViewController.h"
@@ -60,7 +61,9 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 
 // ipad
+@property (strong, nonatomic) ShelbyEntranceViewController *entranceVC;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
+@property (nonatomic, strong) ShelbyTopContainerViewController *topContainerVC;
 
 //login and signup view controllers
 @property (strong, nonatomic) LoginViewController *loginVC;
@@ -80,13 +83,67 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 @property (nonatomic, strong) UIAlertView *currentAlertView;
 
-@property (nonatomic, strong) ShelbyTopContainerViewController *topContainerVC;
+
 // Notification properties
 @property (nonatomic, strong) NSString *notificationDashboardID;
 @property (nonatomic, strong) NSString *notificationUserID;
 @end
 
 @implementation ShelbyBrain
+
+- (void)handleDidFinishLaunching
+{
+    [ShelbyDataMediator sharedInstance].delegate = self;
+    
+    if (DEVICE_IPAD) {
+        self.entranceVC = [[ShelbyEntranceViewController alloc] initWithNibName:@"ShelbyEntranceViewController" bundle:nil];
+        self.entranceVC.brain = self;
+        
+        User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+        if (currentUser) {
+            [self setCurrentUser:currentUser];
+            [self activateHomeViewController];
+            [self fetchUserChannelsForceSwitchToUsersStream:YES];
+        } else {
+            self.mainWindow.rootViewController = self.entranceVC;
+        }
+        
+    } else {
+        
+        // This needs to be done before we decide what VC to activate
+        // If welcome screen is completed and user started the signup screen and never logged in.
+        // We should not reset Welcome screen in the case where user didn't even open signup, because maybe they just went for perview app.
+        // Odd case is, user finished welcome, going to preview, then hit signup, kill the app... and now next time they open, we will take them to welcome again.
+        if ([WelcomeViewController isWelcomeComplete]) {
+            if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
+                // Cleanup cache, logout user to prevent funcky case when a user that logged-in in the past tries to go thru signup but kills the app in the middle
+                [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
+                [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
+                if (![[ShelbyDataMediator sharedInstance] hasUserLoggedIn]) {
+                    [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusUnstarted];
+                    [[ShelbyDataMediator sharedInstance] nuclearCleanup];
+                }
+            }
+        }
+        
+        if (![WelcomeViewController isWelcomeComplete]) {
+            [self activateWelcomeViewController];
+        } else {
+            [self activateHomeViewController];
+            User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+            if (currentUser) {
+                [self fetchUserChannelsForceSwitchToUsersStream:YES];
+                [[ShelbyDataMediator sharedInstance] updateRollFollowingsForCurrentUser];
+                [self registerForPushNotifications];
+            } else {
+                [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
+            }
+        }
+        
+    }
+    
+    [self.mainWindow makeKeyAndVisible];
+}
 
 - (void)handleDidBecomeActive
 {
@@ -149,42 +206,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [User sessionDidPause];
 }
 
-- (void)handleDidFinishLaunching
-{
-    [ShelbyDataMediator sharedInstance].delegate = self;
-
-    // This needs to be done before we decide what VC to activate
-    // If welcome screen is completed and user started the signup screen and never logged in.
-    // We should not reset Welcome screen in the case where user didn't even open signup, because maybe they just went for perview app.
-    // Odd case is, user finished welcome, going to preview, then hit signup, kill the app... and now next time they open, we will take them to welcome again.
-    if ([WelcomeViewController isWelcomeComplete]) {
-        if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
-            // Cleanup cache, logout user to prevent funcky case when a user that logged-in in the past tries to go thru signup but kills the app in the middle
-            [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
-            [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
-         if (![[ShelbyDataMediator sharedInstance] hasUserLoggedIn]) {
-             [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusUnstarted];
-             [[ShelbyDataMediator sharedInstance] nuclearCleanup];
-            }
-        }
-    }
-    
-    if (![WelcomeViewController isWelcomeComplete]) {
-        [self activateWelcomeViewController];
-    } else {
-        [self activateHomeViewController];
-        User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-        if (currentUser) {
-            [self fetchUserChannelsForceSwitchToUsersStream:YES];
-            [[ShelbyDataMediator sharedInstance] updateRollFollowingsForCurrentUser];
-            [self registerForPushNotifications];
-        } else {
-            [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
-        }
-    }
-    [self.mainWindow makeKeyAndVisible];
-}
-
 - (void)registerForPushNotifications
 {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
@@ -200,8 +221,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)activateHomeViewController
 {
-    // KP KP: TODO: rearrange this method
-    if (self.homeVC) {
+    if (self.homeVC || self.mainStoryboard) {
         return;
     }
     
@@ -214,6 +234,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         // Passing delegate to the top level navigation
         self.topContainerVC.masterDelegate = self;
         self.topContainerVC.currentUser = currentUser;
+        //TODO: animate out the self.entranceVC
         self.mainWindow.rootViewController = self.topContainerVC;
     } else {
         rootViewControllerNibName = @"ShelbyHomeView-iPhone";
@@ -243,34 +264,29 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)presentLoginVC
 {
-
     if (DEVICE_IPAD) {
         self.loginVC = [[LoginViewController alloc] initWithNibName:@"LoginView-iPad" bundle:nil];
         self.loginVC.modalPresentationStyle = UIModalPresentationFormSheet;
         self.loginVC.delegate = self;
-        [self.topContainerVC presentViewController:self.loginVC animated:YES completion:^{
-        }];
+        [self.entranceVC presentViewController:self.loginVC animated:YES completion:nil];
+        
     } else {
         UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         UINavigationController *loginNav = [loginStoryboard instantiateInitialViewController];
         self.loginVC = loginNav.viewControllers[0];
         self.loginVC.delegate = self;
         [self.mainWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
-    }
-    // When user goes to login, reset signup status.
-    if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
-        [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
+        
+        // When user goes to login, reset signup status.
+        if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
+            [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
+        }
     }
 }
 
 - (void)dismissLoginVCCompletion:(void (^)(void))completion
 {
-    UIViewController *viewController = nil;
-    if (DEVICE_IPAD) {
-        viewController = self.topContainerVC;
-    } else {
-        viewController = self.mainWindow.rootViewController;
-    }
+    UIViewController *viewController = self.mainWindow.rootViewController;
 
     [viewController dismissViewControllerAnimated:YES completion:^{
         self.loginVC = nil;
@@ -529,6 +545,13 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 - (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh
 {
      return [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:forceRefresh];
+}
+
+- (void)proceedWithAnonymousUser:(User *)user
+{
+    [self setCurrentUser:user];
+    [self activateHomeViewController];
+    [self fetchUserChannelsForceSwitchToUsersStream:YES];
 }
 
 #pragma mark - ShelbyDataMediatorDelegate
@@ -884,14 +907,12 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)setCurrentUser:(User *)user
 {
-    if (DEVICE_IPAD) {
-        self.topContainerVC.currentUser = user;
-    } else {
-        [self.homeVC setCurrentUser:user];
-    }
+    [self.homeVC setCurrentUser:user];  //<--iPhone only
+        
     if (user) {
         [[ShelbyDataMediator sharedInstance] syncLikes];
         [[ShelbyDataMediator sharedInstance] userLoggedIn];
+        [[ShelbyDataMediator sharedInstance] updateRollFollowingsForCurrentUser];
         [self registerForPushNotifications];
     }
 }
@@ -993,17 +1014,21 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)logoutUser
 {
+    [self deleteDeviceToken];
     [User sessionDidPause];
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
     if (DEVICE_IPAD) {
-        self.topContainerVC.currentUser = nil;
+        self.mainStoryboard = nil;
+        self.topContainerVC = nil;
+        //TODO iPad: animate in the entrance VC
+        self.mainWindow.rootViewController = self.entranceVC;
+        [ShelbyUserEducationViewController reset];
+        
     } else {
         [self.homeVC logoutUser];
+        [self goToCommunityChannel];
     }
-    [self deleteDeviceToken];
-    
-    [self goToCommunityChannel];
 }
 
 - (void)connectToFacebook

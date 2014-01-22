@@ -130,6 +130,7 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 - (NSString *)errorMessageForExistingAccountWithErrorDictionary:(NSDictionary *)errorInfo;
 
 // Signup process ONLY
+- (void)createAnonymousUser;
 - (void)createUserWithName:(NSString *)name
                   andEmail:(NSString *)email;
 - (void)createUserWithFacebook;

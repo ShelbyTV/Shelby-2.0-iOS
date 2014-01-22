@@ -59,4 +59,6 @@ extern NSString *const kShelbyDeviceToken;
 
 - (void)registerDeviceToken:(NSString *)token;
 - (void)deleteDeviceToken;
+
+- (void)proceedWithAnonymousUser:(User *)user;
 @end

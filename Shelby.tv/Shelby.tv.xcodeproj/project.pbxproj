@@ -675,6 +675,12 @@
 		9124A6B3188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */; };
 		9124A6B4188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */; };
 		9124A6B5188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */; };
+		9124A6B91890512B00175A9C /* ShelbyEntranceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6B71890512B00175A9C /* ShelbyEntranceViewController.m */; };
+		9124A6BA1890512B00175A9C /* ShelbyEntranceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6B71890512B00175A9C /* ShelbyEntranceViewController.m */; };
+		9124A6BB1890512B00175A9C /* ShelbyEntranceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A6B71890512B00175A9C /* ShelbyEntranceViewController.m */; };
+		9124A6BC1890512B00175A9C /* ShelbyEntranceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6B81890512B00175A9C /* ShelbyEntranceViewController.xib */; };
+		9124A6BD1890512B00175A9C /* ShelbyEntranceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6B81890512B00175A9C /* ShelbyEntranceViewController.xib */; };
+		9124A6BE1890512B00175A9C /* ShelbyEntranceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9124A6B81890512B00175A9C /* ShelbyEntranceViewController.xib */; };
 		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
@@ -1267,6 +1273,9 @@
 		9124A6A6188F0F0F00175A9C /* ShelbyUserEducationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyUserEducationViewController.m; sourceTree = "<group>"; };
 		9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamUserEducationView.xib; sourceTree = "<group>"; };
 		9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelsUserEducationView.xib; sourceTree = "<group>"; };
+		9124A6B61890512B00175A9C /* ShelbyEntranceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyEntranceViewController.h; sourceTree = "<group>"; };
+		9124A6B71890512B00175A9C /* ShelbyEntranceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyEntranceViewController.m; sourceTree = "<group>"; };
+		9124A6B81890512B00175A9C /* ShelbyEntranceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyEntranceViewController.xib; sourceTree = "<group>"; };
 		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
 		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
@@ -1542,6 +1551,7 @@
 		1C38255F187DE373002177C6 /* Xib-iPad */ = {
 			isa = PBXGroup;
 			children = (
+				9124A6B81890512B00175A9C /* ShelbyEntranceViewController.xib */,
 				1C382560187DE387002177C6 /* Main.Storyboard */,
 				910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */,
 				1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */,
@@ -1558,6 +1568,8 @@
 		1C38256A187E011D002177C6 /* View Controllers - iPad */ = {
 			isa = PBXGroup;
 			children = (
+				9124A6B61890512B00175A9C /* ShelbyEntranceViewController.h */,
+				9124A6B71890512B00175A9C /* ShelbyEntranceViewController.m */,
 				1C382575187E069A002177C6 /* ShelbyNavigationViewController.h */,
 				1C382576187E069A002177C6 /* ShelbyNavigationViewController.m */,
 				1C38256B187E014C002177C6 /* ShelbyStreamInfoViewController.h */,
@@ -2564,6 +2576,7 @@
 				1CC3244C188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
 				9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C3178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
+				9124A6BD1890512B00175A9C /* ShelbyEntranceViewController.xib in Resources */,
 				1C7B63DF178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C56F14317BABD8C00EE9206 /* README.md in Resources */,
 				1C0C7DF61852328B008F5506 /* heart-icon-color@2x.png in Resources */,
@@ -2690,6 +2703,7 @@
 				1CC3244D188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
 				9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C4178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
+				9124A6BE1890512B00175A9C /* ShelbyEntranceViewController.xib in Resources */,
 				1C7B63E0178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C56F14417BABD8C00EE9206 /* README.md in Resources */,
 				1C0C7DF71852328B008F5506 /* heart-icon-color@2x.png in Resources */,
@@ -2878,6 +2892,7 @@
 				9192ED0517C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				1C534E3A17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3D17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
+				9124A6BC1890512B00175A9C /* ShelbyEntranceViewController.xib in Resources */,
 				1CE5583F17DE1E1300C18A30 /* button-off.png in Resources */,
 				1C534E4017A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
 				1C0C7DFD1852357C008F5506 /* share-icon@2x.png in Resources */,
@@ -3119,6 +3134,7 @@
 				9178C9D317CE375000913256 /* WelcomeViewController.m in Sources */,
 				910933091743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				9124A681188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
+				9124A6BA1890512B00175A9C /* ShelbyEntranceViewController.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
@@ -3282,6 +3298,7 @@
 				9178C9D417CE375000913256 /* WelcomeViewController.m in Sources */,
 				9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				9124A682188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
+				9124A6BB1890512B00175A9C /* ShelbyEntranceViewController.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
@@ -3445,6 +3462,7 @@
 				9178C9D217CE375000913256 /* WelcomeViewController.m in Sources */,
 				910933081743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				9124A680188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
+				9124A6B91890512B00175A9C /* ShelbyEntranceViewController.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
