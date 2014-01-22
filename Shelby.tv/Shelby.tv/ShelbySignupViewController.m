@@ -7,6 +7,8 @@
 //
 
 #import "ShelbySignupViewController.h"
+#import "FacebookHandler.h"
+#import "ShelbyValidationUtility.h"
 #import "ShelbyAnalyticsClient.h"
 #import "ShelbyDataMediator.h"
 #import <QuartzCore/QuartzCore.h>
@@ -29,11 +31,20 @@
 
 @property (nonatomic, assign) BOOL stepOneActive;
 
+@property (nonatomic, strong) User *currentUser;
+
 - (IBAction)signupWithFacebook:(id)sender;
 - (IBAction)signupWithEmail:(id)sender;
 - (IBAction)saveProfile:(id)sender;
 - (IBAction)cancel:(id)sender;
 @end
+
+typedef NS_ENUM(NSInteger, UserUpdateType) {
+    UserUpdateTypeFacebook,
+    UserUpdateTypeEmail,
+    UserUpdateTypeProfile
+};
+
 
 @implementation ShelbySignupViewController
 
@@ -51,13 +62,19 @@
 {
     [super viewDidLoad];
 
+    self.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    self.stepOneEmail.text = self.currentUser.email;
+    self.stepOneName.text = self.currentUser.name;
+    
     if (self.stepOneActive) {
         self.stepTwoView.alpha = 0;
        [self.stepOneName becomeFirstResponder];
+        self.stepOneSignUpWithEmail.enabled = NO;
     } else {
         self.stepOneView.alpha = 0;
         self.stepTwoView.frame = self.stepOneView.frame;
         [self.stepTwoUsername becomeFirstResponder];
+        self.stepTwoSaveProfile.enabled = NO;
     }
     
     //title font
@@ -94,28 +111,42 @@
 
 - (IBAction)signupWithFacebook:(id)sender
 {
-    [self addObserversForSignup:YES withEmail:NO];
+    [self addObserversForUpdateType:UserUpdateTypeFacebook];
     
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup
                                           action:kAnalyticsSignupWithFacebookStart
                                            label:nil];
 
-     [[ShelbyDataMediator sharedInstance] createUserWithFacebook];
+    [[ShelbyDataMediator sharedInstance] openFacebookSessionWithAllowLoginUI:YES];
 }
 
 - (IBAction)signupWithEmail:(id)sender
 {
-    [self addObserversForSignup:YES withEmail:YES];
+    [self addObserversForUpdateType:UserUpdateTypeEmail];
 
-    [self goToStepTwo];
-//     [[ShelbyDataMediator sharedInstance] createUserWithName:name andEmail:email];
+    __weak ShelbySignupViewController *weakSelf = self;
+    [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepOneName.text nickname:nil password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
+        if (!error) {
+            [weakSelf goToStepTwo];
+        } else {
+            // KP KP
+        }
+    }];
 }
 
 - (IBAction)saveProfile:(id)sender
 {
-    [self addObserversForSignup:NO withEmail:NO];
 
-//    [[ShelbyDataMediator sharedInstance] updateUserWithName:name nickname:nil password:nil email:email avatar:nil rolls:nil completion:nil];
+    
+    [self addObserversForUpdateType:UserUpdateTypeProfile];
+    __weak ShelbySignupViewController *weakSelf = self;
+    [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepOneName.text nickname:nil password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
+        if (!error) {
+            [weakSelf cancel:nil];
+        } else {
+            // KP KP
+        }
+    }];
 }
 
 - (IBAction)cancel:(id)sender
@@ -133,109 +164,98 @@
     self.stepTwoView.alpha = 0;
     self.stepTwoView.frame = CGRectMake(0, 44, 768, 350);
     
+    self.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    self.stepTwoEmail.text = self.currentUser.email;
+    self.stepTwoName.text = self.currentUser.name;
+    self.stepTwoUsername.text = self.currentUser.nickname;
+    
     [UIView animateWithDuration:1 animations:^{
         self.stepTwoView.alpha = 1;
         self.stepOneView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.stepOneActive = NO;
     }];
 }
 
 - (void)userSignupDidFail:(NSNotification *)notification
 {
-    [self removeObserversForSignup:YES];
+    [self removeObservers];
     
 //    [self signupErrorWithErrorMessage:notification.object];
 }
 
 - (void)userSignupDidSucceed:(NSNotification *)notification
 {
-    [self removeObserversForSignup:YES];
+    [self removeObservers];
+    [self goToStepTwo];
 //    self.facebookSignup = NO;
 //    [self signupSuccess];
 }
 
 - (void)userUpdateDidFail:(NSNotification *)notification
 {
-    [self removeObserversForSignup:NO];
+    [self removeObservers];
     
 //    [self signupErrorWithErrorMessage:notification.object];
 }
 
 - (void)userUpdateDidSucceed:(NSNotification *)notification
 {
-    [self removeObserversForSignup:NO];
+    [self removeObservers];
     
 //    [self signupSuccess];
 }
 
-- (void)addObserversForSignup:(BOOL)signupNotifications withEmail:(BOOL)withEmail
+- (void)addObserversForUpdateType:(UserUpdateType)userUpdateType
 {
-    if (signupNotifications) {
-        if (withEmail) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
-        } else {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
-        }
+    if (userUpdateType == UserUpdateTypeEmail) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
-    } else {
+    } else if (userUpdateType == UserUpdateTypeFacebook){
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationFacebookConnectCompleted object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
+    } else { // userUpdateType == UserUpdateTypeProfile
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidSucceed:) name:kShelbyNotificationUserUpdateDidSucceed object:nil];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidFail:) name:kShelbyNotificationUserUpdateDidFail object:nil];
     }
 }
 
-- (void)removeObserversForSignup:(BOOL)signupNotifications
+- (void)removeObservers
 {
-    if (signupNotifications) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidSucceed object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidFail object:nil];
-    } else {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserUpdateDidSucceed object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserUpdateDidFail object:nil];
-    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (self.view.frame.origin.x == 0) {
-//        [self animateOpenEditing];
-    }
     return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-//    [self modifyDictionaryWithTextFieldValue:textField];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-//    [self modifyDictionaryWithTextFieldValue:textField];
-    
-    [textField resignFirstResponder];
-    
-    // Set focus on the next TextField in the form. If last TextField, move view back down.
-    //TODO: this should be moved in the individual views, since only they know what order their fields are in
-    
-//    BOOL shouldResign = NO;
-//    if (textField == TextFieldTagName) {
-//        [self.email becomeFirstResponder];
-//    } else if (tag == TextFieldTagEmail) {
-//        if (!self.username) {
-//            shouldResign = YES;
-//        } else {
-//            [self.username becomeFirstResponder];
-//        }
-//    } else if (tag == TextFieldTagUsername) {
-//        [self.password becomeFirstResponder];
-//    } else {
-//        shouldResign = YES;
-//    }
-//    
-//    if (shouldResign) {
-//        [self animateCloseEditing];
-//    }
+    if ([self.stepOneName isFirstResponder]) {
+        [self.stepOneName resignFirstResponder];
+        [self.stepOneEmail becomeFirstResponder];
+    } else if ([self.stepOneEmail isFirstResponder]) {
+        [self.stepOneEmail resignFirstResponder];
+        [self.stepOnePassword becomeFirstResponder];
+    } else if ([self.stepTwoUsername isFirstResponder]) {
+        [self.stepTwoUsername resignFirstResponder];
+        [self.stepTwoName becomeFirstResponder];
+    } else if ([self.stepTwoName isFirstResponder]) {
+        [self.stepTwoName resignFirstResponder];
+        [self.stepTwoEmail becomeFirstResponder];
+    } else if ([self.stepTwoEmail isFirstResponder]) {
+        [self.stepTwoEmail resignFirstResponder];
+        [self.stepTwoPassword becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+    }
     
     return YES;
 }
@@ -243,30 +263,47 @@
 //NB: confusingly, this is the delegate for name/email on step 1 and username/password on step 4
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-//    BOOL nextEnabled = NO;
-//    if (textField == self.nameField || textField == self.email) {
-//        NSString *name = self.nameField.text;
-//        NSString *email = self.email.text;
-//        if (textField == self.nameField) {
-//            name = [name stringByReplacingCharactersInRange:range withString:string];
-//        }
-//        if (textField == self.email) {
-//            email = [email stringByReplacingCharactersInRange:range withString:string];
-//        }
-//        nextEnabled = [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isEmailValid:email];
-//        
-//    } else {
-//        NSString *username = self.username.text;
-//        NSString *password = self.password.text;
-//        if (textField == self.username) {
-//            username = [username stringByReplacingCharactersInRange:range withString:string];
-//        }
-//        if (textField == self.password) {
-//            password = [password stringByReplacingCharactersInRange:range withString:string];
-//        }
-//        nextEnabled = [ShelbyValidationUtility isUsernameValid:username] && [ShelbyValidationUtility isPasswordValid:password];
-//    }
-//    self.nextButton.enabled = nextEnabled;
+    if (textField == self.stepOneName || textField == self.stepOneEmail || textField == self.stepOnePassword) {
+        NSString *name = self.stepOneName.text;
+        NSString *email = self.stepOneEmail.text;
+        NSString *password = self.stepOnePassword.text;
+        if (textField == self.stepOneName) {
+            name = [name stringByReplacingCharactersInRange:range withString:string];
+        }
+        
+        if (textField == self.stepOneEmail) {
+            email = [email stringByReplacingCharactersInRange:range withString:string];
+        }
+        
+        if (textField == self.stepOnePassword) {
+            password = [password stringByReplacingCharactersInRange:range withString:string];
+        }
+        
+        self.stepOneSignUpWithEmail.enabled = [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email];
+    } else {
+        NSString *name = self.stepOneName.text;
+        NSString *email = self.stepTwoEmail.text;
+        NSString *password = self.stepTwoPassword.text;
+        NSString *username = self.stepTwoUsername.text;
+        
+        if (textField == self.stepTwoName) {
+            name = [name stringByReplacingCharactersInRange:range withString:string];
+        }
+        
+        if (textField == self.stepTwoEmail) {
+            email = [email stringByReplacingCharactersInRange:range withString:string];
+        }
+        
+        if (textField == self.stepTwoPassword) {
+            password = [password stringByReplacingCharactersInRange:range withString:string];
+        }
+
+        if (textField == self.stepTwoUsername) {
+            username = [username stringByReplacingCharactersInRange:range withString:string];
+        }
+        
+        self.stepTwoSaveProfile.enabled = [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email] && [ShelbyValidationUtility isUsernameValid:username];
+    }
     
     return YES;
 }
