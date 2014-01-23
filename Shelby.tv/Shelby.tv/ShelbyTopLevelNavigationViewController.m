@@ -78,7 +78,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     STVAssert(self.currentUser, @"should have user, otherwise should be showing EntranceVC");
-    return 7;
+    return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -96,8 +96,6 @@
     } else if (indexPath.row == 4) {
         cell.titleLabel.text = @"Notifications";
         [cell setBadge:self.notificationCenterVC.unseenNotifications];
-    } else if (indexPath.row == 5) {
-        cell.titleLabel.text = @"Signup";
     } else {
         cell.titleLabel.text = @"Settings";
     }
@@ -136,16 +134,12 @@
         self.notificationCenterVC.title = @"Notifications";
         [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.notificationCenterVC];
         
-    } else if (indexPath.row == 6) {
+    } else if (indexPath.row == 5) {
         //Settings
         self.settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser];
         self.settingsVC.title = @"Settings";
         self.settingsVC.delegate = self;
         [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.settingsVC];
-    } else {
-        ShelbySignupViewController *signupVC = [[ShelbySignupViewController alloc] initWithNibName:@"SignupView-iPad" bundle:nil];
-        signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
-        [(ShelbyNavigationViewController *)self.navigationController presentViewController:signupVC animated:YES completion:nil];
     }
 
     [self.topLevelTable deselectRowAtIndexPath:indexPath animated:YES];
