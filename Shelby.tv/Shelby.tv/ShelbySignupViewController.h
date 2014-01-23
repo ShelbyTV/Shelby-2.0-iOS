@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShelbySignupViewController : UIViewController <UITextFieldDelegate>
+@interface ShelbySignupViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end

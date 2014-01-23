@@ -28,11 +28,16 @@
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoEmail;
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoPassword;
 @property (nonatomic, weak) IBOutlet UIButton *stepTwoSaveProfile;
+@property (nonatomic, weak) IBOutlet UIImageView *avatarImage;
 
 @property (nonatomic, assign) BOOL stepOneActive;
 
+@property (nonatomic, strong) UIPopoverController *popoverVC;
+@property (nonatomic, strong) UIImagePickerController *imagePickerVC;
+
 @property (nonatomic, strong) User *currentUser;
 
+- (IBAction)assignAvatar:(id)sender;
 - (IBAction)signupWithFacebook:(id)sender;
 - (IBAction)signupWithEmail:(id)sender;
 - (IBAction)saveProfile:(id)sender;
@@ -68,13 +73,11 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     
     if (self.stepOneActive) {
         self.stepTwoView.alpha = 0;
-       [self.stepOneName becomeFirstResponder];
-        self.stepOneSignUpWithEmail.enabled = NO;
+        self.stepOneSignUpWithEmail.enabled = [self stepOneFieldsValid];
     } else {
         self.stepOneView.alpha = 0;
         self.stepTwoView.frame = self.stepOneView.frame;
-        [self.stepTwoUsername becomeFirstResponder];
-        self.stepTwoSaveProfile.enabled = NO;
+        self.stepTwoSaveProfile.enabled = [self stepTwoFieldsValid];
     }
     
     //title font
@@ -95,18 +98,39 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [self.stepOneSignUpWithFacebook setBackgroundImage:[[UIImage imageNamed:@"facebook-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
     [self.stepTwoSaveProfile setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
  
-//    UIImage *secondaryButtonBackground = [[UIImage imageNamed:@"secondary-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
-//    [self.forgotPasswordButton setBackgroundImage:secondaryButtonBackground forState:UIControlStateNormal];
-//    [self.signupButton setBackgroundImage:secondaryButtonBackground forState:UIControlStateNormal];
+    self.avatarImage.layer.cornerRadius = self.avatarImage.frame.size.height / 2;
+    self.avatarImage.layer.masksToBounds = YES;
     
     self.stepOneOr.layer.cornerRadius = self.stepOneOr.frame.size.height/2;
     self.stepOneOr.layer.masksToBounds = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    
+    if (self.stepOneActive) {
+        [self.stepOneName becomeFirstResponder];
+    } else {
+        [self.stepTwoUsername becomeFirstResponder];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)assignAvatar:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera Roll", @"Take Photo", nil];
+    [actionSheet showFromRect:((UIView *)sender).frame inView:self.view animated:YES];
 }
 
 - (IBAction)signupWithFacebook:(id)sender
@@ -123,9 +147,11 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 - (IBAction)signupWithEmail:(id)sender
 {
     [self addObserversForUpdateType:UserUpdateTypeEmail];
-
+    self.stepOneSignUpWithEmail.enabled = NO;
+    
     __weak ShelbySignupViewController *weakSelf = self;
     [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepOneName.text nickname:nil password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
+        self.stepOneSignUpWithEmail.enabled = YES;
         if (!error) {
             [weakSelf goToStepTwo];
         } else {
@@ -136,27 +162,28 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (IBAction)saveProfile:(id)sender
 {
-
+    self.stepTwoSaveProfile.enabled = NO;
     
     [self addObserversForUpdateType:UserUpdateTypeProfile];
     __weak ShelbySignupViewController *weakSelf = self;
-    [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepOneName.text nickname:nil password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
+    [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepOneName.text nickname:self.stepTwoUsername.text password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
+        self.stepTwoSaveProfile.enabled = YES;
         if (!error) {
-            [weakSelf cancel:nil];
+            [weakSelf closeViewController];
         } else {
             // KP KP
         }
     }];
 }
 
+- (void)closeViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)cancel:(id)sender
 {
-    if ([[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext]) {
-        //a user has been created, need to get rid of it
-        [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self closeViewController];
 }
 
 - (void)goToStepTwo
@@ -164,10 +191,15 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     self.stepTwoView.alpha = 0;
     self.stepTwoView.frame = CGRectMake(0, 44, 768, 350);
     
+    self.stepTwoSaveProfile.enabled = [self stepTwoFieldsValid];
     self.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     self.stepTwoEmail.text = self.currentUser.email;
     self.stepTwoName.text = self.currentUser.name;
     self.stepTwoUsername.text = self.currentUser.nickname;
+    
+    if (self.stepOnePassword.text) {
+        self.stepTwoPassword.text = self.stepOnePassword.text;
+    }
     
     [UIView animateWithDuration:1 animations:^{
         self.stepTwoView.alpha = 1;
@@ -225,6 +257,25 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (BOOL)stepOneFieldsValid
+{
+    NSString *name = self.stepOneName.text;
+    NSString *email = self.stepOneEmail.text;
+    NSString *password = self.stepOnePassword.text;
+    
+    return [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email];
+}
+
+
+- (BOOL)stepTwoFieldsValid
+{
+    NSString *name = self.stepOneName.text;
+    NSString *email = self.stepTwoEmail.text;
+    NSString *password = self.stepTwoPassword.text;
+    NSString *username = self.stepTwoUsername.text;
+    
+    return self.stepTwoSaveProfile.enabled = [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email] && [ShelbyValidationUtility isUsernameValid:username];
+}
 
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -308,5 +359,64 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     return YES;
 }
 
+- (void)dismissImagePicker
+{
+    if (self.popoverVC) {
+        [self.popoverVC dismissPopoverAnimated:YES];
+    } else {
+        self.stepTwoView.alpha = 0;
+        [self.imagePickerVC dismissViewControllerAnimated:YES completion:^{
+            self.stepTwoView.frame = CGRectMake(0, 64, self.stepTwoView.frame.size.width, self.stepTwoView.frame.size.height);
+            self.stepTwoView.alpha = 1;
+        }];
+    }
+}
+
+#pragma mark - UIImagePickerControllerDelegate Methods
+
+// This method is called when an image has been chosen from the library or taken from the camera.
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
+    self.avatarImage.image = image;
+    
+    [self dismissImagePicker];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissImagePicker];
+}
+
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 2) {
+        return;
+    }
+    
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    if (buttonIndex == 1) {
+        // This check for camera is for the Simulator - all iOS6 devices that support iOS6 have camera.
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            sourceType = UIImagePickerControllerSourceTypeCamera;
+        }
+    }
+    
+    self.imagePickerVC = [[UIImagePickerController alloc] init];
+    self.imagePickerVC.sourceType = sourceType;
+    self.imagePickerVC.delegate = self;
+    
+    if (sourceType == UIImagePickerControllerSourceTypeSavedPhotosAlbum) {
+        self.popoverVC = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerVC];
+        [self.popoverVC presentPopoverFromRect:self.avatarImage.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+    } else {
+        self.popoverVC = nil;
+        self.imagePickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+        [self presentViewController:self.imagePickerVC animated:YES completion:nil];
+    }
+}
 
 @end
