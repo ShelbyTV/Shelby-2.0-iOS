@@ -15,9 +15,9 @@
 #define FULLSCREEN_ANIMATION_DURATION 0.75
 #define FULLSCREEN_ANIMATION_DELAY 0.f
 #define FULLSCREEN_ANIMATION_CONTROLS_DELAY 1.0f
-#define FULLSCREEN_ANIMATION_DAMPING .75
-#define FULLSCREEN_ANIMATION_VELOCITY 7.f
-#define FULLSCREEN_ANIMATION_OPTIONS UIViewAnimationCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState
+#define FULLSCREEN_ANIMATION_DAMPING 1.0
+#define FULLSCREEN_ANIMATION_VELOCITY 8.f
+#define FULLSCREEN_ANIMATION_OPTIONS UIViewAnimationCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
 
 @interface ShelbyTopContainerViewController ()
 //container Views
@@ -47,6 +47,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -60,9 +65,39 @@
                                                object:nil];
 }
 
-- (void)dealloc
+- (void)viewDidAppear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    CGPoint navFinalCenter = self.navigationViewContainer.center;
+    CGPoint currentlyOnFinalCenter = self.currentlyOnViewContainer.center;
+    CGPoint videoReelFinalCenter = self.videoReelViewContainer.center;
+    
+    self.navigationViewContainer.center = CGPointMake(-400, navFinalCenter.y);
+    self.currentlyOnViewContainer.center = CGPointMake(-400, currentlyOnFinalCenter.y);
+    self.videoReelViewContainer.center = CGPointMake(2000, videoReelFinalCenter.y);
+    
+    [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION delay:FULLSCREEN_ANIMATION_DELAY usingSpringWithDamping:FULLSCREEN_ANIMATION_DAMPING initialSpringVelocity:FULLSCREEN_ANIMATION_VELOCITY options:UIViewAnimationCurveEaseIn animations:^{
+        
+        self.navigationViewContainer.center = navFinalCenter;
+        self.currentlyOnViewContainer.center = currentlyOnFinalCenter;
+        self.videoReelViewContainer.center = videoReelFinalCenter;
+        
+    } completion:^(BOOL finished) {
+        //?
+    }];
+}
+
+- (void)animateDisappearanceWithCompletion:(void(^)())completion
+{
+    [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION animations:^{
+        self.navigationViewContainer.center = CGPointMake(-400, self.navigationViewContainer.center.y);
+        self.currentlyOnViewContainer.center = CGPointMake(-400, self.currentlyOnViewContainer.center.y);
+        self.videoReelViewContainer.center = CGPointMake(2000, self.videoReelViewContainer.center.y);
+        
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion();
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning

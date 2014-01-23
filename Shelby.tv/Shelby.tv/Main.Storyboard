@@ -53,7 +53,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="Igh-bX-Plx" secondAttribute="centerX" constant="352" id="5os-gV-pIm"/>
                             <constraint firstAttribute="centerY" secondItem="4r1-5u-tvJ" secondAttribute="centerY" constant="-354" id="b7B-ta-YNr"/>
