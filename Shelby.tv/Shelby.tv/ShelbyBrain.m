@@ -234,8 +234,10 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         // Passing delegate to the top level navigation
         self.topContainerVC.masterDelegate = self;
         self.topContainerVC.currentUser = currentUser;
-        //TODO: animate out the self.entranceVC
-        self.mainWindow.rootViewController = self.topContainerVC;
+        [self.entranceVC animateDisappearanceWithCompletion:^{
+            self.mainWindow.rootViewController = self.topContainerVC;
+        }];
+        
     } else {
         rootViewControllerNibName = @"ShelbyHomeView-iPhone";
         self.homeVC = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
@@ -1019,11 +1021,12 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
     if (DEVICE_IPAD) {
-        self.mainStoryboard = nil;
-        self.topContainerVC = nil;
-        //TODO iPad: animate in the entrance VC
-        self.mainWindow.rootViewController = self.entranceVC;
         [ShelbyUserEducationViewController reset];
+        [self.topContainerVC animateDisappearanceWithCompletion:^{
+            self.mainWindow.rootViewController = self.entranceVC;
+            self.mainStoryboard = nil;
+            self.topContainerVC = nil;
+        }];
         
     } else {
         [self.homeVC logoutUser];

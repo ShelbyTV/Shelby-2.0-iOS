@@ -8,11 +8,12 @@
 
 #import "ShelbyUserInfoViewController.h"
 #import "ShelbyBrain.h"
+#import "ShelbyUserFollowingViewController.h"
 #import "User+Helper.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface ShelbyUserInfoViewController ()
-@property (nonatomic, strong) UIViewController *followingVC;
+@property (strong, nonatomic) ShelbyUserFollowingViewController *followingVC;
 @property (nonatomic, strong) IBOutlet UIView *switchContainer;
 @property (nonatomic, strong) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, strong) IBOutlet UILabel *userNickname;
@@ -37,18 +38,45 @@
 {
     [super viewDidLoad];
 
-    self.streamInfoVC.view.frame = CGRectMake(self.streamInfoVC.view.frame.origin.x, self.streamInfoVC.view.frame.origin.y, self.streamInfoVC.view.frame.size.width, self.switchContainer.frame.size.height + 44);
+    //header
+    [self setupUserDisplay];
+    
+    //switcher: video stream
     [self.streamInfoVC willMoveToParentViewController:self];
     [self addChildViewController:self.streamInfoVC];
+    self.streamInfoVC.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.switchContainer addSubview:self.streamInfoVC.view];
+    [self.switchContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stream]|" options:0 metrics:nil views:@{@"stream": self.streamInfoVC.view}]];
+    [self.switchContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[stream]|" options:0 metrics:nil views:@{@"stream": self.streamInfoVC.view}]];
     [self.streamInfoVC didMoveToParentViewController:self];
-    [self setupUserDisplay];
+    
+    //switcher: folowing
+    self.followingVC = [[UIStoryboard storyboardWithName:@"UserFollowing" bundle:nil] instantiateInitialViewController];
+    [self.followingVC willMoveToParentViewController:self];
+    self.followingVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addChildViewController:self.followingVC];
+    [self.switchContainer addSubview:self.followingVC.view];
+    [self.switchContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[following]|" options:0 metrics:nil views:@{@"following": self.followingVC.view}]];
+    [self.switchContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[following]|" options:0 metrics:nil views:@{@"following": self.followingVC.view}]];
+    [self.followingVC didMoveToParentViewController:self];
+    
+    //make sure proper view is on top
+    [self ActivityFollowingToggle:nil];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setUser:(User *)user
+{
+    if (_user != user) {
+        _user = user;
+        [self setupUserDisplay];
+        self.followingVC.user = user;
+    }
 }
 
 - (void)setupStreamInfoDisplayChannel:(DisplayChannel *)displayChannel
@@ -76,9 +104,9 @@
 {
     UISegmentedControl *switcher = (UISegmentedControl *)sender;
     if (switcher.selectedSegmentIndex == 0) {
-        self.switchContainer.backgroundColor = [UIColor redColor];
+        [self.switchContainer insertSubview:self.streamInfoVC.view aboveSubview:self.followingVC.view];
     } else {
-        self.switchContainer.backgroundColor = [UIColor greenColor];
+        [self.switchContainer insertSubview:self.followingVC.view aboveSubview:self.streamInfoVC.view];
     }
 }
 

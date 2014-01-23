@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="getStartedButton" destination="wUN-Df-NI8" id="qGO-WR-cQd"/>
                 <outlet property="loginButton" destination="bsu-Cc-7aT" id="l3E-gB-BRh"/>
+                <outlet property="logo" destination="hL4-Bg-5Sl" id="RQV-m2-k5R"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
         </placeholder>
@@ -40,6 +41,13 @@
                         <action selector="loginTapped:" destination="-1" eventType="touchUpInside" id="GRu-9P-9Nc"/>
                     </connections>
                 </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Shelby" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hL4-Bg-5Sl">
+                    <rect key="frame" x="377" y="211" width="271" height="115"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="85"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>

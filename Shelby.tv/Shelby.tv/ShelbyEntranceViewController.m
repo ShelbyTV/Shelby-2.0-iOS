@@ -10,13 +10,16 @@
 #import "ShelbyDataMediator.h"
 
 @interface ShelbyEntranceViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *logo;
 @property (weak, nonatomic) IBOutlet UIButton *getStartedButton;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-
 @end
 
 @implementation ShelbyEntranceViewController {
     UIAlertView *_alertView;
+    CGPoint _logoOffscreenCenter, _logoFinalCenter,
+            _getStartedButtonOffscreenCenter, _getStartedButtonFinalCenter,
+            _loginButtonOffscreenCenter, _loginButtonFinalCenter;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,13 +43,48 @@
     self.getStartedButton.backgroundColor = kShelbyColorGreen;
     self.loginButton.backgroundColor = kShelbyColorAirPlayBlue;
     
+    //animation before/after positions
+    _logoFinalCenter = self.logo.center;
+    _logoOffscreenCenter = CGPointMake(_logoFinalCenter.x, -500);
+    _getStartedButtonFinalCenter = self.getStartedButton.center;
+    _getStartedButtonOffscreenCenter = CGPointMake(_getStartedButtonFinalCenter.x, 1200);
+    _loginButtonFinalCenter = self.loginButton.center;
+    _loginButtonOffscreenCenter = CGPointMake(_loginButtonFinalCenter.x, 1000);
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     [self setButtonsEnabled:YES];
+    
+    self.logo.center = _logoOffscreenCenter;
+    self.getStartedButton.center = _getStartedButtonOffscreenCenter;
+    self.loginButton.center = _loginButtonOffscreenCenter;
+    
+    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.logo.center = _logoFinalCenter;
+        self.getStartedButton.center = _getStartedButtonFinalCenter;
+        self.loginButton.center = _loginButtonFinalCenter;
+    } completion:^(BOOL finished) {
+        //nothing to do just yet... maybe kick off some continuing animations?
+    }];
+}
+
+- (void)animateDisappearanceWithCompletion:(void (^)())completion
+{
+    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.logo.center = _logoOffscreenCenter;
+        self.getStartedButton.center = _getStartedButtonOffscreenCenter;
+        self.loginButton.center = _loginButtonOffscreenCenter;
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion();
+        }
+    }];
 }
 
 - (BOOL)prefersStatusBarHidden

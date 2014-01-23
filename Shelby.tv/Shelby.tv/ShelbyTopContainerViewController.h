@@ -23,6 +23,9 @@
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, assign) id<ShelbyTopContainerProtocol> masterDelegate;
 
+//affects visuals, you still need to remove view controller from hierarchy
+- (void)animateDisappearanceWithCompletion:(void(^)())completion;
+
 - (void)pushViewController:(UIViewController *)viewController;
 - (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController;
 @end

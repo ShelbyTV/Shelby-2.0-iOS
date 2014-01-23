@@ -14,4 +14,7 @@
 
 @property (weak, nonatomic) ShelbyBrain *brain;
 
+//affects visuals, you still need to remove view controller from hierarchy
+- (void)animateDisappearanceWithCompletion:(void(^)())completion;
+
 @end

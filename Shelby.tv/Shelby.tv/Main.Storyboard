@@ -53,7 +53,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="Igh-bX-Plx" secondAttribute="centerX" constant="352" id="5os-gV-pIm"/>
                             <constraint firstAttribute="centerY" secondItem="4r1-5u-tvJ" secondAttribute="centerY" constant="-354" id="b7B-ta-YNr"/>
@@ -372,13 +372,10 @@
                                     <action selector="ActivityFollowingToggle:" destination="mm2-hC-Yhx" eventType="valueChanged" id="TgX-LA-xFc"/>
                                 </connections>
                             </segmentedControl>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OYj-J5-xH1">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OYj-J5-xH1" userLabel="switcherContainer">
                                 <rect key="frame" x="0.0" y="209" width="320" height="459"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="486" constant="459" id="ZL0-ds-RZV"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

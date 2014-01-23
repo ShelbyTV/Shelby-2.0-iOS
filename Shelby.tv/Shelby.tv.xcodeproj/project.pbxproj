@@ -699,6 +699,12 @@
 		9137187E17DE95200021A99B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187B17DE95140021A99B /* libsqlite3.dylib */; };
 		9137187F17DE95260021A99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187917DE950E0021A99B /* libz.dylib */; };
 		9137188017DE952B0021A99B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187B17DE95140021A99B /* libsqlite3.dylib */; };
+		913AD8781891C4EF00177A25 /* ShelbyUserFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 913AD8771891C4EF00177A25 /* ShelbyUserFollowingViewController.m */; };
+		913AD8791891C4EF00177A25 /* ShelbyUserFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 913AD8771891C4EF00177A25 /* ShelbyUserFollowingViewController.m */; };
+		913AD87A1891C4EF00177A25 /* ShelbyUserFollowingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 913AD8771891C4EF00177A25 /* ShelbyUserFollowingViewController.m */; };
+		913AD87C1891C51B00177A25 /* UserFollowing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913AD87B1891C51B00177A25 /* UserFollowing.storyboard */; };
+		913AD87D1891C51B00177A25 /* UserFollowing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913AD87B1891C51B00177A25 /* UserFollowing.storyboard */; };
+		913AD87E1891C51B00177A25 /* UserFollowing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913AD87B1891C51B00177A25 /* UserFollowing.storyboard */; };
 		913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
 		913D854917CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
 		913D854A17CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
@@ -1286,6 +1292,9 @@
 		9137186F17DE94EF0021A99B /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsSession.h; sourceTree = "<group>"; };
 		9137187917DE950E0021A99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9137187B17DE95140021A99B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		913AD8761891C4EF00177A25 /* ShelbyUserFollowingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyUserFollowingViewController.h; sourceTree = "<group>"; };
+		913AD8771891C4EF00177A25 /* ShelbyUserFollowingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyUserFollowingViewController.m; sourceTree = "<group>"; };
+		913AD87B1891C51B00177A25 /* UserFollowing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserFollowing.storyboard; sourceTree = "<group>"; };
 		913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeLoginView.xib; sourceTree = "<group>"; };
 		913D854B17CEAB0200A6C534 /* WelcomeLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeLoginView.h; sourceTree = "<group>"; };
 		913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeLoginView.m; sourceTree = "<group>"; };
@@ -1561,6 +1570,7 @@
 				9124A697188ECF2100175A9C /* BrowseChannelsHeaderView.xib */,
 				9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */,
 				9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */,
+				913AD87B1891C51B00177A25 /* UserFollowing.storyboard */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -1590,6 +1600,8 @@
 				9124A6A1188EE5F000175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.m */,
 				9124A6A5188F0F0F00175A9C /* ShelbyUserEducationViewController.h */,
 				9124A6A6188F0F0F00175A9C /* ShelbyUserEducationViewController.m */,
+				913AD8761891C4EF00177A25 /* ShelbyUserFollowingViewController.h */,
+				913AD8771891C4EF00177A25 /* ShelbyUserFollowingViewController.m */,
 			);
 			name = "View Controllers - iPad";
 			sourceTree = "<group>";
@@ -2590,6 +2602,7 @@
 				9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 				9137187117DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				1CD8111917CCF6C0002FD84B /* play-all.png in Resources */,
+				913AD87D1891C51B00177A25 /* UserFollowing.storyboard in Resources */,
 				1CD8111C17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				9192ED0617C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				912261D417B97F070092AF30 /* overlay-likers.png in Resources */,
@@ -2717,6 +2730,7 @@
 				9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 				9137187217DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				1CD8111A17CCF6C0002FD84B /* play-all.png in Resources */,
+				913AD87E1891C51B00177A25 /* UserFollowing.storyboard in Resources */,
 				1CD8111D17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				9192ED0717C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				912261D517B97F070092AF30 /* overlay-likers.png in Resources */,
@@ -2841,6 +2855,7 @@
 				9124A6B3188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				1C382561187DE387002177C6 /* Main.Storyboard in Resources */,
 				1CE5585217DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
+				913AD87C1891C51B00177A25 /* UserFollowing.storyboard in Resources */,
 				1C7B63DE178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C7B63F0178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F3178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
@@ -3129,6 +3144,7 @@
 				915ACBC717EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91C4444E18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
+				913AD8791891C4EF00177A25 /* ShelbyUserFollowingViewController.m in Sources */,
 				1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9178C9D317CE375000913256 /* WelcomeViewController.m in Sources */,
@@ -3293,6 +3309,7 @@
 				915ACBC817EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91C4444F18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
+				913AD87A1891C4EF00177A25 /* ShelbyUserFollowingViewController.m in Sources */,
 				1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9178C9D417CE375000913256 /* WelcomeViewController.m in Sources */,
@@ -3457,6 +3474,7 @@
 				915ACBC617EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91C4444D18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
+				913AD8781891C4EF00177A25 /* ShelbyUserFollowingViewController.m in Sources */,
 				1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9178C9D217CE375000913256 /* WelcomeViewController.m in Sources */,
