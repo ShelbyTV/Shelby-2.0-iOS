@@ -44,7 +44,7 @@
                     </items>
                 </navigationBar>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1">
-                    <rect key="frame" x="70" y="130" width="400" height="350"/>
+                    <rect key="frame" x="70" y="110" width="400" height="350"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username / email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cum-Qu-sLC" customClass="STVTextField">
@@ -169,7 +169,7 @@
                 <constraint firstItem="LdX-oR-czC" firstAttribute="top" secondItem="HXj-NV-SDr" secondAttribute="top" id="Dpa-aG-frA"/>
                 <constraint firstAttribute="trailing" secondItem="1" secondAttribute="trailing" constant="70" id="eXn-GF-J6i"/>
                 <constraint firstAttribute="trailing" secondItem="LdX-oR-czC" secondAttribute="trailing" id="jEO-TD-crG"/>
-                <constraint firstItem="1" firstAttribute="top" secondItem="LdX-oR-czC" secondAttribute="bottom" constant="86" id="jPj-q2-gg0"/>
+                <constraint firstItem="1" firstAttribute="top" secondItem="LdX-oR-czC" secondAttribute="bottom" constant="66" id="jPj-q2-gg0"/>
                 <constraint firstItem="1" firstAttribute="leading" secondItem="HXj-NV-SDr" secondAttribute="leading" constant="70" id="qEO-D7-cCt"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
