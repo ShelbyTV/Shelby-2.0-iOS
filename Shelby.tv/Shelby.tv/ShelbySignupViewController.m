@@ -159,7 +159,13 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         if (!error) {
             [weakSelf goToStepTwo];
         } else {
-            // KP KP
+            NSString *errorMessage = nil;
+            if ([error isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *JSONError = (NSDictionary *)error;
+                errorMessage = JSONError[@"message"];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alertView show];
+            }
         }
     }];
 }
