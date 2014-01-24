@@ -26,6 +26,7 @@
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoUsername;
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoName;
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoEmail;
+@property (nonatomic, weak) IBOutlet UITextView *stepTwoBio;
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoPassword;
 @property (nonatomic, weak) IBOutlet UIButton *stepTwoSaveProfile;
 @property (nonatomic, weak) IBOutlet UIImageView *avatarImage;
@@ -92,6 +93,9 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [self.stepTwoName setBackground:textFieldBackground];
     [self.stepTwoPassword setBackground:textFieldBackground];
     [self.stepTwoUsername setBackground:textFieldBackground];
+    
+    self.stepTwoBio.layer.borderColor = kShelbyColorLightGray.CGColor;
+    self.stepTwoBio.layer.borderWidth = 1;
     
     //button backgrounds
     [self.stepOneSignUpWithEmail setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
@@ -196,6 +200,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     self.stepTwoEmail.text = self.currentUser.email;
     self.stepTwoName.text = self.currentUser.name;
     self.stepTwoUsername.text = self.currentUser.nickname;
+    self.stepTwoBio.text = self.currentUser.bio;
     
     if (self.stepOnePassword.text) {
         self.stepTwoPassword.text = self.stepOnePassword.text;
