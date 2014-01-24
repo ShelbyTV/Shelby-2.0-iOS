@@ -14,6 +14,7 @@
 #import "ShelbyNavigationViewController.h"
 #import "ShelbySignupViewController.h"
 #import "ShelbyUserEducationViewController.h"
+#import "ShelbyUserInfoViewController.h"
 #import "SignupHeaderView.h"
 #import "TopLevelNavigationCell.h"
 #import "User+Helper.h"
@@ -55,6 +56,13 @@
     self.headerView.delegate = self;
     
     self.topLevelTable.backgroundColor = kShelbyColorDarkGray;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.topLevelTable reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -123,7 +131,11 @@
         //Me
         DisplayChannel *userStream =  [DisplayChannel fetchChannelWithRollID:self.currentUser.publicRollID
                                                                    inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
+        ShelbyUserInfoViewController *userInfoVC = [ [UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfile"];
+        
+        [(ShelbyNavigationViewController *)self.navigationController pushUserProfileViewController:userInfoVC];
+        userInfoVC.user = self.currentUser;
+        [userInfoVC setupStreamInfoDisplayChannel:userStream];
         
     } else if (indexPath.row == 2) {
         //Explore

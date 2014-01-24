@@ -8,6 +8,7 @@
 
 #import "ShelbyUserInfoViewController.h"
 #import "ShelbyBrain.h"
+#import "ShelbySignupViewController.h"
 #import "ShelbyUserFollowingViewController.h"
 #import "User+Helper.h"
 #import "UIImageView+AFNetworking.h"
@@ -15,6 +16,8 @@
 @interface ShelbyUserInfoViewController ()
 @property (strong, nonatomic) ShelbyUserFollowingViewController *followingVC;
 @property (nonatomic, strong) IBOutlet UIView *switchContainer;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *userInfoContainerTopSpaceConstraint;
+@property (nonatomic, strong) IBOutlet SignupHeaderView *headerView;
 @property (nonatomic, strong) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, strong) IBOutlet UILabel *userNickname;
 @property (nonatomic, strong) IBOutlet UILabel *userName;
@@ -62,6 +65,55 @@
     
     //make sure proper view is on top
     [self ActivityFollowingToggle:nil];
+    
+    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    if ([self.user.userID isEqualToString:currentUser.userID] && [self.user isAnonymousUser]) {
+        self.userInfoContainerTopSpaceConstraint.constant = 100;
+        self.headerView = [[NSBundle mainBundle] loadNibNamed:@"SignupHeaderView" owner:self options:nil][0];
+        self.headerView.delegate = self;
+        self.headerView.frame = CGRectMake(0, 64, 320, 80);
+        [self.view addSubview:self.headerView];
+        [self.view bringSubviewToFront:self.headerView];
+        self.headerView.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerView]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"headerView":self.headerView}]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-64-[headerView(80)]"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"headerView":self.headerView}]];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    if ([self.user.userID isEqualToString:currentUser.userID] && [self.user isAnonymousUser]) {
+        [self.user addObserver:self forKeyPath:@"userType" options:NSKeyValueObservingOptionNew context:nil];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if (self.headerView) {
+        [self.user removeObserver:self forKeyPath:@"userType" context:nil];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (![self.user isAnonymousUser] && self.headerView) {
+        [self.headerView removeFromSuperview];
+        self.headerView = nil;
+        self.userInfoContainerTopSpaceConstraint.constant = 0;
+        [self.user removeObserver:self forKeyPath:@"userType" context:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,4 +179,12 @@
     return self.streamInfoVC.displayChannel;
 }
 
+#pragma mark - SignupHeaderDelegate
+- (void)signupUser
+{
+    ShelbySignupViewController *signupVC = [[ShelbySignupViewController alloc] initWithNibName:@"SignupView-iPad" bundle:nil];
+    signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
+    
+    [((ShelbyNavigationViewController *)self.navigationController) presentViewController:signupVC animated:YES completion:nil];
+}
 @end

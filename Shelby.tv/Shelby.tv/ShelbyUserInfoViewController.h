@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ShelbyStreamInfoViewController.h"
 #import "ShelbyVideoContentBrowsingViewControllerProtocol.h"
+#import "SignupHeaderView.h"
 
-@interface ShelbyUserInfoViewController : UIViewController <ShelbyVideoContentBrowsingViewControllerProtocol>
+@interface ShelbyUserInfoViewController : UIViewController <ShelbyVideoContentBrowsingViewControllerProtocol, SignupHeaderDelegate>
 @property (nonatomic, strong) ShelbyStreamInfoViewController *streamInfoVC;
 @property (nonatomic, strong) User *user;
 
