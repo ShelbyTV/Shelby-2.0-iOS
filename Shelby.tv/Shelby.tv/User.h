@@ -2,8 +2,8 @@
 //  User.h
 //  Shelby.tv
 //
-//  Created by Keren on 12/27/13.
-//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
+//  Created by Keren on 1/24/14.
+//  Copyright (c) 2014 Shelby TV, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -33,6 +33,7 @@
 @property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSString * userImage;
 @property (nonatomic, retain) NSNumber * userType;
+@property (nonatomic, retain) NSString * bio;
 @property (nonatomic, retain) NSSet *dashboardEntriesFromActions;
 @property (nonatomic, retain) NSSet *frames;
 @property (nonatomic, retain) NSSet *upvoted;

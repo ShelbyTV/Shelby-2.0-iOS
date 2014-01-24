@@ -77,6 +77,10 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         user.hasShelbyAvatar = dict[@"has_shelby_avatar"];
     }
     
+    NSString *bio = [dict[@"dot_tv_description"] nilOrSelfWhenNotNull];
+    if (bio) {
+        user.bio = bio;
+    }
 
     //auths
     NSArray *authentications = dict[@"authentications"];

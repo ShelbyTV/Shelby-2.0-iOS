@@ -336,6 +336,9 @@
 		1CCAC9D71848F128008E603C /* ShelbyUserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCAC9D61848F128008E603C /* ShelbyUserProfileCell.m */; };
 		1CCAC9D81848F128008E603C /* ShelbyUserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCAC9D61848F128008E603C /* ShelbyUserProfileCell.m */; };
 		1CCAC9D91848F128008E603C /* ShelbyUserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCAC9D61848F128008E603C /* ShelbyUserProfileCell.m */; };
+		1CCC4B6018931CC00073A3D3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCC4B5F18931CC00073A3D3 /* User.m */; };
+		1CCC4B6118931CC00073A3D3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCC4B5F18931CC00073A3D3 /* User.m */; };
+		1CCC4B6218931CC00073A3D3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCC4B5F18931CC00073A3D3 /* User.m */; };
 		1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB55116D2A33600C8C216 /* PageControl.m */; };
 		1CCE4C4C17E226F700F0BF5A /* user_default_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CCE4C4A17E226F700F0BF5A /* user_default_avatar.png */; };
 		1CCE4C4D17E226F700F0BF5A /* user_default_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CCE4C4A17E226F700F0BF5A /* user_default_avatar.png */; };
@@ -487,9 +490,6 @@
 		1CFEB3B0186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
 		1CFEB3B1186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
 		1CFEB3B2186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
-		1CFEB3BF186E12BF00179AE2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFEB3BE186E12BF00179AE2 /* User.m */; };
-		1CFEB3C0186E12BF00179AE2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFEB3BE186E12BF00179AE2 /* User.m */; };
-		1CFEB3C1186E12BF00179AE2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFEB3BE186E12BF00179AE2 /* User.m */; };
 		26C937AA2557465EA2344250 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
 		2FBF3481B7434BDFACD6A5AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
@@ -1050,7 +1050,7 @@
 		1CA34E541892C79400A168D1 /* SignupHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupHeaderView.xib; sourceTree = "<group>"; };
 		1CA34E581892C7FE00A168D1 /* SignupHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupHeaderView.h; sourceTree = "<group>"; };
 		1CA34E591892C7FE00A168D1 /* SignupHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupHeaderView.m; sourceTree = "<group>"; };
-		1CA34E5D18931C3F00A168D1 /* Shelby 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shelby 9.xcdatamodel"; sourceTree = "<group>"; };
+		1CA34E5D18931C3F00A168D1 /* Shelby 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 9.xcdatamodel"; sourceTree = "<group>"; };
 		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1CACC0AE17287276007EDD65 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1CB708F818622EB600D1C803 /* Shelby 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 8.xcdatamodel"; sourceTree = "<group>"; };
@@ -1070,6 +1070,8 @@
 		1CCAC9D11848F0DC008E603C /* ShelbyUserProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyUserProfileCell.xib; sourceTree = "<group>"; };
 		1CCAC9D51848F128008E603C /* ShelbyUserProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyUserProfileCell.h; sourceTree = "<group>"; };
 		1CCAC9D61848F128008E603C /* ShelbyUserProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyUserProfileCell.m; sourceTree = "<group>"; };
+		1CCC4B5E18931CC00073A3D3 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		1CCC4B5F18931CC00073A3D3 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		1CCCB55016D2A33500C8C216 /* PageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageControl.h; sourceTree = "<group>"; };
 		1CCCB55116D2A33600C8C216 /* PageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PageControl.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1CCE4C4A17E226F700F0BF5A /* user_default_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user_default_avatar.png; path = ../user_default_avatar.png; sourceTree = "<group>"; };
@@ -1132,8 +1134,6 @@
 		1CFEB3AA186DF63F00179AE2 /* UserPreferencesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreferencesCell.h; sourceTree = "<group>"; };
 		1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreferencesCell.m; sourceTree = "<group>"; };
 		1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserPreferencesViewCell.xib; sourceTree = "<group>"; };
-		1CFEB3BD186E12BF00179AE2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		1CFEB3BE186E12BF00179AE2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		4CBDF08619EE4AFB90D8FDD2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0132D916A7CC9C00195D9A /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
@@ -1858,8 +1858,6 @@
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				1CFEB3BD186E12BF00179AE2 /* User.h */,
-				1CFEB3BE186E12BF00179AE2 /* User.m */,
 				1CB709081862320B00D1C803 /* DashboardEntry.h */,
 				1CB709091862320B00D1C803 /* DashboardEntry.m */,
 				91C4444B18576B6F00A8F438 /* Video.h */,
@@ -1871,6 +1869,8 @@
 				91E5D461174E938100AD3746 /* Roll.h */,
 				91E5D462174E938100AD3746 /* Roll.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				1CCC4B5E18931CC00073A3D3 /* User.h */,
+				1CCC4B5F18931CC00073A3D3 /* User.m */,
 				91F655B91864F01A000B9843 /* DisplayChannel.h */,
 				91F655BA1864F01A000B9843 /* DisplayChannel.m */,
 				915ACBC417EB52DE00FA3EFF /* Conversation.h */,
@@ -3147,9 +3147,9 @@
 				1C38258D187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */,
 				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
+				1CCC4B6118931CC00073A3D3 /* User.m in Sources */,
 				1C100DD9185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
 				91D03F531733149F008131D2 /* Messages.m in Sources */,
-				1CFEB3C0186E12BF00179AE2 /* User.m in Sources */,
 				91D03F581733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F67173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F711733201A008131D2 /* Conversation+Helper.m in Sources */,
@@ -3313,9 +3313,9 @@
 				1C38258E187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */,
 				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
+				1CCC4B6218931CC00073A3D3 /* User.m in Sources */,
 				1C100DDA185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
 				91D03F541733149F008131D2 /* Messages.m in Sources */,
-				1CFEB3C1186E12BF00179AE2 /* User.m in Sources */,
 				91D03F591733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F68173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F721733201A008131D2 /* Conversation+Helper.m in Sources */,
@@ -3479,9 +3479,9 @@
 				1C38258C187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */,
 				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
+				1CCC4B6018931CC00073A3D3 /* User.m in Sources */,
 				1C100DD8185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
 				91D03F521733149F008131D2 /* Messages.m in Sources */,
-				1CFEB3BF186E12BF00179AE2 /* User.m in Sources */,
 				91D03F571733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F66173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F701733201A008131D2 /* Conversation+Helper.m in Sources */,

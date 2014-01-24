@@ -2,8 +2,8 @@
 //  User.m
 //  Shelby.tv
 //
-//  Created by Keren on 12/27/13.
-//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
+//  Created by Keren on 1/24/14.
+//  Copyright (c) 2014 Shelby TV, Inc. All rights reserved.
 //
 
 #import "User.h"
@@ -33,6 +33,7 @@
 @dynamic userID;
 @dynamic userImage;
 @dynamic userType;
+@dynamic bio;
 @dynamic dashboardEntriesFromActions;
 @dynamic frames;
 @dynamic upvoted;

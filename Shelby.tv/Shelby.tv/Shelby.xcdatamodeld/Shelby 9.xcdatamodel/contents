@@ -97,6 +97,7 @@
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="admin" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="facebookName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="facebookNickname" optional="YES" attributeType="String" syncable="YES"/>
