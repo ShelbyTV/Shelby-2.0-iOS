@@ -14,12 +14,15 @@
 #import "ShelbyNavigationViewController.h"
 #import "ShelbySignupViewController.h"
 #import "ShelbyUserEducationViewController.h"
+#import "SignupHeaderView.h"
 #import "TopLevelNavigationCell.h"
+#import "User+Helper.h"
 
 @interface ShelbyTopLevelNavigationViewController ()
 @property (nonatomic, weak) IBOutlet UITableView *topLevelTable;
 @property (nonatomic, strong) SettingsViewController *settingsVC;
 @property (nonatomic, strong) ShelbyNotificationCenterViewController *notificationCenterVC;
+@property (nonatomic, strong) SignupHeaderView *headerView;
 @end
 
 
@@ -47,6 +50,9 @@
     
     self.notificationCenterVC = [[ShelbyNotificationCenterViewController alloc] initWithNibName:@"ShelbyNotificationCenterView" bundle:nil];
     self.notificationCenterVC.delegate = self;
+
+    self.headerView = [[NSBundle mainBundle] loadNibNamed:@"SignupHeaderView" owner:self options:nil][0];
+    self.headerView.delegate = self;
     
     self.topLevelTable.backgroundColor = kShelbyColorDarkGray;
 }
@@ -61,8 +67,8 @@
 {
     if (_currentUser != currentUser) {
         _currentUser = currentUser;
-        [self.topLevelTable reloadData];
     }
+    [self.topLevelTable reloadData];
 }
 
 - (void)fetchNotificationEntriesDidCompletelNotification:(NSNotification *)notification
@@ -145,6 +151,19 @@
     [self.topLevelTable deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if ([self.currentUser isAnonymousUser]) {
+        return 80.0;
+    } else {
+        return 0;
+    }
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return self.headerView;
+}
+
 - (void)goToFeaturedChannel
 {
     DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
@@ -194,5 +213,15 @@
 - (void)videoWasTapped:(NSString *)videoID
 {
 //    [((ShelbyNavigationViewController *)self.navigationController).topContainerDelegate  openVideoViewForDashboardID:videoID];
+}
+
+#pragma mark - SignupHeaderDelegate
+- (void)signupUser
+{
+    ShelbySignupViewController *signupVC = [[ShelbySignupViewController alloc] initWithNibName:@"SignupView-iPad" bundle:nil];
+    signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
+
+    [((ShelbyNavigationViewController *)self.navigationController) presentViewController:signupVC animated:YES completion:nil];
+    
 }
 @end

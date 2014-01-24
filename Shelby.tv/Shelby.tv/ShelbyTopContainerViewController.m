@@ -190,8 +190,9 @@
 {
     if (_currentUser != currentUser) {
         _currentUser = currentUser;
-        self.sideNavigationVC.currentUser = currentUser;
     }
+
+    self.sideNavigationVC.currentUser = currentUser;
 }
 
 #pragma mark - ShelbyNavigationProtocol

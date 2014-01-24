@@ -49,11 +49,11 @@
 {
     if (_currentUser != currentUser) {
         _currentUser = currentUser;
-    
-        ShelbyTopLevelNavigationViewController *topLevelNavigationVC = (ShelbyTopLevelNavigationViewController *)self.topViewController;
-        if ([topLevelNavigationVC respondsToSelector:@selector(currentUser)]) {
-            topLevelNavigationVC.currentUser = self.currentUser;
-        }
+    }
+    // Passing the current user down the chain, even if it is the same user. (As the user_type might have changed)
+    ShelbyTopLevelNavigationViewController *topLevelNavigationVC = (ShelbyTopLevelNavigationViewController *)self.topViewController;
+    if ([topLevelNavigationVC respondsToSelector:@selector(currentUser)]) {
+        topLevelNavigationVC.currentUser = self.currentUser;
     }
 }
 

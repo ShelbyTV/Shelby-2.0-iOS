@@ -40,6 +40,7 @@
 - (BOOL)isFacebookConnected;
 - (BOOL)isNonShelbyFacebookUser;
 - (BOOL)isNonShelbyTwitterUser;
+- (BOOL)isAnonymousUser;
 
 - (BOOL)hasLikedVideoOfFrame:(Frame *)frame;
 - (Frame *)likedFrameWithVideoOfFrame:(Frame *)frame;

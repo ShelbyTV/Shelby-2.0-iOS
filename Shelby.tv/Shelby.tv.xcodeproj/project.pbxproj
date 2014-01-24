@@ -297,6 +297,12 @@
 		1CA191531774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA191521774DE360039358B /* ShelbyStreamBrowseViewCell.m */; };
 		1CA191541774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA191521774DE360039358B /* ShelbyStreamBrowseViewCell.m */; };
 		1CA191551774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA191521774DE360039358B /* ShelbyStreamBrowseViewCell.m */; };
+		1CA34E551892C79400A168D1 /* SignupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CA34E541892C79400A168D1 /* SignupHeaderView.xib */; };
+		1CA34E561892C79400A168D1 /* SignupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CA34E541892C79400A168D1 /* SignupHeaderView.xib */; };
+		1CA34E571892C79400A168D1 /* SignupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CA34E541892C79400A168D1 /* SignupHeaderView.xib */; };
+		1CA34E5A1892C7FE00A168D1 /* SignupHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA34E591892C7FE00A168D1 /* SignupHeaderView.m */; };
+		1CA34E5B1892C7FE00A168D1 /* SignupHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA34E591892C7FE00A168D1 /* SignupHeaderView.m */; };
+		1CA34E5C1892C7FE00A168D1 /* SignupHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA34E591892C7FE00A168D1 /* SignupHeaderView.m */; };
 		1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
 		1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
 		1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
@@ -1041,6 +1047,9 @@
 		1CA191451774DD440039358B /* ShelbyStreamBrowseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamBrowseView.xib; sourceTree = "<group>"; };
 		1CA191511774DE360039358B /* ShelbyStreamBrowseViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyStreamBrowseViewCell.h; sourceTree = "<group>"; };
 		1CA191521774DE360039358B /* ShelbyStreamBrowseViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyStreamBrowseViewCell.m; sourceTree = "<group>"; };
+		1CA34E541892C79400A168D1 /* SignupHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupHeaderView.xib; sourceTree = "<group>"; };
+		1CA34E581892C7FE00A168D1 /* SignupHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupHeaderView.h; sourceTree = "<group>"; };
+		1CA34E591892C7FE00A168D1 /* SignupHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupHeaderView.m; sourceTree = "<group>"; };
 		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1CACC0AE17287276007EDD65 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1CB708F818622EB600D1C803 /* Shelby 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 8.xcdatamodel"; sourceTree = "<group>"; };
@@ -1571,6 +1580,7 @@
 				9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */,
 				9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */,
 				913AD87B1891C51B00177A25 /* UserFollowing.storyboard */,
+				1CA34E541892C79400A168D1 /* SignupHeaderView.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -1612,6 +1622,8 @@
 				1C38255F187DE373002177C6 /* Xib-iPad */,
 				9124A67E188D903100175A9C /* BrowseChannelsTableViewController.h */,
 				9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */,
+				1CA34E581892C7FE00A168D1 /* SignupHeaderView.h */,
+				1CA34E591892C7FE00A168D1 /* SignupHeaderView.m */,
 				9124A69B188ED0D500175A9C /* BrowseChannelsHeaderView.h */,
 				9124A69C188ED0D500175A9C /* BrowseChannelsHeaderView.m */,
 				1C38258A187F3F37002177C6 /* ShelbyStreamEntryCell.h */,
@@ -2647,6 +2659,7 @@
 				9124A6B0188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
 				1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
+				1CA34E561892C79400A168D1 /* SignupHeaderView.xib in Resources */,
 				1C534E3E17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
 				1CD8112617CCFCDF002FD84B /* logo-tv.png in Resources */,
 				1C100DD4185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */,
@@ -2775,6 +2788,7 @@
 				9124A6B1188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
 				1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
+				1CA34E571892C79400A168D1 /* SignupHeaderView.xib in Resources */,
 				1C534E3F17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
 				1CD8112717CCFCDF002FD84B /* logo-tv.png in Resources */,
 				1C100DD5185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */,
@@ -2857,6 +2871,7 @@
 				1CE5585217DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				913AD87C1891C51B00177A25 /* UserFollowing.storyboard in Resources */,
 				1C7B63DE178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
+				1CA34E551892C79400A168D1 /* SignupHeaderView.xib in Resources */,
 				1C7B63F0178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F3178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
 				1CC5763C178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
@@ -3150,6 +3165,7 @@
 				9178C9D317CE375000913256 /* WelcomeViewController.m in Sources */,
 				910933091743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				9124A681188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
+				1CA34E5B1892C7FE00A168D1 /* SignupHeaderView.m in Sources */,
 				9124A6BA1890512B00175A9C /* ShelbyEntranceViewController.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
@@ -3315,6 +3331,7 @@
 				9178C9D417CE375000913256 /* WelcomeViewController.m in Sources */,
 				9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				9124A682188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
+				1CA34E5C1892C7FE00A168D1 /* SignupHeaderView.m in Sources */,
 				9124A6BB1890512B00175A9C /* ShelbyEntranceViewController.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
@@ -3480,6 +3497,7 @@
 				9178C9D217CE375000913256 /* WelcomeViewController.m in Sources */,
 				910933081743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				9124A680188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
+				1CA34E5A1892C7FE00A168D1 /* SignupHeaderView.m in Sources */,
 				9124A6B91890512B00175A9C /* ShelbyEntranceViewController.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
