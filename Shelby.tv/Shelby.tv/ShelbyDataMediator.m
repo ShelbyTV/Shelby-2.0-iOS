@@ -875,10 +875,9 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 }
 
 #pragma mark - Roll Followings
-- (void)updateRollFollowingsForCurrentUser
+- (void)fetchRollFollowingsForUser:(User *)user withCompletion:(void (^)(User *user, NSArray *rawRollFollowings, NSError *error))completion
 {
-    User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
-    STVAssert(user.token, @"expect user to have token (so we can fetch roll followings)");
+    NSParameterAssert(user);
     
     [ShelbyAPIClient fetchRollFollowingsForUser:user withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
         if (JSON && JSON[@"result"] && [JSON[@"result"] isKindOfClass:[NSArray class]]) {
@@ -887,10 +886,23 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             NSError *err;
             [user.managedObjectContext save:&err];
             STVDebugAssert(!err, @"context save failed on roll followings fetch");
+            if (completion) {
+                completion(user, JSON[@"result"], error);
+            }
         } else {
-            //TODO: try to reschedule this smartly
+            if (completion) {
+                completion(user, nil, error);
+            }
         }
     }];
+}
+
+- (void)updateRollFollowingsForCurrentUser
+{
+    User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
+    STVAssert(user.token, @"expect user to have token (so we can fetch roll followings)");
+    
+    [self fetchRollFollowingsForUser:user withCompletion:nil];
 }
 
 - (void)followRoll:(NSString *)rollID
