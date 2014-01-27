@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 
+//TODO: rename this protocol now that we're sharing it or refactor
+@protocol ShelbyStreamInfoProtocol;
+
 @interface ShelbyUserFollowingViewController : UITableViewController
 
 @property (strong, nonatomic) User *user;
+
+@property (nonatomic, assign) id<ShelbyStreamInfoProtocol> delegate;
 
 @end

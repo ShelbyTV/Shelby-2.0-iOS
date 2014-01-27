@@ -14,7 +14,6 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface ShelbyUserInfoViewController ()
-@property (strong, nonatomic) ShelbyUserFollowingViewController *followingVC;
 @property (nonatomic, strong) IBOutlet UIView *switchContainer;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *userInfoContainerTopSpaceConstraint;
 @property (nonatomic, strong) IBOutlet SignupHeaderView *headerView;
@@ -54,7 +53,6 @@
     [self.streamInfoVC didMoveToParentViewController:self];
     
     //switcher: folowing
-    self.followingVC = [[UIStoryboard storyboardWithName:@"UserFollowing" bundle:nil] instantiateInitialViewController];
     [self.followingVC willMoveToParentViewController:self];
     self.followingVC.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addChildViewController:self.followingVC];
@@ -62,6 +60,7 @@
     [self.switchContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[following]|" options:0 metrics:nil views:@{@"following": self.followingVC.view}]];
     [self.switchContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[following]|" options:0 metrics:nil views:@{@"following": self.followingVC.view}]];
     [self.followingVC didMoveToParentViewController:self];
+    self.followingVC.user = self.user;
     
     //make sure proper view is on top
     [self ActivityFollowingToggle:nil];

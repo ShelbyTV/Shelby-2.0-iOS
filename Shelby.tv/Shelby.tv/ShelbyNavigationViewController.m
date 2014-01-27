@@ -10,6 +10,7 @@
 #import "Dashboard.h"
 #import "Roll.h"
 #import "ShelbyTopLevelNavigationViewController.h"
+#import "ShelbyUserFollowingViewController.h"
 #import "ShelbyVideoContentBrowsingViewControllerProtocol.h"
 
 @interface ShelbyNavigationViewController ()
@@ -88,6 +89,7 @@
 - (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController
 {
     viewController.streamInfoVC = [self setupStreamInfoViewControllerWithChannel:nil];
+    viewController.followingVC = [self setupUserFollowingViewController];
     [self pushViewController:viewController];
 }
 
@@ -99,6 +101,14 @@
     streamInfoVC.delegate = self;
 
     return streamInfoVC;
+}
+
+- (ShelbyUserFollowingViewController *)setupUserFollowingViewController
+{
+    ShelbyUserFollowingViewController *followingVC = [[UIStoryboard storyboardWithName:@"UserFollowing" bundle:nil] instantiateInitialViewController];
+    followingVC.delegate = self;
+    
+    return followingVC;
 }
 
 - (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel

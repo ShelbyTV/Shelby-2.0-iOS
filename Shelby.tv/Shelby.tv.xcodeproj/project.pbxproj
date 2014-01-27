@@ -747,6 +747,9 @@
 		91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
+		916BABF11896EF1B0086A22D /* UserFollowingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BABF01896EF1B0086A22D /* UserFollowingCell.m */; };
+		916BABF21896EF1B0086A22D /* UserFollowingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BABF01896EF1B0086A22D /* UserFollowingCell.m */; };
+		916BABF31896EF1B0086A22D /* UserFollowingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BABF01896EF1B0086A22D /* UserFollowingCell.m */; };
 		916F41A21798A795001D9DF7 /* STVTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A11798A795001D9DF7 /* STVTextField.m */; };
 		916F41A31798A795001D9DF7 /* STVTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A11798A795001D9DF7 /* STVTextField.m */; };
 		916F41A41798A795001D9DF7 /* STVTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A11798A795001D9DF7 /* STVTextField.m */; };
@@ -1330,6 +1333,8 @@
 		91649ECB1741B1A000A9265B /* DeduplicationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeduplicationUtility.h; sourceTree = "<group>"; };
 		91649ECC1741B1A000A9265B /* DeduplicationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeduplicationUtility.m; sourceTree = "<group>"; };
 		91649ED017426FB800A9265B /* ShelbyDuplicateContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDuplicateContainer.h; sourceTree = "<group>"; };
+		916BABEF1896EF1B0086A22D /* UserFollowingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFollowingCell.h; sourceTree = "<group>"; };
+		916BABF01896EF1B0086A22D /* UserFollowingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFollowingCell.m; sourceTree = "<group>"; };
 		916F41A01798A795001D9DF7 /* STVTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVTextField.h; sourceTree = "<group>"; };
 		916F41A11798A795001D9DF7 /* STVTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVTextField.m; sourceTree = "<group>"; };
 		916F41A51798B450001D9DF7 /* LoginNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNavigationViewController.h; sourceTree = "<group>"; };
@@ -1640,6 +1645,8 @@
 				9124A684188DAB0F00175A9C /* BrowseChannelCell.m */,
 				9124A688188DDA4300175A9C /* TopLevelNavigationCell.h */,
 				9124A689188DDA4300175A9C /* TopLevelNavigationCell.m */,
+				916BABEF1896EF1B0086A22D /* UserFollowingCell.h */,
+				916BABF01896EF1B0086A22D /* UserFollowingCell.m */,
 			);
 			name = "Views - iPad";
 			sourceTree = "<group>";
@@ -3190,6 +3197,7 @@
 				1CA191541774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE074F1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				1CDB27DE18453D2C008E1C36 /* ShelbyUserProfileViewController.m in Sources */,
+				916BABF21896EF1B0086A22D /* UserFollowingCell.m in Sources */,
 				9119AB74178211D6001C9190 /* VideoControlsViewController.m in Sources */,
 				910F5B87188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */,
 				9119AB7917821A5C001C9190 /* VideoControlsView.m in Sources */,
@@ -3356,6 +3364,7 @@
 				1CA191551774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE07501779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				1CDB27DF18453D2C008E1C36 /* ShelbyUserProfileViewController.m in Sources */,
+				916BABF31896EF1B0086A22D /* UserFollowingCell.m in Sources */,
 				9119AB75178211D6001C9190 /* VideoControlsViewController.m in Sources */,
 				910F5B88188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */,
 				9119AB7A17821A5C001C9190 /* VideoControlsView.m in Sources */,
@@ -3522,6 +3531,7 @@
 				1CA191531774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE074E1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				1CDB27DD18453D2C008E1C36 /* ShelbyUserProfileViewController.m in Sources */,
+				916BABF11896EF1B0086A22D /* UserFollowingCell.m in Sources */,
 				9119AB73178211D6001C9190 /* VideoControlsViewController.m in Sources */,
 				910F5B86188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */,
 				9119AB7817821A5C001C9190 /* VideoControlsView.m in Sources */,

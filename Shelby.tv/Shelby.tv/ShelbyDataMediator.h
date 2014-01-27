@@ -114,6 +114,9 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 - (void)inviteFacebookFriends;
 
 // Roll Followings
+//updates the roll followings in the given User model and returns the raw
+//roll following data (not persisted/transformed from parsed JSON).
+- (void)fetchRollFollowingsForUser:(User *)user withCompletion:(void (^)(User *user, NSArray *rawRollFollowings, NSError *error))completion;
 - (void)updateRollFollowingsForCurrentUser;
 - (void)followRoll:(NSString *)rollID;
 - (void)unfollowRoll:(NSString *)rollID;

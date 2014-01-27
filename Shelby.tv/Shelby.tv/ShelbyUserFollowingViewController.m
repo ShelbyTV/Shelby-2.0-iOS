@@ -7,9 +7,14 @@
 //
 
 #import "ShelbyUserFollowingViewController.h"
+#import "ShelbyDataMediator.h"
+#import "ShelbyStreamInfoViewController.h"
+#import "User+Helper.h"
+#import "UserFollowingCell.h"
 
 @interface ShelbyUserFollowingViewController ()
-
+@property (strong, nonatomic) NSArray *rawRollFollowings;
+@property (strong, nonatomic) UIActivityIndicatorView *spinner;
 @end
 
 @implementation ShelbyUserFollowingViewController
@@ -26,12 +31,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.spinner = ({
+        UIActivityIndicatorView *v = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        v.hidesWhenStopped = YES;
+        [v startAnimating];
+        v;
+    });
+    [self.view addSubview:self.spinner];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.spinner.center = CGPointMake(self.view.bounds.size.width/2.f, -20);
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,86 +60,59 @@
     if (_user != user) {
         _user = user;
         
-        //TODO: kick off a request for followings
-        //TODO: update our private data model when it returns and reload table view
+        if (user){
+            self.tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
+            [self.spinner startAnimating];
+            [[ShelbyDataMediator sharedInstance] fetchRollFollowingsForUser:user withCompletion:^(User *user, NSArray *rawRollFollowings, NSError *error) {
+                if (!error) {
+                    self.rawRollFollowings = rawRollFollowings;
+                    [self.tableView reloadData];
+                } else {
+                    DLog(@"ERROR on roll following fetch %@", error);
+                }
+                [self.spinner stopAnimating];
+                [self.tableView setContentInset:UIEdgeInsetsZero];
+            }];
+        }
     }
+}
+
+- (void)setRawRollFollowings:(NSArray *)rawRollFollowings
+{
+    NSMutableDictionary *uniqueFollowings = [[NSMutableDictionary alloc] initWithCapacity:[rawRollFollowings count]];
+    for (NSDictionary *rollInfo in rawRollFollowings) {
+        if (rollInfo[@"creator_id"] && rollInfo[@"creator_nickname"]) {
+            uniqueFollowings[rollInfo[@"creator_id"]] = rollInfo;
+        }
+    }
+    _rawRollFollowings = [uniqueFollowings allValues];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return self.rawRollFollowings.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"UserFollowingCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    UserFollowingCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.rollFollowing = self.rawRollFollowings[indexPath.row];
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - UITableViewCellDelegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    [self.delegate userProfileWasTapped:self.rawRollFollowings[indexPath.row][@"creator_id"]];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 @end
