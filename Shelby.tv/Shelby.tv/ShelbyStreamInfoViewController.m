@@ -102,6 +102,9 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 {
     if (self.displayChannel == nil) {
         _displayChannel = displayChannel;
+        if (self.singleVideoEntry) {
+            return;
+        }
         [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:displayChannel sinceEntry:nil];
     } else {
         STVDebugAssert(NO, @"changing display channel not implemented");
@@ -148,6 +151,10 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 
 - (void)fetchEntriesDidCompleteForChannelNotification:(NSNotification *)notification
 {
+    if (self.singleVideoEntry) {
+        return; // should only have one video
+    }
+    
     NSDictionary *userInfo = notification.userInfo;
     DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
     if (channel != self.displayChannel) {
@@ -327,6 +334,12 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     } else {
         //fetch requested via non-user mechanism (ie. -[setDisplayChannel:])
     }
+}
+
+- (void)setSingleVideoEntry:(NSArray *)singleVideoEntry
+{
+    _singleVideoEntry = singleVideoEntry;
+    self.deduplicatedEntries = self.singleVideoEntry;
 }
 
 #pragma mark - Entries Helpers (set & merge entries)

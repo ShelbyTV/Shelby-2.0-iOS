@@ -20,6 +20,7 @@
 
 @interface ShelbyStreamInfoViewController : UIViewController <ShelbyStreamEntryProtocol, UITableViewDataSource, UITableViewDelegate, ShelbyVideoContentBrowsingViewControllerProtocol>
 @property (nonatomic, strong) DisplayChannel *displayChannel;
+@property (nonatomic, strong) NSArray *singleVideoEntry;
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, assign) id<ShelbyStreamInfoProtocol> delegate;
 @property (strong, nonatomic) ShelbyUserEducationViewController *userEducationVC;

@@ -8,6 +8,7 @@
 
 #import "ShelbyTopLevelNavigationViewController.h"
 #import "BrowseChannelsTableViewController.h"
+#import "DashboardEntry+Helper.h"
 #import "DisplayChannel+Helper.h"
 #import "ShelbyBrain.h"
 #import "ShelbyDataMediator.h"
@@ -224,7 +225,17 @@
 
 - (void)videoWasTapped:(NSString *)videoID
 {
-//    [((ShelbyNavigationViewController *)self.navigationController).topContainerDelegate  openVideoViewForDashboardID:videoID];
+    [[ShelbyDataMediator sharedInstance] fetchDashboardEntryWithID:videoID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(DashboardEntry *fetchedDashboardEntry) {
+        
+        if (fetchedDashboardEntry) {
+            DisplayChannel *displayChannel =  [DisplayChannel channelForTransientEntriesWithID:videoID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+            displayChannel.dashboard = fetchedDashboardEntry.dashboard;
+            displayChannel.shouldFetchRemoteEntries = NO;
+            ShelbyStreamInfoViewController *videoStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:displayChannel];
+            videoStreamVC.singleVideoEntry = @[fetchedDashboardEntry];
+            videoStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
+        }
+    }];
 }
 
 #pragma mark - SignupHeaderDelegate
