@@ -96,7 +96,7 @@ static BOOL videoHasPlayed = NO;
         return;
     }
     
-    self.view.center = CGPointMake(self.view.center.x + referenceViewFrame.size.width, referenceViewFrame.size.height / 2.0 + referenceViewFrame.origin.y);
+    self.view.center = CGPointMake(self.view.center.x + referenceViewFrame.size.width, self.view.center.y);
     
     [UIView animateWithDuration:.5 animations:^{
         self.view.alpha = 1.0f;
