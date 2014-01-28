@@ -63,9 +63,6 @@
         likerImageView.layer.masksToBounds = YES;
     }
     
-    self.userAvatar.layer.cornerRadius = self.userAvatar.frame.size.height / 2;
-    self.userAvatar.layer.masksToBounds = YES;
-    
     [self deselectStreamEntry];
     
     self.likerImageViews = likerViews;
@@ -98,11 +95,14 @@
     }];
     
     NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
-    [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avarar-med"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         weakSelf.userAvatar.image = image;
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         
     }];
+    
+    self.userAvatar.layer.cornerRadius = self.userAvatar.frame.size.height / 2;
+    self.userAvatar.layer.masksToBounds = YES;
 }
 
 //- (void)observeValueForKeyPath:(NSString *)keyPath
@@ -138,7 +138,7 @@
         self.detailNoLikersLabel.hidden = YES;
         for (NSUInteger i = 0; i < MIN([self.likers count], [self.likerImageViews count]); i++) {
             User *liker = self.likers[i];
-            [((UIImageView *)self.likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
+            [((UIImageView *)self.likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank-small"]];
         }
     } else if ([self.videoFrame.video.trackedLikerCount intValue]) {
         self.detailNoLikersLabel.hidden = NO;
