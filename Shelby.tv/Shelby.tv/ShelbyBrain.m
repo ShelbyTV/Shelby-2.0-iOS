@@ -104,6 +104,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
             [self setCurrentUser:currentUser];
             [self activateHomeViewController];
             [self fetchUserChannelsForceSwitchToUsersStream:YES];
+            self.mainWindow.rootViewController = self.topContainerVC;
         } else {
             self.mainWindow.rootViewController = self.entranceVC;
         }
