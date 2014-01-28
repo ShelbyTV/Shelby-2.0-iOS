@@ -21,6 +21,12 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 
 @interface ShelbyAPIClient : NSObject
 
+// -- Session
+// Cancels pending operations, clears cookies and hits the logout route.
+// Works even if user isn't authenticated
+//NB: this method waits for logout call to return
++ (void)synchronousLogout;
+
 // -- User
 + (void)postCreateAnonymousUser:(shelby_api_request_complete_block_t)completionBlock;
 

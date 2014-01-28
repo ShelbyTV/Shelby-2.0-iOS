@@ -32,6 +32,7 @@ NSString * const kShelbyAPIGetRollsUserFollows =            @"v1/user/%@/rolls/f
 NSString * const kShelbyAPIGetAllLikersOfVideo =            @"v1/video/%@/likers";
 NSString * const kShelbyAPIGetFramePath =                   @"v1/frame/%@?include_children=true";
 NSString * const kShelbyAPIGetDashboardPath =               @"v1/dashboard/%@?include_children=true";
+NSString * const kShelbyAPIGetSignout =                     @"signout.json";
 NSString * const POST =    @"POST";
 NSString * const kShelbyAPIPostFrameLikePath =              @"v1/frame/%@/like";
 NSString * const kShelbyAPIPostExternalShare =              @"v1/frame/%@/share";
@@ -111,10 +112,40 @@ static AFHTTPClient *httpClient = nil;
     return [httpClient requestWithMethod:method path:path parameters:queryParams];
 }
 
++ (void)synchronousLogout
+{
+    [[httpClient operationQueue] cancelAllOperations];
+
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:kShelbyAPIGetSignout
+                                withQueryParameters:nil
+                                      shouldAddAuth:NO];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        //all good
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [self clearAllCookies];
+    }];
+    
+    [operation start];
+    [operation waitUntilFinished];
+}
+
+// cancelAllOperations does not prevent cookies from getting set by operations
+// that return after signout.  So we clear cookies on sigup and signin.
++ (void)clearAllCookies
+{
+    NSHTTPCookieStorage *cookieStore = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in cookieStore.cookies) {
+        [cookieStore deleteCookie:cookie];
+    }
+}
+
 #pragma mark - User
 + (void)postSignupWithUserParams:(NSDictionary *)userParams
                         andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    [self clearAllCookies];
+    
     NSURLRequest *request = [self requestWithMethod:POST
                                             forPath:kShelbyAPIPostSignupPath
                                 withQueryParameters:userParams
@@ -153,7 +184,6 @@ static AFHTTPClient *httpClient = nil;
                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 
 {
-//    NSString *clientID = (DEVICE_IPAD ? @"iOS_iPad" : @"iOS_iPhone");
     NSDictionary *userParams = @{@"user": @{@"name": name,
                                             @"primary_email": email},
                                  @"generate_temporary_nickname_and_password" : @"1",
@@ -275,6 +305,9 @@ static AFHTTPClient *httpClient = nil;
                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     STVAssert(email && password, @"required arguments email and password cannot be nil");
+    
+    [self clearAllCookies];
+    
     NSDictionary *loginParams = @{kShelbyAPIParamLoginEmail: email,
                                   kShelbyAPIParamLoginPassword: password};
     NSURLRequest *request = [self requestWithMethod:POST forPath:kShelbyAPIPostLoginPath withQueryParameters:loginParams shouldAddAuth:NO];

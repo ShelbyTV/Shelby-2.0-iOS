@@ -600,14 +600,6 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     [[FacebookHandler sharedInstance] facebookCleanup];
 }
 
-- (void)clearAllCookies
-{
-    NSHTTPCookieStorage *cookieStore = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie *cookie in cookieStore.cookies) {
-        [cookieStore deleteCookie:cookie];
-    }
-}
-
 - (void)logoutCurrentUser
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
@@ -620,8 +612,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 
     user.token = nil;
     [self cleanupSession];
-    [self clearAllCookies];
     [Intercom endSession];
+    [ShelbyAPIClient synchronousLogout];
     
     NSError *err;
     [[self mainThreadContext] save:&err];
