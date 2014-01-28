@@ -226,6 +226,11 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
                           atIndex:indexPath.row];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 360.0;
+}
+
 #pragma mark - UIScrollViewDelegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView

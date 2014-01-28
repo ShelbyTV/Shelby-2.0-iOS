@@ -14,6 +14,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface ShelbyStreamEntryCell()
+@property (nonatomic, weak) IBOutlet UILabel *username;
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
 @property (nonatomic, weak) IBOutlet UIImageView *currentlyOn;
 @property (nonatomic, weak) IBOutlet UIImageView *videoThumbnail;
@@ -23,6 +24,7 @@
 @property (nonatomic, weak) IBOutlet UIView *likersView;
 @property (nonatomic, weak) IBOutlet UIButton *likeButton;
 @property (nonatomic, weak) IBOutlet UIButton *unlikeButton;
+@property (nonatomic, weak) IBOutlet UIView *borderView;
 @property (nonatomic, strong) NSMutableArray *likerImageViews;
 @property (nonatomic, strong) NSMutableOrderedSet *likers;
 
@@ -48,16 +50,21 @@
 {
     NSMutableArray *likerViews = [@[] mutableCopy];
     CGFloat likerX = 0.f;
-    CGFloat likerSharerHeight = 30.f;
+    CGFloat likerSharerHeight = 26.f;
     UIImageView *likerImageView;
     for (int i = 0; i < 6; i++) {
-        likerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(likerX, 5, likerSharerHeight, likerSharerHeight)];
+        likerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(likerX, 7, likerSharerHeight, likerSharerHeight)];
         [self.likersView addSubview:likerImageView];
         likerImageView.layer.cornerRadius = 3.0f;
         likerImageView.layer.masksToBounds = YES;
         [likerViews addObject:likerImageView];
         likerX += likerSharerHeight + 10;
+        likerImageView.layer.cornerRadius = likerImageView.frame.size.height / 2;
+        likerImageView.layer.masksToBounds = YES;
     }
+    
+    self.userAvatar.layer.cornerRadius = self.userAvatar.frame.size.height / 2;
+    self.userAvatar.layer.masksToBounds = YES;
     
     [self deselectStreamEntry];
     
@@ -77,6 +84,7 @@
     }
     [self updateLikersAndSharersVisuals];
     
+    self.username.text = self.videoFrame.creator.nickname;
     self.videoTitle.text = self.videoFrame.video.title;
     NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
     self.description.text = captionText;
@@ -172,14 +180,14 @@
 
 - (void)selectStreamEntry
 {
-    self.layer.borderColor = kShelbyColorGreen.CGColor;
-    self.layer.borderWidth = 5;
+    self.borderView.layer.borderColor = kShelbyColorGreen.CGColor;
+    self.borderView.layer.borderWidth = 5;
     self.currentlyOn.hidden = NO;
 }
 
 - (void)deselectStreamEntry
 {
-    self.layer.borderWidth = 0;
+    self.borderView.layer.borderWidth = 0;
     self.currentlyOn.hidden = YES;
 }
 @end
