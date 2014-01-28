@@ -16,6 +16,9 @@
 #define HEIGHT_IN_PORTRAIT 88
 #define HEIGHT_IN_LANDSCAPE 44
 
+NSString * const kShelbyRequestFullscreenPlaybackNotification = @"kShelbyRequestFullscreenPlaybackNotification";
+NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyRequestSmallscreenPlaybackNotification";
+
 @interface VideoControlsViewController ()
 
 @property (nonatomic, weak) VideoControlsView *controlsView;
@@ -60,7 +63,9 @@
         self.nonplaybackActionViews = @[];
         self.playbackActionViews = @[self.controlsView.likeButton,
                                      self.controlsView.unlikeButton,
-                                     self.controlsView.ipadShareButton];
+                                     self.controlsView.ipadShareButton,
+                                     self.controlsView.iPadExpandButton,
+                                     self.controlsView.iPadContractButton];
     } else {
         self.nonplaybackActionViews = @[self.controlsView.nonplaybackLikeButton,
                                         self.controlsView.nonplaybackUnlikeButton];
@@ -258,6 +263,15 @@
     }
 }
 
+- (void)requestToggleFullscreen
+{
+    if (self.controlsView.iPadExpandButton.hidden == YES) {
+        [self contractTapped:nil];
+    } else {
+        [self expandTapped:nil];
+    }
+}
+
 #pragma mark - Airplay Setup
 - (void)setupAirPlay
 {
@@ -295,16 +309,17 @@
 
 #pragma mark - XIB actions
 
-- (IBAction)backgroundTapped:(id)sender {
-    //on iPad, in full screen, we keep the view on screen (but transparent)
-    //this allows users to bring up controls in full screen
-    if (self.displayMode == VideoControlsDisplayHiddenForIPadFullScreen) {
-        [UIView animateWithDuration:0.5 animations:^{
-            
-            [self setDisplayMode:VideoControlsDisplayShowingForIPadFullScreen];
-            
-        }];
-    }
+//expand and contract are currently iPad only
+- (IBAction)expandTapped:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyRequestFullscreenPlaybackNotification object:self];
+    self.controlsView.iPadExpandButton.hidden = YES;
+    self.controlsView.iPadContractButton.hidden = NO;
+}
+
+- (IBAction)contractTapped:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyRequestSmallscreenPlaybackNotification object:self];
+    self.controlsView.iPadExpandButton.hidden = NO;
+    self.controlsView.iPadContractButton.hidden = YES;
 }
 
 - (IBAction)playPauseButtonTapped:(id)sender
@@ -493,18 +508,6 @@
                 [self setIpadSeparatorViewsAlpha:1.0f];
                 self.controlsView.backgroundColor = kShelbyColorVeryDarkGray;
             }
-            break;
-        case VideoControlsDisplayHiddenForIPadFullScreen:
-            [self setPlaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
-            [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
-            [self setIpadSeparatorViewsAlpha:0.0];
-            self.controlsView.backgroundColor = [UIColor clearColor];
-            break;
-        case VideoControlsDisplayShowingForIPadFullScreen:
-            [self setPlaybackActionViewsAlpha:1.0 userInteractionEnabled:YES];
-            [self setPlaybackControlViewsAlpha:1.0 userInteractionEnabled:YES];
-            [self setIpadSeparatorViewsAlpha:1.0f];
-            self.controlsView.backgroundColor = kShelbyColorDarkGray;
             break;
     }
 }

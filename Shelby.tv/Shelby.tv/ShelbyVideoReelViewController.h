@@ -12,8 +12,6 @@
 #import "VideoControlsViewController.h"
 #import "VideoOverlayView.h"
 
-extern NSString * const kShelbySingleTapOnVideoReelNotification;
-
 @interface ShelbyVideoReelViewController : ShelbyViewController <VideoControlsDelegate, SPVideoReelDelegate, ShelbyAirPlayControllerDelegate>
 
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;

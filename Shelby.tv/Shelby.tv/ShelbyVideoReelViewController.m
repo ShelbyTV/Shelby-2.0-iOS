@@ -19,8 +19,6 @@
 
 #define OVERLAY_PEEK_TIME 5.0
 
-NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnVideoReelNotification";
-
 @interface ShelbyVideoReelViewController ()
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, strong) VideoReelBackdropView *videoReelBackdropView;
@@ -266,7 +264,12 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
 
 - (void)singleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySingleTapOnVideoReelNotification object:self];
+    [self togglePlayerChrome];
+}
+
+- (void)doubleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
+{
+    [self.videoControlsVC requestToggleFullscreen];
 }
 
 #pragma mark - VideoControlsDelegate
@@ -517,7 +520,11 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
     [self.videoReel didMoveToParentViewController:self];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnVideoReelDetected:)];
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOnVideoReelDetected:)];
+    doubleTap.numberOfTapsRequired = 2;
+    [singleTap requireGestureRecognizerToFail:doubleTap];
     [self.videoReel addGestureRecognizer:singleTap];
+    [self.videoReel addGestureRecognizer:doubleTap];
     
     //to allow SPVideoReel controls the hidden state of backdrop image
     self.videoReelBackdropView.showBackdropImage = YES;
@@ -547,32 +554,48 @@ NSString * const kShelbySingleTapOnVideoReelNotification = @"kShelbySingleTapOnV
 
 - (void)peekAndHideOverlay
 {
-    if (self.videoControlsVC.displayMode == VideoControlsDisplayHiddenForIPadFullScreen ||
-        self.videoControlsVC.displayMode == VideoControlsDisplayShowingForIPadFullScreen) {
-        //peek the basic info
+    //if overlay isn't showing, peek it
+    if (self.videoOverlayView.alpha == 0.f) {
         [UIView animateWithDuration:0.5 animations:^{
             self.videoOverlayView.alpha = 1.0;
         }];
-        
-        //and hide it w/ delay from the last peek
-        if (self.hidePeekingOverlayTimer) {
-            [self.hidePeekingOverlayTimer invalidate];
-        }
-        self.hidePeekingOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:OVERLAY_PEEK_TIME
-                                                                        target:self
-                                                                      selector:@selector(hidePeekingOverlay) userInfo:nil
-                                                                       repeats:NO];
     }
+    
+    //always update the hide peeking timer (it won't hide unless we're actually peeking, see below)
+    if (self.hidePeekingOverlayTimer) {
+        [self.hidePeekingOverlayTimer invalidate];
+    }
+    self.hidePeekingOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:OVERLAY_PEEK_TIME
+                                                                    target:self
+                                                                  selector:@selector(hidePeekingOverlay) userInfo:nil
+                                                                   repeats:NO];
+
 }
 
 - (void)hidePeekingOverlay
 {
-    if (self.videoControlsVC.displayMode == VideoControlsDisplayHiddenForIPadFullScreen ||
-        self.videoControlsVC.displayMode == VideoControlsDisplayShowingForIPadFullScreen) {
+    //only hide if we're currently peeking
+    if (self.videoControlsVC.view.alpha == 0.f &&
+        self.videoOverlayView.alpha == 1.f) {
         [UIView animateWithDuration:0.5 animations:^{
             self.videoOverlayView.alpha = 0.f;
         }];
     }
+}
+
+- (void)togglePlayerChrome
+{
+    CGFloat newAlpha;
+    if (self.videoControlsVC.view.alpha == 0.f) {
+        newAlpha = 1.f;
+    } else {
+        newAlpha = 0.f;
+    }
+    
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        self.videoControlsVC.view.alpha = newAlpha;
+        self.videoOverlayView.alpha = newAlpha;
+    } completion:nil];
 }
 
 @end

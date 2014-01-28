@@ -10,6 +10,9 @@
 #import <CoreMedia/CoreMedia.h>
 #import "SPVideoReel.h"
 
+extern NSString * const kShelbyRequestFullscreenPlaybackNotification;
+extern NSString * const kShelbyRequestSmallscreenPlaybackNotification;
+
 typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 {
     //nothing is shown
@@ -22,11 +25,7 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
     VideoControlsDisplayActionsAndPlaybackControls,
 
     //VideoControlsDisplayActionsAndPlaybackControls + alterations for AirPlay
-    VideoControlsDisplayForAirPlay,
-    
-    //allowing for controls to be shown when fullscreen on iPad
-    VideoControlsDisplayHiddenForIPadFullScreen,
-    VideoControlsDisplayShowingForIPadFullScreen
+    VideoControlsDisplayForAirPlay
 };
 
 @class VideoControlsViewController;
@@ -57,5 +56,9 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 @property (nonatomic, assign) CMTimeRange bufferedRange;
 @property (nonatomic, assign) CMTime currentTime;
 @property (nonatomic, assign) CMTime duration;
+
+// Same behavior as if the proper expand/contract button was tapped
+// iPad only for now
+- (void)requestToggleFullscreen;
 
 @end

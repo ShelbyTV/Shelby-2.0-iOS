@@ -9,12 +9,11 @@
 #import "ShelbyTopContainerViewController.h"
 #import "ShelbyCurrentlyOnViewController.h"
 #import "ShelbyNavigationViewController.h"
-#import "ShelbyVideoReelViewController.h"
 #import "SPShareController.h"
+#import "VideoControlsViewController.h" // <-- for the constants... TODO: refactor
 
 #define FULLSCREEN_ANIMATION_DURATION 0.75
 #define FULLSCREEN_ANIMATION_DELAY 0.f
-#define FULLSCREEN_ANIMATION_CONTROLS_DELAY 1.0f
 #define FULLSCREEN_ANIMATION_DAMPING 1.0
 #define FULLSCREEN_ANIMATION_VELOCITY 8.f
 #define FULLSCREEN_ANIMATION_OPTIONS UIViewAnimationCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
@@ -59,10 +58,7 @@
     _fullscreenVideoWidth = 1024;
     _smallscreenVideoWidth = self.videoReelWidthConstraint.constant;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(toggleFullscreenVideo)
-                                                 name:kShelbySingleTapOnVideoReelNotification
-                                               object:nil];
+    [self observeFullscreenNotifications];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -104,58 +100,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)toggleFullscreenVideo
-{
-    CGFloat newWidth, videoOverlaysAlpha, controlsDelay;
-    CGAffineTransform navTransform;
-    VideoControlsDisplayMode controlsDisplayMode;
-    BOOL hideStatusBar = NO;
-    if ([self isVideoFullscreen] && self.videoReelVC.videoControlsVC.displayMode != VideoControlsDisplayShowingForIPadFullScreen) {
-        newWidth = _smallscreenVideoWidth;
-        navTransform = CGAffineTransformIdentity;
-        videoOverlaysAlpha = 1.f;
-        controlsDisplayMode = VideoControlsDisplayActionsAndPlaybackControls;
-        controlsDelay = 0.f;
-    } else {
-        hideStatusBar = YES;
-        newWidth = _fullscreenVideoWidth;
-        navTransform = CGAffineTransformMakeScale(0.8, 0.8);
-        videoOverlaysAlpha = 0.f;
-        controlsDisplayMode = VideoControlsDisplayHiddenForIPadFullScreen;
-        if (self.videoReelVC.videoControlsVC.displayMode == VideoControlsDisplayShowingForIPadFullScreen) {
-            controlsDelay = 0.f;
-        } else {
-            //fading the video controls slower to give users a hint that they can still bring them up
-            controlsDelay = FULLSCREEN_ANIMATION_CONTROLS_DELAY;
-        }
-    }
-    
-    //most controls react immediately
-    [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION delay:FULLSCREEN_ANIMATION_DELAY usingSpringWithDamping:FULLSCREEN_ANIMATION_DAMPING initialSpringVelocity:FULLSCREEN_ANIMATION_VELOCITY options:FULLSCREEN_ANIMATION_OPTIONS animations:^{
-        
-        self.navigationViewContainer.transform = navTransform;
-        self.currentlyOnViewContainer.transform = navTransform;
-        self.videoReelWidthConstraint.constant = newWidth;
-        self.videoReelVC.videoOverlayView.alpha = videoOverlaysAlpha;
-        [[UIApplication sharedApplication] setStatusBarHidden:hideStatusBar];
-        [self.view layoutIfNeeded];
-
-    } completion:nil];
-    
-    //controsl may be different (see above)
-    [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION delay:FULLSCREEN_ANIMATION_DELAY + controlsDelay usingSpringWithDamping:FULLSCREEN_ANIMATION_DAMPING initialSpringVelocity:FULLSCREEN_ANIMATION_VELOCITY options:FULLSCREEN_ANIMATION_OPTIONS animations:^{
-        
-        [self.videoReelVC.videoControlsVC setDisplayMode:controlsDisplayMode];
-        [self.view layoutIfNeeded];
-        
-    } completion:nil];
-}
-
-- (BOOL)isVideoFullscreen
-{
-    return self.videoReelWidthConstraint.constant == _fullscreenVideoWidth;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -211,4 +155,60 @@
     [self.masterDelegate logoutUser];
 
 }
+
+#pragma mark - Full/Small Screen Video Size Helpers
+
+- (void)observeFullscreenNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goFullscreenVideo)
+                                                 name:kShelbyRequestFullscreenPlaybackNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goSmallscreenVideo)
+                                                 name:kShelbyRequestSmallscreenPlaybackNotification
+                                               object:nil];
+}
+
+- (void)goFullscreenVideo
+{
+    if (![self isVideoFullscreen]) {
+        [self animateSizeChangesWithNavTransform:CGAffineTransformMakeScale(0.8, 0.8)
+                            currentlyOnTransform:CGAffineTransformMakeScale(0.1, 0.1)
+                                           width:_fullscreenVideoWidth
+                                       statusBar:YES];
+    }
+}
+
+- (void)goSmallscreenVideo
+{
+    if ([self isVideoFullscreen]) {
+        [self animateSizeChangesWithNavTransform:CGAffineTransformIdentity
+                            currentlyOnTransform:CGAffineTransformIdentity
+                                           width:_smallscreenVideoWidth
+                                       statusBar:NO];
+    }
+}
+
+- (void)animateSizeChangesWithNavTransform:(CGAffineTransform)navTransform
+                      currentlyOnTransform:(CGAffineTransform)currenlyOnTransform
+                                     width:(CGFloat)newWidth
+                                 statusBar:(BOOL)hideStatusBar
+{
+    [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION delay:FULLSCREEN_ANIMATION_DELAY usingSpringWithDamping:FULLSCREEN_ANIMATION_DAMPING initialSpringVelocity:FULLSCREEN_ANIMATION_VELOCITY options:FULLSCREEN_ANIMATION_OPTIONS animations:^{
+        
+        self.navigationViewContainer.transform = navTransform;
+        self.currentlyOnViewContainer.transform = currenlyOnTransform;
+        self.videoReelWidthConstraint.constant = newWidth;
+        [[UIApplication sharedApplication] setStatusBarHidden:hideStatusBar];
+        [self.view layoutIfNeeded];
+        
+    } completion:nil];
+}
+
+- (BOOL)isVideoFullscreen
+{
+    return self.videoReelWidthConstraint.constant == _fullscreenVideoWidth;
+}
+
 @end
