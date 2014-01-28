@@ -25,6 +25,7 @@
 @property (nonatomic, strong) SettingsViewController *settingsVC;
 @property (nonatomic, strong) ShelbyNotificationCenterViewController *notificationCenterVC;
 @property (nonatomic, strong) SignupHeaderView *headerView;
+@property (nonatomic, assign) BOOL shouldNavigateToUsersStreamOnAppear;
 @end
 
 
@@ -57,6 +58,9 @@
     self.headerView.delegate = self;
     
     self.topLevelTable.backgroundColor = kShelbyColorDarkGray;
+    
+    //start users in their stream on app launch (as opposed to top level navigation)
+    self.shouldNavigateToUsersStreamOnAppear = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,6 +68,14 @@
     [super viewWillAppear:animated];
     
     [self.topLevelTable reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (self.shouldNavigateToUsersStreamOnAppear && self.currentUser) {
+        [self navigateToUsersStream];
+        self.shouldNavigateToUsersStreamOnAppear = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -118,47 +130,31 @@
 }
 
 #pragma mark UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     STVAssert(self.currentUser, @"must have user on iPad");
     
     if (indexPath.row == 0) {
         //Stream
-        DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
-        userStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
+        [self navigateToUsersStream];
         
     } else if (indexPath.row == 1) {
         //Me
-        DisplayChannel *userStream =  [DisplayChannel fetchChannelWithRollID:self.currentUser.publicRollID
-                                                                   inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        ShelbyUserInfoViewController *userInfoVC = [ [UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfile"];
-        
-        [(ShelbyNavigationViewController *)self.navigationController pushUserProfileViewController:userInfoVC];
-        userInfoVC.user = self.currentUser;
-        [userInfoVC setupStreamInfoDisplayChannel:userStream];
+        [self navigateToUsersActivity];
         
     } else if (indexPath.row == 2) {
         //Explore
-        [self goToFeaturedChannel];
+        [self navigateToFeaturedChannel];
         
     } else if (indexPath.row == 3) {
-        //Channels
-        BrowseChannelsTableViewController *channelsVC = [[UIStoryboard storyboardWithName:@"BrowseChannels" bundle:nil] instantiateInitialViewController];
-        [self.navigationController pushViewController:channelsVC animated:YES];
-        channelsVC.userEducationVC = [ShelbyUserEducationViewController newChannelsUserEducationViewController];
+        [self navigateToChannels];
         
     } else if (indexPath.row == 4) {
-        //Notifications
-        self.notificationCenterVC.title = @"Notifications";
-        [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.notificationCenterVC];
+        [self navigateToNotifications];
         
     } else if (indexPath.row == 5) {
-        //Settings
-        self.settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser];
-        self.settingsVC.title = @"Settings";
-        self.settingsVC.delegate = self;
-        [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.settingsVC];
+        [self navigateToSettings];
     }
 
     [self.topLevelTable deselectRowAtIndexPath:indexPath animated:YES];
@@ -177,16 +173,8 @@
     return self.headerView;
 }
 
-- (void)goToFeaturedChannel
-{
-    DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
-                                         
-                                                                          inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel];
- 
-}
-
 #pragma mark - SettingsViewDelegate
+
 - (void)logoutUser
 {
     [((ShelbyNavigationViewController *)self.navigationController).topContainerDelegate logoutUser];
@@ -212,7 +200,8 @@
     
 }
 
-#pragma mark - ShelbyNotificationDelegate Methods
+#pragma mark - ShelbyNotificationDelegate
+
 - (void)unseenNotificationCountChanged
 {
     [self.topLevelTable reloadData];
@@ -239,6 +228,7 @@
 }
 
 #pragma mark - SignupHeaderDelegate
+
 - (void)signupUser
 {
     ShelbySignupViewController *signupVC = [[ShelbySignupViewController alloc] initWithNibName:@"SignupView-iPad" bundle:nil];
@@ -247,4 +237,55 @@
     [((ShelbyNavigationViewController *)self.navigationController) presentViewController:signupVC animated:YES completion:nil];
     
 }
+
+#pragma mark - Navigation Helpers
+
+- (void)navigateToUsersStream
+{
+    DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
+    userStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
+}
+
+- (void)navigateToUsersActivity
+{
+    DisplayChannel *userStream =  [DisplayChannel fetchChannelWithRollID:self.currentUser.publicRollID
+                                                               inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    ShelbyUserInfoViewController *userInfoVC = [ [UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfile"];
+    
+    [(ShelbyNavigationViewController *)self.navigationController pushUserProfileViewController:userInfoVC];
+    userInfoVC.user = self.currentUser;
+    [userInfoVC setupStreamInfoDisplayChannel:userStream];
+}
+
+- (void)navigateToFeaturedChannel
+{
+    DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
+                                         
+                                                                          inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel];
+    
+}
+
+- (void)navigateToChannels
+{
+    BrowseChannelsTableViewController *channelsVC = [[UIStoryboard storyboardWithName:@"BrowseChannels" bundle:nil] instantiateInitialViewController];
+    [self.navigationController pushViewController:channelsVC animated:YES];
+    channelsVC.userEducationVC = [ShelbyUserEducationViewController newChannelsUserEducationViewController];
+}
+
+- (void)navigateToNotifications
+{
+    self.notificationCenterVC.title = @"Notifications";
+    [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.notificationCenterVC];
+}
+
+- (void)navigateToSettings
+{
+    self.settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser];
+    self.settingsVC.title = @"Settings";
+    self.settingsVC.delegate = self;
+    [(ShelbyNavigationViewController *)self.navigationController pushViewController:self.settingsVC];
+}
+
 @end

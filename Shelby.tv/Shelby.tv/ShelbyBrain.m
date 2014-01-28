@@ -553,8 +553,8 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 - (void)proceedWithAnonymousUser:(User *)user
 {
     [self setCurrentUser:user];
-    [self activateHomeViewController];
-    [self fetchUserChannelsForceSwitchToUsersStream:YES];
+    [self activateHomeViewController]; // <-- automatically navigates to stream on load
+    [self fetchUserChannelsForceSwitchToUsersStream:NO]; //<-- iPad does not switch to user stream with this mechanism
 }
 
 #pragma mark - ShelbyDataMediatorDelegate
@@ -1243,20 +1243,14 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [self goToDisplayChannel:dashboardChannel];
 }
 
-//on iPad, starts playing roll
+//not used on iPad
 //on iPhone, changes view
 - (void)goToDisplayChannel:(DisplayChannel *)displayChannel
 {
     if (displayChannel) {
-//        if (DEVICE_IPAD && [displayChannel hasEntityAtIndex:0]) {
-//            self.currentChannel = displayChannel;
-//            [self.homeVC animateLaunchPlayerForChannel:displayChannel atIndex:0];
-//            return;
-//        } else {
         self.currentChannel = displayChannel;
         [self.homeVC focusOnChannel:displayChannel];
         return;
-//        }
     }
     
     //fell through, can't go to the channel...
