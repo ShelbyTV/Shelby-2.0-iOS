@@ -468,7 +468,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         //NB: player will setAllowsEternalPlayback:YES when it starts playing
         
         //show backdrop unless an active player is showing
-        self.backdropView.showBackdropImage = ![self.currentPlayer isShowingPlayerLayer];
+        self.backdropView.showBackdropImage = !self.currentPlayer.shouldAutoplay && ![self.currentPlayer isShowingPlayerLayer];
         
         [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
                                         previousPlayer:previousPlayer];
