@@ -81,10 +81,10 @@
         if (showBackdropImage != _showBackdropImage) {
             _showBackdropImage = showBackdropImage;
             CGFloat backdropOverlayImageAlpha = _showBackdropImage ? 1.f : 0.f;
-            [UIView animateWithDuration:0.5 animations:^{
+            [UIView animateWithDuration:0.5 delay:0.f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
                 self.backdropOverlayImageView.alpha = backdropOverlayImageAlpha;
                 self.hiddenBackdropOverlayImageView.alpha = 0.f;
-            }];
+            } completion:nil];
         }
     }
 }
@@ -98,7 +98,7 @@
         self.hiddenBackdropOverlayImageView.image = blurredImage;
         
         //swap views
-        [UIView animateWithDuration:1.0f animations:^{
+        [UIView animateWithDuration:0.5 delay:0.f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
             self.hiddenBackdropOverlayImageView.alpha = _showBackdropImage ? 1.f : 0.f;
             self.backdropOverlayImageView.alpha = 0.f;
         } completion:^(BOOL finished) {

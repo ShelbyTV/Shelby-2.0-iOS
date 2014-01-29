@@ -405,6 +405,11 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     return self.canBecomePlayable && (self.isPlaying || self.shouldAutoplay);
 }
 
+- (BOOL)isShowingPlayerLayer
+{
+    return self.playerLayer && !self.playerLayer.hidden;
+}
+
 - (void)togglePlayback
 {
     if (self.isPlayable && 0.0 == self.player.rate) {

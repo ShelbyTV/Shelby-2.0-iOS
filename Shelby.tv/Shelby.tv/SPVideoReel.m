@@ -467,6 +467,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self.currentPlayer prepareForStreamingPlayback];
         //NB: player will setAllowsEternalPlayback:YES when it starts playing
         
+        //show backdrop unless an active player is showing
+        self.backdropView.showBackdropImage = ![self.currentPlayer isShowingPlayerLayer];
+        
         [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
                                         previousPlayer:previousPlayer];
         [self warmURLExtractionCache];
@@ -680,7 +683,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     if (self.currentPlayer == player) {
         [self.videoPlaybackDelegate setVideoIsPlaying:isPlaying];
-        self.backdropView.showBackdropImage = !isPlaying;
+        if (isPlaying) {
+            //hide backdrop when we start playing
+            self.backdropView.showBackdropImage = NO;
+        }
     }
 }
 
