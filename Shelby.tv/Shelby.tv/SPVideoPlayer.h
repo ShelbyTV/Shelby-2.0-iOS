@@ -55,6 +55,7 @@ extern NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged;
 
 //isPlaying or will be playing asap w/o any outside help
 - (BOOL)shouldBePlaying;
+- (BOOL)isShowingPlayerLayer;
 
 // Playback Control
 - (void)play;
