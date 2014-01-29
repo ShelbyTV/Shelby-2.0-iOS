@@ -20,7 +20,7 @@
 + (void)reset;
 
 //only shows view if user hasn't been educated
-- (void)referenceViewWillAppear:(CGRect)referenceViewFrame animated:(BOOL)animated;
+- (void)referenceView:(UIView *)referenceView willAppearAnimated:(BOOL)animated;
 
 //hides view
 - (void)referenceViewWillDisappear:(BOOL)animated;

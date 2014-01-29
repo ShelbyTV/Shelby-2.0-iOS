@@ -99,7 +99,7 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.userEducationVC referenceViewWillAppear:self.view.frame animated:animated];
+    [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -140,9 +140,6 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
     self.selectedRowIndexPath = indexPath;
 
     [self visualizeSelectedRow:indexPath];
-    
-    //playing a video == "user educated"
-    [self.userEducationVC userHasBeenEducatedAndViewShouldHide:YES];
 }
 
 - (void)visualizeSelectedRow:(NSIndexPath *)indexPath
@@ -274,6 +271,8 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
     [self.videoReelVC playChannel:self.displayChannel
           withDeduplicatedEntries:self.deduplicatedEntries
                           atIndex:indexPath.row];
+    
+    [self.userEducationVC userHasBeenEducatedAndViewShouldHide:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

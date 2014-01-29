@@ -48,6 +48,8 @@ extern NSString * const kShelbyVideoReelChannelKey;
 @property (nonatomic) UIButton *airPlayButton;
 //set on iPad only (we adjust state of showing yes/no)
 @property (nonatomic, strong) VideoReelBackdropView *backdropView;
+//defaults to YES
+@property (nonatomic, assign) BOOL autoplayOnInitialLoad;
 
 - (id)initWithChannel:(DisplayChannel *)channel
      andVideoEntities:(NSArray *)videoEntities
