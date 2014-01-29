@@ -315,6 +315,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)setDeduplicatedEntries:(NSArray *)deduplicatedEntries
 {
     _videoEntities = [deduplicatedEntries mutableCopy];
+    
+    //first, resize the content area
+    [self setupVideoScrollView];  // sets content offset to (0,0)
 
     SPVideoPlayer *curPlayer = self.currentPlayer;
     NSMutableArray *oldNonCurrentPlayers = [self.videoPlayers mutableCopy];
@@ -339,6 +342,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         }
         [self createVideoPlayerForEntity:entity atPosition:i];
     }
+    
+    //reset content offset to stay centered on current player
+    [self.videoScrollView setContentOffset:curPlayer.view.frame.origin animated:NO];
 }
 
 - (BOOL)isCurrentPlayerPlaying
@@ -404,13 +410,25 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)scrollForPlaybackAtIndex:(NSUInteger)idx forcingPlayback:(BOOL)forcePlaybackEvenIfPaused
 {
-    //start our new player (index out of bounds is handled by -currentVideoShouldChangeToVideo:shouldAutoplay:
-    BOOL shouldAutoplay = forcePlaybackEvenIfPaused || [self.currentPlayer shouldBePlaying];
-    [self currentVideoShouldChangeToVideo:idx autoplay:shouldAutoplay];
-    
-    //and scroll it into view
     CGRect newPlayersRect = [self rectForPlayerAtPosition:idx];
-    [self scrollTo:newPlayersRect.origin];
+    
+    if (CGPointEqualToPoint(self.videoScrollView.contentOffset, newPlayersRect.origin) &&
+        self.videoEntities.count > idx &&
+        self.currentPlayer.videoFrame == [Frame frameForEntity:self.videoEntities[idx]]) {
+        //no scrolling or player changing required, just make sure we respect forcePlaybackEvenIfPaused
+        if (forcePlaybackEvenIfPaused) {
+            [self.currentPlayer play];
+        }
+        return;
+        
+    } else {
+        //change to our new player/video (index out of bounds is handled by -currentVideoShouldChangeToVideo:shouldAutoplay:)
+        BOOL shouldAutoplay = forcePlaybackEvenIfPaused || [self.currentPlayer shouldBePlaying];
+        [self currentVideoShouldChangeToVideo:idx autoplay:shouldAutoplay];
+        
+        //and scroll it into view
+        [self scrollTo:newPlayersRect.origin];
+    }
 }
 
 #pragma mark -  Update Methods (Private)

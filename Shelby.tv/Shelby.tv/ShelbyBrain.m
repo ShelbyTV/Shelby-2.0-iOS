@@ -46,12 +46,14 @@ NSString * const kShelbyBrainWillResignActiveNotification = @"kShelbyBrainWillRe
 NSString * const kShelbyBrainDismissVideoReelNotification = @"kShelbyBrainDismissVideoReelNotification";
 NSString * const kShelbyBrainDidAutoadvanceNotification = @"kShelbyBrainDidAutoadvanceNotification";
 NSString * const kShelbyBrainSetEntriesNotification = @"kShelbyBrainSetEntriesNotification";
+NSString * const kShelbyBrainRemoveFrameNotification = @"kShelbyBrainRemoveFrameNotification";
 
 NSString * const kShelbyBrainChannelKey = @"channel";
 NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
 NSString * const kShelbyBrainFetchedUserKey = @"fetchedUser";
 NSString * const kShelbyBrainCachedKey = @"cached";
 NSString * const kShelbyBrainEntityKey = @"entity";
+NSString * const kShelbyBrainFrameKey = @"frame";
 
 NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 @interface ShelbyBrain()
@@ -710,15 +712,23 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)removeFrame:(Frame *)frame fromChannel:(DisplayChannel *)channel
 {
-    NSArray *channelEntries = [self.homeVC entriesForChannel:channel];
-    STVAssert(channelEntries && [channelEntries[0] isKindOfClass:[Frame class]], @"can't remove frame from channel that doesn't have frames");
-    NSMutableArray *newChannelEntries = [channelEntries mutableCopy];
-    [newChannelEntries removeObject:frame];
-    
-    newChannelEntries = newChannelEntries ? newChannelEntries : [@[] mutableCopy];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
-                                                        object:self userInfo:@{kShelbyBrainChannelKey : channel,
-                                                                               kShelbyBrainChannelEntriesKey : newChannelEntries}];
+    if (DEVICE_IPAD) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainRemoveFrameNotification
+                                                            object:self
+                                                          userInfo:@{kShelbyBrainChannelKey: channel,
+                                                                     kShelbyBrainFrameKey: frame}];
+        
+    } else {
+        NSArray *channelEntries = [self.homeVC entriesForChannel:channel];
+        STVAssert(channelEntries && [channelEntries[0] isKindOfClass:[Frame class]], @"can't remove frame from channel that doesn't have frames");
+        NSMutableArray *newChannelEntries = [channelEntries mutableCopy];
+        [newChannelEntries removeObject:frame];
+        
+        newChannelEntries = newChannelEntries ? newChannelEntries : [@[] mutableCopy];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                            object:self userInfo:@{kShelbyBrainChannelKey : channel,
+                                                                                   kShelbyBrainChannelEntriesKey : newChannelEntries}];
+    }
 }
 
 // 100% of the logic of channel ordering.

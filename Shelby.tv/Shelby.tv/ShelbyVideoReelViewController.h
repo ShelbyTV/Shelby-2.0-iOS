@@ -17,6 +17,9 @@
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
 @property (nonatomic, strong) VideoOverlayView *videoOverlayView;
 
+@property (nonatomic, readonly) DisplayChannel *currentChannel;
+@property (nonatomic, readonly) NSUInteger currentlyPlayingIndexInChannel;
+
 // does not change playback
 - (void)setDeduplicatedEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
 

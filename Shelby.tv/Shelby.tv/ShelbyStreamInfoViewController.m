@@ -77,6 +77,11 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
                                                  name:kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(removeFrameNotification:)
+                                                 name:kShelbyBrainRemoveFrameNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
                                                  name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
 }
@@ -185,6 +190,27 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     // TODO iPad - simple standard notice of fetch error?
     
     [self fetchEntriesWasSuccessful:NO hadEntries:NO];
+}
+
+- (void)removeFrameNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
+    if (channel != self.displayChannel) {
+        return;
+    }
+    Frame *frameToRemove = userInfo[kShelbyBrainFrameKey];
+    
+    NSMutableArray *entriesCopy = [self.channelEntries mutableCopy];
+    [entriesCopy removeObject:frameToRemove];
+    if ([entriesCopy count] != [self.channelEntries count]) {
+        [self setEntries:entriesCopy];
+        if (self.videoReelVC.currentChannel == self.displayChannel) {
+            [self.videoReelVC playChannel:channel
+                  withDeduplicatedEntries:self.deduplicatedEntries
+                                  atIndex:self.videoReelVC.currentlyPlayingIndexInChannel];
+        }
+    }
 }
 
 #pragma mark - UITableDataSource
@@ -354,12 +380,11 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     if (_channelEntries != rawEntries) {
         _channelEntries = [rawEntries copy];
         self.deduplicatedEntries = [DeduplicationUtility deduplicatedCopy:_channelEntries];
+        [self.entriesTable reloadData];
+        self.moreEntriesMayBeAvailable = YES;
         
         [self.videoReelVC setDeduplicatedEntries:self.deduplicatedEntries
                                       forChannel:self.displayChannel];
-        [self.entriesTable reloadData];
-        
-        self.moreEntriesMayBeAvailable = YES;
     }
 }
 
