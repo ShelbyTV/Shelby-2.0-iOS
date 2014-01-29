@@ -80,6 +80,9 @@ NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
                                                  name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+
+    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryRecommendedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryRecommendedCell];
+    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryCell];
 }
 
 - (void)dealloc
@@ -250,7 +253,7 @@ NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
     if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
         DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
         if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
-            return 280;
+            return 311;
         }
     }
     
