@@ -51,7 +51,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.userEducationVC referenceViewWillAppear:self.view.frame animated:animated];
+    [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

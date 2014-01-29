@@ -90,6 +90,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         _videoEntities = [videoEntities mutableCopy];
         _videoStartIndex = videoStartIndex;
         _currentVideoPlayingIndex = videoStartIndex;
+        _autoplayOnInitialLoad = YES;
     }
 
     return self;
@@ -165,7 +166,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self setupGestures];
         
         [self setupAllVideoPlayers];
-        [self currentVideoShouldChangeToVideo:self.videoStartIndex autoplay:YES];
+        [self currentVideoShouldChangeToVideo:self.videoStartIndex autoplay:self.autoplayOnInitialLoad];
     }
 }
 

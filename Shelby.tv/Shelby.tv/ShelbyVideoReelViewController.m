@@ -88,9 +88,20 @@
 
 - (void)setDeduplicatedEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
-    if (self.currentChannel == channel || !self.currentChannel) {
+    BOOL initialChannel = !self.currentChannel;
+    if (self.currentChannel == channel || initialChannel) {
         self.currentChannel = channel;
         self.currentDeduplicatedEntries = channelEntries;
+        
+        if (initialChannel) {
+            //want a video reel so it's pretty from bootup
+            STVDebugAssert(!self.videoReel);
+            [self presentVideoReelWithChannel:channel
+                          deduplicatedEntries:self.currentDeduplicatedEntries
+                                      atIndex:0
+                                     autoplay:NO];
+            self.videoReelBackdropView.backdropImageEntity = [self.currentDeduplicatedEntries firstObject];
+        }
     }
 }
 
@@ -107,7 +118,10 @@
             [self.videoReel scrollForPlaybackAtIndex:idx forcingPlayback:YES];
         } else {
             [self dismissCurrentVideoReel];
-            [self presentVideoReelWithChannel:channel deduplicatedEntries:deduplicatedEntries atIndex:idx];
+            [self presentVideoReelWithChannel:channel
+                          deduplicatedEntries:deduplicatedEntries
+                                      atIndex:idx
+                                     autoplay:YES];
         }
         self.videoReelBackdropView.backdropImageEntity = deduplicatedEntries[idx];
         
@@ -120,7 +134,8 @@
         //C) haven't started playing anything yet (bootup)
         [self presentVideoReelWithChannel:channel
                       deduplicatedEntries:deduplicatedEntries
-                                  atIndex:idx];
+                                  atIndex:idx
+                                 autoplay:YES];
         self.videoReelBackdropView.backdropImageEntity = deduplicatedEntries[idx];
     }
 
@@ -442,7 +457,8 @@
     // we present a video reel for continuity
     [self presentVideoReelWithChannel:self.currentChannel
                   deduplicatedEntries:self.currentDeduplicatedEntries
-                              atIndex:self.currentlyPlayingIndexInChannel];
+                              atIndex:self.currentlyPlayingIndexInChannel
+                             autoplay:NO];
     
     [self showAirPlayViewMode:NO];
 }
@@ -501,13 +517,15 @@
 }
 
 - (void)presentVideoReelWithChannel:(DisplayChannel *)channel
-                     deduplicatedEntries:(NSArray *)deduplicatedChannelEntries
+                deduplicatedEntries:(NSArray *)deduplicatedChannelEntries
                             atIndex:(NSUInteger)videoStartIndex
+                           autoplay:(BOOL)autoplay
 {
     self.videoReel = ({
         SPVideoReel *reel = [[SPVideoReel alloc] initWithChannel:channel andVideoEntities:deduplicatedChannelEntries atIndex:videoStartIndex];
         reel.delegate = self;
         reel.videoPlaybackDelegate = self.videoControlsVC;
+        reel.autoplayOnInitialLoad = autoplay;
         reel.view.frame = self.view.bounds;
         //iPad only modifications to SPVideoReel
         reel.view.backgroundColor = [UIColor clearColor];

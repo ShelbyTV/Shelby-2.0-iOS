@@ -13,7 +13,9 @@
 static NSString * const kShelbyUserEducationDefaultsKeyPrefix = @"userEd-";
 
 @interface ShelbyUserEducationViewController ()
-
+@property (nonatomic, assign) BOOL hasSeenPlaybackEntityChange;
+@property (nonatomic, assign) CGFloat nibAlpha;
+@property (nonatomic, assign) CGPoint nibCenter;
 @end
 
 @implementation ShelbyUserEducationViewController
@@ -68,7 +70,7 @@ static BOOL videoHasPlayed = NO;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        _hasSeenPlaybackEntityChange = NO;
     }
     return self;
 }
@@ -77,8 +79,9 @@ static BOOL videoHasPlayed = NO;
 {
     [super viewDidLoad];
     
+    self.nibAlpha = self.view.alpha;
+    self.nibCenter = self.view.center;
     self.view.alpha = 0.f;
-    [[[UIApplication sharedApplication] keyWindow].rootViewController.view addSubview:self.view];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
@@ -90,16 +93,18 @@ static BOOL videoHasPlayed = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)referenceViewWillAppear:(CGRect)referenceViewFrame animated:(BOOL)animated
+- (void)referenceView:(UIView *)referenceView willAppearAnimated:(BOOL)animated;
 {
     if ([ShelbyUserEducationViewController userIsEducatedFor:self.nibName] || videoHasPlayed) {
         return;
     }
     
-    self.view.center = CGPointMake(self.view.center.x + referenceViewFrame.size.width, self.view.center.y);
+    [[[UIApplication sharedApplication] keyWindow].rootViewController.view addSubview:self.view];
+    
+    self.view.center = CGPointMake(self.nibCenter.x + referenceView.frame.size.width, self.nibCenter.y);
     
     [UIView animateWithDuration:.5 animations:^{
-        self.view.alpha = 1.0f;
+        self.view.alpha = self.nibAlpha;
     }];
 }
 
@@ -107,6 +112,8 @@ static BOOL videoHasPlayed = NO;
 {
     [UIView animateWithDuration:.5 animations:^{
         self.view.alpha = 0.f;
+    } completion:^(BOOL finished) {
+        [self.view removeFromSuperview];
     }];
 }
 
@@ -126,6 +133,12 @@ static BOOL videoHasPlayed = NO;
 
 - (void)playbackEntityDidChangeNotification:(NSNotification *)note
 {
+    //if there was no pervious entity, ignore
+    if (!self.hasSeenPlaybackEntityChange) {
+        self.hasSeenPlaybackEntityChange = YES;
+        return;
+    }
+    
     //always hide when a video starts to play
     //does not necessarily indicate user has been educated
     [self referenceViewWillDisappear:YES];
