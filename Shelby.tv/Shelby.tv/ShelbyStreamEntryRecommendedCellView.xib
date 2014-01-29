@@ -21,6 +21,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="currently-large" translatesAutoresizingMaskIntoConstraints="NO" id="tsN-mD-DAd">
+                        <rect key="frame" x="280" y="10" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dfe-oU-wba" userLabel="ImageBlockerView">
                         <rect key="frame" x="0.0" y="150" width="320" height="150"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -35,8 +39,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KdL-uh-6kc" userLabel="vertical border">
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KdL-uh-6kc" userLabel="horizontal border">
                         <rect key="frame" x="0.0" y="250" width="320" height="1"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gYp-08-VO6" userLabel="vertical border">
+                        <rect key="frame" x="159" y="250" width="1" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -58,6 +67,11 @@
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ixo-Fe-VCx" userLabel="BorderView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gE9-n4-pK7" userLabel="LikeButton">
                         <rect key="frame" x="0.0" y="250" width="160" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -65,6 +79,9 @@
                         <state key="normal" image="like-card">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="likeVideo:" destination="RLg-Sc-rh9" eventType="touchUpInside" id="H1W-lJ-1iN"/>
+                        </connections>
                     </button>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opG-2i-51a" userLabel="UnLikeButton">
                         <rect key="frame" x="0.0" y="250" width="160" height="50"/>
@@ -73,19 +90,30 @@
                         <state key="normal" image="like-card-on">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="unLikeVideo:" destination="RLg-Sc-rh9" eventType="touchUpInside" id="cNl-jZ-Ztd"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yTn-MN-lMn" userLabel="ShareButton">
-                        <rect key="frame" x="270" y="161" width="160" height="50"/>
+                        <rect key="frame" x="161" y="250" width="160" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <state key="normal" image="share-card">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="shareVideo:" destination="RLg-Sc-rh9" eventType="touchUpInside" id="EM3-5E-9lL"/>
+                        </connections>
                     </button>
                 </subviews>
                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
             <connections>
+                <outlet property="borderView" destination="Ixo-Fe-VCx" id="EQe-3d-vR0"/>
+                <outlet property="currentlyOn" destination="tsN-mD-DAd" id="yht-VS-y4f"/>
+                <outlet property="description" destination="eDP-Gu-4rO" id="QnT-rS-oMv"/>
+                <outlet property="likeButton" destination="gE9-n4-pK7" id="8AH-bA-TbR"/>
+                <outlet property="unlikeButton" destination="opG-2i-51a" id="x9a-kP-3b3"/>
                 <outlet property="videoThumbnail" destination="VH9-H2-cng" id="yiZ-qe-WXN"/>
                 <outlet property="videoTitle" destination="jvc-ls-VKv" id="Ln4-8l-ciQ"/>
             </connections>
@@ -93,6 +121,7 @@
     </objects>
     <resources>
         <image name="card-image-overlay" width="320" height="146"/>
+        <image name="currently-large" width="30" height="30"/>
         <image name="like-card" width="22" height="20"/>
         <image name="like-card-on" width="22" height="20"/>
         <image name="recommendation-avatar" width="36" height="36"/>
