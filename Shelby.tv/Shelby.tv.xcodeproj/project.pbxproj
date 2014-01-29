@@ -135,6 +135,9 @@
 		1C49623A18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */; };
 		1C49623B18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */; };
 		1C49623C18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */; };
+		1C49623E18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */; };
+		1C49623F18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */; };
+		1C49624018999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */; };
 		1C534E3A17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */; };
 		1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */; };
 		1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */; };
@@ -1006,6 +1009,7 @@
 		1C4110DE17319468009022EA /* ShelbyHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHomeViewController.m; sourceTree = "<group>"; };
 		1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryRecommendedCellView.xib; sourceTree = "<group>"; };
 		1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryCellView.xib; sourceTree = "<group>"; };
+		1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryLikeCellView.xib; sourceTree = "<group>"; };
 		1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape-568h.png"; sourceTree = "<group>"; };
 		1C534E3817A1792700B6B3D5 /* bkgd-landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape.png"; sourceTree = "<group>"; };
 		1C534E3917A1792700B6B3D5 /* bkgd-landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape@2x.png"; sourceTree = "<group>"; };
@@ -1597,6 +1601,7 @@
 				1CA34E541892C79400A168D1 /* SignupHeaderView.xib */,
 				1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */,
 				1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */,
+				1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -2649,6 +2654,7 @@
 				1CDCA67F179DCE190098C4E1 /* play.png in Resources */,
 				1CD8112217CCF6C0002FD84B /* play-current@2x.png in Resources */,
 				1CDCA682179DCE190098C4E1 /* play@2x.png in Resources */,
+				1C49623F18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */,
 				1CDCA685179DCE190098C4E1 /* scrubber.png in Resources */,
 				1CE5586F17DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
 				1CDCA688179DCE190098C4E1 /* scrubber@2x.png in Resources */,
@@ -2780,6 +2786,7 @@
 				1CDCA680179DCE190098C4E1 /* play.png in Resources */,
 				1CD8112317CCF6C0002FD84B /* play-current@2x.png in Resources */,
 				1CDCA683179DCE190098C4E1 /* play@2x.png in Resources */,
+				1C49624018999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */,
 				1CDCA686179DCE190098C4E1 /* scrubber.png in Resources */,
 				1CE5587017DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
 				1CDCA689179DCE190098C4E1 /* scrubber@2x.png in Resources */,
@@ -2926,6 +2933,7 @@
 				912261DC17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
 				1CDCA68D179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA690179F317A0098C4E1 /* overlay.png in Resources */,
+				1C49623E18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */,
 				9192ED0E17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				9192ED0B17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */,
 				1CE5585F17DE73CA00C18A30 /* share-large.png in Resources */,

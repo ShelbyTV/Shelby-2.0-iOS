@@ -97,7 +97,14 @@
         }
         [self updateLikersAndSharersVisuals];
         
-        self.username.text = self.videoFrame.creator.nickname;
+        NSString *nickname = nil;
+        if (videoFrame.typeOfFrame == FrameTypeLightWeight) {
+            nickname= [NSString stringWithFormat:@"%@ liked this", videoFrame.creator.nickname];
+        } else {
+            nickname = videoFrame.creator.nickname;
+        }
+
+        self.username.text = nickname;
         self.videoTitle.text = self.videoFrame.video.title;
         NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
         self.description.text = captionText;

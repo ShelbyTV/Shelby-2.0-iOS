@@ -21,6 +21,7 @@
 
 NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
+NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
 
 @interface ShelbyStreamInfoViewController ()
 @property (nonatomic, strong) NSArray *channelEntries;
@@ -88,6 +89,7 @@ NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
 
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryRecommendedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryRecommendedCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryCell];
+    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryLikeCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryLikeCell];
 }
 
 - (void)dealloc
@@ -226,24 +228,23 @@ NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     id streamEntry = self.deduplicatedEntries[indexPath.row];
+    NSString *cellIdentifier = nil;
     if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
         DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
         if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
-            ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:kShelbyStreamEntryRecommendedCell forIndexPath:indexPath];
-            Frame *videoFrame = dashboardEntry.frame;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.videoFrame = videoFrame;
-            cell.delegate = self;
-            
-            if (self.selectedRowIndexPath && self.selectedRowIndexPath.row == indexPath.row) {
-                [self visualizeSelectedCell:cell];
-            }
-            return cell;
+            cellIdentifier = kShelbyStreamEntryRecommendedCell;
+        } else if ([dashboardEntry typeOfEntry] == FrameTypeLightWeight) {
+            cellIdentifier = kShelbyStreamEntryLikeCell;
         }
     }
     
-    ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:kShelbyStreamEntryCell forIndexPath:indexPath];
+    if (!cellIdentifier) {
+        cellIdentifier = kShelbyStreamEntryCell;
+    }
+    
+    ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     Frame *videoFrame = nil;
     if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
         videoFrame = ((DashboardEntry *)streamEntry).frame;
@@ -274,12 +275,13 @@ NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     id streamEntry = self.deduplicatedEntries[indexPath.row];
     if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
         DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
         if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
             return 311.0;
+        }  else if ([dashboardEntry typeOfEntry] == FrameTypeLightWeight) {
+            return 271.0;
         }
     }
     
