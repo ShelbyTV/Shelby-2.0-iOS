@@ -279,11 +279,11 @@ NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
     if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
         DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
         if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
-            return 311;
+            return 311.0;
         }
     }
     
-    return 360.0;
+    return 341.0;
 }
 
 #pragma mark - UIScrollViewDelegate
