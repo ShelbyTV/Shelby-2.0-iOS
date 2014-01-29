@@ -9,7 +9,7 @@
 #import "ShelbyStreamInfoViewController.h"
 #import "DashboardEntry+Helper.h"
 #import "DeduplicationUtility.h"
-#import "Frame.h"
+#import "Frame+Helper.h"
 #import "ShelbyBrain.h"
 #import "ShelbyModelArrayUtility.h"
 #import "SPShareController.h"
@@ -235,7 +235,10 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
         DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
         if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
             cellIdentifier = kShelbyStreamEntryRecommendedCell;
-        } else if ([dashboardEntry typeOfEntry] == FrameTypeLightWeight) {
+        }
+    } else if ([streamEntry isKindOfClass:[Frame class]]) {
+        Frame *frameEntry = (Frame *)streamEntry;
+        if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
             cellIdentifier = kShelbyStreamEntryLikeCell;
         }
     }
@@ -280,7 +283,10 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
         DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
         if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
             return 311.0;
-        }  else if ([dashboardEntry typeOfEntry] == FrameTypeLightWeight) {
+        }
+    } else if ([streamEntry isKindOfClass:[Frame class]]) {
+        Frame *frameEntry = (Frame *)streamEntry;
+        if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
             return 271.0;
         }
     }
