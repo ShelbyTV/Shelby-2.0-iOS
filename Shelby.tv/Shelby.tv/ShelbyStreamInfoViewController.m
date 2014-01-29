@@ -260,18 +260,14 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 
 - (void)likeFrame:(Frame *)videoFrame
 {
-    BOOL didLike = [videoFrame doLike];
-    if (didLike) {
-        //TODO iPad -- change state, view, etc.
-    }
+    [videoFrame doLike];
+    //view updates handled via KVO
 }
 
 - (void)unLikeFrame:(Frame *)videoFrame
 {
-    BOOL didUnlike = [videoFrame doUnlike];
-    if (didUnlike) {
-        //TODO iPad -- change state, view, etc.
-    }
+    [videoFrame doUnlike];
+    //view updates handled via KVO
 }
 
 - (void)userProfileWasTapped:(NSString *)userID
