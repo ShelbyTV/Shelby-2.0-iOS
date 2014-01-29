@@ -100,6 +100,7 @@
                           deduplicatedEntries:self.currentDeduplicatedEntries
                                       atIndex:0
                                      autoplay:NO];
+            self.videoOverlayView.hidden = NO;
             self.videoReelBackdropView.backdropImageEntity = [self.currentDeduplicatedEntries firstObject];
         }
     }
