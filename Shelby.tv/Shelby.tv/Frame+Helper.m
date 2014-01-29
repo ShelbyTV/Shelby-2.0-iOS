@@ -166,7 +166,10 @@ NSString * const kFramePathClientLikedAt = @"clientLikedAt";
 
 + (Frame *)frameForEntity:(id<ShelbyVideoContainer>)entity
 {
-    STVAssert(entity, @"entity cannot be nil");
+    if (!entity) {
+        return nil;
+    }
+
     Frame *currentFrame;
     if ([entity isKindOfClass:[Frame class]]) {
         currentFrame = (Frame *)entity;
