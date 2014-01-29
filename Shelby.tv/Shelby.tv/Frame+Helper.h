@@ -11,6 +11,9 @@
 #import "ShelbyDuplicateContainer.h"
 #import "ShelbyVideoContainer.h"
 
+//KVO
+extern NSString * const kFramePathClientLikedAt;
+
 typedef NS_ENUM(NSInteger, FrameType){
     //traditional shares
     FrameTypeHeavyWeight,

@@ -98,7 +98,8 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 
 - (void)dealloc
 {
-    [self.airPlayButton removeObserver:self forKeyPath:@"alpha"];
+    [_airPlayButton removeObserver:self forKeyPath:@"alpha"];
+    [[Frame frameForEntity:_currentEntity] removeObserver:self forKeyPath:kFramePathClientLikedAt];
 }
 
 - (void)didReceiveMemoryWarning
@@ -257,7 +258,12 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 - (void)setCurrentEntity:(id<ShelbyVideoContainer>)currentEntity
 {
     if (_currentEntity != currentEntity) {
+        if (_currentEntity) {
+            [[Frame frameForEntity:_currentEntity] removeObserver:self forKeyPath:kFramePathClientLikedAt];
+        }
         _currentEntity = currentEntity;
+        [[Frame frameForEntity:_currentEntity] addObserver:self forKeyPath:kFramePathClientLikedAt options:NSKeyValueObservingOptionNew context:nil];
+        
         [self resetVideoControlsToInitialConditions];
         [self updateViewForCurrentEntity];
     }
@@ -293,6 +299,11 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object == self.airPlayButton) {
         [self adjustForAirplay];
+        
+    } else if (object == [Frame frameForEntity:self.currentEntity]) {
+        //FYI: we're only observing changes to clientLikedAt in -setCurrentEntity:
+        [self updateViewForCurrentEntity];
+        
     }
 }
 

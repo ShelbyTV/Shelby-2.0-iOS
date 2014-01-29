@@ -45,6 +45,16 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    self.userAvatar.layer.cornerRadius = self.userAvatar.frame.size.height / 2;
+    self.userAvatar.layer.masksToBounds = YES;
+}
+
+- (void)dealloc
+{
+    [_videoFrame removeObserver:self forKeyPath:kFramePathClientLikedAt];
+}
 
 - (void)prepareForReuse
 {
@@ -52,6 +62,7 @@
     CGFloat likerX = 0.f;
     CGFloat likerSharerHeight = 26.f;
     UIImageView *likerImageView;
+    //XXX TODO: the views should only be created once, not on each resuse
     for (int i = 0; i < 6; i++) {
         likerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(likerX, 7, likerSharerHeight, likerSharerHeight)];
         [self.likersView addSubview:likerImageView];
@@ -71,49 +82,59 @@
 
 - (void)setVideoFrame:(Frame *)videoFrame
 {
-    _videoFrame = videoFrame;
-
-    // KP KP - need to fetch upvoters from backend like we do on iphone
-    // KP KP TODO- add/remove observer
-//    [self.videoFrame addObserver:self forKeyPath:@"upvoters" options:NSKeyValueObservingOptionNew context:nil];
-    if ([self.videoFrame.upvoters count]) {
-        [self processLikersAndSharers];
+    if (_videoFrame != videoFrame) {
+        if (_videoFrame) {
+            [_videoFrame removeObserver:self forKeyPath:kFramePathClientLikedAt];
+        }
+        _videoFrame = videoFrame;
+        [_videoFrame addObserver:self forKeyPath:kFramePathClientLikedAt options:NSKeyValueObservingOptionNew context:nil];
+        
+        // KP KP - need to fetch upvoters from backend like we do on iphone
+        // KP KP TODO- add/remove observer
+        //    [self.videoFrame addObserver:self forKeyPath:@"upvoters" options:NSKeyValueObservingOptionNew context:nil];
+        if ([self.videoFrame.upvoters count]) {
+            [self processLikersAndSharers];
+        }
+        [self updateLikersAndSharersVisuals];
+        
+        self.username.text = self.videoFrame.creator.nickname;
+        self.videoTitle.text = self.videoFrame.video.title;
+        NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
+        self.description.text = captionText;
+        NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
+        
+        __weak ShelbyStreamEntryCell *weakSelf = self;
+        [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            weakSelf.videoThumbnail.image = image;
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            
+        }];
+        
+        NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
+        [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avarar-med"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            weakSelf.userAvatar.image = image;
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            
+        }];
+        
+        [self updateViewForCurrentLikeStatus];
     }
-    [self updateLikersAndSharersVisuals];
-    
-    self.username.text = self.videoFrame.creator.nickname;
-    self.videoTitle.text = self.videoFrame.video.title;
-    NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
-    self.description.text = captionText;
-    NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
- 
-    __weak ShelbyStreamEntryCell *weakSelf = self;
-    [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        weakSelf.videoThumbnail.image = image;
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        
-    }];
-    
-    NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
-    [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avarar-med"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        weakSelf.userAvatar.image = image;
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        
-    }];
-    
-    self.userAvatar.layer.cornerRadius = self.userAvatar.frame.size.height / 2;
-    self.userAvatar.layer.masksToBounds = YES;
 }
 
-//- (void)observeValueForKeyPath:(NSString *)keyPath
-//                      ofObject:(id)object
-//                        change:(NSDictionary *)change
-//                       context:(void *)context
-//{
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (object == self.videoFrame) {
+        [self updateViewForCurrentLikeStatus];
+    }
+    
+    //TODO: bring these back, I imagine...
+    //XXX Be sure to remove observer in setVideoFrame: AND dealloc
 //    [self processLikersAndSharers];
-//    
 //    [self updateLikersAndSharersVisuals];
-//}
+}
 
 - (void)processLikersAndSharers
 {
@@ -156,16 +177,14 @@
 
 - (IBAction)likeVideo:(id)sender
 {
-    self.likeButton.hidden = YES;
-    self.unlikeButton.hidden = NO;
     [self.delegate likeFrame:self.videoFrame];
+    [self updateViewForCurrentLikeStatus];
 }
 
 - (IBAction)unLikeVideo:(id)sender
 {
-    self.likeButton.hidden = NO;
-    self.unlikeButton.hidden = YES;
     [self.delegate unLikeFrame:self.videoFrame];
+    [self updateViewForCurrentLikeStatus];
 }
 
 - (IBAction)openUserProfile:(id)sender
@@ -190,4 +209,14 @@
     self.borderView.layer.borderWidth = 0;
     self.currentlyOn.hidden = YES;
 }
+
+#pragma mark - View Helpers
+
+- (void)updateViewForCurrentLikeStatus
+{
+    BOOL isLiked = [self.videoFrame videoIsLiked];
+    self.likeButton.hidden = isLiked;
+    self.unlikeButton.hidden = !isLiked;
+}
+
 @end
