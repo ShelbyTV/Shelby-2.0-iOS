@@ -7,7 +7,7 @@
 //
 
 #import "ShelbyStreamInfoViewController.h"
-#import "DashboardEntry.h"
+#import "DashboardEntry+Helper.h"
 #import "DeduplicationUtility.h"
 #import "Frame.h"
 #import "ShelbyBrain.h"
@@ -20,6 +20,7 @@
 #define LOAD_MORE_SPINNER_AREA_HEIGHT 100
 
 NSString * const kShelbyStreamEntryCell = @"StreamEntry";
+NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
 
 @interface ShelbyStreamInfoViewController ()
 @property (nonatomic, strong) NSArray *channelEntries;
@@ -84,6 +85,9 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
                                                  name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+
+    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryRecommendedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryRecommendedCell];
+    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryCell];
 }
 
 - (void)dealloc
@@ -222,8 +226,24 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:kShelbyStreamEntryCell forIndexPath:indexPath];
     id streamEntry = self.deduplicatedEntries[indexPath.row];
+    if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
+        DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
+        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
+            ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:kShelbyStreamEntryRecommendedCell forIndexPath:indexPath];
+            Frame *videoFrame = dashboardEntry.frame;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.videoFrame = videoFrame;
+            cell.delegate = self;
+            
+            if (self.selectedRowIndexPath && self.selectedRowIndexPath.row == indexPath.row) {
+                [self visualizeSelectedCell:cell];
+            }
+            return cell;
+        }
+    }
+    
+    ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:kShelbyStreamEntryCell forIndexPath:indexPath];
     Frame *videoFrame = nil;
     if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
         videoFrame = ((DashboardEntry *)streamEntry).frame;
@@ -254,6 +274,15 @@ NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    id streamEntry = self.deduplicatedEntries[indexPath.row];
+    if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
+        DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
+        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
+            return 311;
+        }
+    }
+    
     return 360.0;
 }
 
