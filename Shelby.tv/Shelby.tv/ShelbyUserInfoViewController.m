@@ -21,7 +21,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *userNickname;
 @property (nonatomic, strong) IBOutlet UILabel *userName;
 
-- (IBAction)ActivityFollowingToggle:(id)sender;
+- (IBAction)activityFollowingToggle:(id)sender;
 - (IBAction)toggleFollowUser:(id)sender;
 @end
 
@@ -63,7 +63,7 @@
     self.followingVC.user = self.user;
     
     //make sure proper view is on top
-    [self ActivityFollowingToggle:nil];
+    [self activityFollowingToggle:nil];
     
     User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     if ([self.user.userID isEqualToString:currentUser.userID] && [self.user isAnonymousUser]) {
@@ -151,7 +151,7 @@
     }];
 }
 
-- (IBAction)ActivityFollowingToggle:(id)sender
+- (IBAction)activityFollowingToggle:(id)sender
 {
     UISegmentedControl *switcher = (UISegmentedControl *)sender;
     if (switcher.selectedSegmentIndex == 0) {
