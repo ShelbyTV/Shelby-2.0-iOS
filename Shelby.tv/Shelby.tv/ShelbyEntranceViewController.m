@@ -10,7 +10,7 @@
 #import "ShelbyDataMediator.h"
 
 @interface ShelbyEntranceViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *logo;
+@property (weak, nonatomic) IBOutlet UIView *logo;
 @property (weak, nonatomic) IBOutlet UIButton *getStartedButton;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @end
@@ -41,7 +41,9 @@
     [super viewDidLoad];
     
     self.getStartedButton.backgroundColor = kShelbyColorGreen;
-    self.loginButton.backgroundColor = kShelbyColorAirPlayBlue;
+    self.getStartedButton.layer.cornerRadius = 5.f;
+    self.loginButton.backgroundColor = kShelbyColorBlue;
+    self.loginButton.layer.cornerRadius = 5.f;
     
     //animation before/after positions
     _logoFinalCenter = self.logo.center;
