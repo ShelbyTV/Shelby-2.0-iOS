@@ -148,7 +148,7 @@
     
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.user avatarURL]];
     __weak ShelbyUserInfoViewController *weakSelf = self;
-    [self.userAvatar setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    [self.userAvatar setImageWithURLRequest:imageRequest placeholderImage:[UIImage imageNamed:@"blank-avarar-large"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         weakSelf.userAvatar.image = image;
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         //
