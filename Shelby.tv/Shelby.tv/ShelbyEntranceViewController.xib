@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShelbyEntranceViewController">
             <connections>
                 <outlet property="getStartedButton" destination="wUN-Df-NI8" id="qGO-WR-cQd"/>
+                <outlet property="getStartedSpinner" destination="hYP-M6-cVc" id="jl0-Sa-MEw"/>
                 <outlet property="loginButton" destination="bsu-Cc-7aT" id="l3E-gB-BRh"/>
                 <outlet property="logo" destination="GJO-01-6rf" id="Cfe-Nr-6bn"/>
                 <outlet property="view" destination="2" id="3"/>
@@ -25,10 +26,17 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <state key="disabled">
+                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="getStartedTapped:" destination="-1" eventType="touchUpInside" id="DoW-3T-Vnq"/>
                     </connections>
                 </button>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="hYP-M6-cVc" userLabel="get started spinner">
+                    <rect key="frame" x="592" y="596" width="37" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsu-Cc-7aT">
                     <rect key="frame" x="302" y="678" width="420" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -36,6 +44,9 @@
                     <state key="normal" title="Login">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="disabled">
+                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="loginTapped:" destination="-1" eventType="touchUpInside" id="GRu-9P-9Nc"/>

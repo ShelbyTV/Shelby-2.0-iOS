@@ -12,6 +12,7 @@
 @interface ShelbyEntranceViewController ()
 @property (weak, nonatomic) IBOutlet UIView *logo;
 @property (weak, nonatomic) IBOutlet UIButton *getStartedButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getStartedSpinner;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @end
 
@@ -97,6 +98,7 @@
 #pragma mark - Target-Action
 
 - (IBAction)getStartedTapped:(id)sender {
+    [self.getStartedSpinner startAnimating];
     [self setButtonsEnabled:NO];
     [[ShelbyDataMediator sharedInstance] createAnonymousUser];
     //result via notifications, registered above
@@ -132,6 +134,9 @@
 {
     self.getStartedButton.enabled = enabled;
     self.loginButton.enabled = enabled;
+    if (enabled) {
+        [self.getStartedSpinner stopAnimating];
+    }
 }
 
 @end
