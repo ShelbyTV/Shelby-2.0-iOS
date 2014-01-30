@@ -127,6 +127,13 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
                  email:(NSString *)email
                 avatar:(UIImage *)avatar
             completion:(void (^)(NSError *error))completion;
+- (void)updateUserWithName:(NSString *)name
+                  nickname:(NSString *)nickname
+                  password:(NSString *)password
+                     email:(NSString *)email
+                    avatar:(UIImage *)avatar
+                       bio:(NSString *)bio
+                completion:(void (^)(NSError *error))completion;
 - (void)updateUserPreferenesForCurrentUser;
 
 // Making this method public because TwitterHandler is still not fully coming thru ShelbyDataMediator. So we want to give it access to get the error message just like the ShelbyDataMediator will get it when it is a FB error

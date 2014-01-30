@@ -767,13 +767,13 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
      }];
 }
 
-
-- (void)updateUserName:(NSString *)name
-              nickname:(NSString *)nickname
-              password:(NSString *)password
-                 email:(NSString *)email
-                avatar:(UIImage *)avatar
-            completion:(void (^)(NSError *error))completion
+- (void)updateUserWithName:(NSString *)name
+                  nickname:(NSString *)nickname
+                  password:(NSString *)password
+                     email:(NSString *)email
+                    avatar:(UIImage *)avatar
+                       bio:(NSString *)bio
+                completion:(void (^)(NSError *error))completion;
 {
     NSMutableDictionary *params = [@{} mutableCopy];
     if (name) {
@@ -791,6 +791,10 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     
     if (email) {
         params[kShelbyAPIParamEmail] = email;
+    }
+    
+    if (bio) {
+        params[kShelbyAPIParamBio] = bio;
     }
 
     if ([params count] == 0) {
@@ -823,6 +827,16 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             completion(error);
         }
     }];
+}
+
+- (void)updateUserName:(NSString *)name
+              nickname:(NSString *)nickname
+              password:(NSString *)password
+                 email:(NSString *)email
+                avatar:(UIImage *)avatar
+            completion:(void (^)(NSError *error))completion
+{
+    [self updateUserWithName:name nickname:nickname password:password email:email avatar:avatar bio:nil completion:completion];
 }
 
 - (void)updateUserPreferenesForCurrentUser

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ShelbySignupViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@property (nonatomic, assign) BOOL prepareForSignup;
 
 @end

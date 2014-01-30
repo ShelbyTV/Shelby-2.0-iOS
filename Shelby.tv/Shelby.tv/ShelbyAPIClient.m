@@ -72,6 +72,7 @@ NSString * const kShelbyAPIParamTriggerRecommendations =    @"trigger_recs";
 NSString * const kShelbyAPIParamRecommendationsVersion =    @"recs_version";
 NSString * const kShelbyAPIParamNickname =                  @"nickname";
 NSString * const kShelbyAPIParamEmail =                     @"primary_email";
+NSString * const kShelbyAPIParamBio =                       @"dot_tv_description";
 NSString * const kShelbyAPIParamPassword =                  @"password";
 NSString * const kShelbyAPIParamPasswordConfirmation =      @"password_confirmation";
 NSString * const kShelbyAPIParamName =                      @"name";

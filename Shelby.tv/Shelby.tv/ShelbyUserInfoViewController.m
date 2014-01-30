@@ -20,9 +20,13 @@
 @property (nonatomic, strong) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, strong) IBOutlet UILabel *userNickname;
 @property (nonatomic, strong) IBOutlet UILabel *userName;
+@property (nonatomic, strong) IBOutlet UILabel *bio;
+@property (nonatomic, strong) IBOutlet UIButton *followButton;
+@property (nonatomic, strong) IBOutlet UIButton *editProfileButton;
 
 - (IBAction)activityFollowingToggle:(id)sender;
 - (IBAction)toggleFollowUser:(id)sender;
+- (IBAction)editProfile:(id)sender;
 @end
 
 @implementation ShelbyUserInfoViewController
@@ -139,7 +143,7 @@
 {
     self.userName.text = self.user.name;
     self.userNickname.text = self.user.nickname;
-    
+    self.bio.text = self.user.bio;
     self.title = self.user.nickname;
     
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.user avatarURL]];
@@ -149,6 +153,37 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         //
     }];
+    self.userAvatar.layer.cornerRadius = self.userAvatar.bounds.size.height / 2.f;
+    self.userAvatar.layer.masksToBounds = YES;
+    
+    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    if ([currentUser.userID isEqualToString:self.user.userID]) {
+        self.followButton.hidden = YES;
+        self.editProfileButton.layer.cornerRadius = self.editProfileButton.bounds.size.height / 8.f;
+        self.editProfileButton.layer.masksToBounds = YES;
+        self.editProfileButton.backgroundColor = kShelbyColorGreen;
+    } else {
+        self.followButton.layer.cornerRadius = self.followButton.bounds.size.height / 8.f;
+        self.followButton.layer.masksToBounds = YES;
+        
+        self.editProfileButton.hidden = YES;
+        BOOL isFollowing = [currentUser isFollowing:self.user.publicRollID];
+        [self updateFollowButton:isFollowing];
+    }
+}
+
+- (void)updateFollowButton:(BOOL)isFollowing
+{
+    if (isFollowing) {
+        //show unfollow
+        [self.followButton setTitle:@"Following" forState:UIControlStateNormal];
+        self.followButton.backgroundColor = kShelbyColorLightGray;
+    } else {
+        //show follow
+        [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        self.followButton.backgroundColor = kShelbyColorGreen;
+    }
+
 }
 
 - (IBAction)activityFollowingToggle:(id)sender
@@ -163,6 +198,32 @@
 
 - (IBAction)toggleFollowUser:(id)sender
 {
+    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    
+    BOOL isFollowing = [currentUser isFollowing:self.user.publicRollID];
+    BOOL currentButtonActionFollow = [self.followButton.titleLabel.text isEqualToString:@"Follow"];
+    
+    if ((currentButtonActionFollow && isFollowing) || (!currentButtonActionFollow && !isFollowing)) {
+        return; // ignore multiple taps
+    }
+    
+    [self updateFollowButton:!isFollowing];
+    
+    if (isFollowing) {
+        [[ShelbyDataMediator sharedInstance] unfollowRoll:self.user.publicRollID];
+    } else {
+        [[ShelbyDataMediator sharedInstance] followRoll:self.user.publicRollID];
+    }
+
+}
+
+- (IBAction)editProfile:(id)sender
+{
+    ShelbySignupViewController *signupVC = [[ShelbySignupViewController alloc] initWithNibName:@"SignupView-iPad" bundle:nil];
+    signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
+    signupVC.prepareForSignup = NO;
+    
+    [((ShelbyNavigationViewController *)self.navigationController) presentViewController:signupVC animated:YES completion:nil];
     
 }
 
@@ -183,6 +244,7 @@
 {
     ShelbySignupViewController *signupVC = [[ShelbySignupViewController alloc] initWithNibName:@"SignupView-iPad" bundle:nil];
     signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
+    signupVC.prepareForSignup = YES;
     
     [((ShelbyNavigationViewController *)self.navigationController) presentViewController:signupVC animated:YES completion:nil];
 }

@@ -11,6 +11,7 @@
 
 extern NSString * const kShelbyAPIParamNickname;
 extern NSString * const kShelbyAPIParamEmail;
+extern NSString * const kShelbyAPIParamBio;
 extern NSString * const kShelbyAPIParamPassword;
 extern NSString * const kShelbyAPIParamPasswordConfirmation;
 extern NSString * const kShelbyAPIParamName;

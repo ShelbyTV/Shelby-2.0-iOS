@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShelbySignupViewController">
             <connections>
                 <outlet property="avatarImage" destination="Yxc-9n-mh0" id="Lys-9X-1SX"/>
+                <outlet property="signupNavigationItem" destination="POl-02-Ky0" id="kzW-82-AKb"/>
                 <outlet property="stepOneEmail" destination="1kr-mB-xRh" id="6Hx-em-lSu"/>
                 <outlet property="stepOneName" destination="o9Q-kS-Azh" id="k98-c1-7xw"/>
                 <outlet property="stepOneOr" destination="BQw-bS-fO5" id="WcX-eg-IUt"/>
@@ -19,6 +20,7 @@
                 <outlet property="stepTwoName" destination="zBM-Ff-Oal" id="a20-dB-ZeO"/>
                 <outlet property="stepTwoPassword" destination="pfv-LR-IVf" id="wpK-IS-qtR"/>
                 <outlet property="stepTwoSaveProfile" destination="TH0-pU-ni6" id="BCi-pe-5Ac"/>
+                <outlet property="stepTwoTitle" destination="S4h-Dh-hCC" id="1Ea-lT-Mgg"/>
                 <outlet property="stepTwoUsername" destination="mxi-dc-wWz" id="ce8-dJ-xUq"/>
                 <outlet property="stepTwoView" destination="5fn-ri-bS4" id="6qu-nB-4fk"/>
                 <outlet property="view" destination="1" id="opX-Va-iFh"/>
@@ -129,7 +131,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5fn-ri-bS4" userLabel="StepTwo">
-                    <rect key="frame" x="0.0" y="503" width="768" height="350"/>
+                    <rect key="frame" x="0.0" y="44" width="768" height="350"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6iB-wF-bb6">
