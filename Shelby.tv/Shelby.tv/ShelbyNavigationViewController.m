@@ -23,7 +23,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        _bottomInsetForContainedScrollViews = 0.f;
     }
     return self;
 }
@@ -81,6 +81,28 @@
         if ([videoVC displayChannel] == [self.currentlyOnVC displayChannel]) {
             viewController = self.currentlyOnVC;
         }
+    }
+    
+    //To account for any view overlapping us on the bottom (ie. "currently on")
+    //Add content offset to bottom of topmost scrollview in pushed VC
+    UIScrollView *scrollView;
+    for (UIView *view in [@[viewController.view] arrayByAddingObjectsFromArray:viewController.view.subviews]) {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            scrollView = (UIScrollView *)view;
+            break;
+        }
+    }
+    if (scrollView) {
+        UIEdgeInsets curInsets = scrollView.contentInset;
+        [scrollView setContentInset:UIEdgeInsetsMake(curInsets.top,
+                                                     curInsets.left,
+                                                     curInsets.bottom + self.bottomInsetForContainedScrollViews,
+                                                     curInsets.right)];
+        UIEdgeInsets curScrollInsets = scrollView.scrollIndicatorInsets;
+        [scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(curScrollInsets.top,
+                                                              curScrollInsets.left,
+                                                              curScrollInsets.bottom + self.bottomInsetForContainedScrollViews,
+                                                              curScrollInsets.right)];
     }
     
     [super pushViewController:viewController animated:animated];

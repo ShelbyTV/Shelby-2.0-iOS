@@ -120,6 +120,7 @@
     NSString *segueIdentifier = segue.identifier;
     if ([segueIdentifier isEqualToString:@"SideNavigation"]) {
         self.sideNavigationVC = segue.destinationViewController;
+        self.sideNavigationVC.bottomInsetForContainedScrollViews = self.currentlyOnViewContainer.bounds.size.height;
     } else if ([segueIdentifier isEqualToString:@"VideoReel"]) {
         self.videoReelVC = segue.destinationViewController;
     } else if ([segueIdentifier isEqualToString:@"CurrentlyOn"]) {
