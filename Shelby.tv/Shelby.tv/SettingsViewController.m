@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
 @property (weak, nonatomic) IBOutlet UILabel *fullname;
 @property (weak, nonatomic) IBOutlet UITableView *table;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopVerticalSpaceConstraint;
 
 @property (assign, nonatomic) BOOL facebookConnected;
 @property (assign, nonatomic) BOOL twitterConnected;
@@ -61,9 +62,13 @@
     [self.table registerNib:[UINib nibWithNibName:@"UserDetailsViewCell" bundle:nil] forCellReuseIdentifier:@"UserDetailsViewCell"];
     [self.table registerNib:[UINib nibWithNibName:@"SettingsViewCell" bundle:nil] forCellReuseIdentifier:@"SettingsViewCell"];
     [self.table registerNib:[UINib nibWithNibName:@"UserPreferencesViewCell" bundle:nil] forCellReuseIdentifier:@"UserPreferencesCell"];
-    
-    
     [self.table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SettingsCell"];
+    
+    if (DEVICE_IPAD) {
+        //working around iOS 7 bug where Grouped TableView inside a NavigationController does not respect
+        //headers of height 0.  So I make the header height 1 and account for it here.
+        self.tableViewTopVerticalSpaceConstraint.constant = -1;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -181,8 +186,6 @@
         UserDetailsCell *cell = (UserDetailsCell *)[self.table dequeueReusableCellWithIdentifier:@"UserDetailsViewCell" forIndexPath:indexPath];
         cell.name.text = self.user.name;
         cell.userName.text = self.user.nickname;
-        cell.avatar.layer.cornerRadius = 5;
-        cell.avatar.layer.masksToBounds = YES;
         [cell.avatar setImageWithURL:self.user.avatarURL placeholderImage:[UIImage imageNamed:@"settings-default-avatar"]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -248,9 +251,19 @@
 {
     if (indexPath.row == 0) {
         return 88;
+    } else if (indexPath.row == 5 && [self.user isAnonymousUser]) {
+        //hide push notifications for anonymous user
+        return 0.f;
     }
     
     return 55;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    //just using grouping to get rid fo the fake empty cells, don't want actual header
+    //accounting for this 1 pixel via top constraint
+    return 1.f;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath

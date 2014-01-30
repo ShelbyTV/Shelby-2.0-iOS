@@ -23,6 +23,9 @@
 
 - (void)awakeFromNib
 {
+    self.avatar.layer.cornerRadius = self.avatar.bounds.size.width/2.f;
+    self.avatar.layer.masksToBounds = YES;
+    
     self.name.font = kShelbyFontH3;
     self.userName.font = kShelbyFontH4Medium;
     self.email.font = kShelbyFontH4Medium;
