@@ -160,6 +160,17 @@
     [self.topLevelTable deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 4 && [self.currentUser isAnonymousUser]) {
+        //No Notifications for anonymous user
+        return 0.f;
+        
+    } else {
+        return tableView.rowHeight;
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if ([self.currentUser isAnonymousUser]) {
