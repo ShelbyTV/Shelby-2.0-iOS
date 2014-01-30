@@ -65,7 +65,18 @@
             [self.spinner startAnimating];
             [[ShelbyDataMediator sharedInstance] fetchRollFollowingsForUser:user withCompletion:^(User *user, NSArray *rawRollFollowings, NSError *error) {
                 if (!error) {
-                    self.rawRollFollowings = rawRollFollowings;
+                    NSMutableArray *following = [NSMutableArray arrayWithArray:rawRollFollowings];
+                    // When viewing own user profile, filter out user's watch later and public roll
+                    NSMutableArray *removeUserRolls = [NSMutableArray new];
+                    for (NSDictionary *rollDictionary in following) {
+                        if ([rollDictionary[@"roll_type"] isEqualToNumber:@(13)]) { // 13 = watch later roll type
+                            [removeUserRolls addObject:rollDictionary];
+                        } else if ([rollDictionary[@"id"] isEqualToString:self.user.publicRollID]) {
+                            [removeUserRolls addObject:rollDictionary];
+                        }
+                    }
+                    [following removeObjectsInArray:removeUserRolls];
+                    self.rawRollFollowings = [NSArray arrayWithArray:following];
                     [self.tableView reloadData];
                 } else {
                     DLog(@"ERROR on roll following fetch %@", error);
