@@ -80,6 +80,7 @@
 - (void)animateDisappearanceWithCompletion:(void (^)())completion
 {
     [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.getStartedSpinner stopAnimating];
         self.logo.center = _logoOffscreenCenter;
         self.getStartedButton.center = _getStartedButtonOffscreenCenter;
         self.loginButton.center = _loginButtonOffscreenCenter;
