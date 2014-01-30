@@ -29,17 +29,17 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    self.avatar.layer.cornerRadius = self.avatar.bounds.size.width/2.f;
+    self.avatar.layer.masksToBounds = YES;
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
-}
-
-- (void)prepareForReuse
-{
-    self.avatar.layer.cornerRadius = 5;
-    self.avatar.layer.masksToBounds = YES;
 }
 
 - (void)setupCellForLiker:(User *)user
