@@ -141,11 +141,20 @@
 
 - (IBAction)logout:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
-                                                        message:@"Are you sure you want to logout?"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Logout", nil];
+    UIAlertView *alertView;
+    if ([self.user isAnonymousUser]) {
+        alertView = [[UIAlertView alloc] initWithTitle:@"Already Have an Account?"
+                                               message:@"You can Keep Using this anonymous account and sign up later.  But, if you already have a Shelby Login, you can Reset the app to Login."
+                                              delegate:self
+                                     cancelButtonTitle:@"Keep Using"
+                                     otherButtonTitles:@"Reset & Login", nil];
+    } else {
+        alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
+                                               message:@"Are you sure you want to logout?"
+                                              delegate:self
+                                     cancelButtonTitle:@"Cancel"
+                                     otherButtonTitles:@"Logout", nil];
+    }
     
     [alertView show];
 }
@@ -157,9 +166,6 @@
         if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(logoutUser)]) {
             [self.delegate logoutUser];
         }
-   
-        // KP KP: TODO: should be done nicely somewhere else
-//        [SettingsViewController cleanupSession];
     }
 }
 
@@ -225,7 +231,11 @@
         } else if (indexPath.row == 4) {
             cell.mainTitle.text = @"Review us on App Store";
         } else if (indexPath.row == 6) {
-            cell.mainTitle.text = @"Logout";
+            if ([self.user isAnonymousUser]) {
+                cell.mainTitle.text = @"Login";
+            } else {
+                cell.mainTitle.text = @"Logout";
+            }
         }
         
         return cell;
