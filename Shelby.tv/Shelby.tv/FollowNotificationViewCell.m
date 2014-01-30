@@ -23,9 +23,11 @@
     return self;
 }
 
-- (void)prepareForReuse
+- (void)awakeFromNib
 {
-    self.avatar.layer.cornerRadius = 5;
+    [super awakeFromNib];
+    
+    self.avatar.layer.cornerRadius = self.avatar.bounds.size.width/2.f;
     self.avatar.layer.masksToBounds = YES;
 }
 
