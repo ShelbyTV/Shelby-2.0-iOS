@@ -401,4 +401,24 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return self.userType && [self.userType intValue] != 1;
 }
 
+#pragma mark - View Helpers
+
+- (NSString *)nickname
+{
+    if ([self isAnonymousUser]) {
+        return @"anonymous";
+    } else {
+        return [self primitiveValueForKey:@"nickname"];
+    }
+}
+
+- (NSString *)name
+{
+    if ([self isAnonymousUser]) {
+        return @"Video Lover";
+    } else {
+        return [self primitiveValueForKey:@"name"];
+    }
+}
+
 @end
