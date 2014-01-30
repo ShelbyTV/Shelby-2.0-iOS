@@ -115,7 +115,7 @@
     if (indexPath.row == 0) {
         cell.titleLabel.text = @"Stream";
     } else if (indexPath.row == 1) {
-        cell.titleLabel.text = @"My Activity";
+        cell.titleLabel.text = @"My Profile";
     } else if (indexPath.row == 2) {
         cell.titleLabel.text = @"Explore";
     } else if (indexPath.row == 3) {
