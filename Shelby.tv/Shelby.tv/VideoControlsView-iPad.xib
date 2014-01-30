@@ -14,14 +14,6 @@
             <rect key="frame" x="0.0" y="0.0" width="687" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOa-T3-fKR" userLabel="separator">
-                    <rect key="frame" x="0.0" y="0.0" width="1" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="1" id="zYA-kY-swL"/>
-                    </constraints>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Od-uW-uSl" userLabel="PlayPauseButton">
                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -243,14 +235,12 @@
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="0Od-uW-uSl" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="3Ap-1y-owh"/>
-                <constraint firstAttribute="bottom" secondItem="uOa-T3-fKR" secondAttribute="bottom" id="7es-Tt-xRX"/>
                 <constraint firstAttribute="centerY" secondItem="1RZ-fh-4Ar" secondAttribute="centerY" id="8TJ-XO-KE9"/>
                 <constraint firstItem="raZ-lS-VpX" firstAttribute="leading" secondItem="1RZ-fh-4Ar" secondAttribute="trailing" constant="8" id="CTL-is-geQ"/>
                 <constraint firstAttribute="trailing" secondItem="pWX-G6-DJ2" secondAttribute="trailing" id="CYN-2Y-1I7"/>
                 <constraint firstAttribute="centerY" secondItem="0Od-uW-uSl" secondAttribute="centerY" id="J7o-oy-trg"/>
                 <constraint firstItem="pWX-G6-DJ2" firstAttribute="leading" secondItem="Tys-dE-Ff9" secondAttribute="trailing" id="K3i-Cc-uYX"/>
                 <constraint firstAttribute="centerY" secondItem="lIL-ec-drI" secondAttribute="centerY" id="KF6-Xt-qDP"/>
-                <constraint firstItem="uOa-T3-fKR" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="LsQ-Bh-IlG"/>
                 <constraint firstItem="Vvc-Q4-lWi" firstAttribute="leading" secondItem="Mrq-Jq-azG" secondAttribute="trailing" constant="16" id="McP-7Q-UCG"/>
                 <constraint firstAttribute="bottom" secondItem="pWX-G6-DJ2" secondAttribute="bottom" id="NGq-BK-pgb"/>
                 <constraint firstAttribute="bottom" secondItem="Tys-dE-Ff9" secondAttribute="bottom" id="QYh-tr-rnX"/>
@@ -259,7 +249,6 @@
                 <constraint firstItem="Mrq-Jq-azG" firstAttribute="leading" secondItem="lIL-ec-drI" secondAttribute="trailing" constant="16" id="ZPe-Pk-5uP"/>
                 <constraint firstItem="Tys-dE-Ff9" firstAttribute="top" secondItem="1" secondAttribute="top" id="bkp-Ki-xnN"/>
                 <constraint firstAttribute="centerY" secondItem="Mrq-Jq-azG" secondAttribute="centerY" id="eL9-Ci-Yhy"/>
-                <constraint firstItem="uOa-T3-fKR" firstAttribute="top" secondItem="1" secondAttribute="top" id="eiA-uR-mxX"/>
                 <constraint firstItem="lIL-ec-drI" firstAttribute="leading" secondItem="0Od-uW-uSl" secondAttribute="trailing" id="pgX-It-TzG"/>
                 <constraint firstItem="pWX-G6-DJ2" firstAttribute="top" secondItem="1" secondAttribute="top" id="r6N-15-lma"/>
                 <constraint firstItem="raZ-lS-VpX" firstAttribute="top" secondItem="1" secondAttribute="top" id="w8J-8D-MEv"/>
@@ -296,8 +285,8 @@
         <image name="play-standard.png" width="15" height="18"/>
         <image name="player-controls-contract" width="22" height="22"/>
         <image name="player-controls-expand" width="22" height="22"/>
-        <image name="player-controls-like" width="22" height="20"/>
-        <image name="player-controls-share" width="21" height="28"/>
+        <image name="player-controls-like" width="24" height="20"/>
+        <image name="player-controls-share" width="19" height="25"/>
         <image name="player-controls-unlike" width="22" height="20"/>
         <image name="scrubber.png" width="32" height="32"/>
     </resources>
