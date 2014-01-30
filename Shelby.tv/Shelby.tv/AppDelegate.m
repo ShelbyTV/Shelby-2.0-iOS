@@ -225,8 +225,14 @@
 - (void)setupAppAppearanceProxies
 {
     //navigation bars
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top-nav-bkgd"] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Ubuntu-Medium" size:20.0], NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    if (DEVICE_IPAD) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        [[UIView appearance] setTintColor:kShelbyColorGreen];
+        [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:18.0], NSForegroundColorAttributeName: [UIColor blackColor]}];
+    } else {
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top-nav-bkgd"] forBarMetrics:UIBarMetricsDefault];
+        [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Ubuntu-Medium" size:20.0], NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    }
 }
 
 - (void)setupCrashHandling

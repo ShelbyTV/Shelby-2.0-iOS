@@ -15,6 +15,7 @@
 #import "ShelbyVideoContainer.h"
 
 @interface ShelbyCurrentlyOnViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *currentlyOnStaticLabel;
 @property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (strong, nonatomic) id<ShelbyVideoContainer> currentEntity;
@@ -29,6 +30,15 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    //blurred backgroud
+    UITabBar *tb = [[UITabBar alloc] initWithFrame:self.view.bounds];
+    [self.view insertSubview:tb atIndex:0];
+    
+    self.currentlyOnStaticLabel.textColor = kShelbyColorGreen;
 }
 
 - (void)viewDidLoad

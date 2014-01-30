@@ -28,11 +28,6 @@
 {
     [super awakeFromNib];
     
-    //label visuals
-    self.contentView.backgroundColor = kShelbyColorDarkGray;
-    self.titleLabel.textColor = kShelbyColorWhite;
-    self.titleLabel.font = kShelbyFontH3Bold;
-    
     //notification badge visuals
     self.badgeLabel.backgroundColor = kShelbyColorGreen;
     self.badgeLabel.layer.cornerRadius = self.badgeLabel.bounds.size.height / 2.f;

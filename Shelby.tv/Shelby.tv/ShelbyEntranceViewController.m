@@ -134,7 +134,9 @@
 - (void)setButtonsEnabled:(BOOL)enabled
 {
     self.getStartedButton.enabled = enabled;
+    self.getStartedButton.alpha = enabled ? 1.f : 0.3;
     self.loginButton.enabled = enabled;
+    self.loginButton.alpha = enabled ? 1.f : 0.3;
     if (enabled) {
         [self.getStartedSpinner stopAnimating];
     }

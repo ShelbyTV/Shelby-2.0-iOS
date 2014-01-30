@@ -44,7 +44,8 @@
 {
     [super viewDidLoad];
 
-    self.title = @"Shelby TV";
+    self.title = @" "; //<-- so that nav shows "<" instead of "< Back"
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ipad-nav-title-logo"]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(fetchNotificationEntriesDidCompletelNotification:)
@@ -56,8 +57,6 @@
 
     self.headerView = [[NSBundle mainBundle] loadNibNamed:@"SignupHeaderView" owner:self options:nil][0];
     self.headerView.delegate = self;
-    
-    self.topLevelTable.backgroundColor = kShelbyColorDarkGray;
     
     //start users in their stream on app launch (as opposed to top level navigation)
     self.shouldNavigateToUsersStreamOnAppear = YES;
@@ -176,12 +175,17 @@
     if ([self.currentUser isAnonymousUser]) {
         return 80.0;
     } else {
-        return 0;
+        //iOS 7 bug prevents 0 height from working inside navigation controller
+        return 1.0;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return self.headerView;
+    if ([self.currentUser isAnonymousUser]) {
+        return self.headerView;
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - SettingsViewDelegate
