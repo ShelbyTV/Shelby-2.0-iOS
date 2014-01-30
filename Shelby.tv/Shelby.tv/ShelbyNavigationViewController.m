@@ -92,7 +92,7 @@
             break;
         }
     }
-    if (scrollView) {
+    if (scrollView && viewController != self.currentlyOnVC) {
         UIEdgeInsets curInsets = scrollView.contentInset;
         [scrollView setContentInset:UIEdgeInsetsMake(curInsets.top,
                                                      curInsets.left,
