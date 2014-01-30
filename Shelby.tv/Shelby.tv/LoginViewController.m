@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
 @property (weak, nonatomic) IBOutlet UIButton *loginWithFacebookButton;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -111,11 +112,18 @@
     
     if (enabled) {
         self.navigationItem.rightBarButtonItem = nil;
+        if (DEVICE_IPAD) {
+            [self.activityIndicator stopAnimating];
+        }
     } else {
-        UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        [activity startAnimating];
-        activity.frame = CGRectMake(10, 10, 50, 44);
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
+        if (DEVICE_IPAD) {
+            [self.activityIndicator startAnimating];
+        } else {
+            UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            [activity startAnimating];
+            activity.frame = CGRectMake(10, 10, 50, 44);
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
+        }
     }
 }
 
