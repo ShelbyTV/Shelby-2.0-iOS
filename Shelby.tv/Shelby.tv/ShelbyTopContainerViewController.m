@@ -18,6 +18,9 @@
 #define FULLSCREEN_ANIMATION_VELOCITY 8.f
 #define FULLSCREEN_ANIMATION_OPTIONS UIViewAnimationCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
 
+#define LEFT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT 400
+#define RIGHT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT 2000
+
 @interface ShelbyTopContainerViewController ()
 //container Views
 @property (weak, nonatomic) IBOutlet UIView *navigationViewContainer;
@@ -26,6 +29,9 @@
 
 //constraints
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *videoReelWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationCenterXConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *currentlyOnCenterXConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *videoReelHorizontalSpaceRightSideConstraint;
 
 //View Controllers
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
@@ -61,21 +67,26 @@
     [self observeFullscreenNotifications];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationCenterXConstraint.constant += LEFT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
+    self.currentlyOnCenterXConstraint.constant += LEFT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
+    self.videoReelHorizontalSpaceRightSideConstraint.constant -= RIGHT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
+    [self.view layoutIfNeeded];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
-    CGPoint navFinalCenter = self.navigationViewContainer.center;
-    CGPoint currentlyOnFinalCenter = self.currentlyOnViewContainer.center;
-    CGPoint videoReelFinalCenter = self.videoReelViewContainer.center;
-    
-    self.navigationViewContainer.center = CGPointMake(-400, navFinalCenter.y);
-    self.currentlyOnViewContainer.center = CGPointMake(-400, currentlyOnFinalCenter.y);
-    self.videoReelViewContainer.center = CGPointMake(2000, videoReelFinalCenter.y);
+    [super viewDidAppear:animated];
     
     [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION delay:FULLSCREEN_ANIMATION_DELAY usingSpringWithDamping:FULLSCREEN_ANIMATION_DAMPING initialSpringVelocity:FULLSCREEN_ANIMATION_VELOCITY options:UIViewAnimationCurveEaseIn animations:^{
         
-        self.navigationViewContainer.center = navFinalCenter;
-        self.currentlyOnViewContainer.center = currentlyOnFinalCenter;
-        self.videoReelViewContainer.center = videoReelFinalCenter;
+        self.navigationCenterXConstraint.constant -= LEFT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
+        self.currentlyOnCenterXConstraint.constant -= LEFT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
+        self.videoReelHorizontalSpaceRightSideConstraint.constant += RIGHT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
+        [self.view layoutIfNeeded];
         
     } completion:^(BOOL finished) {
         //?
@@ -85,9 +96,11 @@
 - (void)animateDisappearanceWithCompletion:(void(^)())completion
 {
     [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION animations:^{
-        self.navigationViewContainer.center = CGPointMake(-400, self.navigationViewContainer.center.y);
-        self.currentlyOnViewContainer.center = CGPointMake(-400, self.currentlyOnViewContainer.center.y);
-        self.videoReelViewContainer.center = CGPointMake(2000, self.videoReelViewContainer.center.y);
+
+        self.navigationCenterXConstraint.constant += LEFT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
+        self.currentlyOnCenterXConstraint.constant += LEFT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
+        self.videoReelHorizontalSpaceRightSideConstraint.constant -= RIGHT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
+        [self.view layoutIfNeeded];
         
     } completion:^(BOOL finished) {
         if (completion) {
@@ -173,34 +186,31 @@
 - (void)goFullscreenVideo
 {
     if (![self isVideoFullscreen]) {
-        [self animateSizeChangesWithNavTransform:CGAffineTransformMakeScale(0.8, 0.8)
-                            currentlyOnTransform:CGAffineTransformMakeScale(0.1, 0.1)
-                                           width:_fullscreenVideoWidth
-                                       statusBar:YES];
+        [self animateSizeChangesWithLeftConstantAdjustment:self.navigationViewContainer.bounds.size.width*0.5
+                                            videoReelWidth:_fullscreenVideoWidth
+                                                 statusBar:YES];
     }
 }
 
 - (void)goSmallscreenVideo
 {
     if ([self isVideoFullscreen]) {
-        [self animateSizeChangesWithNavTransform:CGAffineTransformIdentity
-                            currentlyOnTransform:CGAffineTransformIdentity
-                                           width:_smallscreenVideoWidth
-                                       statusBar:NO];
+        [self animateSizeChangesWithLeftConstantAdjustment:-self.navigationViewContainer.bounds.size.width*0.5
+                                            videoReelWidth:_smallscreenVideoWidth
+                                                 statusBar:NO];
     }
 }
 
-- (void)animateSizeChangesWithNavTransform:(CGAffineTransform)navTransform
-                      currentlyOnTransform:(CGAffineTransform)currenlyOnTransform
-                                     width:(CGFloat)newWidth
-                                 statusBar:(BOOL)hideStatusBar
+- (void)animateSizeChangesWithLeftConstantAdjustment:(CGFloat)leftConstantAdjustment
+                                      videoReelWidth:(CGFloat)newWidth
+                                           statusBar:(BOOL)hideStatusBar
 {
     [UIView animateWithDuration:FULLSCREEN_ANIMATION_DURATION delay:FULLSCREEN_ANIMATION_DELAY usingSpringWithDamping:FULLSCREEN_ANIMATION_DAMPING initialSpringVelocity:FULLSCREEN_ANIMATION_VELOCITY options:FULLSCREEN_ANIMATION_OPTIONS animations:^{
         
-        self.navigationViewContainer.transform = navTransform;
-        self.currentlyOnViewContainer.transform = currenlyOnTransform;
+        self.navigationCenterXConstraint.constant += leftConstantAdjustment;
+        self.currentlyOnCenterXConstraint.constant += leftConstantAdjustment;
         self.videoReelWidthConstraint.constant = newWidth;
-        [[UIApplication sharedApplication] setStatusBarHidden:hideStatusBar];
+        [[UIApplication sharedApplication] setStatusBarHidden:hideStatusBar withAnimation:UIStatusBarAnimationSlide];
         [self.view layoutIfNeeded];
         
     } completion:nil];
