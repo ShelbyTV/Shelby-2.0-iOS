@@ -159,9 +159,13 @@
     User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     if ([currentUser.userID isEqualToString:self.user.userID]) {
         self.followButton.hidden = YES;
-        self.editProfileButton.layer.cornerRadius = self.editProfileButton.bounds.size.height / 8.f;
-        self.editProfileButton.layer.masksToBounds = YES;
-        self.editProfileButton.backgroundColor = kShelbyColorGreen;
+        if ([currentUser isAnonymousUser]) {
+            self.editProfileButton.hidden = YES;
+        } else {
+            self.editProfileButton.layer.cornerRadius = self.editProfileButton.bounds.size.height / 8.f;
+            self.editProfileButton.layer.masksToBounds = YES;
+            self.editProfileButton.backgroundColor = kShelbyColorGreen;
+        }
     } else {
         self.followButton.layer.cornerRadius = self.followButton.bounds.size.height / 8.f;
         self.followButton.layer.masksToBounds = YES;

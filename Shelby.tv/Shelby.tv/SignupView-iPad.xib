@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="avatarImage" destination="Yxc-9n-mh0" id="Lys-9X-1SX"/>
                 <outlet property="signupNavigationItem" destination="POl-02-Ky0" id="kzW-82-AKb"/>
+                <outlet property="stepOneActivityIndicator" destination="97k-gM-dMd" id="ume-He-lGR"/>
                 <outlet property="stepOneEmail" destination="1kr-mB-xRh" id="6Hx-em-lSu"/>
                 <outlet property="stepOneName" destination="o9Q-kS-Azh" id="k98-c1-7xw"/>
                 <outlet property="stepOneOr" destination="BQw-bS-fO5" id="WcX-eg-IUt"/>
@@ -15,6 +16,7 @@
                 <outlet property="stepOneSignUpWithEmail" destination="rTE-6V-vPp" id="rBD-g8-PHm"/>
                 <outlet property="stepOneSignUpWithFacebook" destination="7eQ-NF-iXC" id="RSU-7e-1mG"/>
                 <outlet property="stepOneView" destination="nvc-PU-Hl8" id="c52-C1-sfb"/>
+                <outlet property="stepTwoActivityIndicator" destination="d7H-D6-0Vs" id="koL-AR-8vn"/>
                 <outlet property="stepTwoBio" destination="yfk-Il-nPu" id="fqa-7M-hzv"/>
                 <outlet property="stepTwoEmail" destination="peH-Ed-x9x" id="ifD-fN-yPK"/>
                 <outlet property="stepTwoName" destination="zBM-Ff-Oal" id="a20-dB-ZeO"/>
@@ -86,7 +88,7 @@
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rTE-6V-vPp">
                             <rect key="frame" x="452" y="256" width="221" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                             <state key="normal" title="Let's do this!">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -127,6 +129,10 @@
                             <color key="textColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="97k-gM-dMd">
+                            <rect key="frame" x="621" y="268" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
@@ -213,7 +219,7 @@
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TH0-pU-ni6">
                             <rect key="frame" x="450" y="276" width="220" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                             <state key="normal" title="Save Profile">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -263,6 +269,10 @@
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="d7H-D6-0Vs">
+                            <rect key="frame" x="613" y="296" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>

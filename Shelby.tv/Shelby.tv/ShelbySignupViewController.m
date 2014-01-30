@@ -22,6 +22,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *stepOneSignUpWithFacebook;
 @property (nonatomic, weak) IBOutlet UIButton *stepOneSignUpWithEmail;
 @property (nonatomic, weak) IBOutlet UILabel *stepOneOr;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *stepOneActivityIndicator;
 
 @property (nonatomic, weak) IBOutlet UIView *stepTwoView;
 @property (nonatomic, weak) IBOutlet UITextField *stepTwoUsername;
@@ -32,6 +33,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *stepTwoSaveProfile;
 @property (nonatomic, weak) IBOutlet UIImageView *avatarImage;
 @property (nonatomic, weak) IBOutlet UILabel *stepTwoTitle;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *stepTwoActivityIndicator;
 
 @property (nonatomic, weak) IBOutlet UINavigationItem *signupNavigationItem;
 
@@ -157,12 +159,17 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [self addObserversForUpdateType:UserUpdateTypeEmail];
     self.stepOneSignUpWithEmail.enabled = NO;
     
+    [self.stepOneActivityIndicator startAnimating];
+    self.view.userInteractionEnabled = NO;
+    
     __weak ShelbySignupViewController *weakSelf = self;
     [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepOneName.text nickname:nil password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
-        self.stepOneSignUpWithEmail.enabled = YES;
+        weakSelf.view.userInteractionEnabled = YES;
+        [weakSelf.stepOneActivityIndicator stopAnimating];
         if (!error) {
             [weakSelf goToStepTwo];
         } else {
+            weakSelf.stepOneSignUpWithEmail.enabled = YES;
             NSString *errorMessage = nil;
             if ([error isKindOfClass:[NSDictionary class]]) {
                 NSDictionary *JSONError = (NSDictionary *)error;
@@ -177,11 +184,17 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 - (IBAction)saveProfile:(id)sender
 {
     self.stepTwoSaveProfile.enabled = NO;
+    [self.stepTwoActivityIndicator startAnimating];
+    self.view.userInteractionEnabled = NO;
     
     [self addObserversForUpdateType:UserUpdateTypeProfile];
     __weak ShelbySignupViewController *weakSelf = self;
     [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepTwoName.text nickname:self.stepTwoUsername.text password:self.stepTwoPassword.text email:self.stepTwoEmail.text avatar:self.avatarImage.image bio:self.stepTwoBio.text completion:^(NSError *error) {
-        self.stepTwoSaveProfile.enabled = YES;
+        weakSelf.stepOneSignUpWithEmail.enabled = YES;
+        weakSelf.view.userInteractionEnabled = YES;
+        [weakSelf.stepTwoActivityIndicator stopAnimating];
+        
+        weakSelf.stepTwoSaveProfile.enabled = YES;
         if (!error) {
             [weakSelf closeViewController];
         } else {
@@ -205,12 +218,12 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     self.stepTwoView.alpha = 0;
     self.stepTwoView.frame = CGRectMake(0, 44, 768, 350);
     
-    self.stepTwoSaveProfile.enabled = [self stepTwoFieldsValid];
     self.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     self.stepTwoEmail.text = self.currentUser.email;
     self.stepTwoName.text = self.currentUser.name;
-    self.stepTwoUsername.text = self.currentUser.nickname;
+    self.stepTwoUsername.text = @"";
     self.stepTwoBio.text = self.currentUser.bio;
+    self.stepTwoSaveProfile.enabled = [self stepTwoFieldsValid];
     
     if (self.stepOnePassword.text) {
         self.stepTwoPassword.text = self.stepOnePassword.text;
@@ -284,12 +297,20 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (BOOL)stepTwoFieldsValid
 {
-    NSString *name = self.stepOneName.text;
+    NSString *name = self.stepTwoName.text;
     NSString *email = self.stepTwoEmail.text;
     NSString *password = self.stepTwoPassword.text;
     NSString *username = self.stepTwoUsername.text;
     
-    return self.stepTwoSaveProfile.enabled = [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email] && [ShelbyValidationUtility isUsernameValid:username];
+    // If a user is editing their profile ignore the password field. Unless they are trying to change it
+    BOOL passwordField = NO;
+    if ([self.stepTwoPassword.text isEqualToString:@""] && ![self.currentUser isAnonymousUser]) {
+        passwordField = YES;
+    } else {
+        passwordField = [ShelbyValidationUtility isPasswordValid:password];
+    }
+    
+    return self.stepTwoSaveProfile.enabled = [ShelbyValidationUtility isNameValid:name] && passwordField && [ShelbyValidationUtility isEmailValid:email] && [ShelbyValidationUtility isUsernameValid:username];
 }
 
 #pragma mark - UITextFieldDelegate Methods
