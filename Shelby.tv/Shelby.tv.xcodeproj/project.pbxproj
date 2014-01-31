@@ -138,6 +138,12 @@
 		1C49623E18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */; };
 		1C49623F18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */; };
 		1C49624018999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */; };
+		1C496242189C4931005F9BD4 /* ShelbyChannelsCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */; };
+		1C496243189C4931005F9BD4 /* ShelbyChannelsCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */; };
+		1C496244189C4931005F9BD4 /* ShelbyChannelsCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */; };
+		1C496246189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */; };
+		1C496247189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */; };
+		1C496248189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */; };
 		1C534E3A17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */; };
 		1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */; };
 		1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */; };
@@ -1010,6 +1016,8 @@
 		1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryRecommendedCellView.xib; sourceTree = "<group>"; };
 		1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryCellView.xib; sourceTree = "<group>"; };
 		1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryLikeCellView.xib; sourceTree = "<group>"; };
+		1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyChannelsCellView.xib; sourceTree = "<group>"; };
+		1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyChannelsCollapsedCellView.xib; sourceTree = "<group>"; };
 		1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape-568h.png"; sourceTree = "<group>"; };
 		1C534E3817A1792700B6B3D5 /* bkgd-landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape.png"; sourceTree = "<group>"; };
 		1C534E3917A1792700B6B3D5 /* bkgd-landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape@2x.png"; sourceTree = "<group>"; };
@@ -1602,6 +1610,8 @@
 				1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */,
 				1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */,
 				1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */,
+				1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */,
+				1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -2649,6 +2659,7 @@
 				91F16826179840FF00AF8A2E /* Login.storyboard in Resources */,
 				9124A67C188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */,
 				1CD8111317CCF6C0002FD84B /* play-airplay.png in Resources */,
+				1C496247189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib in Resources */,
 				1CDCA679179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67C179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA67F179DCE190098C4E1 /* play.png in Resources */,
@@ -2718,6 +2729,7 @@
 				91B7DC5317B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
 				1C253B74184D45A200FBE054 /* ShelbyLikersView.xib in Resources */,
 				91B7DC5617B29D59009ABF02 /* scrub-track-progress.png in Resources */,
+				1C496243189C4931005F9BD4 /* ShelbyChannelsCellView.xib in Resources */,
 				1CFEB3B1186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */,
 				91B7DC5917B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 				911ED32217B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
@@ -2781,6 +2793,7 @@
 				91F16827179840FF00AF8A2E /* Login.storyboard in Resources */,
 				9124A67D188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */,
 				1CD8111417CCF6C0002FD84B /* play-airplay.png in Resources */,
+				1C496248189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib in Resources */,
 				1CDCA67A179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67D179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA680179DCE190098C4E1 /* play.png in Resources */,
@@ -2850,6 +2863,7 @@
 				91B7DC5417B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
 				1C253B75184D45A200FBE054 /* ShelbyLikersView.xib in Resources */,
 				91B7DC5717B29D59009ABF02 /* scrub-track-progress.png in Resources */,
+				1C496244189C4931005F9BD4 /* ShelbyChannelsCellView.xib in Resources */,
 				1CFEB3B2186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */,
 				91B7DC5A17B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 				911ED32317B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
@@ -2922,6 +2936,7 @@
 				1CDCA678179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67B179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA67E179DCE190098C4E1 /* play.png in Resources */,
+				1C496242189C4931005F9BD4 /* ShelbyChannelsCellView.xib in Resources */,
 				1CDCA681179DCE190098C4E1 /* play@2x.png in Resources */,
 				1CDCA684179DCE190098C4E1 /* scrubber.png in Resources */,
 				1C3A7EDA1887354C00458718 /* LoginView-iPad.xib in Resources */,
@@ -2961,6 +2976,7 @@
 				1CD255CB17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB317A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
 				910F5BEB1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */,
+				1C496246189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib in Resources */,
 				1C56F14817BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				1CCE4C4C17E226F700F0BF5A /* user_default_avatar.png in Resources */,
 				1CE5584217DE1E1300C18A30 /* button-off@2x.png in Resources */,
