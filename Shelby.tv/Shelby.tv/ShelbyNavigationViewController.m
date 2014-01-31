@@ -133,11 +133,10 @@
     return followingVC;
 }
 
-- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride
 {
     ShelbyStreamInfoViewController *streamInfoVC = [self setupStreamInfoViewControllerWithChannel:channel];
-    NSString *description = channel.dashboard ? channel.dashboard.displayTitle : channel.roll.displayTitle;
-    streamInfoVC.title = description;
+    streamInfoVC.title = titleOverride ? titleOverride : (channel.dashboard ? channel.dashboard.displayTitle : channel.roll.displayTitle);
     [self pushViewController:streamInfoVC animated:YES];
     return streamInfoVC;
 }
