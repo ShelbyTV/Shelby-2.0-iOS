@@ -53,11 +53,15 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [self.userEducationVC referenceViewWillDisappear:animated];
 }
 
