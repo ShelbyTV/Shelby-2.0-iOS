@@ -7,9 +7,11 @@
 //
 
 #import "ShelbyStreamInfoViewController.h"
+#import "BrowseChannelsTableViewController.h"
 #import "DashboardEntry+Helper.h"
 #import "DeduplicationUtility.h"
 #import "Frame+Helper.h"
+#import "Roll.h"
 #import "ShelbyBrain.h"
 #import "ShelbyModelArrayUtility.h"
 #import "SPShareController.h"
@@ -22,8 +24,11 @@
 NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
 NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
+NSString * const kShelbyStreamEntryAddChannelsCell = @"AddChannels";
+NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsCollapsed";
 
 @interface ShelbyStreamInfoViewController ()
+@property (nonatomic, assign) NSInteger followCount;
 @property (nonatomic, strong) NSArray *channelEntries;
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 @property (nonatomic, weak) IBOutlet UITableView *entriesTable;
@@ -90,6 +95,8 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryRecommendedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryRecommendedCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryLikeCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryLikeCell];
+    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCell];
+    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCollapsedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCollapsedCell];
 }
 
 - (void)dealloc
@@ -99,7 +106,25 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
+}
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    ShelbyStreamInfoViewController *weakSelf = self;
+    [[ShelbyDataMediator sharedInstance] fetchFeaturedChannelsWithCompletionHandler:^(NSArray *channels, NSError *error) {
+        if (channels) {
+            [weakSelf calculateFollowCountForChannels:channels];
+            [weakSelf.entriesTable reloadData];
+        } else {
+            //TODO iPad: handle error
+        }
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -135,7 +160,7 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
 
     id currentEntity = userInfo[kShelbyVideoReelEntityKey];
     NSInteger row = [self.deduplicatedEntries indexOfObject:currentEntity];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:1]; //KP KP - don't hard code section
     
     self.selectedRowIndexPath = indexPath;
 
@@ -217,14 +242,28 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
 }
 
 #pragma mark - UITableDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (!self.followCount) {
+        return 1;
+    }
+    return 2;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section == 0 && self.followCount) {
+        return 1; // add channels section
+    }
     return [self.deduplicatedEntries count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0 && self.followCount) {
+        NSString *cellIdentifier = self.followCount > 2 ? kShelbyStreamEntryAddChannelsCollapsedCell : kShelbyStreamEntryAddChannelsCell;
+        return [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    }
     
     id streamEntry = self.deduplicatedEntries[indexPath.row];
     NSString *cellIdentifier = nil;
@@ -262,9 +301,29 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
     return cell;
 }
 
+- (void)calculateFollowCountForChannels:(NSArray *)followChannels
+{
+    NSInteger followCount = 0;
+    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    for (DisplayChannel *channel in followChannels) {
+        if ([currentUser isFollowing:channel.roll.rollID]) {
+            followCount++;
+        }
+    }
+        
+    self.followCount = followCount;
+}
+
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.followCount && indexPath.section == 0 && indexPath.row == 0) {
+        BrowseChannelsTableViewController *channelsVC = [[UIStoryboard storyboardWithName:@"BrowseChannels" bundle:nil] instantiateInitialViewController];
+        [self.navigationController pushViewController:channelsVC animated:YES];
+        channelsVC.userEducationVC = [ShelbyUserEducationViewController newChannelsUserEducationViewController];
+        return;
+    }
+    
     self.selectedRowIndexPath = indexPath;
     [self visualizeSelectedRow:indexPath];
     
@@ -277,6 +336,10 @@ NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        return self.followCount > 2 ? 110.0 : 210.0;
+    }
+    
     id streamEntry = self.deduplicatedEntries[indexPath.row];
     if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
         DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
