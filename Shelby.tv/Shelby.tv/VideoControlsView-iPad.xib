@@ -14,26 +14,44 @@
             <rect key="frame" x="0.0" y="0.0" width="687" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Od-uW-uSl" userLabel="PlayPauseButton">
-                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qdz-nf-2YM" userLabel="iPad White Background">
+                    <rect key="frame" x="0.0" y="0.0" width="687" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BMg-Xm-rlK" userLabel="play holder">
+                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Od-uW-uSl" userLabel="PlayPauseButton">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="dtN-GA-ugF"/>
+                                <constraint firstAttribute="height" constant="60" id="wGy-aN-d4Z"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                            <state key="normal" image="player-controls-play">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="playPauseButtonTapped:" destination="-1" eventType="touchUpInside" id="0Qm-cY-e67"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="60" id="dtN-GA-ugF"/>
-                        <constraint firstAttribute="height" constant="60" id="wGy-aN-d4Z"/>
+                        <constraint firstAttribute="width" constant="60" id="N5Z-9U-nBq"/>
+                        <constraint firstAttribute="centerY" secondItem="0Od-uW-uSl" secondAttribute="centerY" id="Nkx-eV-glN"/>
+                        <constraint firstAttribute="height" constant="60" id="qfE-dI-CVx"/>
+                        <constraint firstItem="0Od-uW-uSl" firstAttribute="leading" secondItem="BMg-Xm-rlK" secondAttribute="leading" id="vHd-wa-Ayv"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                    <state key="normal" image="play-standard.png">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="highlighted">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="playPauseButtonTapped:" destination="-1" eventType="touchUpInside" id="0Qm-cY-e67"/>
-                    </connections>
-                </button>
-                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="1RZ-fh-4Ar" userLabel="airPlayView">
+                </view>
+                <view alpha="0.59999999999999998" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="1RZ-fh-4Ar" userLabel="airPlayView">
                     <rect key="frame" x="499" y="19" width="0.0" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
@@ -49,7 +67,6 @@
                         <constraint firstAttribute="width" constant="47" id="z2M-Vs-BWa"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </label>
@@ -60,7 +77,6 @@
                         <constraint firstAttribute="width" constant="51" id="bHo-jb-DDl"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </label>
@@ -78,7 +94,7 @@
                     <rect key="frame" x="115" y="14" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                    <state key="normal" image="scrubber.png">
+                    <state key="normal" image="player-controls-scrubber">
                         <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -92,7 +108,7 @@
                         <action selector="scrubberTouchUpOutside:" destination="-1" eventType="touchUpOutside" id="Jqz-YB-5cq"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="raZ-lS-VpX" userLabel="share holder">
+                <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="raZ-lS-VpX" userLabel="share holder">
                     <rect key="frame" x="507" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -109,7 +125,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pgj-3G-foN" userLabel="separator">
                             <rect key="frame" x="0.0" y="0.0" width="1" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="hZo-z2-SQ4"/>
                             </constraints>
@@ -127,7 +143,7 @@
                         <constraint firstItem="HhG-MP-RAy" firstAttribute="top" secondItem="raZ-lS-VpX" secondAttribute="top" id="mP7-kE-CeU"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tys-dE-Ff9" userLabel="like holder">
+                <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tys-dE-Ff9" userLabel="like holder">
                     <rect key="frame" x="567" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -160,7 +176,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u6d-NO-cGF" userLabel="separator">
                             <rect key="frame" x="0.0" y="0.0" width="1" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="Pd4-Oz-687"/>
                             </constraints>
@@ -182,7 +198,7 @@
                         <constraint firstAttribute="bottom" secondItem="T5R-EZ-t1c" secondAttribute="bottom" id="xtX-Q5-VsB"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pWX-G6-DJ2" userLabel="expand holder">
+                <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pWX-G6-DJ2" userLabel="expand holder">
                     <rect key="frame" x="627" y="0.0" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -209,7 +225,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDd-Qc-BlH" userLabel="separator">
                             <rect key="frame" x="0.0" y="0.0" width="1" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="Omt-KJ-47w"/>
                             </constraints>
@@ -231,14 +247,17 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="0Od-uW-uSl" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="3Ap-1y-owh"/>
+                <constraint firstItem="Qdz-nf-2YM" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="1QH-qW-J7p"/>
+                <constraint firstAttribute="centerY" secondItem="BMg-Xm-rlK" secondAttribute="centerY" id="1u6-3V-PIf"/>
+                <constraint firstItem="BMg-Xm-rlK" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="48z-vd-LJw"/>
+                <constraint firstAttribute="trailing" secondItem="Qdz-nf-2YM" secondAttribute="trailing" id="5X4-US-bs9"/>
                 <constraint firstAttribute="centerY" secondItem="1RZ-fh-4Ar" secondAttribute="centerY" id="8TJ-XO-KE9"/>
                 <constraint firstItem="raZ-lS-VpX" firstAttribute="leading" secondItem="1RZ-fh-4Ar" secondAttribute="trailing" constant="8" id="CTL-is-geQ"/>
                 <constraint firstAttribute="trailing" secondItem="pWX-G6-DJ2" secondAttribute="trailing" id="CYN-2Y-1I7"/>
-                <constraint firstAttribute="centerY" secondItem="0Od-uW-uSl" secondAttribute="centerY" id="J7o-oy-trg"/>
+                <constraint firstAttribute="bottom" secondItem="Qdz-nf-2YM" secondAttribute="bottom" id="Gt2-sj-CEh"/>
                 <constraint firstItem="pWX-G6-DJ2" firstAttribute="leading" secondItem="Tys-dE-Ff9" secondAttribute="trailing" id="K3i-Cc-uYX"/>
                 <constraint firstAttribute="centerY" secondItem="lIL-ec-drI" secondAttribute="centerY" id="KF6-Xt-qDP"/>
                 <constraint firstItem="Vvc-Q4-lWi" firstAttribute="leading" secondItem="Mrq-Jq-azG" secondAttribute="trailing" constant="16" id="McP-7Q-UCG"/>
@@ -249,7 +268,8 @@
                 <constraint firstItem="Mrq-Jq-azG" firstAttribute="leading" secondItem="lIL-ec-drI" secondAttribute="trailing" constant="16" id="ZPe-Pk-5uP"/>
                 <constraint firstItem="Tys-dE-Ff9" firstAttribute="top" secondItem="1" secondAttribute="top" id="bkp-Ki-xnN"/>
                 <constraint firstAttribute="centerY" secondItem="Mrq-Jq-azG" secondAttribute="centerY" id="eL9-Ci-Yhy"/>
-                <constraint firstItem="lIL-ec-drI" firstAttribute="leading" secondItem="0Od-uW-uSl" secondAttribute="trailing" id="pgX-It-TzG"/>
+                <constraint firstItem="lIL-ec-drI" firstAttribute="leading" secondItem="BMg-Xm-rlK" secondAttribute="trailing" id="iVA-M0-RwE"/>
+                <constraint firstItem="Qdz-nf-2YM" firstAttribute="top" secondItem="1" secondAttribute="top" id="mqc-oK-qRw"/>
                 <constraint firstItem="pWX-G6-DJ2" firstAttribute="top" secondItem="1" secondAttribute="top" id="r6N-15-lma"/>
                 <constraint firstItem="raZ-lS-VpX" firstAttribute="top" secondItem="1" secondAttribute="top" id="w8J-8D-MEv"/>
                 <constraint firstItem="1RZ-fh-4Ar" firstAttribute="leading" secondItem="Vvc-Q4-lWi" secondAttribute="trailing" constant="8" id="ygn-lc-7lc"/>
@@ -282,12 +302,12 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="play-standard.png" width="15" height="18"/>
         <image name="player-controls-contract" width="22" height="22"/>
         <image name="player-controls-expand" width="22" height="22"/>
         <image name="player-controls-like" width="24" height="20"/>
+        <image name="player-controls-play" width="15" height="18"/>
+        <image name="player-controls-scrubber" width="32" height="32"/>
         <image name="player-controls-share" width="19" height="25"/>
         <image name="player-controls-unlike" width="22" height="20"/>
-        <image name="scrubber.png" width="32" height="32"/>
     </resources>
 </document>
