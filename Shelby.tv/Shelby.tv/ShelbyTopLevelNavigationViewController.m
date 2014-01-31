@@ -235,7 +235,7 @@
             DisplayChannel *displayChannel =  [DisplayChannel channelForTransientEntriesWithID:videoID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             displayChannel.dashboard = fetchedDashboardEntry.dashboard;
             displayChannel.shouldFetchRemoteEntries = NO;
-            ShelbyStreamInfoViewController *videoStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:displayChannel];
+            ShelbyStreamInfoViewController *videoStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:displayChannel titleOverride:nil];
             videoStreamVC.singleVideoEntry = @[fetchedDashboardEntry];
             videoStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
         }
@@ -258,7 +258,7 @@
 - (void)navigateToUsersStream
 {
     DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream];
+    ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream titleOverride:nil];
     userStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
 }
 
@@ -276,9 +276,8 @@
 - (void)navigateToFeaturedChannel
 {
     DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
-                                         
                                                                           inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel];
+    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel titleOverride:@"Explore"];
     
 }
 

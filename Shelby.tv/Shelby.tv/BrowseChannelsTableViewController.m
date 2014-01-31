@@ -90,7 +90,7 @@
  
     //TODO iPad: i think we need to push a different kind of view controller
     // or at least a slightly different setup (need mockups)
-    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:selectedChannel];
+    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:selectedChannel titleOverride:nil];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

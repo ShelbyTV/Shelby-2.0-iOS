@@ -27,6 +27,6 @@
 
 - (void)pushViewController:(UIViewController *)viewController;
 - (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController;
-- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel;
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride;
 
 @end
