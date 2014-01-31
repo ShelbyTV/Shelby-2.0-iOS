@@ -283,6 +283,8 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [self removeObservers];
     if ([notification.object isKindOfClass:[NSString class]]) {
         [self showErrorMessage:notification.object];
+    } else {
+        [self showErrorMessage:nil];
     }
 }
 
@@ -308,8 +310,9 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     
     if ([notification.object isKindOfClass:[NSString class]]) {
         [self showErrorMessage:notification.object];
+    } else {
+        [self showErrorMessage:nil];
     }
-//    [self signupErrorWithErrorMessage:notification.object];
 }
 
 - (void)userUpdateDidSucceed:(NSNotification *)notification
