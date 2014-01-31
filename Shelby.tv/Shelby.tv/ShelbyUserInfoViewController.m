@@ -171,8 +171,10 @@
         self.followButton.layer.masksToBounds = YES;
         
         self.editProfileButton.hidden = YES;
-        BOOL isFollowing = [currentUser isFollowing:self.user.publicRollID];
-        [self updateFollowButton:isFollowing];
+        if (self.user.publicRollID) {
+            BOOL isFollowing = [currentUser isFollowing:self.user.publicRollID];
+            [self updateFollowButton:isFollowing];
+        }
     }
 }
 

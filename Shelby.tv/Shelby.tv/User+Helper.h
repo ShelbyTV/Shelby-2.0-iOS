@@ -29,7 +29,7 @@
 + (void)sessionDidBecomeActive;
 + (void)sessionDidPause;
 
-- (void)updateWithFacebookUser:(NSDictionary *)facebookUser;
+- (void)updateWithFacebookUser:(NSDictionary *)facebookUser andJSON:(NSDictionary *)JSON;
 // KP KP: TODO: once we move twitter handler stuff to data mediator, we can pass a context. For now, we'll just ask for a private context.
 + (User *)updateUserWithTwitterUsername:(NSString *)username andTwitterID:(NSString *)twitterID;
 

@@ -1038,7 +1038,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                             andBlock:^(id JSON, NSError *error) {
                                                 if(!error){
                                                     //user updated by API
-                                                    [user updateWithFacebookUser:facebookUser];
+                                                    [user updateWithFacebookUser:facebookUser andJSON:JSON];
                                                     NSError *err;
                                                     [user.managedObjectContext save:&err];
                                                     STVDebugAssert(!err, @"context save failed saving User after facebook login...");
@@ -1050,7 +1050,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                     
                                                     [self.delegate facebookConnectDidComplete];
                                                     
-                                                    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookConnectCompleted object:nil];
+                                                    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookConnectCompleted object:facebookUser];
                                                     
                                                     if (askForPublishPermission) {
                                                         [[FacebookHandler sharedInstance] askForPublishPermissions];
