@@ -11,23 +11,32 @@
 
 @interface ShelbyEntranceViewController ()
 @property (weak, nonatomic) IBOutlet UIView *logo;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoVerticalSpaceToTop;
 @property (weak, nonatomic) IBOutlet UIButton *getStartedButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *getStartedVerticalSpaceToBottom;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getStartedSpinner;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginVerticalSpaceToBottom;
+
+//blurry background
+@property (nonatomic, assign) BOOL runBackgroundAnimation;
+@property (weak, nonatomic) IBOutlet UIImageView *currentlyShowingBackground;
+@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *allBackgrounds;
+
 @end
 
 @implementation ShelbyEntranceViewController {
     UIAlertView *_alertView;
-    CGPoint _logoOffscreenCenter, _logoFinalCenter,
-            _getStartedButtonOffscreenCenter, _getStartedButtonFinalCenter,
-            _loginButtonOffscreenCenter, _loginButtonFinalCenter;
+    CGFloat _initialLogoVerticalSpaceToTopConstant, _properLogoVerticalSpaceToTopConstant,
+            _initialGetStartedVerticalSpaceToBottomConstant, _properGetStartedVerticalSpaceToBottomConstant,
+            _initialLoginVerticalSpaceToBottomConstant, _properLoginVerticalSpaceToBottomConstant;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        _runBackgroundAnimation = NO;
     }
     return self;
 }
@@ -46,16 +55,29 @@
     self.loginButton.backgroundColor = kShelbyColorBlue;
     self.loginButton.layer.cornerRadius = 5.f;
     
-    //animation before/after positions
-    _logoFinalCenter = self.logo.center;
-    _logoOffscreenCenter = CGPointMake(_logoFinalCenter.x, -500);
-    _getStartedButtonFinalCenter = self.getStartedButton.center;
-    _getStartedButtonOffscreenCenter = CGPointMake(_getStartedButtonFinalCenter.x, 1200);
-    _loginButtonFinalCenter = self.loginButton.center;
-    _loginButtonOffscreenCenter = CGPointMake(_loginButtonFinalCenter.x, 1000);
+    //initial/proper position constants
+    _properLogoVerticalSpaceToTopConstant = self.logoVerticalSpaceToTop.constant;
+    _initialLogoVerticalSpaceToTopConstant = _properLogoVerticalSpaceToTopConstant - 500.f;
+    _properGetStartedVerticalSpaceToBottomConstant = self.getStartedVerticalSpaceToBottom.constant;
+    _initialGetStartedVerticalSpaceToBottomConstant = _properGetStartedVerticalSpaceToBottomConstant - 1500.f;
+    _properLoginVerticalSpaceToBottomConstant = self.loginVerticalSpaceToBottom.constant;
+    _initialLoginVerticalSpaceToBottomConstant = _properLoginVerticalSpaceToBottomConstant - 1000.f;
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
+    
+    srand48(time(0));
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self setInitialViewStates];
+    [self.view layoutIfNeeded];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -64,31 +86,53 @@
     
     [self setButtonsEnabled:YES];
     
-    self.logo.center = _logoOffscreenCenter;
-    self.getStartedButton.center = _getStartedButtonOffscreenCenter;
-    self.loginButton.center = _loginButtonOffscreenCenter;
-    
-    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.logo.center = _logoFinalCenter;
-        self.getStartedButton.center = _getStartedButtonFinalCenter;
-        self.loginButton.center = _loginButtonFinalCenter;
+    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState) animations:^{
+        
+        [self setProperViewStates];
+        [self.view layoutIfNeeded];
+        
     } completion:^(BOOL finished) {
-        //nothing to do just yet... maybe kick off some continuing animations?
+        self.runBackgroundAnimation = YES;
     }];
 }
 
 - (void)animateDisappearanceWithCompletion:(void (^)())completion
 {
-    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.getStartedSpinner stopAnimating];
-        self.logo.center = _logoOffscreenCenter;
-        self.getStartedButton.center = _getStartedButtonOffscreenCenter;
-        self.loginButton.center = _loginButtonOffscreenCenter;
+    self.runBackgroundAnimation = NO;
+    
+    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState) animations:^{
+        
+        [self setInitialViewStates];
+        [self.view layoutIfNeeded];
+        
     } completion:^(BOOL finished) {
         if (completion) {
             completion();
         }
     }];
+}
+
+//aka "off screen"
+- (void)setInitialViewStates
+{
+    [self.getStartedSpinner stopAnimating];
+    self.logoVerticalSpaceToTop.constant = _initialLogoVerticalSpaceToTopConstant;
+    self.getStartedVerticalSpaceToBottom.constant = _initialGetStartedVerticalSpaceToBottomConstant;
+    self.loginVerticalSpaceToBottom.constant = _initialLoginVerticalSpaceToBottomConstant;
+    
+    for (UIView *backgroundView in self.allBackgrounds) {
+        backgroundView.alpha = 0.f;
+    }
+}
+
+//aka "on screen"
+- (void)setProperViewStates
+{
+    self.logoVerticalSpaceToTop.constant = _properLogoVerticalSpaceToTopConstant;
+    self.getStartedVerticalSpaceToBottom.constant = _properGetStartedVerticalSpaceToBottomConstant;
+    self.loginVerticalSpaceToBottom.constant = _properLoginVerticalSpaceToBottomConstant;
+    
+    self.currentlyShowingBackground.alpha = 1.f;
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -139,6 +183,43 @@
     self.loginButton.alpha = enabled ? 1.f : 0.3;
     if (enabled) {
         [self.getStartedSpinner stopAnimating];
+    }
+}
+
+- (void)setRunBackgroundAnimation:(BOOL)runBackgroundAnimation
+{
+    if (_runBackgroundAnimation != runBackgroundAnimation) {
+        _runBackgroundAnimation = runBackgroundAnimation;
+        
+        if (_runBackgroundAnimation) {
+            [self stepBackgroundAnimation];
+        }
+    }
+}
+
+- (void)stepBackgroundAnimation
+{
+    if (self.runBackgroundAnimation) {
+        NSMutableArray *hiddenBackgrounds = [self.allBackgrounds mutableCopy];
+        [hiddenBackgrounds removeObject:self.currentlyShowingBackground];
+        UIImageView *nextBackground = hiddenBackgrounds[arc4random_uniform([hiddenBackgrounds count])];
+        nextBackground.alpha = 1.f;
+        nextBackground.transform = CGAffineTransformIdentity;
+        [self.view insertSubview:nextBackground belowSubview:self.currentlyShowingBackground];
+        
+        [UIView animateWithDuration:5.0f animations:^{
+            self.currentlyShowingBackground.alpha = 0.f;
+            nextBackground.transform = CGAffineTransformMakeScale(drand48(), drand48());
+            
+        } completion:^(BOOL finished) {
+            self.currentlyShowingBackground = nextBackground;
+            if (finished) {
+                [self stepBackgroundAnimation];
+            }
+        }];
+        
+    } else {
+        //we've been asked to stop, do nothing
     }
 }
 
