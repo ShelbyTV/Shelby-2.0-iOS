@@ -90,6 +90,12 @@
                         <outletCollection property="gestureRecognizers" destination="pLZ-L7-ahs" appends="YES" id="nBT-Ak-HOY"/>
                     </connections>
                 </progressView>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xI8-d3-Gd2" userLabel="elapsed played / Progress View">
+                    <rect key="frame" x="123" y="29" width="301" height="2"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </progressView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlI-Ii-uTV" userLabel="Button - scrubber">
                     <rect key="frame" x="115" y="14" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -260,18 +266,22 @@
                 <constraint firstAttribute="bottom" secondItem="Qdz-nf-2YM" secondAttribute="bottom" id="Gt2-sj-CEh"/>
                 <constraint firstItem="pWX-G6-DJ2" firstAttribute="leading" secondItem="Tys-dE-Ff9" secondAttribute="trailing" id="K3i-Cc-uYX"/>
                 <constraint firstAttribute="centerY" secondItem="lIL-ec-drI" secondAttribute="centerY" id="KF6-Xt-qDP"/>
+                <constraint firstItem="Mrq-Jq-azG" firstAttribute="height" secondItem="xI8-d3-Gd2" secondAttribute="height" id="M77-2L-dGW"/>
                 <constraint firstItem="Vvc-Q4-lWi" firstAttribute="leading" secondItem="Mrq-Jq-azG" secondAttribute="trailing" constant="16" id="McP-7Q-UCG"/>
                 <constraint firstAttribute="bottom" secondItem="pWX-G6-DJ2" secondAttribute="bottom" id="NGq-BK-pgb"/>
                 <constraint firstAttribute="bottom" secondItem="Tys-dE-Ff9" secondAttribute="bottom" id="QYh-tr-rnX"/>
                 <constraint firstAttribute="bottom" secondItem="raZ-lS-VpX" secondAttribute="bottom" id="WN9-EL-Y1j"/>
                 <constraint firstAttribute="centerY" secondItem="Vvc-Q4-lWi" secondAttribute="centerY" id="XXs-h0-w5h"/>
                 <constraint firstItem="Mrq-Jq-azG" firstAttribute="leading" secondItem="lIL-ec-drI" secondAttribute="trailing" constant="16" id="ZPe-Pk-5uP"/>
+                <constraint firstItem="Mrq-Jq-azG" firstAttribute="centerX" secondItem="xI8-d3-Gd2" secondAttribute="centerX" id="bcP-U9-dnZ"/>
                 <constraint firstItem="Tys-dE-Ff9" firstAttribute="top" secondItem="1" secondAttribute="top" id="bkp-Ki-xnN"/>
                 <constraint firstAttribute="centerY" secondItem="Mrq-Jq-azG" secondAttribute="centerY" id="eL9-Ci-Yhy"/>
                 <constraint firstItem="lIL-ec-drI" firstAttribute="leading" secondItem="BMg-Xm-rlK" secondAttribute="trailing" id="iVA-M0-RwE"/>
                 <constraint firstItem="Qdz-nf-2YM" firstAttribute="top" secondItem="1" secondAttribute="top" id="mqc-oK-qRw"/>
                 <constraint firstItem="pWX-G6-DJ2" firstAttribute="top" secondItem="1" secondAttribute="top" id="r6N-15-lma"/>
                 <constraint firstItem="raZ-lS-VpX" firstAttribute="top" secondItem="1" secondAttribute="top" id="w8J-8D-MEv"/>
+                <constraint firstItem="Mrq-Jq-azG" firstAttribute="width" secondItem="xI8-d3-Gd2" secondAttribute="width" id="wYy-Kq-2SY"/>
+                <constraint firstItem="Mrq-Jq-azG" firstAttribute="centerY" secondItem="xI8-d3-Gd2" secondAttribute="centerY" id="yYS-fp-VGF"/>
                 <constraint firstItem="1RZ-fh-4Ar" firstAttribute="leading" secondItem="Vvc-Q4-lWi" secondAttribute="trailing" constant="8" id="ygn-lc-7lc"/>
                 <constraint firstItem="Tys-dE-Ff9" firstAttribute="leading" secondItem="raZ-lS-VpX" secondAttribute="trailing" id="zMq-FE-MMd"/>
             </constraints>
@@ -282,6 +292,7 @@
                 <outlet property="bufferProgressView" destination="Mrq-Jq-azG" id="CTI-hb-2Lx"/>
                 <outlet property="currentTimeLabel" destination="lIL-ec-drI" id="RVL-Jv-edr"/>
                 <outlet property="durationLabel" destination="Vvc-Q4-lWi" id="4o4-7P-J5F"/>
+                <outlet property="elapsedProgressView" destination="xI8-d3-Gd2" id="IKf-PE-UdG"/>
                 <outlet property="iPadAirPlayViewWidthConstraint" destination="RJu-2b-Wx1" id="SaG-ne-sI0"/>
                 <outlet property="iPadContractButton" destination="CBF-Pt-cu9" id="coh-Q4-hxd"/>
                 <outlet property="iPadExpandButton" destination="cTi-Bm-CsU" id="e69-ZN-2fw"/>

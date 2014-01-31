@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *bufferProgressView;
+@property (weak, nonatomic) IBOutlet UIProgressView *elapsedProgressView;
 @property (weak, nonatomic) IBOutlet UIButton *scrubheadButton;
 
 //-- action buttons --
