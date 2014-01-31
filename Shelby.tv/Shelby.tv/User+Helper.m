@@ -141,6 +141,25 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
             if (userImage) {
                 self.userImage = userImage;
             }
+            NSNumber *userType = [resultDict[@"user_type"] nilOrSelfWhenNotNull];
+            if (userType) {
+                self.userType = userType;
+            }
+            
+            NSString *nick = resultDict[@"nickname"];
+            if (nick){
+                self.nickname = nick;
+            }
+            
+            NSString *name = [resultDict[@"name"] nilOrSelfWhenNotNull];
+            if (name) {
+                self.name = name;
+            }
+            
+            NSString *email = [resultDict[@"primary_email"] nilOrSelfWhenNotNull];
+            if (email) {
+                self.email = email;
+            }
         }
     }
 }

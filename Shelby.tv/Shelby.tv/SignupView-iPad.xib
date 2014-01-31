@@ -10,7 +10,7 @@
                 <outlet property="signupNavigationItem" destination="POl-02-Ky0" id="kzW-82-AKb"/>
                 <outlet property="stepOneActivityIndicator" destination="97k-gM-dMd" id="ume-He-lGR"/>
                 <outlet property="stepOneEmail" destination="1kr-mB-xRh" id="6Hx-em-lSu"/>
-                <outlet property="stepOneName" destination="o9Q-kS-Azh" id="k98-c1-7xw"/>
+                <outlet property="stepOneNickname" destination="o9Q-kS-Azh" id="Ui5-Et-Gz8"/>
                 <outlet property="stepOneOr" destination="BQw-bS-fO5" id="WcX-eg-IUt"/>
                 <outlet property="stepOnePassword" destination="qc7-PO-NOA" id="Vwt-Ae-NA5"/>
                 <outlet property="stepOneSignUpWithEmail" destination="rTE-6V-vPp" id="rBD-g8-PHm"/>
@@ -58,7 +58,7 @@
                     <rect key="frame" x="0.0" y="44" width="768" height="350"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o9Q-kS-Azh" customClass="STVTextField">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="nickname" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o9Q-kS-Azh" userLabel="Text Field - nickname" customClass="STVTextField">
                             <rect key="frame" x="452" y="99" width="221" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>

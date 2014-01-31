@@ -16,7 +16,7 @@
 
 @interface ShelbySignupViewController ()
 @property (nonatomic, weak) IBOutlet UIView *stepOneView;
-@property (nonatomic, weak) IBOutlet UITextField *stepOneName;
+@property (nonatomic, weak) IBOutlet UITextField *stepOneNickname;
 @property (nonatomic, weak) IBOutlet UITextField *stepOneEmail;
 @property (nonatomic, weak) IBOutlet UITextField *stepOnePassword;
 @property (nonatomic, weak) IBOutlet UIButton *stepOneSignUpWithFacebook;
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         self.stepTwoView.alpha = 0;
         self.stepOneSignUpWithEmail.enabled = [self stepOneFieldsValid];
         self.stepOneEmail.text = self.currentUser.email;
-        self.stepOneName.text = self.currentUser.name;
+        self.stepOneNickname.text = @"";
     } else {
         self.stepOneView.hidden = YES;
         self.stepTwoEmail.text = self.currentUser.email;
@@ -90,7 +90,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     
     UIImage *textFieldBackground = [[UIImage imageNamed:@"textfield-outline-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
     if (self.prepareForSignup) {
-        [self.stepOneName setBackground:textFieldBackground];
+        [self.stepOneNickname setBackground:textFieldBackground];
         [self.stepOnePassword setBackground:textFieldBackground];
         [self.stepOneEmail setBackground:textFieldBackground];
         self.stepOneOr.layer.cornerRadius = self.stepOneOr.frame.size.height/2;
@@ -120,7 +120,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [UIApplication sharedApplication].statusBarHidden = YES;
     
     if (self.prepareForSignup) {
-        [self.stepOneName becomeFirstResponder];
+        [self.stepOneNickname becomeFirstResponder];
     } else {
         [self.stepTwoUsername becomeFirstResponder];
     }
@@ -163,7 +163,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     self.view.userInteractionEnabled = NO;
     
     __weak ShelbySignupViewController *weakSelf = self;
-    [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepOneName.text nickname:nil password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
+    [[ShelbyDataMediator sharedInstance] updateUserWithName:nil nickname:self.stepOneNickname.text password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
         weakSelf.view.userInteractionEnabled = YES;
         [weakSelf.stepOneActivityIndicator stopAnimating];
         if (!error) {
@@ -261,7 +261,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 - (void)goToStepTwo
 {
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
-    [self goToStepTwoWithUsername:nil fullname:user.name email:user.email];
+    [self goToStepTwoWithUsername:user.nickname fullname:user.name email:user.email];
 }
 
 - (void)showErrorMessage:(NSString *)errorMessage
@@ -284,7 +284,6 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     if ([notification.object isKindOfClass:[NSString class]]) {
         [self showErrorMessage:notification.object];
     }
-//    [self signupErrorWithErrorMessage:notification.object];
 }
 
 - (void)userSignupDidSucceed:(NSNotification *)notification
@@ -301,8 +300,6 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     
     [self removeObservers];
     [self goToStepTwoWithUsername:nickname fullname:name email:email];
-//    self.facebookSignup = NO;
-//    [self signupSuccess];
 }
 
 - (void)userUpdateDidFail:(NSNotification *)notification
@@ -343,11 +340,11 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (BOOL)stepOneFieldsValid
 {
-    NSString *name = self.stepOneName.text;
+    NSString *nickname = self.stepOneNickname.text;
     NSString *email = self.stepOneEmail.text;
     NSString *password = self.stepOnePassword.text;
     
-    return [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email];
+    return [ShelbyValidationUtility isUsernameValid:nickname] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email];
 }
 
 
@@ -381,8 +378,8 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ([self.stepOneName isFirstResponder]) {
-        [self.stepOneName resignFirstResponder];
+    if ([self.stepOneNickname isFirstResponder]) {
+        [self.stepOneNickname resignFirstResponder];
         [self.stepOneEmail becomeFirstResponder];
     } else if ([self.stepOneEmail isFirstResponder]) {
         [self.stepOneEmail resignFirstResponder];
@@ -406,12 +403,12 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 //NB: confusingly, this is the delegate for name/email on step 1 and username/password on step 4
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField == self.stepOneName || textField == self.stepOneEmail || textField == self.stepOnePassword) {
-        NSString *name = self.stepOneName.text;
+    if (textField == self.stepOneNickname || textField == self.stepOneEmail || textField == self.stepOnePassword) {
+        NSString *nickname = self.stepOneNickname.text;
         NSString *email = self.stepOneEmail.text;
         NSString *password = self.stepOnePassword.text;
-        if (textField == self.stepOneName) {
-            name = [name stringByReplacingCharactersInRange:range withString:string];
+        if (textField == self.stepOneNickname) {
+            nickname = [nickname stringByReplacingCharactersInRange:range withString:string];
         }
         
         if (textField == self.stepOneEmail) {
@@ -422,7 +419,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
             password = [password stringByReplacingCharactersInRange:range withString:string];
         }
         
-        self.stepOneSignUpWithEmail.enabled = [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email];
+        self.stepOneSignUpWithEmail.enabled = [ShelbyValidationUtility isUsernameValid:nickname] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email];
     } else {
         NSString *name = self.stepTwoName.text;
         NSString *email = self.stepTwoEmail.text;
