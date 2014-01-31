@@ -213,20 +213,41 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [self closeViewController];
 }
 
-- (void)goToStepTwo
+- (void)goToStepTwoWithUsername:(NSString *)username fullname:(NSString *)fullname email:(NSString *)email
 {
     self.stepTwoView.alpha = 0;
     self.stepTwoView.frame = CGRectMake(0, 44, 768, 350);
     
-    self.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
-    self.stepTwoEmail.text = self.currentUser.email;
-    self.stepTwoName.text = self.currentUser.name;
-    self.stepTwoUsername.text = @"";
+    if (!email) {
+        email = @"";
+    }
+    self.stepTwoEmail.text = email;
+    
+    if (!fullname) {
+        fullname = @"";
+    }
+    self.stepTwoName.text = fullname;
+    
+    if (!username) {
+        username = @"";
+    }
+    self.stepTwoUsername.text = username;
     self.stepTwoBio.text = self.currentUser.bio;
     self.stepTwoSaveProfile.enabled = [self stepTwoFieldsValid];
     
     if (self.stepOnePassword.text) {
         self.stepTwoPassword.text = self.stepOnePassword.text;
+    }
+    
+    NSURL *avatarURL = [self.currentUser avatarURL];
+    if (avatarURL) {
+        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:avatarURL];
+        __weak ShelbySignupViewController *weakSelf = self;
+        [self.avatarImage setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            weakSelf.avatarImage.image = image;
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            //
+        }];
     }
     
     [UIView animateWithDuration:1 animations:^{
@@ -237,17 +258,49 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     }];
 }
 
+- (void)goToStepTwo
+{
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    [self goToStepTwoWithUsername:nil fullname:user.name email:user.email];
+}
+
+- (void)showErrorMessage:(NSString *)errorMessage
+{
+    if (!errorMessage || ![errorMessage isKindOfClass:[NSString class]] || [errorMessage isEqualToString:@""]) {
+        errorMessage = @"There was a problem. Please try again later.";
+    }
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:errorMessage
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
+}
+
 - (void)userSignupDidFail:(NSNotification *)notification
 {
     [self removeObservers];
-    
+    if ([notification.object isKindOfClass:[NSString class]]) {
+        [self showErrorMessage:notification.object];
+    }
 //    [self signupErrorWithErrorMessage:notification.object];
 }
 
 - (void)userSignupDidSucceed:(NSNotification *)notification
 {
+    NSDictionary *facebookUser = notification.object;
+    NSString *email = nil;
+    NSString *name = nil;
+    NSString *nickname = nil;
+    if ([facebookUser isKindOfClass:[NSDictionary class]]) {
+        email = facebookUser[@"email"];
+        name = facebookUser[@"name"];
+        nickname = facebookUser[@"username"];
+    }
+    
     [self removeObservers];
-    [self goToStepTwo];
+    [self goToStepTwoWithUsername:nickname fullname:name email:email];
 //    self.facebookSignup = NO;
 //    [self signupSuccess];
 }
@@ -256,6 +309,9 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 {
     [self removeObservers];
     
+    if ([notification.object isKindOfClass:[NSString class]]) {
+        [self showErrorMessage:notification.object];
+    }
 //    [self signupErrorWithErrorMessage:notification.object];
 }
 

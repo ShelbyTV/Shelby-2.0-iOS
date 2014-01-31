@@ -128,11 +128,21 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return user;
 }
 
-- (void)updateWithFacebookUser:(NSDictionary *)facebookUser
+- (void)updateWithFacebookUser:(NSDictionary *)facebookUser andJSON:(NSDictionary *)JSON
 {
     self.facebookUID = facebookUser[@"id"];
     self.facebookNickname = facebookUser[@"username"];
     self.facebookName = facebookUser[@"name"];
+    
+    if ([JSON isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *resultDict = JSON[@"result"];
+        if ([resultDict isKindOfClass:[NSDictionary class]]) {
+            NSString *userImage = [resultDict[@"user_image"] nilOrSelfWhenNotNull];
+            if (userImage) {
+                self.userImage = userImage;
+            }
+        }
+    }
 }
 
 + (User *)updateUserWithTwitterUsername:(NSString *)username andTwitterID:(NSString *)twitterID
