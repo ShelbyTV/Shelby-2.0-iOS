@@ -236,7 +236,6 @@
             displayChannel.dashboard = fetchedDashboardEntry.dashboard;
             displayChannel.shouldFetchRemoteEntries = NO;
             ShelbyStreamInfoViewController *videoStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:displayChannel titleOverride:nil];
-            videoStreamVC.singleVideoEntry = @[fetchedDashboardEntry];
             videoStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
         }
     }];
@@ -258,7 +257,7 @@
 - (void)navigateToUsersStream
 {
     DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream titleOverride:nil];
+    ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream titleOverride:nil andShowFollowChannels:YES];
     userStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
 }
 

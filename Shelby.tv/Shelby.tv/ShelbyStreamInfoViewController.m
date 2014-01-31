@@ -30,6 +30,7 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 @interface ShelbyStreamInfoViewController ()
 @property (nonatomic, assign) NSInteger followCount;
 @property (nonatomic, strong) NSArray *channelEntries;
+@property (nonatomic, assign) NSInteger channelEntriesSection;
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 @property (nonatomic, weak) IBOutlet UITableView *entriesTable;
 //refresh and load more
@@ -49,6 +50,8 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        _shouldShowFollowChannels = NO;
+        _channelEntriesSection = 0;
         // Custom initialization
     }
     return self;
@@ -116,15 +119,22 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 {
     [super viewDidAppear:animated];
     
-    ShelbyStreamInfoViewController *weakSelf = self;
-    [[ShelbyDataMediator sharedInstance] fetchFeaturedChannelsWithCompletionHandler:^(NSArray *channels, NSError *error) {
-        if (channels) {
-            [weakSelf calculateFollowCountForChannels:channels];
-            [weakSelf.entriesTable reloadData];
-        } else {
-            //TODO iPad: handle error
-        }
-    }];
+    if (self.shouldShowFollowChannels) {
+        ShelbyStreamInfoViewController *weakSelf = self;
+        [[ShelbyDataMediator sharedInstance] fetchFeaturedChannelsWithCompletionHandler:^(NSArray *channels, NSError *error) {
+            if (channels) {
+                [weakSelf calculateFollowCountForChannels:channels];
+                if ([channels count]) {
+                    weakSelf.channelEntriesSection = 1;
+                } else {
+                    weakSelf.channelEntriesSection = 0;
+                }
+                [weakSelf.entriesTable reloadData];
+            } else {
+                //TODO iPad: handle error
+            }
+        }];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -160,7 +170,7 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 
     id currentEntity = userInfo[kShelbyVideoReelEntityKey];
     NSInteger row = [self.deduplicatedEntries indexOfObject:currentEntity];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:1]; //KP KP - don't hard code section
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:self.channelEntriesSection];
     
     self.selectedRowIndexPath = indexPath;
 
@@ -247,6 +257,7 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
     if (!self.followCount) {
         return 1;
     }
+    
     return 2;
 }
 

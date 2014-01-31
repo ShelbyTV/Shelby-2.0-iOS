@@ -135,8 +135,14 @@
 
 - (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride
 {
+    return [self pushViewControllerForChannel:channel titleOverride:titleOverride andShowFollowChannels:NO];
+}
+
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride andShowFollowChannels:(BOOL)showFollowChannels
+{
     ShelbyStreamInfoViewController *streamInfoVC = [self setupStreamInfoViewControllerWithChannel:channel];
     streamInfoVC.title = titleOverride ? titleOverride : (channel.dashboard ? channel.dashboard.displayTitle : channel.roll.displayTitle);
+    streamInfoVC.shouldShowFollowChannels = showFollowChannels;
     [self pushViewController:streamInfoVC animated:YES];
     return streamInfoVC;
 }
