@@ -35,13 +35,15 @@
 {
     [super viewDidLoad];
     
-    self.headerView = [[NSBundle mainBundle] loadNibNamed:@"BrowseChannelsHeaderView" owner:self options:nil][0];
-    
     [[ShelbyDataMediator sharedInstance] fetchFeaturedChannelsWithCompletionHandler:^(NSArray *channels, NSError *error) {
         if (channels) {
             self.channels = [channels copy];
             self.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+            self.headerView = [[NSBundle mainBundle] loadNibNamed:@"BrowseChannelsHeaderView" owner:self options:nil][0];
             [self calculateFollowCount];
+            if (self.headerView.hitTargetFollowCount) {
+                self.headerView = nil;
+            }
             [self.tableView reloadData];
         } else {
             //TODO iPad: handle error
@@ -95,7 +97,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return self.headerView.bounds.size.height;
+    if (self.headerView) {
+        return self.headerView.bounds.size.height;
+    } else {
+        return 0;
+    }
+    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
