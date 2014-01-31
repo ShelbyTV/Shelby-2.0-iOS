@@ -268,8 +268,8 @@
                                                                inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     ShelbyUserInfoViewController *userInfoVC = [ [UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfile"];
     
-    [(ShelbyNavigationViewController *)self.navigationController pushUserProfileViewController:userInfoVC];
     userInfoVC.user = self.currentUser;
+    [(ShelbyNavigationViewController *)self.navigationController pushUserProfileViewController:userInfoVC];
     [userInfoVC setupStreamInfoDisplayChannel:userStream];
 }
 
