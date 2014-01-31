@@ -9,12 +9,12 @@
 #import "SPVideoPlayer.h"
 
 #import <AVFoundation/AVFoundation.h>
-#import "AFNetworking.h"
 #import "ShelbyAPIClient.h"
 #import "ShelbyErrorUtility.h"
 #import "SPVideoDownloader.h"
 #import "SPVideoExtractor.h"
 #import "SPVideoReel.h"
+#import "VideoPlayerThumbnailOverlayView.h"
 
 #define PLAYBACK_API_UPDATE_INTERVAL 15.f
 
@@ -34,7 +34,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) UIActivityIndicatorView *videoLoadingIndicator;
-@property (nonatomic, strong) UIImageView *thumbnailImageView;
+@property (nonatomic, strong) VideoPlayerThumbnailOverlayView *thumbnailView;
 
 @property (nonatomic) AVPlayer *player;
 //on reset, this is set to NO which prevents from loading (is reset by -prepareFor...Playback)
@@ -89,34 +89,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     self.shouldAutoplay = NO;
     
     if (DEVICE_IPAD) {
-        //iPad has thunbnail overlay
-        self.thumbnailImageView = [UIImageView new];
-        self.thumbnailImageView.contentMode = UIViewContentModeScaleAspectFill;
-        self.thumbnailImageView.clipsToBounds = YES;
-        [self.view addSubview:self.thumbnailImageView];
-        self.thumbnailImageView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=1)-[thumb(500)]-(>=1)-|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:@{@"thumb":self.thumbnailImageView}]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=1)-[thumb(250)]-(>=1)-|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:@{@"thumb":self.thumbnailImageView}]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.thumbnailImageView
-                                                              attribute:NSLayoutAttributeCenterX
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.view
-                                                              attribute:NSLayoutAttributeCenterX
-                                                             multiplier:1.0
-                                                               constant:0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.thumbnailImageView
-                                                              attribute:NSLayoutAttributeCenterY
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.view
-                                                              attribute:NSLayoutAttributeCenterY
-                                                             multiplier:1.0
-                                                               constant:0]];
+        [self setupThumbnailOverlay];
     }
 }
 
@@ -191,8 +164,8 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     
     if (DEVICE_IPAD) {
         //iPad has a thumbnail overlay
-        [self.view addSubview:self.thumbnailImageView];
-        [self tryMaxResThumbnail];
+        [self.view addSubview:self.thumbnailView];
+        self.thumbnailView.video = self.videoFrame.video;
     }
 }
 
@@ -394,7 +367,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
         _lastPlaybackUpdateIntervalEnd = CMTimeMake(0, NSEC_PER_MSEC);
         
-        self.thumbnailImageView.alpha = 1.f;
+        self.thumbnailView.alpha = 1.f;
     }
 }
 
@@ -424,7 +397,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     if (DEVICE_IPAD && self.player.status == AVPlayerItemStatusReadyToPlay) {
         [UIView animateWithDuration:0.25 animations:^{
             self.playerLayer.hidden = NO;
-            self.thumbnailImageView.alpha = 0.f;
+            self.thumbnailView.alpha = 0.f;
         }];
     }
     
@@ -537,7 +510,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
             if (self.shouldBePlaying) {
                 [UIView animateWithDuration:0.25 animations:^{
                     self.playerLayer.hidden = NO;
-                    self.thumbnailImageView.alpha = 0.f;
+                    self.thumbnailView.alpha = 0.f;
                 }];
             }
             
@@ -590,31 +563,43 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     _lastPlaybackUpdateIntervalEnd = toTime;
 }
 
-#pragma mark - Get Thumbnails Helpers
+#pragma mark - Thumbnail Helpers
 
-- (void)tryMaxResThumbnail
+- (void)setupThumbnailOverlay
 {
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.videoFrame.video maxResThumbnailURL]];
-    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest imageProcessingBlock:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        [self setThumbnailImage:image];
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        [self tryNormalThumbnail];
-    }] start];
+    self.thumbnailView = [[[NSBundle mainBundle] loadNibNamed:@"VideoPlayerThumbnailOverlayView" owner:self options:nil] firstObject];
+    [self.view addSubview:self.thumbnailView];
+    self.thumbnailView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=1)-[thumb(500)]-(>=1)-|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"thumb":self.thumbnailView}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=1)-[thumb(250)]-(>=1)-|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"thumb":self.thumbnailView}]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.thumbnailView
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:1.0
+                                                           constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.thumbnailView
+                                                          attribute:NSLayoutAttributeCenterY
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeCenterY
+                                                         multiplier:1.0
+                                                           constant:0]];
+    
+    UITapGestureRecognizer *thumbnailTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(thumbnailTapped:)];
+    [self.thumbnailView addGestureRecognizer:thumbnailTap];
 }
 
-- (void)tryNormalThumbnail
+- (void)thumbnailTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.videoFrame.video.thumbnailURL]];
-    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest imageProcessingBlock:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        [self setThumbnailImage:image];
-    } failure:nil] start];
-}
-
-- (void)setThumbnailImage:(UIImage *)image
-{
-    self.thumbnailImageView.image = image;
-    self.thumbnailImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.thumbnailImageView.layer.borderWidth = 8.f;
+    [self play];
 }
 
 @end

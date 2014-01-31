@@ -251,8 +251,8 @@
 {
     if (indexPath.row == 0) {
         return 88;
-    } else if (indexPath.row == 5 && [self.user isAnonymousUser]) {
-        //hide push notifications for anonymous user
+    } else if ([self.user isAnonymousUser] && (indexPath.row == 5 || indexPath.row == 2)) {
+        //hide push notifications and twitter connect for anonymous user
         return 0.f;
     }
     
