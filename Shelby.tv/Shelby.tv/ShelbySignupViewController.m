@@ -151,6 +151,9 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
                                           action:kAnalyticsSignupWithFacebookStart
                                            label:nil];
 
+    [self.stepOneActivityIndicator startAnimating];
+    self.stepOneView.userInteractionEnabled = NO;
+    
     [[ShelbyDataMediator sharedInstance] openFacebookSessionWithAllowLoginUI:YES];
 }
 
@@ -280,6 +283,8 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (void)userSignupDidFail:(NSNotification *)notification
 {
+    self.stepOneView.userInteractionEnabled = YES;
+    
     [self removeObservers];
     if ([notification.object isKindOfClass:[NSString class]]) {
         [self showErrorMessage:notification.object];
