@@ -1051,10 +1051,6 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                     [self.delegate facebookConnectDidComplete];
                                                     
                                                     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookConnectCompleted object:facebookUser];
-                                                    
-                                                    if (askForPublishPermission) {
-                                                        [[FacebookHandler sharedInstance] askForPublishPermissions];
-                                                    }
                                                 } else {
                                                     NSString *errorMessage = nil;
                                                     if ([error.domain isEqualToString:@"ShelbyAPIClient"] && error.code == 403002) {
