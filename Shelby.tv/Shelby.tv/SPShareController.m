@@ -140,7 +140,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 {
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
    
-    if (user && ![user.userID isEqualToString:frame.creator.userID]) {
+    if (user && ![user isAnonymousUser] && ![user.userID isEqualToString:frame.creator.userID]) {
         NSString *shareNibName = DEVICE_IPAD ? @"ShelbyShareView-iPad" : @"ShelbyShareView";
         self.shelbyShare = [[ShelbyShareViewController alloc] initWithNibName:shareNibName bundle:nil];
         [self.shelbyShare setupShareWith:frame link:link andShareController:self];
