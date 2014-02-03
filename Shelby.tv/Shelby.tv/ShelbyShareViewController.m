@@ -37,6 +37,10 @@
 
 @property (nonatomic, strong) SPShareController *shareController;
 
+// UISwitch in iOS7 is sending multiple events for each value change. To make sure we only treat the first event, using these booleans.
+@property (nonatomic, assign) BOOL previousFacebookSwitchValue;
+@property (nonatomic, assign) BOOL previousTwitterSwitchValue;
+
 - (IBAction)toggleFacebook:(id)sender;
 - (IBAction)toggleTwitter:(id)sender;
 - (IBAction)openDefaultShare:(id)sender;
@@ -153,6 +157,12 @@
 - (IBAction)toggleFacebook:(id)sender
 {
     if (DEVICE_IPAD) {
+        if (self.facebookSwitch.on == self.previousFacebookSwitchValue) {
+            return;
+        }
+        
+        self.previousFacebookSwitchValue = self.facebookSwitch.on;
+        
         if (self.facebookSwitch.on) {
             [self.shareController toggleSocialFacebookButton:YES selected:YES];
         }
@@ -173,6 +183,12 @@
 - (IBAction)toggleTwitter:(id)sender
 {
     if (DEVICE_IPAD) {
+        if (self.twitterSwitch.on == self.previousTwitterSwitchValue) {
+            return;
+        }
+        
+        self.previousTwitterSwitchValue = self.twitterSwitch.on;
+        
         if (self.twitterSwitch.on) {
             [self.shareController toggleSocialFacebookButton:NO selected:YES];
         }
@@ -276,6 +292,9 @@
         self.twitterCheck.hidden = YES;
         self.twitterButton.selected = NO;
     }
+    
+    self.previousFacebookSwitchValue = self.facebookSwitch.on;
+    self.previousTwitterSwitchValue =  self.twitterSwitch.on;
 }
 
 

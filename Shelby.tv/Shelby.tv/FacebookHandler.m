@@ -108,6 +108,9 @@ NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kS
             completionBlock(nil, nil, @"There was an error connecting to Facebook. Please try again.");
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
         } else {
+            if (askForPublishPermission) {
+                [self askForPublishPermissions];
+            }
             // If status is OpenTokenExtended - we had a session - no need to change a thing - just call the completion block to let the delegate know facebookSessionDidComplete
             if (status == FBSessionStateOpenTokenExtended) {
                 completionBlock(nil, [self facebookToken], nil);
