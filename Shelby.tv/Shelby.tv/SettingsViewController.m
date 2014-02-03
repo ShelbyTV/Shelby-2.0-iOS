@@ -149,10 +149,10 @@
     UIAlertView *alertView;
     if ([self.user isAnonymousUser]) {
         alertView = [[UIAlertView alloc] initWithTitle:@"Already Have an Account?"
-                                               message:@"You can Keep Using this anonymous account and sign up later.  But, if you already have a Shelby Login, you can Reset the app to Login."
+                                               message:@"You're using Shelby without an account. You can continue like this and convert to an account later, or log in with an existing account. Logging in will erase your progress so far."
                                               delegate:self
                                      cancelButtonTitle:@"Keep Using"
-                                     otherButtonTitles:@"Reset & Login", nil];
+                                     otherButtonTitles:@"Erase & Log in", nil];
     } else {
         alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
                                                message:@"Are you sure you want to logout?"
