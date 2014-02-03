@@ -133,7 +133,17 @@
 {
 //    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:kShelbySPActivityTypeRoll];
 
-    [self.shareController shelbyShareWithMessage:self.message.text withFacebook:!self.facebookCheck.hidden andWithTwitter:!self.twitterCheck.hidden];
+    BOOL shareOnFacebook = NO;
+    BOOL shareOnTwitter = NO;
+    if (DEVICE_IPAD) {
+        shareOnFacebook = self.facebookSwitch.on;
+        shareOnTwitter = self.twitterSwitch.on;
+    } else {
+        shareOnFacebook = !self.facebookCheck.hidden;
+        shareOnTwitter = !self.twitterCheck.hidden;
+    }
+    
+    [self.shareController shelbyShareWithMessage:self.message.text withFacebook:shareOnFacebook andWithTwitter:shareOnTwitter];
     
     [self dismissViewControllerAnimated:YES completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyDidDismissModalViewNotification object:self];

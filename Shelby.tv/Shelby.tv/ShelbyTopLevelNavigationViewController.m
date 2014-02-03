@@ -83,6 +83,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)setCurrentUser:(User *)currentUser
 {
     if (_currentUser != currentUser) {
@@ -188,6 +193,13 @@
     }
 }
 
+- (void)refreshCurrentUser
+{
+    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] forceRefresh:YES];
+    self.currentUser = currentUser;
+    self.settingsVC.user = currentUser;
+}
+
 #pragma mark - SettingsViewDelegate
 
 - (void)logoutUser
@@ -198,6 +210,7 @@
 - (void)connectToFacebook
 {
     [[ShelbyDataMediator sharedInstance] userAskForFacebookPublishPermissions];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(facebookConnectDidComplete:) name:kShelbyNotificationFacebookConnectCompleted object:nil];
 }
 
 - (void)connectToTwitter
@@ -213,6 +226,25 @@
 - (void)enablePushNotifications:(BOOL)enable
 {
     
+}
+
+- (void)facebookConnectDidComplete:(NSNotification *)notification
+{
+    [self refreshCurrentUser];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationFacebookConnectCompleted object:nil];
+}
+
+#pragma mark - TwitterHandlerDelegate
+- (void)twitterConnectDidComplete
+{
+    [self refreshCurrentUser];
+}
+
+
+- (void)twitterConnectDidCompleteWithError:(NSString *)errorMessage
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
 }
 
 #pragma mark - ShelbyNotificationDelegate

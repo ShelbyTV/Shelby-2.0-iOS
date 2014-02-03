@@ -109,8 +109,8 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
         
     }
 
-    _delegate = delegate;
-    _shelbyToken = authToken;
+    self.delegate = delegate;
+    self.shelbyToken = authToken;
 }
 
 #pragma mark - Private Methods

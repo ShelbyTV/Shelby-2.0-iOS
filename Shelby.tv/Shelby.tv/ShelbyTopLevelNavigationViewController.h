@@ -10,8 +10,9 @@
 #import "SettingsViewController.h"
 #import "ShelbyNotificationCenterViewController.h"
 #import "SignupHeaderView.h"
+#import "TwitterHandler.h"
 #import "User.h"
 
-@interface ShelbyTopLevelNavigationViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SettingsViewDelegate, ShelbyNotificationDelegate, SignupHeaderDelegate>
+@interface ShelbyTopLevelNavigationViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SettingsViewDelegate, ShelbyNotificationDelegate, SignupHeaderDelegate, TwitterHandlerDelegate>
 @property (nonatomic, strong) User *currentUser;
 @end
