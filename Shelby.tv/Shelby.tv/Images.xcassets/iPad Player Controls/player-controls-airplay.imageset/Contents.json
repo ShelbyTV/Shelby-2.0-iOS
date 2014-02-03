@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "player-controls-airplay.png"
+      "filename" : "airplay-icon-dark.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "player-controls-airplay@2x.png"
+      "filename" : "airplay-icon-dark@2x.png"
     }
   ],
   "info" : {

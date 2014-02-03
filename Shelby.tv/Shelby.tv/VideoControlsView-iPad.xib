@@ -52,7 +52,7 @@
                     </constraints>
                 </view>
                 <view alpha="0.59999999999999998" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="1RZ-fh-4Ar" userLabel="airPlayView">
-                    <rect key="frame" x="499" y="19" width="0.0" height="23"/>
+                    <rect key="frame" x="499" y="21" width="0.0" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -121,6 +121,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhG-MP-RAy">
                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="-2" maxX="0.0" maxY="0.0"/>
                             <state key="normal" image="player-controls-share">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -260,7 +261,7 @@
                 <constraint firstAttribute="centerY" secondItem="BMg-Xm-rlK" secondAttribute="centerY" id="1u6-3V-PIf"/>
                 <constraint firstItem="BMg-Xm-rlK" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="48z-vd-LJw"/>
                 <constraint firstAttribute="trailing" secondItem="Qdz-nf-2YM" secondAttribute="trailing" id="5X4-US-bs9"/>
-                <constraint firstAttribute="centerY" secondItem="1RZ-fh-4Ar" secondAttribute="centerY" id="8TJ-XO-KE9"/>
+                <constraint firstAttribute="centerY" secondItem="1RZ-fh-4Ar" secondAttribute="centerY" constant="-2.5" id="8TJ-XO-KE9"/>
                 <constraint firstItem="raZ-lS-VpX" firstAttribute="leading" secondItem="1RZ-fh-4Ar" secondAttribute="trailing" constant="8" id="CTL-is-geQ"/>
                 <constraint firstAttribute="trailing" secondItem="pWX-G6-DJ2" secondAttribute="trailing" id="CYN-2Y-1I7"/>
                 <constraint firstAttribute="bottom" secondItem="Qdz-nf-2YM" secondAttribute="bottom" id="Gt2-sj-CEh"/>

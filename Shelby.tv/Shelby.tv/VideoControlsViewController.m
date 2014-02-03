@@ -50,16 +50,15 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 
     _controlsView = (VideoControlsView *)self.view;
     _airPlayView = _controlsView.airPlayView;
-
-    self.playbackControlViews = @[self.controlsView.airPlayView,
-                                  self.controlsView.playPauseButton,
-                                  self.controlsView.currentTimeLabel,
-                                  self.controlsView.durationLabel,
-                                  self.controlsView.bufferProgressView,
-                                  self.controlsView.scrubheadButton
-                                  ];
     
     if (DEVICE_IPAD) {
+        self.playbackControlViews = @[/*self.controlsView.airPlayView,*/
+                                      self.controlsView.playPauseButton,
+                                      self.controlsView.currentTimeLabel,
+                                      self.controlsView.durationLabel,
+                                      self.controlsView.bufferProgressView,
+                                      self.controlsView.scrubheadButton
+                                      ];
         self.nonplaybackActionViews = @[];
         self.playbackActionViews = @[self.controlsView.likeButton,
                                      self.controlsView.unlikeButton,
@@ -67,6 +66,13 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
                                      self.controlsView.iPadExpandButton,
                                      self.controlsView.iPadContractButton];
     } else {
+        self.playbackControlViews = @[self.controlsView.airPlayView,
+                                      self.controlsView.playPauseButton,
+                                      self.controlsView.currentTimeLabel,
+                                      self.controlsView.durationLabel,
+                                      self.controlsView.bufferProgressView,
+                                      self.controlsView.scrubheadButton
+                                      ];
         self.nonplaybackActionViews = @[self.controlsView.nonplaybackLikeButton,
                                         self.controlsView.nonplaybackUnlikeButton];
         self.playbackActionViews = @[self.controlsView.likeButton,
