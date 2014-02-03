@@ -347,7 +347,7 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if (indexPath.section == 0 && self.followCount) {
         return self.followCount > 2 ? 110.0 : 210.0;
     }
     
