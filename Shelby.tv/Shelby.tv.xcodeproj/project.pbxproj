@@ -611,6 +611,9 @@
 		8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
+		9103938818A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */; };
+		9103938918A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */; };
+		9103938A18A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */; };
 		910933081743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		910933091743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
@@ -1276,6 +1279,7 @@
 		8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHexAndAlpha.m"; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamConnectFacebookCellView.xib; sourceTree = "<group>"; };
 		910933061743E47F00AC038E /* ShelbyAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAlert.h; sourceTree = "<group>"; };
 		910933071743E47F00AC038E /* ShelbyAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAlert.m; sourceTree = "<group>"; };
 		910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyCurrentlyOnViewController.h; sourceTree = "<group>"; };
@@ -1622,6 +1626,7 @@
 				1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */,
 				1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */,
 				91319BCC189C4EF4000384A0 /* VideoPlayerThumbnailOverlayView.xib */,
+				9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -2696,6 +2701,7 @@
 				1C56F13717BABD8C00EE9206 /* .gitignore in Resources */,
 				1C3A7ED7188717D900458718 /* ShelbyShareView-iPad.xib in Resources */,
 				1CDCA6A4179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
+				9103938918A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */,
 				1CE5585317DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				1CDCA6A9179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
 				9178C9D717CE398400913256 /* Welcome.storyboard in Resources */,
@@ -2831,6 +2837,7 @@
 				1C56F13817BABD8C00EE9206 /* .gitignore in Resources */,
 				1C3A7ED8188717D900458718 /* ShelbyShareView-iPad.xib in Resources */,
 				1CDCA6A5179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
+				9103938A18A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */,
 				1CE5585417DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				1CDCA6AA179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
 				9178C9D817CE398400913256 /* Welcome.storyboard in Resources */,
@@ -2927,6 +2934,7 @@
 				1C382561187DE387002177C6 /* Main.Storyboard in Resources */,
 				1CE5585217DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				913AD87C1891C51B00177A25 /* UserFollowing.storyboard in Resources */,
+				9103938818A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */,
 				1C7B63DE178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1CA34E551892C79400A168D1 /* SignupHeaderView.xib in Resources */,
 				1C7B63F0178C5379000C1E84 /* navbar_back_button.png in Resources */,

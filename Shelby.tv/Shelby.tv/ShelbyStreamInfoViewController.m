@@ -16,21 +16,26 @@
 #import "ShelbyModelArrayUtility.h"
 #import "SPShareController.h"
 #import "SPVideoExtractor.h"
+#import "User+Helper.h"
 
 #define LOAD_MORE_ACTIVATION_HEIGHT 200
 #define NOT_LOADING_MORE -1
 #define LOAD_MORE_SPINNER_AREA_HEIGHT 100
+
+#define SECTION_COUNT 3
+#define SECTION_FOR_ADD_CHANNELS 0
+#define SECTION_FOR_CONNECT_SOCIAL 1
+#define SECTION_FOR_PLAYBACK_ENTITIES 2
 
 NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
 NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
 NSString * const kShelbyStreamEntryAddChannelsCell = @"AddChannels";
 NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsCollapsed";
+NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
 @interface ShelbyStreamInfoViewController ()
-@property (nonatomic, assign) NSInteger followCount;
 @property (nonatomic, strong) NSArray *channelEntries;
-@property (nonatomic, assign) NSInteger channelEntriesSection;
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 @property (nonatomic, weak) IBOutlet UITableView *entriesTable;
 //refresh and load more
@@ -42,6 +47,10 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 @property (nonatomic, strong) SPShareController *shareController;
 
 @property (nonatomic, strong) NSIndexPath *selectedRowIndexPath;
+
+//for user education "bonus" sections
+@property (nonatomic, assign) NSInteger followCount;
+@property (nonatomic, assign) BOOL currentUserHasFacebookConnected;
 @end
 
 @implementation ShelbyStreamInfoViewController
@@ -50,9 +59,10 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _shouldShowFollowChannels = NO;
-        _channelEntriesSection = 0;
-        // Custom initialization
+        _mayShowFollowChannels = NO;
+        _followCount = 0;
+        _mayShowConnectSocial = NO;
+        _currentUserHasFacebookConnected = NO;
     }
     return self;
 }
@@ -100,6 +110,7 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryLikeCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryLikeCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCollapsedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCollapsedCell];
+    [self.entriesTable registerNib:[UINib nibWithNibName:@"StreamConnectFacebookCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamConnectFacebookCell];
 }
 
 - (void)dealloc
@@ -119,27 +130,36 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 {
     [super viewDidAppear:animated];
     
-    if (self.shouldShowFollowChannels) {
-        ShelbyStreamInfoViewController *weakSelf = self;
-        [[ShelbyDataMediator sharedInstance] fetchFeaturedChannelsWithCompletionHandler:^(NSArray *channels, NSError *error) {
-            if (channels) {
-                [weakSelf calculateFollowCountForChannels:channels];
-                if ([channels count]) {
-                    weakSelf.channelEntriesSection = 1;
-                } else {
-                    weakSelf.channelEntriesSection = 0;
-                }
-                [weakSelf.entriesTable reloadData];
-            } else {
-                //TODO iPad: handle error
-            }
-        }];
+    if (self.mayShowFollowChannels || self.mayShowConnectSocial) {
+        User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        self.followCount = currentUser ? [currentUser rollFollowingCount] : 0;
+        self.currentUserHasFacebookConnected = [currentUser isFacebookConnected];
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [self.userEducationVC referenceViewWillDisappear:animated];
+}
+
+#pragma mark - Accessors
+
+- (void)setFollowCount:(NSInteger)followCount
+{
+    if (_followCount != followCount) {
+        _followCount = followCount;
+        [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_ADD_CHANNELS] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (void)setCurrentUserHasFacebookConnected:(BOOL)currentUserHasFacebookConnected
+{
+    if (_currentUserHasFacebookConnected != currentUserHasFacebookConnected) {
+        _currentUserHasFacebookConnected = currentUserHasFacebookConnected;
+        [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_CONNECT_SOCIAL] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 
 #pragma mark - public API
@@ -170,7 +190,7 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 
     id currentEntity = userInfo[kShelbyVideoReelEntityKey];
     NSInteger row = [self.deduplicatedEntries indexOfObject:currentEntity];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:self.channelEntriesSection];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:SECTION_FOR_PLAYBACK_ENTITIES];
     
     self.selectedRowIndexPath = indexPath;
 
@@ -186,8 +206,14 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 
 - (void)visualizeSelectedCell:(ShelbyStreamEntryCell *)cell
 {
-    NSArray *visibleCells = [self.entriesTable visibleCells];
-    [visibleCells makeObjectsPerformSelector:@selector(deselectStreamEntry)];
+    NSArray *visibleIndexPaths = [self.entriesTable indexPathsForVisibleRows];
+    if (visibleIndexPaths) {
+        for (NSIndexPath *indexPath in visibleIndexPaths) {
+            if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
+                [(id)[self.entriesTable cellForRowAtIndexPath:indexPath] deselectStreamEntry];
+            }
+        }
+    }
     
     [cell selectStreamEntry];
 }
@@ -254,117 +280,133 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 #pragma mark - UITableDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (!self.followCount) {
-        return 1;
-    }
-    
-    return 2;
+    return SECTION_COUNT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 && self.followCount) {
-        return 1; // add channels section
+    if (section == SECTION_FOR_ADD_CHANNELS) {
+        return self.mayShowFollowChannels ? 1 : 0;
+        
+    } else if (section == SECTION_FOR_CONNECT_SOCIAL) {
+        return (self.mayShowConnectSocial && !self.currentUserHasFacebookConnected) ? 1 : 0;
+    
+    } else if (section == SECTION_FOR_PLAYBACK_ENTITIES) {
+        return [self.deduplicatedEntries count];
+        
+    } else {
+        STVAssert(NO, @"unhandled section");
+        return 0;
     }
-    return [self.deduplicatedEntries count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 && self.followCount) {
+    if (indexPath.section == SECTION_FOR_ADD_CHANNELS) {
         NSString *cellIdentifier = self.followCount > 2 ? kShelbyStreamEntryAddChannelsCollapsedCell : kShelbyStreamEntryAddChannelsCell;
         return [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    }
-    
-    id streamEntry = self.deduplicatedEntries[indexPath.row];
-    NSString *cellIdentifier = nil;
-    if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
-        DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
-            cellIdentifier = kShelbyStreamEntryRecommendedCell;
-        }
-    } else if ([streamEntry isKindOfClass:[Frame class]]) {
-        Frame *frameEntry = (Frame *)streamEntry;
-        if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
-            cellIdentifier = kShelbyStreamEntryLikeCell;
-        }
-    }
-    
-    if (!cellIdentifier) {
-        cellIdentifier = kShelbyStreamEntryCell;
-    }
-    
-    ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    Frame *videoFrame = nil;
-    if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
-        videoFrame = ((DashboardEntry *)streamEntry).frame;
-    } else if ([streamEntry isKindOfClass:[Frame class]]) {
-        videoFrame = (Frame *)streamEntry;
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.videoFrame = videoFrame;
-    cell.delegate = self;
-    
-    if (self.selectedRowIndexPath && self.selectedRowIndexPath.row == indexPath.row) {
-        [self visualizeSelectedCell:cell];
-    }
-    
-    return cell;
-}
-
-- (void)calculateFollowCountForChannels:(NSArray *)followChannels
-{
-    NSInteger followCount = 0;
-    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    for (DisplayChannel *channel in followChannels) {
-        if ([currentUser isFollowing:channel.roll.rollID]) {
-            followCount++;
-        }
-    }
         
-    self.followCount = followCount;
+    } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
+        return [tableView dequeueReusableCellWithIdentifier:kShelbyStreamConnectFacebookCell forIndexPath:indexPath];
+    
+    } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
+    
+        id streamEntry = self.deduplicatedEntries[indexPath.row];
+        NSString *cellIdentifier = nil;
+        if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
+            DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
+            if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
+                cellIdentifier = kShelbyStreamEntryRecommendedCell;
+            }
+        } else if ([streamEntry isKindOfClass:[Frame class]]) {
+            Frame *frameEntry = (Frame *)streamEntry;
+            if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
+                cellIdentifier = kShelbyStreamEntryLikeCell;
+            }
+        }
+        
+        if (!cellIdentifier) {
+            cellIdentifier = kShelbyStreamEntryCell;
+        }
+        
+        ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+        Frame *videoFrame = nil;
+        if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
+            videoFrame = ((DashboardEntry *)streamEntry).frame;
+        } else if ([streamEntry isKindOfClass:[Frame class]]) {
+            videoFrame = (Frame *)streamEntry;
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.videoFrame = videoFrame;
+        cell.delegate = self;
+        
+        if (self.selectedRowIndexPath && self.selectedRowIndexPath.row == indexPath.row) {
+            [self visualizeSelectedCell:cell];
+        }
+        
+        return cell;
+        
+    } else {
+        STVAssert(NO, @"unaccounted for section");
+        return nil;
+    }
 }
 
 #pragma mark - UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.followCount && indexPath.section == 0 && indexPath.row == 0) {
+    if (indexPath.section == SECTION_FOR_ADD_CHANNELS) {
         BrowseChannelsTableViewController *channelsVC = [[UIStoryboard storyboardWithName:@"BrowseChannels" bundle:nil] instantiateInitialViewController];
         [self.navigationController pushViewController:channelsVC animated:YES];
         channelsVC.userEducationVC = [ShelbyUserEducationViewController newChannelsUserEducationViewController];
         return;
+        
+    } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
+        [self.socialConnectDelegate connectToFacebook];
+        [tableView cellForRowAtIndexPath:indexPath].selected = NO;
+    
+    } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
+        
+        self.selectedRowIndexPath = indexPath;
+        [self visualizeSelectedRow:indexPath];
+        
+        [self.videoReelVC playChannel:self.displayChannel
+              withDeduplicatedEntries:self.deduplicatedEntries
+                              atIndex:indexPath.row];
+        
+        [self.userEducationVC userHasBeenEducatedAndViewShouldHide:YES];
     }
-    
-    self.selectedRowIndexPath = indexPath;
-    [self visualizeSelectedRow:indexPath];
-    
-    [self.videoReelVC playChannel:self.displayChannel
-          withDeduplicatedEntries:self.deduplicatedEntries
-                          atIndex:indexPath.row];
-    
-    [self.userEducationVC userHasBeenEducatedAndViewShouldHide:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 && self.followCount) {
+    if (indexPath.section == SECTION_FOR_ADD_CHANNELS) {
         return self.followCount > 2 ? 110.0 : 210.0;
-    }
+        
+    } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
+        return 110.f;
     
-    id streamEntry = self.deduplicatedEntries[indexPath.row];
-    if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
-        DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
-            return 311.0;
+    } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
+        id streamEntry = self.deduplicatedEntries[indexPath.row];
+        if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
+            DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
+            if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
+                return 311.0;
+            }
+        } else if ([streamEntry isKindOfClass:[Frame class]]) {
+            Frame *frameEntry = (Frame *)streamEntry;
+            if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
+                return 271.0;
+            }
         }
-    } else if ([streamEntry isKindOfClass:[Frame class]]) {
-        Frame *frameEntry = (Frame *)streamEntry;
-        if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
-            return 271.0;
-        }
+        //what is this for?
+        return 341.0;
+            
+    } else {
+        STVAssert(NO, @"unaccoutned for section");
+        return 0;
     }
-    
-    return 341.0;
 }
 
 #pragma mark - UIScrollViewDelegate
