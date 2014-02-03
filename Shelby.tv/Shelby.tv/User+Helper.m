@@ -418,6 +418,11 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     }
 }
 
+- (NSUInteger)rollFollowingCount
+{
+    return MAX((NSUInteger)0, [[self.rollFollowings componentsSeparatedByString:@";"] count] - 1);
+}
+
 - (BOOL)isShelbyUser
 {
     /* user type enumeration:

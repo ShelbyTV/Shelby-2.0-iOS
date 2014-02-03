@@ -18,11 +18,19 @@
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
 @end
 
+@protocol ShelbyStreamInfoSocialConnectProtocol <NSObject>
+- (void)connectToFacebook;
+- (void)connectToTwitter; //currently unused
+@end
+
 @interface ShelbyStreamInfoViewController : UIViewController <ShelbyStreamEntryProtocol, UITableViewDataSource, UITableViewDelegate, ShelbyVideoContentBrowsingViewControllerProtocol>
 @property (nonatomic, strong) DisplayChannel *displayChannel;
-@property (nonatomic, assign) BOOL shouldShowFollowChannels;
 @property (nonatomic, strong) NSArray *singleVideoEntry;
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, assign) id<ShelbyStreamInfoProtocol> delegate;
+@property (nonatomic, weak) id<ShelbyStreamInfoSocialConnectProtocol> socialConnectDelegate;
 @property (strong, nonatomic) ShelbyUserEducationViewController *userEducationVC;
+//user education "bonus" sections
+@property (nonatomic, assign) BOOL mayShowFollowChannels;
+@property (nonatomic, assign) BOOL mayShowConnectSocial;
 @end

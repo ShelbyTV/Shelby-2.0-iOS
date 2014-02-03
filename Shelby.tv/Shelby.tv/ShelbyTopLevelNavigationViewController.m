@@ -289,8 +289,9 @@
 - (void)navigateToUsersStream
 {
     DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream titleOverride:nil andShowFollowChannels:YES];
+    ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream titleOverride:nil showUserEducationSections:YES];
     userStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
+    userStreamVC.socialConnectDelegate = self;
 }
 
 - (void)navigateToUsersActivity
