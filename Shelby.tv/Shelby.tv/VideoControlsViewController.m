@@ -50,16 +50,15 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 
     _controlsView = (VideoControlsView *)self.view;
     _airPlayView = _controlsView.airPlayView;
-
-    self.playbackControlViews = @[self.controlsView.airPlayView,
-                                  self.controlsView.playPauseButton,
-                                  self.controlsView.currentTimeLabel,
-                                  self.controlsView.durationLabel,
-                                  self.controlsView.bufferProgressView,
-                                  self.controlsView.scrubheadButton
-                                  ];
     
     if (DEVICE_IPAD) {
+        self.playbackControlViews = @[/*self.controlsView.airPlayView,*/
+                                      self.controlsView.playPauseButton,
+                                      self.controlsView.currentTimeLabel,
+                                      self.controlsView.durationLabel,
+                                      self.controlsView.bufferProgressView,
+                                      self.controlsView.scrubheadButton
+                                      ];
         self.nonplaybackActionViews = @[];
         self.playbackActionViews = @[self.controlsView.likeButton,
                                      self.controlsView.unlikeButton,
@@ -67,6 +66,13 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
                                      self.controlsView.iPadExpandButton,
                                      self.controlsView.iPadContractButton];
     } else {
+        self.playbackControlViews = @[self.controlsView.airPlayView,
+                                      self.controlsView.playPauseButton,
+                                      self.controlsView.currentTimeLabel,
+                                      self.controlsView.durationLabel,
+                                      self.controlsView.bufferProgressView,
+                                      self.controlsView.scrubheadButton
+                                      ];
         self.nonplaybackActionViews = @[self.controlsView.nonplaybackLikeButton,
                                         self.controlsView.nonplaybackUnlikeButton];
         self.playbackActionViews = @[self.controlsView.likeButton,
@@ -285,6 +291,9 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.airPlayView.bounds];
     [volumeView setShowsVolumeSlider:NO];
     [volumeView setShowsRouteButton:YES];
+    if (DEVICE_IPAD) {
+        [volumeView setRouteButtonImage:[UIImage imageNamed:@"player-controls-airplay"] forState:UIControlStateNormal];
+    }
     [self.airPlayView addSubview:volumeView];
     
     for (UIView *view in volumeView.subviews) {
@@ -407,9 +416,21 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     if (_videoIsPlaying != videoIsPlaying) {
         _videoIsPlaying = videoIsPlaying;
         if (_videoIsPlaying) {
-            [self.controlsView.playPauseButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
+            UIImage *img;
+            if (DEVICE_IPAD) {
+                img = [UIImage imageNamed:@"player-controls-pause"];
+            } else {
+                img = [UIImage imageNamed:@"pause"];
+            }
+            [self.controlsView.playPauseButton setImage:img forState:UIControlStateNormal];
         } else {
-            [self.controlsView.playPauseButton setImage:[UIImage imageNamed:@"play-standard.png"] forState:UIControlStateNormal];
+            UIImage *img;
+            if (DEVICE_IPAD) {
+                img = [UIImage imageNamed:@"player-controls-play"];
+            } else {
+                img = [UIImage imageNamed:@"play-standard"];
+            }
+            [self.controlsView.playPauseButton setImage:img forState:UIControlStateNormal];
         }
     }
 }
@@ -517,7 +538,6 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
             self.separator.hidden = NO;
             if (DEVICE_IPAD) {
                 [self setIpadSeparatorViewsAlpha:1.0f];
-                self.controlsView.backgroundColor = kShelbyColorVeryDarkGray;
             }
             break;
     }

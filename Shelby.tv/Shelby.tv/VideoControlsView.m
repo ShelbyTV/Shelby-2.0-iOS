@@ -92,6 +92,8 @@
 
     CGFloat x = self.bufferProgressView.frame.origin.x + bufferProgressRelativeDelta - (self.scrubheadButton.frame.size.width/2.0);
     self.scrubheadButton.frame = CGRectMake(x, self.bufferProgressView.frame.origin.y - 14, self.scrubheadButton.frame.size.width, self.scrubheadButton.frame.size.height);
+
+    [self.elapsedProgressView setProgress:(bufferProgressRelativeDelta / self.bufferProgressView.frame.size.width) animated:NO];
 }
 
 - (CGFloat)playbackTargetPercentForTouch:(UITouch *)touch
