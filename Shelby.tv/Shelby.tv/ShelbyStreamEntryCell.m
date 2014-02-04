@@ -118,7 +118,7 @@
         }];
         
         NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
-        [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avarar-med"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             weakSelf.userAvatar.image = image;
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
             
