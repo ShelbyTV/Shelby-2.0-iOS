@@ -130,10 +130,9 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
         //reuse player
         self.lastPlayheadPosition = CMTimeMake(0, NSEC_PER_MSEC);
-        [self removePlayerItemObservers:self.player.currentItem];
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
         //replacement happens asynchronously.
-        //we add observers via KVO on self.player.currentItem and autoplay then
+        //we remove & add observers via KVO on self.player.currentItem and autoplay when adding if applicable
 
     } else {
         //new player
@@ -169,19 +168,26 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     }
 }
 
-- (void)playerItemReplacedWith:(AVPlayerItem *)newPlayerItem
+- (void)playerItemReplaced:(NSDictionary *)change
 {
+    AVPlayerItem *oldPlayerItem = change[NSKeyValueChangeOldKey];
+    if ((id)oldPlayerItem != [NSNull null]) {
+        [self removePlayerItemObservers:oldPlayerItem];
+    }
+
+    AVPlayerItem *newPlayerItem = change[NSKeyValueChangeNewKey];
     if ((id)newPlayerItem != [NSNull null]) {
         [self addPlayerItemObservers];
         if (self.shouldAutoplay) {
             [self play];
         }
     } else {
-        DLog(@"Player Item replaced with nothing (%@)", newPlayerItem);
-        //this happens if we hand a cached URL to the player and it can't get the video.
-        //XXX so far this seems to be the correct thing to do
-        //    (ie. haven't seen the NSNull replacement except when you have no connection)
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNoInternetConnectionNotification object:nil];
+        //This happens when an unplayable AVAsset is set on the player
+        //it gets removed and replaced with NSNull
+        self.isPlayable = NO;
+        if (self.shouldAutoplay) {
+            [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
+        }
     }
 }
 
@@ -475,9 +481,9 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
             }
         } else if ([keyPath isEqualToString:kShelbySPVideoCurrentItemKey]) {
             //item replacement not guaranteed to be called on same thread that registered for KVO
-             if (change[NSKeyValueChangeNewKey]) {
-                [self performSelectorOnMainThread:@selector(playerItemReplacedWith:)
-                                       withObject:change[NSKeyValueChangeNewKey]
+            if (change[NSKeyValueChangeNewKey] || change[NSKeyValueChangeOldKey]) {
+                [self performSelectorOnMainThread:@selector(playerItemReplaced:)
+                                       withObject:change
                                     waitUntilDone:YES];
             }
         }
