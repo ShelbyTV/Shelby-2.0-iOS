@@ -118,6 +118,10 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
                                                  name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+    
+    if (self.mayShowConnectSocial) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSpecialCellStatus) name:kShelbyNotificationFacebookConnectCompleted object:nil];
+    }
 
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryRecommendedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryRecommendedCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryCell];
@@ -139,16 +143,20 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
 }
 
-
--(void)viewDidAppear:(BOOL)animated
+- (void)refreshSpecialCellStatus
 {
-    [super viewDidAppear:animated];
-    
     if (self.mayShowFollowChannels || self.mayShowConnectSocial) {
         User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
         self.followCount = currentUser ? [currentUser rollFollowingCount] : 0;
         self.currentUserHasFacebookConnected = [currentUser isFacebookConnected];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+ 
+    [self refreshSpecialCellStatus];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
