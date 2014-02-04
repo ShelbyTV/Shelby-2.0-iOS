@@ -14,32 +14,32 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build our your stream!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2a-gc-5lV">
-                    <rect key="frame" x="116" y="240" width="338" height="39"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personalize your stream!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2a-gc-5lV">
+                    <rect key="frame" x="116" y="240" width="379" height="39"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="393" translatesAutoresizingMaskIntoConstraints="NO" id="T1L-n2-TaP" userLabel="body copy">
-                    <rect key="frame" x="116" y="287" width="393" height="114"/>
+                    <rect key="frame" x="116" y="287" width="393" height="142"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <attributedString key="attributedText">
-                        <fragment content="Follow some great ">
+                        <fragment content="Follow some of the ">
                             <attributes>
                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <font key="NSFont" size="24" name="HelveticaNeue-Light"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                             </attributes>
                         </fragment>
-                        <fragment content="video creators">
+                        <fragment content="best channels of video">
                             <attributes>
                                 <color key="NSColor" red="0.43529411764705883" green="0.74509803921568629" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                 <font key="NSFont" size="24" name="HelveticaNeue-Light"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                             </attributes>
                         </fragment>
-                        <fragment content=". It'll also give us an idea of the types of videos you like so that we can provide better recommendations.">
+                        <fragment content=" from all over the web. We'll add new videos to your stream and provide better recommendations to you over time.">
                             <attributes>
                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <font key="NSFont" size="24" name="HelveticaNeue-Light"/>
@@ -50,7 +50,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-edu-left-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="HPE-be-N8E">
-                    <rect key="frame" x="30" y="321" width="56" height="46"/>
+                    <rect key="frame" x="30" y="335" width="56" height="46"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
