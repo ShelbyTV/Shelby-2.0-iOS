@@ -418,9 +418,17 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     }
 }
 
-- (NSUInteger)rollFollowingCount
+- (NSUInteger)rollFollowingCountIgnoringOwnRolls:(BOOL)ignoreOwnRolls;
 {
-    return MAX((NSUInteger)0, [[self.rollFollowings componentsSeparatedByString:@";"] count] - 1);
+    NSString *rollFollowingsForCounting = self.rollFollowings;
+    if (ignoreOwnRolls) {
+        rollFollowingsForCounting = [rollFollowingsForCounting stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@;", self.publicRollID]
+                                                                                         withString:@""];
+        rollFollowingsForCounting = [rollFollowingsForCounting stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@;", self.likesRollID]
+                                                                                         withString:@""];
+    }
+    //subtracting 1 to account for a trailing semicolon that will produce a Nil entry in the components array
+    return MAX((NSUInteger)0, [[rollFollowingsForCounting componentsSeparatedByString:@";"] count] - 1);
 }
 
 - (BOOL)isShelbyUser

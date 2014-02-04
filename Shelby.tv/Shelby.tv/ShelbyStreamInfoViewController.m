@@ -146,7 +146,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     
     if (self.mayShowFollowChannels || self.mayShowConnectSocial) {
         User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        self.followCount = currentUser ? [currentUser rollFollowingCount] : 0;
+        self.followCount = currentUser ? [currentUser rollFollowingCountIgnoringOwnRolls:YES] : 0;
         self.currentUserHasFacebookConnected = [currentUser isFacebookConnected];
     }
 }
