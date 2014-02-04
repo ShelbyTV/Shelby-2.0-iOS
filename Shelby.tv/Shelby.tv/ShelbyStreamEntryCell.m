@@ -97,14 +97,6 @@
         }
         [self updateLikersAndSharersVisuals];
         
-        NSString *nickname = nil;
-        if (videoFrame.typeOfFrame == FrameTypeLightWeight) {
-            nickname= [NSString stringWithFormat:@"%@ liked this", videoFrame.creator.nickname];
-        } else {
-            nickname = videoFrame.creator.nickname;
-        }
-
-        self.username.text = nickname;
         self.videoTitle.text = self.videoFrame.video.title;
         NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
         self.description.text = captionText;
@@ -126,21 +118,57 @@
         
         [self updateViewForCurrentLikeStatus];
         
-        //avatar badge
-        UIImage *badgeImage;
+        NSString *nickname = nil;
+        NSString *suppotingText = nil;
+        if (videoFrame.typeOfFrame == FrameTypeLightWeight) {
+            suppotingText = @"liked this";
+        }
+        
+        nickname = videoFrame.creator.nickname;
+        
+        //avatar badge + via network
+        UIImage *badgeImage = nil;
+        NSString *viaNetwork = nil;
         if ([self.videoFrame typeOfFrame] == FrameTypeLightWeight) {
             badgeImage = [UIImage imageNamed:@"avatar-badge-heart"];
         } else if ([self.videoFrame.creator isNonShelbyFacebookUser]) {
             badgeImage = [UIImage imageNamed:@"avatar-badge-facebook"];
+            viaNetwork = @"facebook";
         } else if ([self.videoFrame.creator isNonShelbyTwitterUser]) {
             badgeImage = [UIImage imageNamed:@"avatar-badge-twitter"];
+            viaNetwork = @"twitter";
         } else {
             badgeImage = nil;
         }
         self.detailAvatarBadge.layer.cornerRadius = self.detailAvatarBadge.frame.size.height / 2;
         self.detailAvatarBadge.layer.masksToBounds = YES;
         self.detailAvatarBadge.image = badgeImage;
+        
+        self.detailAvatarBadge.image = badgeImage;
+    
+        // Via Network
+        if (viaNetwork) {
+            suppotingText = [NSString stringWithFormat:@"via %@", viaNetwork];
+        }
+        
+        if (suppotingText) {
+            self.username.attributedText = [self nicknameAttributedString:nickname withText:suppotingText];
+        } else {
+            self.username.text = nickname;
+        }
     }
+}
+
+- (NSAttributedString *)nicknameAttributedString:(NSString *)username withText:(NSString *)text
+{
+    NSString *recoString = [NSString stringWithFormat:@"%@ %@", username, text];
+    NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
+    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2Bold}
+                            range:[recoString rangeOfString:username]];
+    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2}
+                            range:[recoString rangeOfString:text]];
+    
+    return recoAttributed;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
