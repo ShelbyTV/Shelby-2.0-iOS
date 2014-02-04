@@ -55,7 +55,7 @@
                         </fragment>
                         <fragment>
                             <string key="content"> following a few of your
-favorite sources and connecting social to personalize your experience.</string>
+favorite channels and connecting social to personalize your experience.</string>
                             <attributes>
                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <font key="NSFont" size="24" name="Helvetica-Light"/>
