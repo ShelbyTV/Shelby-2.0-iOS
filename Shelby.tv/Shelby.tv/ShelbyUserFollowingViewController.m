@@ -81,18 +81,7 @@
             [self.spinner startAnimating];
             [[ShelbyDataMediator sharedInstance] fetchRollFollowingsForUser:user withCompletion:^(User *user, NSArray *rawRollFollowings, NSError *error) {
                 if (!error) {
-                    NSMutableArray *following = [NSMutableArray arrayWithArray:rawRollFollowings];
-                    // When viewing own user profile, filter out user's watch later and public roll
-                    NSMutableArray *removeUserRolls = [NSMutableArray new];
-                    for (NSDictionary *rollDictionary in following) {
-                        if ([rollDictionary[@"roll_type"] isEqualToNumber:@(13)]) { // 13 = watch later roll type
-                            [removeUserRolls addObject:rollDictionary];
-                        } else if ([rollDictionary[@"id"] isEqualToString:self.user.publicRollID]) {
-                            [removeUserRolls addObject:rollDictionary];
-                        }
-                    }
-                    [following removeObjectsInArray:removeUserRolls];
-                    self.rawRollFollowings = [NSArray arrayWithArray:following];
+                    self.rawRollFollowings = rawRollFollowings;
                     self.showNoContentView = ([self.rawRollFollowings count] == 0);
                     [self.tableView reloadData];
                 } else {
@@ -107,8 +96,18 @@
 
 - (void)setRawRollFollowings:(NSArray *)rawRollFollowings
 {
+    //when current user is viewing own profile, we don't want to show them as a follower of themself
+    User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    NSString *creatorIdToIgnore = (self.user == currentUser) ? self.user.userID : nil;
+    
     NSMutableDictionary *uniqueFollowings = [[NSMutableDictionary alloc] initWithCapacity:[rawRollFollowings count]];
     for (NSDictionary *rollInfo in rawRollFollowings) {
+        //skip watch_later rolls (type 13) and current user's own public roll (when viewing current user's rolls)
+        if ([@(13) isEqualToNumber:rollInfo[@"roll_type"]] ||
+            [creatorIdToIgnore isEqualToString:rollInfo[@"creator_id"]]) {
+            continue;
+        }
+        
         if (rollInfo[@"creator_id"] && rollInfo[@"creator_nickname"]) {
             uniqueFollowings[rollInfo[@"creator_id"]] = rollInfo;
         }
