@@ -209,7 +209,7 @@
 
 - (void)connectToFacebook
 {
-    [[ShelbyDataMediator sharedInstance] userAskForFacebookPublishPermissions];
+    [[ShelbyDataMediator sharedInstance] openFacebookSessionWithAllowLoginUI:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(facebookConnectDidComplete:) name:kShelbyNotificationFacebookConnectCompleted object:nil];
 }
 
