@@ -61,6 +61,10 @@
                         <rect key="frame" x="10" y="160" width="36" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hto-qo-nD6" userLabel="SocialAvatar">
+                        <rect key="frame" x="33" y="181" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9nb-CU-XVm" userLabel="NameLabel">
                         <rect key="frame" x="66" y="167" width="219" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -153,6 +157,7 @@
                 <outlet property="borderView" destination="5md-Js-Zz4" id="aQc-B8-8GT"/>
                 <outlet property="currentlyOn" destination="e7d-Hd-IeN" id="0Mj-Dg-ZHU"/>
                 <outlet property="description" destination="1LM-GZ-NMT" id="yee-4N-adU"/>
+                <outlet property="detailAvatarBadge" destination="hto-qo-nD6" id="585-dd-Rg3"/>
                 <outlet property="detailNoLikersLabel" destination="Iby-GO-uoN" id="os1-N6-ggg"/>
                 <outlet property="likeButton" destination="RSh-DT-HOP" id="9qG-Gc-Xdd"/>
                 <outlet property="likersView" destination="cNL-GX-y23" id="2pZ-sx-If0"/>

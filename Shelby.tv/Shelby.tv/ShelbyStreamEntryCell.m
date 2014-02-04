@@ -18,6 +18,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
 @property (nonatomic, weak) IBOutlet UIImageView *currentlyOn;
 @property (nonatomic, weak) IBOutlet UIImageView *videoThumbnail;
+@property (nonatomic, weak) IBOutlet UIImageView *detailAvatarBadge;
 @property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, weak) IBOutlet UILabel *detailNoLikersLabel;
 @property (nonatomic, weak) IBOutlet UIView *likersView;
@@ -124,6 +125,21 @@
         }];
         
         [self updateViewForCurrentLikeStatus];
+        
+        //avatar badge
+        UIImage *badgeImage;
+        if ([self.videoFrame typeOfFrame] == FrameTypeLightWeight) {
+            badgeImage = [UIImage imageNamed:@"avatar-badge-heart"];
+        } else if ([self.videoFrame.creator isNonShelbyFacebookUser]) {
+            badgeImage = [UIImage imageNamed:@"avatar-badge-facebook"];
+        } else if ([self.videoFrame.creator isNonShelbyTwitterUser]) {
+            badgeImage = [UIImage imageNamed:@"avatar-badge-twitter"];
+        } else {
+            badgeImage = nil;
+        }
+        self.detailAvatarBadge.layer.cornerRadius = self.detailAvatarBadge.frame.size.height / 2;
+        self.detailAvatarBadge.layer.masksToBounds = YES;
+        self.detailAvatarBadge.image = badgeImage;
     }
 }
 
