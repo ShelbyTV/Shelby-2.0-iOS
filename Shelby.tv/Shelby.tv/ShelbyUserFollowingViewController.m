@@ -7,14 +7,20 @@
 //
 
 #import "ShelbyUserFollowingViewController.h"
+#import "NoContentView.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyStreamInfoViewController.h"
 #import "User+Helper.h"
 #import "UserFollowingCell.h"
 
+#define SECTION_COUNT 2
+#define SECTION_FOR_NO_CONTENT 0
+#define SECTION_FOR_FOLLOWINGS 1
+
 @interface ShelbyUserFollowingViewController ()
 @property (strong, nonatomic) NSArray *rawRollFollowings;
 @property (strong, nonatomic) UIActivityIndicatorView *spinner;
+@property (nonatomic, assign) BOOL showNoContentView;
 @end
 
 @implementation ShelbyUserFollowingViewController
@@ -23,9 +29,19 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        [self commonInit];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self commonInit];
+}
+
+- (void)commonInit
+{
+    _showNoContentView = NO;
 }
 
 - (void)viewDidLoad
@@ -77,6 +93,7 @@
                     }
                     [following removeObjectsInArray:removeUserRolls];
                     self.rawRollFollowings = [NSArray arrayWithArray:following];
+                    self.showNoContentView = ([self.rawRollFollowings count] == 0);
                     [self.tableView reloadData];
                 } else {
                     DLog(@"ERROR on roll following fetch %@", error);
@@ -103,25 +120,57 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return SECTION_COUNT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.rawRollFollowings.count;
+    if (section == SECTION_FOR_NO_CONTENT) {
+        return self.showNoContentView ? 1 : 0;
+        
+    } else if (section == SECTION_FOR_FOLLOWINGS) {
+        return self.rawRollFollowings.count;
+        
+    } else {
+        STVAssert(NO, @"unhandled section");
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"UserFollowingCell";
-    UserFollowingCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.rollFollowing = self.rawRollFollowings[indexPath.row];
-    return cell;
+    if (indexPath.section == SECTION_FOR_NO_CONTENT) {
+        return [NoContentView noFollowingsView];
+        
+    } else if (indexPath.section == SECTION_FOR_FOLLOWINGS) {
+        static NSString *CellIdentifier = @"UserFollowingCell";
+        UserFollowingCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.rollFollowing = self.rawRollFollowings[indexPath.row];
+        return cell;
+        
+    } else {
+        STVAssert(NO, @"unhandled section");
+        return nil;
+    }
 }
 
 #pragma mark - UITableViewCellDelegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == SECTION_FOR_NO_CONTENT) {
+        return tableView.bounds.size.height;
+        
+    } else if (indexPath.section == SECTION_FOR_FOLLOWINGS) {
+        return tableView.rowHeight;
+        
+    } else {
+        STVAssert(NO, @"unhandled section");
+        return 0;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.delegate userProfileWasTapped:self.rawRollFollowings[indexPath.row][@"creator_id"]];
 }

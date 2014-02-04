@@ -11,6 +11,7 @@
 #import "DashboardEntry+Helper.h"
 #import "DeduplicationUtility.h"
 #import "Frame+Helper.h"
+#import "NoContentView.h"
 #import "Roll.h"
 #import "ShelbyBrain.h"
 #import "ShelbyModelArrayUtility.h"
@@ -22,10 +23,11 @@
 #define NOT_LOADING_MORE -1
 #define LOAD_MORE_SPINNER_AREA_HEIGHT 100
 
-#define SECTION_COUNT 3
+#define SECTION_COUNT 4
 #define SECTION_FOR_ADD_CHANNELS 0
 #define SECTION_FOR_CONNECT_SOCIAL 1
-#define SECTION_FOR_PLAYBACK_ENTITIES 2
+#define SECTION_FOR_NO_CONTENT 2
+#define SECTION_FOR_PLAYBACK_ENTITIES 3
 
 NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
@@ -51,6 +53,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 //for user education "bonus" sections
 @property (nonatomic, assign) NSInteger followCount;
 @property (nonatomic, assign) BOOL currentUserHasFacebookConnected;
+@property (nonatomic, assign) BOOL showNoContentView;
 @end
 
 @implementation ShelbyStreamInfoViewController
@@ -59,12 +62,23 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _mayShowFollowChannels = NO;
-        _followCount = 0;
-        _mayShowConnectSocial = NO;
-        _currentUserHasFacebookConnected = NO;
+        [self commonInit];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self commonInit];
+}
+
+- (void)commonInit
+{
+    _mayShowFollowChannels = NO;
+    _followCount = 0;
+    _mayShowConnectSocial = NO;
+    _currentUserHasFacebookConnected = NO;
+    _showNoContentView = NO;
 }
 
 - (void)viewDidLoad
@@ -245,6 +259,11 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         }
     }
     
+    self.showNoContentView = ([self.channelEntries count] == 0);
+    if (self.showNoContentView) {
+        [self.entriesTable reloadData];
+    }
+    
     //API returns the element represented by the sinceID (therefore we need count > 1)
     [self fetchEntriesWasSuccessful:YES hadEntries:[receivedChannelEntries count] > 1];
 }
@@ -278,6 +297,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 }
 
 #pragma mark - UITableDataSource
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return SECTION_COUNT;
@@ -290,6 +310,9 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         
     } else if (section == SECTION_FOR_CONNECT_SOCIAL) {
         return (self.mayShowConnectSocial && !self.currentUserHasFacebookConnected) ? 1 : 0;
+        
+    } else if (section == SECTION_FOR_NO_CONTENT) {
+        return self.showNoContentView ? 1 : 0;
     
     } else if (section == SECTION_FOR_PLAYBACK_ENTITIES) {
         return [self.deduplicatedEntries count];
@@ -308,7 +331,10 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         
     } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
         return [tableView dequeueReusableCellWithIdentifier:kShelbyStreamConnectFacebookCell forIndexPath:indexPath];
-    
+        
+    } else if (indexPath.section == SECTION_FOR_NO_CONTENT) {
+        return [NoContentView noActivityView];
+
     } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
     
         id streamEntry = self.deduplicatedEntries[indexPath.row];
@@ -386,6 +412,9 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         
     } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
         return 110.f;
+        
+    } else if (indexPath.section == SECTION_FOR_NO_CONTENT) {
+        return [NoContentView noActivityCellHeight];
     
     } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
         id streamEntry = self.deduplicatedEntries[indexPath.row];

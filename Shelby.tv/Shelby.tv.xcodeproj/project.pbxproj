@@ -614,6 +614,12 @@
 		9103938818A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */; };
 		9103938918A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */; };
 		9103938A18A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */; };
+		9103939018A131DC003B911D /* NoContentViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103938F18A131DC003B911D /* NoContentViews.xib */; };
+		9103939118A131DC003B911D /* NoContentViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103938F18A131DC003B911D /* NoContentViews.xib */; };
+		9103939218A131DC003B911D /* NoContentViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103938F18A131DC003B911D /* NoContentViews.xib */; };
+		9103939518A1330A003B911D /* NoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103939418A1330A003B911D /* NoContentView.m */; };
+		9103939618A1330A003B911D /* NoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103939418A1330A003B911D /* NoContentView.m */; };
+		9103939718A1330A003B911D /* NoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103939418A1330A003B911D /* NoContentView.m */; };
 		910933081743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		910933091743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
@@ -1280,6 +1286,9 @@
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamConnectFacebookCellView.xib; sourceTree = "<group>"; };
+		9103938F18A131DC003B911D /* NoContentViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoContentViews.xib; sourceTree = "<group>"; };
+		9103939318A1330A003B911D /* NoContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoContentView.h; sourceTree = "<group>"; };
+		9103939418A1330A003B911D /* NoContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentView.m; sourceTree = "<group>"; };
 		910933061743E47F00AC038E /* ShelbyAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAlert.h; sourceTree = "<group>"; };
 		910933071743E47F00AC038E /* ShelbyAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAlert.m; sourceTree = "<group>"; };
 		910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyCurrentlyOnViewController.h; sourceTree = "<group>"; };
@@ -1628,6 +1637,7 @@
 				1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */,
 				91319BCC189C4EF4000384A0 /* VideoPlayerThumbnailOverlayView.xib */,
 				9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */,
+				9103938F18A131DC003B911D /* NoContentViews.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -1689,6 +1699,8 @@
 				916BABF01896EF1B0086A22D /* UserFollowingCell.m */,
 				91319BD0189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.h */,
 				91319BD1189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.m */,
+				9103939318A1330A003B911D /* NoContentView.h */,
+				9103939418A1330A003B911D /* NoContentView.m */,
 			);
 			name = "Views - iPad";
 			sourceTree = "<group>";
@@ -2679,6 +2691,7 @@
 				1C496247189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib in Resources */,
 				1CDCA679179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67C179DCE190098C4E1 /* pause@2x.png in Resources */,
+				9103939118A131DC003B911D /* NoContentViews.xib in Resources */,
 				1CDCA67F179DCE190098C4E1 /* play.png in Resources */,
 				1CD8112217CCF6C0002FD84B /* play-current@2x.png in Resources */,
 				1CDCA682179DCE190098C4E1 /* play@2x.png in Resources */,
@@ -2815,6 +2828,7 @@
 				1C496248189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib in Resources */,
 				1CDCA67A179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67D179DCE190098C4E1 /* pause@2x.png in Resources */,
+				9103939218A131DC003B911D /* NoContentViews.xib in Resources */,
 				1CDCA680179DCE190098C4E1 /* play.png in Resources */,
 				1CD8112317CCF6C0002FD84B /* play-current@2x.png in Resources */,
 				1CDCA683179DCE190098C4E1 /* play@2x.png in Resources */,
@@ -2913,6 +2927,7 @@
 				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				8E7024EC1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F51715E71500E8DE46 /* README in Resources */,
+				9103939018A131DC003B911D /* NoContentViews.xib in Resources */,
 				1C0C7DF51852328B008F5506 /* heart-icon-color@2x.png in Resources */,
 				91FCC6A7174BF118004255F5 /* Localizable.strings in Resources */,
 				1CD8111217CCF6C0002FD84B /* play-airplay.png in Resources */,
@@ -3287,6 +3302,7 @@
 				1C96DEDD17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
 				91F1682B1798422F00AF8A2E /* LoginViewController.m in Sources */,
 				916F41A31798A795001D9DF7 /* STVTextField.m in Sources */,
+				9103939618A1330A003B911D /* NoContentView.m in Sources */,
 				916F41A81798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
 				916F41BF179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4617A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
@@ -3455,6 +3471,7 @@
 				1C96DEDE17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
 				91F1682C1798422F00AF8A2E /* LoginViewController.m in Sources */,
 				916F41A41798A795001D9DF7 /* STVTextField.m in Sources */,
+				9103939718A1330A003B911D /* NoContentView.m in Sources */,
 				916F41A91798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
 				916F41C0179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4717A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
@@ -3623,6 +3640,7 @@
 				1C96DEDC17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
 				91F1682A1798422F00AF8A2E /* LoginViewController.m in Sources */,
 				916F41A21798A795001D9DF7 /* STVTextField.m in Sources */,
+				9103939518A1330A003B911D /* NoContentView.m in Sources */,
 				916F41A71798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
 				916F41BE179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4517A179DE00B6B3D5 /* NoContentViewController.m in Sources */,

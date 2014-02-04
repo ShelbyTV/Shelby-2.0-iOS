@@ -8,15 +8,21 @@
 
 #import "ShelbyNotificationCenterViewController.h"
 #import "DashboardEntry+Helper.h"
+#import "NoContentView.h"
 #import "ShelbyBrain.h"
 #import "ShelbyModelArrayUtility.h"
 #import "UIImageView+AFNetworking.h"
+
+#define SECTION_COUNT 2
+#define SECTION_FOR_NO_CONTENT 0
+#define SECTION_FOR_NOTIFICATIONS 1
 
 @interface ShelbyNotificationCenterViewController ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopSpaceConstraint;
 @property (nonatomic, weak) IBOutlet UITableView *notificationTable;
 @property (nonatomic, strong) NSMutableArray *notifications;
 @property (nonatomic, assign) NSInteger unseenNotifications;
+@property (nonatomic, assign) BOOL showNoContentView;
 @end
 
 NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotificationCenterLastNotificationIDKey";
@@ -27,9 +33,19 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        [self commonInit];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self commonInit];
+}
+
+- (void)commonInit
+{
+    _showNoContentView = NO;
 }
 
 - (void)viewDidLoad
@@ -101,6 +117,7 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
         [self.delegate unseenNotificationCountChanged];
     }
 
+    self.showNoContentView = ([self.notifications count] == 0);
     [self.notificationTable reloadData];
 }
 
@@ -146,58 +163,97 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
     }
 }
 
-#pragma mark - UITableViewDataSource Delegate Methods
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+#pragma mark - UITableDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.notifications count];
+    return SECTION_COUNT;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == SECTION_FOR_NO_CONTENT) {
+        return self.showNoContentView ? 1 : 0;
+        
+    } else if (section == SECTION_FOR_NOTIFICATIONS) {
+        return [self.notifications count];
+        
+    } else {
+        STVAssert(NO, @"unhandled section");
+        return 0;
+    }
+}
+
+#pragma mark - UITableViewDataSource Delegate Methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DashboardEntry *dashboardEntry = self.notifications[indexPath.row];
-
-    DashboardEntryType dashboardEntryType = [dashboardEntry typeOfEntry];
-    
-    NSString *likerName = dashboardEntry.actor.name;
-    NSString *actorID = actorID = dashboardEntry.actor.userID;
-    if (!likerName) {
-        likerName = @"Somebody";
-    }
-
-    if (dashboardEntryType == DashboardEntryTypeFollow) {
-        FollowNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FollowNotificationCell" forIndexPath:indexPath];
-        cell.notificationText.text = [NSString stringWithFormat:@"%@ started following you", likerName];
-        cell.userID = actorID;
-        cell.delegate = self;
-        [self fetchAvatarForCell:cell withAvatarURL:[dashboardEntry.actor avatarURL]];
-
-        return cell;
-    } else {
-        LikeNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeNotificationCell" forIndexPath:indexPath];
-        cell.userID = actorID;
-        cell.dashboardID = dashboardEntry.dashboardEntryID;
-        cell.delegate = self;
+    if (indexPath.section == SECTION_FOR_NO_CONTENT) {
+        return [NoContentView noNotificationsView];
         
-        if (dashboardEntryType == DashboardEntryTypeLike || dashboardEntryType == DashboardEntryTypeAnonymousLike) {
-            cell.notificationText.text = [NSString stringWithFormat:@"%@ liked your video", likerName];
-        } else { // Share
-            cell.notificationText.text = [NSString stringWithFormat:@"%@ shared your video", likerName];
+    } else if (indexPath.section == SECTION_FOR_NOTIFICATIONS) {
+        DashboardEntry *dashboardEntry = self.notifications[indexPath.row];
+        
+        DashboardEntryType dashboardEntryType = [dashboardEntry typeOfEntry];
+        
+        NSString *likerName = dashboardEntry.actor.name;
+        NSString *actorID = actorID = dashboardEntry.actor.userID;
+        if (!likerName) {
+            likerName = @"Somebody";
         }
- 
-        NSMutableURLRequest *thumbnailRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:dashboardEntry.frame.video.thumbnailURL]];
-        // KP KP: TODO: default thumbnail
-        [cell.thumbnail setImageWithURLRequest:thumbnailRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            if (image) {
-                cell.thumbnail.image = image;
+        
+        if (dashboardEntryType == DashboardEntryTypeFollow) {
+            FollowNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FollowNotificationCell" forIndexPath:indexPath];
+            cell.notificationText.text = [NSString stringWithFormat:@"%@ started following you", likerName];
+            cell.userID = actorID;
+            cell.delegate = self;
+            [self fetchAvatarForCell:cell withAvatarURL:[dashboardEntry.actor avatarURL]];
+            
+            return cell;
+        } else {
+            LikeNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeNotificationCell" forIndexPath:indexPath];
+            cell.userID = actorID;
+            cell.dashboardID = dashboardEntry.dashboardEntryID;
+            cell.delegate = self;
+            
+            if (dashboardEntryType == DashboardEntryTypeLike || dashboardEntryType == DashboardEntryTypeAnonymousLike) {
+                cell.notificationText.text = [NSString stringWithFormat:@"%@ liked your video", likerName];
+            } else { // Share
+                cell.notificationText.text = [NSString stringWithFormat:@"%@ shared your video", likerName];
             }
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        }];
+            
+            NSMutableURLRequest *thumbnailRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:dashboardEntry.frame.video.thumbnailURL]];
+            // KP KP: TODO: default thumbnail
+            [cell.thumbnail setImageWithURLRequest:thumbnailRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                if (image) {
+                    cell.thumbnail.image = image;
+                }
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            }];
+            
+            [self fetchAvatarForCell:cell withAvatarURL:[dashboardEntry.actor avatarURL]];
+            
+            
+            return cell;
+        }
+        
+    } else {
+        STVAssert(NO, @"unhandled section");
+        return nil;
+    }
+}
 
-        [self fetchAvatarForCell:cell withAvatarURL:[dashboardEntry.actor avatarURL]];
- 
- 
-        return cell;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == SECTION_FOR_NO_CONTENT) {
+        return tableView.bounds.size.height;
+        
+    } else if (indexPath.section == SECTION_FOR_NOTIFICATIONS) {
+        return tableView.rowHeight;
+        
+    } else {
+        STVAssert(NO, @"unhandled section");
+        return 0;
     }
 }
 
@@ -207,4 +263,5 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
     [self viewUserInNotificationCell:cell];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
 @end
