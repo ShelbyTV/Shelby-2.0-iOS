@@ -34,7 +34,12 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         user.userID = userID;
     }
     
-    NSString *userImage = [dict[@"user_image"] nilOrSelfWhenNotNull];
+    // If user_image_original is not nil, use that, otherwise, look if user_image has value
+    NSString *userImage = [dict[@"user_image_original"] nilOrSelfWhenNotNull];
+    if (!userImage) {
+        userImage = [dict[@"user_image"] nilOrSelfWhenNotNull];
+    }
+
     if (userImage) {
         user.userImage = userImage;
     }
