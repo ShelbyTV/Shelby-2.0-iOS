@@ -521,9 +521,7 @@
 - (void)updateVisualsForRecommendation
 {
     if (_dashboardEntry) {
-        DashboardEntryType dbeType = [_dashboardEntry typeOfEntry];
-        if(dbeType == DashboardEntryTypeVideoGraphRecommendation ||
-           dbeType == DashboardEntryTypeMortarRecommendation) {
+        if([_dashboardEntry recommendedEntry]) {
             //dashboard entry recommendation
             self.detailRecommendationReasonLabel.attributedText = [self recommendationStringFor:_dashboardEntry];
             self.summaryRecommendationView.hidden = NO;

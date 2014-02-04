@@ -119,6 +119,18 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
     return results;
 }
 
+- (BOOL)recommendedEntry
+{
+    if ([self typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation ||
+        [self typeOfEntry] == DashboardEntryTypeEntertainmentGraphRecommendation ||
+        [self typeOfEntry] == DashboardEntryTypeMortarRecommendation ||
+        [self typeOfEntry] == DashboardEntryTypeChannelRecommendation) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (BOOL)isPlayable
 {
     if (self.frame) {

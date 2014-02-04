@@ -19,7 +19,6 @@
 @property (nonatomic, weak) IBOutlet UIImageView *currentlyOn;
 @property (nonatomic, weak) IBOutlet UIImageView *videoThumbnail;
 @property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
-@property (nonatomic, weak) IBOutlet UILabel *description;
 @property (nonatomic, weak) IBOutlet UILabel *detailNoLikersLabel;
 @property (nonatomic, weak) IBOutlet UIView *likersView;
 @property (nonatomic, weak) IBOutlet UIButton *likeButton;

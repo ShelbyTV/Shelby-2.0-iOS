@@ -347,10 +347,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     
         id streamEntry = self.deduplicatedEntries[indexPath.row];
         NSString *cellIdentifier = nil;
+        BOOL recommendedEntry = NO;
         if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
             DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-            if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
+            if ([dashboardEntry recommendedEntry]) {
                 cellIdentifier = kShelbyStreamEntryRecommendedCell;
+                recommendedEntry = YES;
             }
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
             Frame *frameEntry = (Frame *)streamEntry;
@@ -372,6 +374,20 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.videoFrame = videoFrame;
+        
+        // Overwrite description in case of a recommended entry
+        if (recommendedEntry) {
+            DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
+            if (dashboardEntry.sourceFrameCreatorNickname) {
+                NSString *recoBase = @"This video is Liked by people like ";
+                NSString *recoUsername = dashboardEntry.sourceFrameCreatorNickname;
+                cell.description.text = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
+            } else if (dashboardEntry.sourceVideoTitle) {
+                cell.description.text = [NSString stringWithFormat:@"Because you Liked \"%@\"", dashboardEntry.sourceVideoTitle];
+            } else {
+                cell.description.text = @"We thought you'd like to see this";
+            }
+        }
         cell.delegate = self;
         
         if (self.selectedRowIndexPath && self.selectedRowIndexPath.row == indexPath.row) {
@@ -428,7 +444,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         id streamEntry = self.deduplicatedEntries[indexPath.row];
         if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
             DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-            if ([dashboardEntry typeOfEntry] == DashboardEntryTypeMortarRecommendation) {
+            if ([dashboardEntry recommendedEntry]) {
                 return 311.0;
             }
         } else if ([streamEntry isKindOfClass:[Frame class]]) {

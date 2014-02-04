@@ -19,6 +19,7 @@
 
 @interface ShelbyStreamEntryCell : UITableViewCell
 @property (nonatomic, strong) Frame *videoFrame;
+@property (nonatomic, weak) IBOutlet UILabel *description;
 @property (nonatomic, weak) id<ShelbyStreamEntryProtocol> delegate;
 
 - (void)selectStreamEntry;

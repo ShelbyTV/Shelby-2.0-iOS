@@ -47,5 +47,6 @@ typedef NS_ENUM(NSInteger, DashboardEntryType){
 - (BOOL)isNotification;
 
 - (DashboardEntryType)typeOfEntry;
+- (BOOL)recommendedEntry;
 
 @end
