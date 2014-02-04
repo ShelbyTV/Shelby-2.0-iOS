@@ -166,7 +166,7 @@
         self.detailNoLikersLabel.hidden = YES;
         for (NSUInteger i = 0; i < MIN([self.likers count], [self.likerImageViews count]); i++) {
             User *liker = self.likers[i];
-            [((UIImageView *)self.likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank-small"]];
+            [((UIImageView *)self.likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"blank-avatar-small"]];
         }
     } else if ([self.videoFrame.video.trackedLikerCount intValue]) {
         self.detailNoLikersLabel.hidden = NO;

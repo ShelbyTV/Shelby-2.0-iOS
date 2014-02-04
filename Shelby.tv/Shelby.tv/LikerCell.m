@@ -51,7 +51,7 @@
     self.user = user;
     NSURL *url = [user avatarURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    UIImage *defaultAvatar = [UIImage imageNamed:@"avatar-blank.png"];
+    UIImage *defaultAvatar = [UIImage imageNamed:@"blank-avatar-med"];
     __weak LikerCell *weakSelf =  self;
     [self.avatar setImageWithURLRequest:request placeholderImage:defaultAvatar success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         weakSelf.avatar.image = image;
