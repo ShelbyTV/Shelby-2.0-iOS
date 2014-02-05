@@ -53,6 +53,9 @@ NSString * const kLocalyticsTapAddChannelsInStream                      = @"tap_
 NSString * const kLocalyticsTapConnectFacebookInStream                  = @"tap_connect_facebook_in_stream";
 NSString * const kLocalyticsTapCardSharingUser                          = @"view_sharer_profile";
 NSString * const kLocalyticsTapCardLikersList                           = @"view_likers";
+NSString * const kLocalyticsTapCardLike                                 = @"tap_card_like";
+NSString * const kLocalyticsTapCardUnlike                               = @"tap_card_unlike";
+NSString * const kLocalyticsTapCardPlay                                 = @"tap_card_play";
 NSString * const kLocalyticsTapLikerListLiker                           = @"view_liker";
 NSString * const kLocalyticsTapPlayerControlsPlay                       = @"tap_player_controls_play";
 NSString * const kLocalyticsTapPlayerControlsLike                       = @"tap_player_controls_like";
@@ -61,7 +64,6 @@ NSString * const kLocalyticsTapPlayerControlsExpand                     = @"tap_
 NSString * const kLocalyticsTapPlayerControlsContract                   = @"tap_player_controls_contract";
 NSString * const kLocalyticsTapUserProfileFromNotificationView          = @"view_profile_notification";
 NSString * const kLocalyticsTapVideoFromNotificationView                = @"view_video_notification";
-NSString * const kLocalyticsTapVideoInStream                            = @"tap_video_in_stream";
 NSString * const kLocalyticsTapVideoPlayerOverlayPlay                   = @"tap_video_player_overlay_play";
 
 // Google Analytics Constants

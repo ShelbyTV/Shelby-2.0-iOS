@@ -47,6 +47,9 @@ extern NSString * const kLocalyticsTapAddChannelsInStream;
 extern NSString * const kLocalyticsTapConnectFacebookInStream;
 extern NSString * const kLocalyticsTapCardSharingUser;
 extern NSString * const kLocalyticsTapCardLikersList;
+extern NSString * const kLocalyticsTapCardLike;
+extern NSString * const kLocalyticsTapCardUnlike;
+extern NSString * const kLocalyticsTapCardPlay;
 extern NSString * const kLocalyticsTapLikerListLiker;
 extern NSString * const kLocalyticsTapPlayerControlsPlay;
 extern NSString * const kLocalyticsTapPlayerControlsLike;
@@ -55,7 +58,6 @@ extern NSString * const kLocalyticsTapPlayerControlsExpand;
 extern NSString * const kLocalyticsTapPlayerControlsContract;
 extern NSString * const kLocalyticsTapUserProfileFromNotificationView;
 extern NSString * const kLocalyticsTapVideoFromNotificationView;
-extern NSString * const kLocalyticsTapVideoInStream;
 extern NSString * const kLocalyticsTapVideoPlayerOverlayPlay;
 
 // Google Analytics Constants

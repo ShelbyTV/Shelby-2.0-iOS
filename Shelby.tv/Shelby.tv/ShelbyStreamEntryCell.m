@@ -8,6 +8,7 @@
 
 #import "ShelbyStreamEntryCell.h"
 #import "Frame+Helper.h"
+#import "ShelbyAnalyticsClient.h"
 #import "UIImageView+AFNetworking.h"
 #import "User+Helper.h"
 #import "Video.h"
@@ -229,23 +230,27 @@
 
 - (IBAction)likeVideo:(id)sender
 {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardLike];
     [self.delegate likeFrame:self.videoFrame];
     [self updateViewForCurrentLikeStatus];
 }
 
 - (IBAction)unLikeVideo:(id)sender
 {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardUnlike];
     [self.delegate unLikeFrame:self.videoFrame];
     [self updateViewForCurrentLikeStatus];
 }
 
 - (IBAction)openUserProfile:(id)sender
 {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardSharingUser];
     [self.delegate userProfileWasTapped:self.videoFrame.creator.userID];
 }
 
 - (IBAction)openLikersView:(id)sender
 {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardLikersList];
     [self.delegate openLikersViewForVideo:self.videoFrame.video withLikers:self.likers];
 }
 
