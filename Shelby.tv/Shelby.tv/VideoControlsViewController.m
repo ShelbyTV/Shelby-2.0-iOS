@@ -331,12 +331,16 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 
 //expand and contract are currently iPad only
 - (IBAction)expandTapped:(id)sender {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapPlayerControlsExpand];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyRequestFullscreenPlaybackNotification object:self];
     self.controlsView.iPadExpandButton.hidden = YES;
     self.controlsView.iPadContractButton.hidden = NO;
 }
 
 - (IBAction)contractTapped:(id)sender {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapPlayerControlsContract];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyRequestSmallscreenPlaybackNotification object:self];
     self.controlsView.iPadExpandButton.hidden = NO;
     self.controlsView.iPadContractButton.hidden = YES;
@@ -344,6 +348,8 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 
 - (IBAction)playPauseButtonTapped:(id)sender
 {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapPlayerControlsPlay];
+    
     if (self.videoIsPlaying) {
         [self.delegate videoControlsPauseCurrentVideo:self];
     } else {
@@ -388,6 +394,8 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 }
 
 - (IBAction)likeTapped:(id)sender {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapPlayerControlsLike];
+    
     if (self.currentEntity) {
         [self.delegate videoControlsLikeCurrentVideo:self];
         [self updateViewForCurrentEntity];
@@ -395,6 +403,8 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 }
 
 - (IBAction)unlikeTapped:(id)sender {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapPlayerControlsUnlike];
+    
     if (self.currentEntity) {
         [self.delegate videoControlsUnlikeCurrentVideo:self];
         [self updateViewForCurrentEntity];
