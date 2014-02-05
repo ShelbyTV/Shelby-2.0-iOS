@@ -58,6 +58,12 @@
     //user
     self.userLabel.attributedText = [self usernameStringFor:f withNetwork:viaNetwork];
     
+    if ([self isRecommendedOverlayFor:f]) {
+        self.userGenericImage.hidden = YES;
+    } else {
+        self.userGenericImage.hidden = NO;
+    }
+    
     //likes
     if ([f.video.trackedLikerCount intValue] == 0) {
         self.likesCountLabel.hidden = YES;
@@ -73,9 +79,18 @@
     }
 }
 
+- (BOOL)isRecommendedOverlayFor:(Frame *)frame
+{
+    if (frame.creator.nickname) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (NSAttributedString *)usernameStringFor:(Frame *)f withNetwork:(NSString *)viaNetwork
 {
-    NSString *nick = f.creator.nickname ? f.creator.nickname : @"reco";
+    NSString *nick = [self isRecommendedOverlayFor:f] ?  @"Recommended For You" : f.creator.nickname;
     NSString *baseString;
     if (f.typeOfFrame == FrameTypeLightWeight) {
         baseString = [NSString stringWithFormat:@"%@ liked this", f.creator.nickname];
