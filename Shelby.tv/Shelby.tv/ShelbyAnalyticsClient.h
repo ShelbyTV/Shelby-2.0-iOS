@@ -40,6 +40,8 @@ extern NSString * const kLocalyticsDidLaunchAfterUserPush;
 extern NSString * const kLocalyticsDidPreview;
 extern NSString * const kLocalyticsFollowUser;
 extern NSString * const kLocalyticsFollowingUser;
+extern NSString * const kLocalyticsTapAddChannelsInStream;
+extern NSString * const kLocalyticsTapConnectFacebookInStream;
 extern NSString * const kLocalyticsTapCardSharingUser;
 extern NSString * const kLocalyticsTapCardLikersList;
 extern NSString * const kLocalyticsTapLikerListLiker;
