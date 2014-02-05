@@ -27,6 +27,7 @@ extern NSString * const kAnalyticsScreenLikersList;
 
 // Localytics Constants
 extern NSString * const kLocalyticsWatchVideo;
+extern NSString * const kLocalyticsWatchVideo25pct;
 extern NSString * const kLocalyticsLikeVideo;
 extern NSString * const kLocalyticsShareComplete;
 extern NSString * const kLocalyticsEntranceStart;

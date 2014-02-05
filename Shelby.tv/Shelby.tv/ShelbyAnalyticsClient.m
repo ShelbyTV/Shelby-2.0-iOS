@@ -33,6 +33,7 @@ NSString * const kAnalyticsScreenLikersList                             = @"Like
 
 // Localytics Constants
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
+NSString * const kLocalyticsWatchVideo25pct                             = @"watch_25_pct";
 NSString * const kLocalyticsLikeVideo                                   = @"like";
 NSString * const kLocalyticsShareComplete                               = @"share_complete";
 NSString * const kLocalyticsEntranceStart                               = @"entrance_start";

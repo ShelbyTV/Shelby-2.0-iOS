@@ -29,6 +29,8 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 @property (nonatomic, strong) NSArray *nonplaybackActionViews;
 @property (nonatomic, weak) IBOutlet UIView *separator;
 @property (strong, nonatomic) UIActivityIndicatorView *shareActivityIndicator;
+
+@property (nonatomic, assign) BOOL hasSentWatched25Pct;
 @end
 
 @implementation VideoControlsViewController
@@ -37,11 +39,23 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _videoIsPlaying = NO;
-        _displayMode = VideoControlsDisplayDefault;
-        _currentlyScrubbing = NO;
+        [self commonInit];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self commonInit];
+}
+
+- (void)commonInit
+{
+    _videoIsPlaying = NO;
+    _displayMode = VideoControlsDisplayDefault;
+    _currentlyScrubbing = NO;
+    _hasSentWatched25Pct = NO;
 }
 
 - (void)viewDidLoad
@@ -272,6 +286,7 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
         
         [self resetVideoControlsToInitialConditions];
         [self updateViewForCurrentEntity];
+        [self resetPlaybackTimeBasedAnalytics];
     }
 }
 
@@ -460,6 +475,7 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
         self.controlsView.currentTimeLabel.text = [self prettyStringForTime:time];
         self.controlsView.durationLabel.text = [NSString stringWithFormat:@"-%@", [self prettyStringForTime:(CMTimeSubtract(self.duration, self.currentTime))]];
         [self updateScrubheadForCurrentTime];
+        [self sendPlaybackTimeBasedAnalytics];
     }
 }
 
@@ -608,6 +624,24 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     }
 
     return convertedTime;
+}
+
+#pragma mark - Playback Analytics
+
+- (void)sendPlaybackTimeBasedAnalytics
+{
+    if (!self.hasSentWatched25Pct && CMTIME_IS_VALID(self.currentTime) && CMTIME_IS_VALID(self.duration)) {
+        CGFloat pctWatched = (CMTimeGetSeconds(self.currentTime)/CMTimeGetSeconds(self.duration));
+        if (pctWatched > 0.25) {
+            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsWatchVideo25pct];
+            self.hasSentWatched25Pct = YES;
+        }
+    }
+}
+
+- (void)resetPlaybackTimeBasedAnalytics
+{
+    self.hasSentWatched25Pct = NO;
 }
 
 @end
