@@ -18,6 +18,7 @@ extern NSString * const kAnalyticsScreenWelcomeA4r;
 extern NSString * const kAnalyticsScreenWelcomeB;
 extern NSString * const kAnalyticsScreenLogin;
 extern NSString * const kAnalyticsScreenEntrance;
+extern NSString * const kAnalyticsScreenChannels;
 /* created dynamically: signup, browse, videoReel */
 extern NSString * const kAnalyticsScreenSettings;
 extern NSString * const kAnalyticsScreenShelbyShare;
@@ -40,6 +41,8 @@ extern NSString * const kLocalyticsDidLaunchAfterUserPush;
 extern NSString * const kLocalyticsDidPreview;
 extern NSString * const kLocalyticsFollowUser;
 extern NSString * const kLocalyticsFollowingUser;
+extern NSString * const kLocalyticsFollowChannel;
+extern NSString * const kLocalyticsUnfollowChannel;
 extern NSString * const kLocalyticsTapAddChannelsInStream;
 extern NSString * const kLocalyticsTapConnectFacebookInStream;
 extern NSString * const kLocalyticsTapCardSharingUser;

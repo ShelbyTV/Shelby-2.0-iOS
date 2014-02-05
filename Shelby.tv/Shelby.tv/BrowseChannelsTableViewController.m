@@ -51,11 +51,18 @@
     }];
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
     [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenChannels];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -136,6 +143,8 @@
 
 - (void)doFollow:(DisplayChannel *)channelToFollow
 {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFollowChannel];
+    
     [[ShelbyDataMediator sharedInstance] followRoll:channelToFollow.roll.rollID];
     //fire and forget (although actual request will update this correctly)
     [self.currentUser didFollowRoll:channelToFollow.roll.rollID];
@@ -145,6 +154,8 @@
 
 - (void)doUnfollow:(DisplayChannel *)channelToUnfollow
 {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsUnfollowChannel];
+    
     [[ShelbyDataMediator sharedInstance] unfollowRoll:channelToUnfollow.roll.rollID];
     //fire and forget (although actual request will update this correctly)
     [self.currentUser didUnfollowRoll:channelToUnfollow.roll.rollID];

@@ -24,6 +24,7 @@ NSString * const kAnalyticsScreenWelcomeA4r                             = @"Welc
 NSString * const kAnalyticsScreenWelcomeB                               = @"Welcome B";
 NSString * const kAnalyticsScreenLogin                                  = @"Login";
 NSString * const kAnalyticsScreenEntrance                               = @"Entrance";
+NSString * const kAnalyticsScreenChannels                               = @"Channels";
 /* created dynamically: signup, browse, videoReel */
 NSString * const kAnalyticsScreenSettings                               = @"Settings";
 NSString * const kAnalyticsScreenShelbyShare                            = @"Shelby Share";
@@ -46,6 +47,8 @@ NSString * const kLocalyticsDidLaunchAfterUserPush                      = @"open
 NSString * const kLocalyticsDidPreview                                  = @"did_preview";
 NSString * const kLocalyticsFollowUser                                  = @"did_follow";
 NSString * const kLocalyticsFollowingUser                               = @"did_unfollow";
+NSString * const kLocalyticsFollowChannel                               = @"did_follow_channel";
+NSString * const kLocalyticsUnfollowChannel                             = @"did_unfollow_channel";
 NSString * const kLocalyticsTapAddChannelsInStream                      = @"tap_add_channels_in_stream";
 NSString * const kLocalyticsTapConnectFacebookInStream                  = @"tap_connect_facebook_in_stream";
 NSString * const kLocalyticsTapCardSharingUser                          = @"view_sharer_profile";
