@@ -485,35 +485,24 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 #pragma mark - Video Preload Strategery
 
-/* --Performance testing notes--
- * TEST: DS, ipad Mini 1 w/ SPVideoReelPreloadNextOnly, 5/9/13
- * NB:   NSZombieEnabled=YES -- so this test is more of a worst-case scenario
- * RESULT:
- *  Received occasional memory warning when returning to browse view from video reel,
- *  but generally it ran very well.
- *
- */
 - (void)setupVideoPreloadStrategy
 {
     if (preloadStrategy == SPVideoReelPreloadStrategyNotSet) {
-//        if (DEVICE_IPAD) {
-//            if ([[UIScreen mainScreen] isRetinaDisplay]) {
-//                //TODO: determine best preload strategy for iPad Retina
-//                preloadStrategy = SPVideoReelPreloadNextThreeKeepPrevious;
-//                DLog(@"Preload strategy: next 3, keep previous");
-//            } else if ([DeviceUtilities isIpadMini1]) {
-//                preloadStrategy = SPVideoReelPreloadNextOnly;
-//                DLog(@"Preload strategy: next only");
-//            } else {
-//                //TODO: determine best preload strategy for iPad2,3
-//                preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
-//                DLog(@"Preload strategy: next 1, keep previous");
-//            }
-//        } else {
-            //TODO: determine best preload strategy for array of iPhones
-        preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
-        DLog(@"iPhone Preload strategy: next 1, keep previous");
-//        }
+        if (DEVICE_IPAD) {
+            if ([[UIScreen mainScreen] isRetinaDisplay]) {
+                preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
+                DLog(@"iPad Retina Preload strategy: next + current + previous");
+            } else if ([DeviceUtilities isIpadMini1]) {
+                preloadStrategy = SPVideoReelPreloadNone;
+                DLog(@"iPad mini Preload strategy: none");
+            } else {
+                preloadStrategy = SPVideoReelPreloadNone;
+                DLog(@"iPad 2,3 Preload strategy: none");
+            }
+        } else {
+            preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
+            DLog(@"iPhone Preload strategy: next + current + previous");
+        }
     }
 }
 
