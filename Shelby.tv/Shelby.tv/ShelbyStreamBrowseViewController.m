@@ -243,7 +243,8 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
                                                                     intoDeduped:self.deduplicatedEntries
                                                                       didInsert:&indexPathsForInsert
                                                                       didDelete:&indexPathsForDelete
-                                                                      didUpdate:&indexPathsForReload];
+                                                                      didUpdate:&indexPathsForReload
+                                                                      inSection:0];
 
         // The index paths returned by DeduplicationUtility are relative to the original array.
         // So we group them within performBatchUpdates:

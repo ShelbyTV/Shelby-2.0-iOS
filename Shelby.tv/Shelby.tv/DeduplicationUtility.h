@@ -33,6 +33,7 @@
                             intoDeduped:(NSArray *)dedupedBaseEntries
                               didInsert:(NSArray **)insertedIndexPaths
                               didDelete:(NSArray **)deletedIndexPaths
-                              didUpdate:(NSArray **)updatedIndexPaths;
+                              didUpdate:(NSArray **)updatedIndexPaths
+                              inSection:(NSUInteger)sectionForIndexPath;
 
 @end
