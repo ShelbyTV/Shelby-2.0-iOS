@@ -52,12 +52,14 @@ extern NSString * const kLocalyticsTapCardLike;
 extern NSString * const kLocalyticsTapCardUnlike;
 extern NSString * const kLocalyticsTapCardPlay;
 extern NSString * const kLocalyticsTapLikerListLiker;
+extern NSString * const kLocalyticsTapTopNavSignup;
 extern NSString * const kLocalyticsTapPlayerControlsPlay;
 extern NSString * const kLocalyticsTapPlayerControlsLike;
 extern NSString * const kLocalyticsTapPlayerControlsUnlike;
 extern NSString * const kLocalyticsTapPlayerControlsExpand;
 extern NSString * const kLocalyticsTapPlayerControlsContract;
 extern NSString * const kLocalyticsTapUserProfileFromNotificationView;
+extern NSString * const kLocalyticsTapUserProfileSignup;
 extern NSString * const kLocalyticsTapVideoFromNotificationView;
 extern NSString * const kLocalyticsTapVideoPlayerOverlayPlay;
 

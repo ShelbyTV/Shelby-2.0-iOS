@@ -58,12 +58,14 @@ NSString * const kLocalyticsTapCardLike                                 = @"tap_
 NSString * const kLocalyticsTapCardUnlike                               = @"tap_card_unlike";
 NSString * const kLocalyticsTapCardPlay                                 = @"tap_card_play";
 NSString * const kLocalyticsTapLikerListLiker                           = @"view_liker";
+NSString * const kLocalyticsTapTopNavSignup                             = @"tap_top_nav_signup";
 NSString * const kLocalyticsTapPlayerControlsPlay                       = @"tap_player_controls_play";
 NSString * const kLocalyticsTapPlayerControlsLike                       = @"tap_player_controls_like";
 NSString * const kLocalyticsTapPlayerControlsUnlike                     = @"tap_player_controls_unlike";
 NSString * const kLocalyticsTapPlayerControlsExpand                     = @"tap_player_controls_expand";
 NSString * const kLocalyticsTapPlayerControlsContract                   = @"tap_player_controls_contract";
 NSString * const kLocalyticsTapUserProfileFromNotificationView          = @"view_profile_notification";
+NSString * const kLocalyticsTapUserProfileSignup                        = @"tap_user_profile_signup";
 NSString * const kLocalyticsTapVideoFromNotificationView                = @"view_video_notification";
 NSString * const kLocalyticsTapVideoPlayerOverlayPlay                   = @"tap_video_player_overlay_play";
 
