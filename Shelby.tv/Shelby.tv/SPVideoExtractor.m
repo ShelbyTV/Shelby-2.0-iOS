@@ -17,7 +17,6 @@
 //non web-view extractions
 @property (nonatomic, strong) STVVimeoExtractor *stvVimeoExtractor;
 @property (nonatomic, strong) STVYouTubeExtractor *stvYTExtractor;
-@property (nonatomic, strong) LBYouTubeExtractor *ytExtractor;
 @property (nonatomic, strong) YTVimeoExtractor *vimeoExtractor;
 //web-view extractions
 @property (nonatomic) UIWebView *webView;
@@ -45,7 +44,7 @@ NSString * const kSPVideoExtractorVideoKey = @"video";
 NSString * const kSPVideoExtractorBlockKey = @"block";
 //extraction caching
 NSString * const kSPVideoExtractorVideoObjectIDKey = @"videoObjectID";
-NSString * const kSPVideoExtractorExtractedURLStringKey = @"extractedURLString";
+NSString * const kSPVideoExtractorExtractedURLArrayKey = @"extractedURLArray";
 NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 #define EXTRACTED_URL_TTL_S -300 //URLs are valid for 300s (5m)
 
@@ -75,7 +74,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 #pragma mark - Public Methods
 
-- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue
+- (void)URLsForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue
 {
     STVAssert(completionBlock, @"urlForVideo expects an extraction block");
     STVAssert(video, @"urlForVideo expects a video");
@@ -84,10 +83,10 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     }
 
     @synchronized(self){
-        NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
-        if(alreadyExtractedURL){
+        NSArray *alreadyExtractedURLs = [self getCachedURLsForVideo:video];
+        if(alreadyExtractedURLs){
             if(completionBlock){
-                completionBlock(alreadyExtractedURL, nil);
+                completionBlock(alreadyExtractedURLs, nil);
             }
         } else {
             NSDictionary *extractionDict = @{kSPVideoExtractorVideoKey: video,
@@ -212,12 +211,12 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
             Video *video = self.currentlyExtracting[kSPVideoExtractorVideoKey];
             STVAssert(video, @"expected valid job w/ video");
             
-            NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
-            if(alreadyExtractedURL){
+            NSArray *alreadyExtractedURLs = [self getCachedURLsForVideo:video];
+            if(alreadyExtractedURLs){
                 //already extracted while it was waiting
                 extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
                 if(completionBlock){
-                    completionBlock(alreadyExtractedURL, nil);
+                    completionBlock(alreadyExtractedURLs, nil);
                 }
                 self.currentlyExtracting = nil;
                 [self scheduleNextExtraction];
@@ -237,9 +236,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
                 //perform actual extraction
                 if ([video.providerName isEqualToString:@"youtube"]) {
-                    //the LBYouTube extractor parses a regular webpage, which seems to work better for more videos
-                    //so we just fall back to the STVYouTubeExtractor when LB fails
-                    [self lbYouTube:video];
+                    [self stvYouTube:video];
                     
                 } else if ([video.providerName isEqualToString:@"vimeo"]) {
                     //the YTVimeoExtractor has stopped working.
@@ -322,13 +319,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     self.stvYTExtractor = nil;
 }
 
-- (void)destroyYTExtractor
-{
-    [self.ytExtractor stopExtracting];
-    self.ytExtractor.delegate = nil;
-    self.ytExtractor = nil;
-}
-
 - (void)destroyVimeoExtractor
 {
     //has no cancel
@@ -348,18 +338,15 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 - (void)stvYouTube:(Video *)video
 {
     STVAssert(video, @"must have a video to extract");
-    //TODO - set Quality based on device (iPad vs iPhone)
-    self.stvYTExtractor = [[STVYouTubeExtractor alloc] initWithID:video.providerID quality:STVYouTubeVideoQualityMedium];
+    STVYouTubeVideoQuality quality;
+    if (DEVICE_IPAD) {
+        quality = STVYouTubeVideoQualityHD720;
+    } else {
+        quality = STVYouTubeVideoQualityMedium;
+    }
+    self.stvYTExtractor = [[STVYouTubeExtractor alloc] initWithID:video.providerID quality:quality];
     self.stvYTExtractor.delegate = self;
     [self.stvYTExtractor startExtracting];
-}
-
-- (void)lbYouTube:(Video *)video
-{
-    //TODO - set Quality based on device (iPad vs iPhone)
-    self.ytExtractor = [[LBYouTubeExtractor alloc] initWithID:video.providerID quality:LBYouTubeVideoQualityLarge];
-    self.ytExtractor.delegate = self;
-    [self.ytExtractor startExtracting];
 }
 
 - (void)ytVimeo:(Video *)video
@@ -417,7 +404,8 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)stvVimeoExtractor:(STVVimeoExtractor *)extractor didSuccessfullyExtractVimeoURL:(NSURL *)videoURL
 {
-    [self processExtractedURL:videoURL];
+    NSParameterAssert(videoURL);
+    [self processExtractedURLs:@[videoURL]];
 }
 
 - (void)stvVimeoExtractor:(STVVimeoExtractor *)extractor failedExtractingVimeoURLWithError:(NSError *)error
@@ -427,9 +415,9 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 #pragma mark - STVYouTubeExtractorDelegate
 
-- (void)stvYouTubeExtractor:(STVYouTubeExtractor *)extractor didSuccessfullyExtractYouTubeURL:(NSURL *)videoURL
+- (void)stvYouTubeExtractor:(STVYouTubeExtractor *)extractor didSuccessfullyExtractYouTubeURLs:(NSArray *)videoURLsArray
 {
-    [self processExtractedURL:videoURL];
+    [self processExtractedURLs:videoURLsArray];
 }
 
 - (void)stvYouTubeExtractor:(STVYouTubeExtractor *)extractor failedExtractingYouTubeURLWithError:(NSError *)error
@@ -437,35 +425,11 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     [self processFailedExtractionWithError:error];
 }
 
-#pragma mark - LBYouTubeExtractorDelegate
-
-- (void)youTubeExtractor:(LBYouTubeExtractor *)extractor didSuccessfullyExtractYouTubeURL:(NSURL *)videoURL
-{
-    if (videoURL) {
-        [self processExtractedURL:videoURL];
-    } else {
-        [self youTubeExtractor:extractor failedExtractingYouTubeURLWithError:nil];
-    }
-
-}
-
-- (void)youTubeExtractor:(LBYouTubeExtractor *)extractor failedExtractingYouTubeURLWithError:(NSError *)error
-{
-    //falling back to our extractor
-    @synchronized(self) {
-        STVAssert(self.currentlyExtracting[kSPVideoExtractorVideoKey], @"expected currently extracting to have video, but it looks like %@", self.currentlyExtracting);
-        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
-                                              action:kAnalyticsIssueYTExtractionFallback
-                                               nicknameAsLabel:YES];
-        [self destroyCurrentExtractor];
-        [self stvYouTube:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
-    }
-}
-
 #pragma mark - Vimeo Extraction Results
 - (void)vimeoExtractor:(YTVimeoExtractor *)extractor didSuccessfullyExtractVimeoURL:(NSURL *)videoURL
 {
-    [self processExtractedURL:videoURL];
+    NSParameterAssert(videoURL);
+    [self processExtractedURLs:@[videoURL]];
 }
 
 - (void)vimeoExtractor:(YTVimeoExtractor *)extractor failedExtractingVimeoURLWithError:(NSError *)error
@@ -475,7 +439,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 #pragma mark - Helpers for All Extractor
 
-- (void)processExtractedURL:(NSURL *)videoURL
+- (void)processExtractedURLs:(NSArray *)videoURLs
 {
     @synchronized(self) {
         if (!self.currentlyExtracting) {
@@ -484,12 +448,10 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         }
         STVDebugAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
 
-        NSString *extractedURL = [videoURL absoluteString];
-
-        [self cacheExtractedURL:extractedURL forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
+        [self cacheExtractedURLs:videoURLs forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
         extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
         if(completionBlock){
-            completionBlock(extractedURL, nil);
+            completionBlock(videoURLs, nil);
         }
         [self destroyCurrentExtractor];
         self.currentlyExtracting = nil;
@@ -526,7 +488,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 {
     [self destroySTVVimeoExtractor];
     [self destroySTVYTExtractor];
-    [self destroyYTExtractor];
     [self destroyVimeoExtractor];
 }
 
@@ -580,10 +541,10 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                     NSString *extractedURL = [value performSelector:pathSelector];
                     #pragma clang diagnostic pop
 
-                    [self cacheExtractedURL:extractedURL forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
+                    [self cacheExtractedURLs:@[extractedURL] forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
                     extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
                     if(completionBlock){
-                        completionBlock(extractedURL, nil);
+                        completionBlock(@[extractedURL], nil);
                     }
                     self.currentlyExtracting = nil;
 
@@ -631,7 +592,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 }
 
 #pragma mark - caching
-- (NSString *)getCachedURLForVideo:(Video *)video
+- (NSArray *)getCachedURLsForVideo:(Video *)video
 {
     if(self.extractedURLCache){
         NSDictionary *previousExtraction = self.extractedURLCache[video.objectID];
@@ -640,15 +601,15 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
             [self.extractedURLCache removeObjectForKey:video.objectID];
             return nil;
         } else {
-            return previousExtraction[kSPVideoExtractorExtractedURLStringKey];
+            return previousExtraction[kSPVideoExtractorExtractedURLArrayKey];
         }
     }
     return nil;
 }
 
-- (void)cacheExtractedURL:(NSString *)extractedURL forVideo:(Video *)video
+- (void)cacheExtractedURLs:(NSArray *)extractedURLs forVideo:(Video *)video
 {
-    self.extractedURLCache[video.objectID] = @{kSPVideoExtractorExtractedURLStringKey: extractedURL,
+    self.extractedURLCache[video.objectID] = @{kSPVideoExtractorExtractedURLArrayKey: extractedURLs,
                                                kSPVideoExtractorExtractedAtKey: [NSDate date]};
 }
 

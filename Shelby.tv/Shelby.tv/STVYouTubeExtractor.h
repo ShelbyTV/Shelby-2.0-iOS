@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, STVYouTubeVideoQuality){
 
 @protocol STVYouTubeExtractorDelegate <NSObject>
 
--(void)stvYouTubeExtractor:(STVYouTubeExtractor *)extractor didSuccessfullyExtractYouTubeURL:(NSURL *)videoURL;
+-(void)stvYouTubeExtractor:(STVYouTubeExtractor *)extractor didSuccessfullyExtractYouTubeURLs:(NSArray *)videoURLsArray;
 -(void)stvYouTubeExtractor:(STVYouTubeExtractor *)extractor failedExtractingYouTubeURLWithError:(NSError *)error;
 
 @end

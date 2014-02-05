@@ -7,7 +7,6 @@
 //
 // Extracts ONE video at a time.
 
-#import "LBYouTubeExtractor.h"
 #import "ShelbyVideoContainer.h"
 #import "STVVimeoExtractor.h"
 #import "STVYouTubeExtractor.h"
@@ -15,9 +14,9 @@
 
 @class Video;
 
-typedef void (^extraction_complete_block)(NSString *videoURL, NSError *error);
+typedef void (^extraction_complete_block)(NSArray *videoURLs, NSError *error);
 
-@interface SPVideoExtractor : NSObject <UIWebViewDelegate, LBYouTubeExtractorDelegate, YTVimeoExtractorDelegate, STVYouTubeExtractorDelegate, STVVimeoExtractorDelegate>
+@interface SPVideoExtractor : NSObject <UIWebViewDelegate, YTVimeoExtractorDelegate, STVYouTubeExtractorDelegate, STVVimeoExtractorDelegate>
 
 /// Singleton Methods
 + (SPVideoExtractor *)sharedInstance;
@@ -25,10 +24,10 @@ typedef void (^extraction_complete_block)(NSString *videoURL, NSError *error);
 //fails current extraction (if any) and removes all queued extractions.
 - (void)cancelAllExtractions;
 
-//uses cached URL unless cache is stale (ie. > 300s)
+//uses cached URLs unless cache is stale (ie. > 300s)
 //calls block with nil if extraction fails
 //high priority will jump the high priority queue
-- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue;
+- (void)URLsForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue;
 
 //tries to extract URL without a completion block, caching result
 //only queues processing if current queue length isn't too long

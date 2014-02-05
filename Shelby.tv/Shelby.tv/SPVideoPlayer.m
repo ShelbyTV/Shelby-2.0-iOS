@@ -44,6 +44,8 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 @property (assign, nonatomic) CMTime lastPlayheadPosition;
 @property (strong, nonatomic) id playerTimeObserver;
 
+//we may have multiple potential video URLs to try
+@property (strong, nonatomic) NSMutableArray *videoURLs;
 @end
 
 @implementation SPVideoPlayer
@@ -184,9 +186,18 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     } else {
         //This happens when an unplayable AVAsset is set on the player
         //it gets removed and replaced with NSNull
-        self.isPlayable = NO;
-        if (self.shouldAutoplay) {
-            [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
+        
+        //let's try another video URL (if we have one)
+        if ([self.videoURLs count] > 0) {
+            [self setupPlayerForURL:[self.videoURLs firstObject]];
+            [self.videoURLs removeObjectAtIndex:0];
+            
+        } else {
+            //fail
+            self.isPlayable = NO;
+            if (self.shouldAutoplay) {
+                [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
+            }
         }
     }
 }
@@ -302,7 +313,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     [self videoLoadingIndicatorShouldAnimate:YES];
     
     //no retain cycle b/c the block's owner (SPVideoExtractor) is not self
-    [[SPVideoExtractor sharedInstance] URLForVideo:self.videoFrame.video usingBlock:^(NSString *videoURL, NSError *error) {
+    [[SPVideoExtractor sharedInstance] URLsForVideo:self.videoFrame.video usingBlock:^(NSArray *videoURLs, NSError *error) {
         if (!self.canBecomePlayable) {
             //Zombie discussion
             // This video player was reset (and observers removed) while we were waiting
@@ -312,9 +323,13 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
             return;
         }
         
-        if (videoURL) {
+        if (videoURLs && [videoURLs count] > 0) {
             BOOL hadExistingPlayer = (self.player != nil);
-            [self setupPlayerForURL:[NSURL URLWithString:videoURL]];
+            
+            self.videoURLs = [videoURLs mutableCopy];
+            [self setupPlayerForURL:[videoURLs firstObject]];
+            [self.videoURLs removeObjectAtIndex:0];
+            
             if (hadExistingPlayer) {
                 //don't play until async item replacement happens, see -[playerItemReplaced]
             } else {

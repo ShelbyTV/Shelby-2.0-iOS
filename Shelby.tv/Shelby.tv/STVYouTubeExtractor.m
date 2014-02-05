@@ -7,10 +7,9 @@
 //
 
 #import "STVYouTubeExtractor.h"
+#import <AVFoundation/AVFoundation.h>
 #import "AFNetworking.h"
 #import "ShelbyAnalyticsClient.h"
-
-static NSString* const kUserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3";
 
 static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video_info";
 static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
@@ -29,6 +28,8 @@ static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
 @property (nonatomic, strong) NSURL* extractedURL;
 @property (nonatomic) STVYouTubeVideoQuality quality;
 
+@property (nonatomic, strong) NSMutableArray *elValues;
+
 @end
 
 @implementation STVYouTubeExtractor
@@ -46,9 +47,10 @@ static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
             case STVYouTubeVideoQualityHD1080:
                 STVAssert(NO, @"HD1080 isn't returned reliably");
                 _qualityString = @"hd1080";
+                break;
             case STVYouTubeVideoQualityHD720:
-                STVAssert(NO, @"HD720 isn't returned reliably");
                 _qualityString = @"hd720";
+                break;
             case STVYouTubeVideoQualityLarge:
                 STVAssert(NO, @"Large isn't returned reliably");
                 _qualityString = @"large";
@@ -62,28 +64,36 @@ static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
         _streamMaps = [@[] mutableCopy];
         _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kYouTubeRequestURL]];
         [_httpClient setDefaultHeader:@"referer" value:[NSString stringWithFormat:kRefererURL, _videoID]];
+        
+        //cycle these values to improve odds of extracing URL for different types of video
+        _elValues = [@[@"embedded", @"detailpage", @"vevo", @""] mutableCopy];
     }
     return self;
 }
 
 - (void)startExtracting
 {
-    //these are the query params YouTube mobile (iPhone) pages send as of 8/5/2013
-    NSDictionary *queryParams = @{@"html5": @"1",
-                                  @"video_id": _videoID,
-                                  @"cpn": [self generateCPN],
-                                  @"eurl": @"unknown",
-                                  @"ps": @"native",
-                                  @"el": @"embedded",
-                                  @"hl": @"en_US",
-                                  @"sts": @"15917",
-                                  //this width and height seem to work okay... but...
-                                  //we get back a bunch of medium/small quality videos
-                                  //not sure how to get large yet :-/
-                                  @"width": @"640", //iphone5: @"640", //phad: @"1536"
-                                  @"height": @"959",//iphone5: @"1136", //ipad: @"2048"
-                                  @"c": @"web",
-                                  @"cver": @"html5"};
+    if ([self.elValues count] == 0) {
+        //no more to try, fail
+        if (_isCancelled) {
+            return;
+        }
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueSTVExtractorFail
+                                               label:@"Exhausted elValues; No valid streams."];
+        [self.delegate stvYouTubeExtractor:self failedExtractingYouTubeURLWithError:nil];
+    }
+    
+    //smaller set of params seems to work just as well
+    //check blame on this line to go back in time and view more params
+    NSDictionary *queryParams = @{@"video_id": _videoID,
+                                  @"el": [self.elValues firstObject],
+                                  @"ps": @"default",
+                                  @"eurl": @"",
+                                  @"gl": @"US",
+                                  @"hl": @"en_US"};
+    [self.elValues removeObjectAtIndex:0];
+    
     NSURLRequest *req = [_httpClient requestWithMethod:@"GET"
                                                   path:nil
                                             parameters:queryParams];
@@ -96,15 +106,23 @@ static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
         NSString *rawString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
 
         if (rawString && [self createStreamMapsFromResponse:rawString]) {
-            NSURL *urlFound = [self playbackURLForCurrentSettings];
-            if (urlFound) {
-                [self.delegate stvYouTubeExtractor:self didSuccessfullyExtractYouTubeURL:urlFound];
+            NSArray *urlsFound = [self playbackURLsForCurrentSettings];
+            if (urlsFound) {
+                [self.delegate stvYouTubeExtractor:self didSuccessfullyExtractYouTubeURLs:urlsFound];
+                
+            } else if ([self.elValues count] > 0 && !_isCancelled) {
+                [self startExtracting];
+                
             } else {
                 [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
                                                       action:kAnalyticsIssueSTVExtractorFail
                                                        label:[NSString stringWithFormat:@"url not found, raw string: %@", rawString]];
                 [self.delegate stvYouTubeExtractor:self failedExtractingYouTubeURLWithError:nil];
             }
+            
+        } else if ([self.elValues count] > 0 && !_isCancelled) {
+            [self startExtracting];
+            
         } else {
             [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
                                                   action:kAnalyticsIssueSTVExtractorFail
@@ -116,10 +134,15 @@ static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
         if (_isCancelled) {
             return;
         }
-        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
-                                              action:kAnalyticsIssueSTVExtractorFail
-                                               label:[NSString stringWithFormat:@"Network op fail, error: %@", error]];
-        [self.delegate stvYouTubeExtractor:self failedExtractingYouTubeURLWithError:error];
+        if ([self.elValues count] > 0) {
+            [self startExtracting];
+            
+        } else {
+            [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                                  action:kAnalyticsIssueSTVExtractorFail
+                                                   label:[NSString stringWithFormat:@"Network op fail, error: %@", error]];
+            [self.delegate stvYouTubeExtractor:self failedExtractingYouTubeURLWithError:error];
+        }
     }];
     [op start];
 }
@@ -171,28 +194,28 @@ static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
     return YES;
 }
 
-- (NSURL *)playbackURLForCurrentSettings
+- (NSArray *)playbackURLsForCurrentSettings
 {
     if (!_streamMaps) {
         return nil;
     }
-    NSString *possibleUrl;
+    
+    NSMutableArray *orderedURLs = [NSMutableArray new];
 
     for (NSDictionary *streamMap in _streamMaps) {
-        if (streamMap[@"url"] && streamMap[@"sig"] && streamMap[@"type"] && [streamMap[@"type"] rangeOfString:@"mp4"].location != NSNotFound ) {
-            possibleUrl = [NSString stringWithFormat:@"%@&signature=%@", streamMap[@"url"], streamMap[@"sig"]];
-            //we can play this back... is it the right quality?
+        BOOL isStereo3d = (streamMap[@"stereo3d"] && [streamMap[@"stereo3d"] isEqualToString:@"1"]);
+        if (streamMap[@"url"] && streamMap[@"sig"] && streamMap[@"type"] && [AVURLAsset isPlayableExtendedMIMEType:streamMap[@"type"]] && !isStereo3d) {
+            NSString *possibleUrl = [NSString stringWithFormat:@"%@&signature=%@", streamMap[@"url"], streamMap[@"sig"]];
+            //we can play this back... put it at head of line if it's the right quality
             if (streamMap[@"quality"] && [streamMap[@"quality"] isEqualToString:_qualityString]) {
-                return [NSURL URLWithString:possibleUrl];
+                [orderedURLs insertObject:[NSURL URLWithString:possibleUrl] atIndex:0];
+            } else {
+                [orderedURLs addObject:[NSURL URLWithString:possibleUrl]];
             }
         }
     }
 
-    //we didn't return the quality we wanted, return a fallback
-    if (possibleUrl) {
-        return [NSURL URLWithString:possibleUrl];
-    }
-    return nil;
+    return orderedURLs;
 }
 
 - (NSString *)urlDecode:(NSString *)urlEncoded
