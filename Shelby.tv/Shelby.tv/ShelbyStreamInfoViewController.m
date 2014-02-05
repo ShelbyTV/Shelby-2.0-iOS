@@ -419,6 +419,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         [tableView cellForRowAtIndexPath:indexPath].selected = NO;
     
     } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapVideoInStream];
         
         self.selectedRowIndexPath = indexPath;
         [self visualizeSelectedRow:indexPath];

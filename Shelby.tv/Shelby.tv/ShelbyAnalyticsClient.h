@@ -50,6 +50,7 @@ extern NSString * const kLocalyticsTapCardLikersList;
 extern NSString * const kLocalyticsTapLikerListLiker;
 extern NSString * const kLocalyticsTapUserProfileFromNotificationView;
 extern NSString * const kLocalyticsTapVideoFromNotificationView;
+extern NSString * const kLocalyticsTapVideoInStream;
 
 // Google Analytics Constants
 //--Welcome--

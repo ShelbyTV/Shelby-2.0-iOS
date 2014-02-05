@@ -56,6 +56,7 @@ NSString * const kLocalyticsTapCardLikersList                           = @"view
 NSString * const kLocalyticsTapLikerListLiker                           = @"view_liker";
 NSString * const kLocalyticsTapUserProfileFromNotificationView          = @"view_profile_notification";
 NSString * const kLocalyticsTapVideoFromNotificationView                = @"view_video_notification";
+NSString * const kLocalyticsTapVideoInStream                            = @"tap_video_in_stream";
 
 // Google Analytics Constants
 //--Welcome--
