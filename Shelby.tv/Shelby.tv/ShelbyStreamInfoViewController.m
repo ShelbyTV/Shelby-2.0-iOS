@@ -490,7 +490,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 {
     self.shareController = [[SPShareController alloc] initWithVideoFrame:videoFrame
                                                       fromViewController:self
-                                                                  atRect:CGRectZero];
+                                                                  atRect:self.entriesTable.frame];
     [self.shareController shareWithCompletionHandler:^(BOOL completed) {
         self.shareController = nil;
     }];

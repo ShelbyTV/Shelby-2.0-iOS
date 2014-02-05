@@ -36,7 +36,7 @@ typedef void(^SPShareCompletionHandler)(BOOL completed);
 - (BOOL)toggleSocialFacebookButton:(BOOL)facebook selected:(BOOL)selected;
 
 - (void)shelbyShareWithMessage:(NSString *)message withFacebook:(BOOL)shareOnFacebook andWithTwitter:(BOOL)shareOnTwitter;
-- (void)nativeShareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link fromViewController:(UIViewController *)viewController;
+- (void)nativeShareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link fromViewController:(UIViewController *)viewController inRect:(CGRect)positionFrame;
 
 // Executes the completions handler.  Call when all is said and done.
 - (void)shareComplete:(BOOL)didComplete;

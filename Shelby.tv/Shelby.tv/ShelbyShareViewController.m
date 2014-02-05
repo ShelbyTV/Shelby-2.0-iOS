@@ -217,7 +217,8 @@
                                                object:nil];
     
     [self.message resignFirstResponder];
-    [self.shareController nativeShareWithFrame:self.frame message:self.videoTitle.text andLink:self.link fromViewController:self];
+    
+    [self.shareController nativeShareWithFrame:self.frame message:self.videoTitle.text andLink:self.link fromViewController:self inRect:((UIButton *)sender).frame];
 }
 
 - (void)iosNativeShareDone

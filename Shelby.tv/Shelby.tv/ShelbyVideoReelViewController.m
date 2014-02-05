@@ -378,7 +378,7 @@
 {
     self.shareController = [[SPShareController alloc] initWithVideoFrame:[Frame frameForEntity:vcvc.currentEntity]
                                                       fromViewController:self
-                                                                  atRect:CGRectZero];
+                                                                  atRect:CGRectMake(515, 700, 60, 60)]; // From where Share button should be
     [self.shareController shareWithCompletionHandler:^(BOOL completed) {
         self.shareController = nil;
     }];
