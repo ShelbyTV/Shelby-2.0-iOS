@@ -102,8 +102,10 @@
         self.description.text = captionText;
         NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
         
+        NSInteger rand = arc4random() % 3;
+        NSString *noThumbImageName = [NSString stringWithFormat:@"video-no-thumb-%d", rand];
         __weak ShelbyStreamEntryCell *weakSelf = self;
-        [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:[UIImage imageNamed:noThumbImageName] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             weakSelf.videoThumbnail.image = image;
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
             
