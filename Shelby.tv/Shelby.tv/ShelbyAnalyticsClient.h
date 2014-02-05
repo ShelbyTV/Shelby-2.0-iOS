@@ -17,6 +17,7 @@ extern NSString * const kAnalyticsScreenWelcomeA4l;
 extern NSString * const kAnalyticsScreenWelcomeA4r;
 extern NSString * const kAnalyticsScreenWelcomeB;
 extern NSString * const kAnalyticsScreenLogin;
+extern NSString * const kAnalyticsScreenEntrance;
 /* created dynamically: signup, browse, videoReel */
 extern NSString * const kAnalyticsScreenSettings;
 extern NSString * const kAnalyticsScreenShelbyShare;
@@ -27,6 +28,9 @@ extern NSString * const kAnalyticsScreenLikersList;
 extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsLikeVideo;
 extern NSString * const kLocalyticsShareComplete;
+extern NSString * const kLocalyticsEntranceStart;
+extern NSString * const kLocalyticsEntranceUserTapGetStarted;
+extern NSString * const kLocalyticsEntranceUserTapLogin;
 extern NSString * const kLocalyticsWelcomeStart;
 extern NSString * const kLocalyticsStartSignup;
 extern NSString * const kLocalyticsFinishSignup;

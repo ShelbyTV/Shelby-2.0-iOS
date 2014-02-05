@@ -23,6 +23,7 @@ NSString * const kAnalyticsScreenWelcomeA4l                             = @"Welc
 NSString * const kAnalyticsScreenWelcomeA4r                             = @"Welcome A4-right";
 NSString * const kAnalyticsScreenWelcomeB                               = @"Welcome B";
 NSString * const kAnalyticsScreenLogin                                  = @"Login";
+NSString * const kAnalyticsScreenEntrance                               = @"Entrance";
 /* created dynamically: signup, browse, videoReel */
 NSString * const kAnalyticsScreenSettings                               = @"Settings";
 NSString * const kAnalyticsScreenShelbyShare                            = @"Shelby Share";
@@ -33,6 +34,9 @@ NSString * const kAnalyticsScreenLikersList                             = @"Like
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
 NSString * const kLocalyticsLikeVideo                                   = @"like";
 NSString * const kLocalyticsShareComplete                               = @"share_complete";
+NSString * const kLocalyticsEntranceStart                               = @"entrance_start";
+NSString * const kLocalyticsEntranceUserTapGetStarted                   = @"entrance_get_started";
+NSString * const kLocalyticsEntranceUserTapLogin                        = @"entrance_login";
 NSString * const kLocalyticsWelcomeStart                                = @"welcome_start";
 NSString * const kLocalyticsStartSignup                                 = @"start_signup";
 NSString * const kLocalyticsFinishSignup                                = @"finish_signup";

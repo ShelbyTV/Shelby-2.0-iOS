@@ -84,6 +84,9 @@
 {
     [super viewDidAppear:animated];
     
+    [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenEntrance];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEntranceStart];
+    
     [self setButtonsEnabled:YES];
     
     [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState) animations:^{
@@ -143,6 +146,8 @@
 #pragma mark - Target-Action
 
 - (IBAction)getStartedTapped:(id)sender {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEntranceUserTapGetStarted];
+    
     [self.getStartedSpinner startAnimating];
     [self setButtonsEnabled:NO];
     [[ShelbyDataMediator sharedInstance] createAnonymousUser];
@@ -150,6 +155,8 @@
 }
 
 - (IBAction)loginTapped:(id)sender {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEntranceUserTapLogin];
+    
     [self.brain presentUserLogin];
 }
 
