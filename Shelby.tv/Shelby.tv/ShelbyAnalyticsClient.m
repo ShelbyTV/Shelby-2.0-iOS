@@ -62,6 +62,7 @@ NSString * const kLocalyticsTapPlayerControlsContract                   = @"tap_
 NSString * const kLocalyticsTapUserProfileFromNotificationView          = @"view_profile_notification";
 NSString * const kLocalyticsTapVideoFromNotificationView                = @"view_video_notification";
 NSString * const kLocalyticsTapVideoInStream                            = @"tap_video_in_stream";
+NSString * const kLocalyticsTapVideoPlayerOverlayPlay                   = @"tap_video_player_overlay_play";
 
 // Google Analytics Constants
 //--Welcome--

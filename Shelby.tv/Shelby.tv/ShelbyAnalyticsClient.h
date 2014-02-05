@@ -56,6 +56,7 @@ extern NSString * const kLocalyticsTapPlayerControlsContract;
 extern NSString * const kLocalyticsTapUserProfileFromNotificationView;
 extern NSString * const kLocalyticsTapVideoFromNotificationView;
 extern NSString * const kLocalyticsTapVideoInStream;
+extern NSString * const kLocalyticsTapVideoPlayerOverlayPlay;
 
 // Google Analytics Constants
 //--Welcome--

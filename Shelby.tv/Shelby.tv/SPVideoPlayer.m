@@ -605,6 +605,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)thumbnailTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapVideoPlayerOverlayPlay];
     [self play];
 }
 
