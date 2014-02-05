@@ -40,6 +40,7 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     [self commonInit];
 }
 

@@ -69,6 +69,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     [self commonInit];
 }
 
