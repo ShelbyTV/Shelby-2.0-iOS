@@ -371,13 +371,15 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         
         ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         Frame *videoFrame = nil;
+        DashboardEntry *dbe = nil;
         if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
             videoFrame = ((DashboardEntry *)streamEntry).frame;
+            dbe = streamEntry;
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
             videoFrame = (Frame *)streamEntry;
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.videoFrame = videoFrame;
+        [cell setDashboardEntry:dbe andFrame:videoFrame];
         
         // Overwrite description in case of a recommended entry
         if (recommendedEntry) {

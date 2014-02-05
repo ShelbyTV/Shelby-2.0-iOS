@@ -13,6 +13,7 @@
 
 //KVO
 extern NSString * const kFramePathClientLikedAt;
+extern NSString * const kFramePathUpvoters;
 
 typedef NS_ENUM(NSInteger, FrameType){
     //traditional shares

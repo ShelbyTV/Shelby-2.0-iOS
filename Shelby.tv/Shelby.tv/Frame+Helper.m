@@ -25,6 +25,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
 
 //KVO
 NSString * const kFramePathClientLikedAt = @"clientLikedAt";
+NSString * const kFramePathUpvoters = @"upvoters";
 
 @implementation Frame (Helper)
 
