@@ -23,8 +23,15 @@
 @property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, weak) IBOutlet UILabel *detailNoLikersLabel;
 @property (nonatomic, weak) IBOutlet UIView *likersView;
+@property (nonatomic, weak) IBOutlet UIView *leftVerticalBorder;
+@property (nonatomic, weak) IBOutlet UIView *centerVerticalBorder;
+@property (nonatomic, weak) IBOutlet UIView *rightVerticalBorder;
 @property (nonatomic, weak) IBOutlet UIButton *likeButton;
 @property (nonatomic, weak) IBOutlet UIButton *unlikeButton;
+@property (nonatomic, weak) IBOutlet UIButton *fullWidthLikeButton;
+@property (nonatomic, weak) IBOutlet UIButton *fullWidthUnlikeButton;
+@property (nonatomic, weak) IBOutlet UIButton *fullWidthShareButton;
+@property (nonatomic, weak) IBOutlet UIView *fullWidthButtonsContainer;
 @property (nonatomic, weak) IBOutlet UIView *borderView;
 @property (nonatomic, strong) NSMutableArray *likerImageViews;
 @property (nonatomic, strong) NSMutableOrderedSet *likers;
@@ -210,16 +217,30 @@
     
     if ([self.likers count]) {
         self.detailNoLikersLabel.hidden = YES;
+        self.likersView.hidden = NO;
+        self.leftVerticalBorder.hidden = NO;
+        self.centerVerticalBorder.hidden = YES;
+        self.rightVerticalBorder.hidden = NO;
         for (NSUInteger i = 0; i < MIN([self.likers count], [self.likerImageViews count]); i++) {
             User *liker = self.likers[i];
             [((UIImageView *)self.likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"blank-avatar-small"]];
         }
+        self.fullWidthButtonsContainer.hidden = YES;
     } else if ([self.videoFrame.video.trackedLikerCount intValue]) {
         self.detailNoLikersLabel.hidden = NO;
+        self.likersView.hidden = NO;
+        self.leftVerticalBorder.hidden = NO;
+        self.centerVerticalBorder.hidden = YES;
+        self.rightVerticalBorder.hidden = NO;
         self.detailNoLikersLabel.text = @"See all who liked this...";
+        self.fullWidthButtonsContainer.hidden = YES;
     } else {
-        self.detailNoLikersLabel.hidden = NO;
-        self.detailNoLikersLabel.text = @"Be the first to like this!";
+        self.leftVerticalBorder.hidden = YES;
+        self.centerVerticalBorder.hidden = NO;
+        self.rightVerticalBorder.hidden = YES;
+        self.likersView.hidden = YES;
+        self.detailNoLikersLabel.hidden = YES;
+        self.fullWidthButtonsContainer.hidden = NO;
     }
 }
 
@@ -272,6 +293,8 @@
 - (void)updateViewForCurrentLikeStatus
 {
     BOOL isLiked = [self.videoFrame videoIsLiked];
+    self.fullWidthLikeButton.hidden = isLiked;
+    self.fullWidthUnlikeButton.hidden = !isLiked;
     self.likeButton.hidden = isLiked;
     self.unlikeButton.hidden = !isLiked;
 }
