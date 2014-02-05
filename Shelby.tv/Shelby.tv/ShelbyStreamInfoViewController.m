@@ -233,7 +233,10 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     if (visibleIndexPaths) {
         for (NSIndexPath *indexPath in visibleIndexPaths) {
             if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
-                [(id)[self.entriesTable cellForRowAtIndexPath:indexPath] deselectStreamEntry];
+                NSUInteger row = indexPath.row;
+                if ([self.deduplicatedEntries count] > row) {
+                    [(id)[self.entriesTable cellForRowAtIndexPath:indexPath] deselectStreamEntry];
+                }
             }
         }
     }
