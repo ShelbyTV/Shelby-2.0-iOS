@@ -406,12 +406,13 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.userEducationVC userHasBeenEducatedAndViewShouldHide:YES];
+    
     if (indexPath.section == SECTION_FOR_ADD_CHANNELS) {
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapAddChannelsInStream];
         BrowseChannelsTableViewController *channelsVC = [[UIStoryboard storyboardWithName:@"BrowseChannels" bundle:nil] instantiateInitialViewController];
         [self.navigationController pushViewController:channelsVC animated:YES];
         channelsVC.userEducationVC = [ShelbyUserEducationViewController newChannelsUserEducationViewController];
-        return;
         
     } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapConnectFacebookInStream];
@@ -426,8 +427,6 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         [self.videoReelVC playChannel:self.displayChannel
               withDeduplicatedEntries:self.deduplicatedEntries
                               atIndex:indexPath.row];
-        
-        [self.userEducationVC userHasBeenEducatedAndViewShouldHide:YES];
     }
 }
 
