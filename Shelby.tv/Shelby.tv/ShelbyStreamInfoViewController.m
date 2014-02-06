@@ -351,6 +351,8 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
             if ([dashboardEntry recommendedEntry]) {
                 cellIdentifier = kShelbyStreamEntryRecommendedCell;
                 recommendedEntry = YES;
+            } else if ([dashboardEntry.frame typeOfFrame] == FrameTypeLightWeight) {
+                  cellIdentifier = kShelbyStreamEntryLikeCell;
             }
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
             Frame *frameEntry = (Frame *)streamEntry;
@@ -448,6 +450,8 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
             DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
             if ([dashboardEntry recommendedEntry]) {
                 return 311.0;
+            }   else if ([dashboardEntry.frame typeOfFrame] == FrameTypeLightWeight) {
+                return 271.0;
             }
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
             Frame *frameEntry = (Frame *)streamEntry;
