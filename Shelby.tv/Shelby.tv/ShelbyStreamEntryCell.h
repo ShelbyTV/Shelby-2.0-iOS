@@ -20,6 +20,7 @@
 @interface ShelbyStreamEntryCell : UITableViewCell
 @property (nonatomic, weak) IBOutlet UILabel *description;
 @property (nonatomic, weak) id<ShelbyStreamEntryProtocol> delegate;
+@property (nonatomic, strong) User* currentUser;
 
 - (void)setDashboardEntry:(DashboardEntry *)dashboardEntry andFrame:(Frame *)videoFrame;
 

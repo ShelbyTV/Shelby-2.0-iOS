@@ -37,6 +37,7 @@ NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsColla
 NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
 @interface ShelbyStreamInfoViewController ()
+@property (nonatomic, strong) User *currentUser;
 @property (nonatomic, strong) NSArray *channelEntries;
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 @property (nonatomic, strong) id<ShelbyVideoContainer>currentlySelectedEntity;
@@ -144,15 +145,6 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
 }
 
-- (void)refreshSpecialCellStatus
-{
-    if (self.mayShowFollowChannels || self.mayShowConnectSocial) {
-        User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        self.followCount = currentUser ? [currentUser rollFollowingCountIgnoringOwnRolls:YES] : 0;
-        self.currentUserHasFacebookConnected = [currentUser isFacebookConnected];
-    }
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -212,6 +204,15 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     }
 
     self.currentlySelectedEntity = userInfo[kShelbyVideoReelEntityKey];
+}
+
+- (void)refreshSpecialCellStatus
+{
+    if (self.mayShowFollowChannels || self.mayShowConnectSocial) {
+        User *currentUser = self.currentUser;
+        self.followCount = currentUser ? [currentUser rollFollowingCountIgnoringOwnRolls:YES] : 0;
+        self.currentUserHasFacebookConnected = [currentUser isFacebookConnected];
+    }
 }
 
 - (void)setCurrentlySelectedEntity:(id<ShelbyVideoContainer>)currentlySelectedEntity
@@ -374,6 +375,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setDashboardEntry:dbe andFrame:videoFrame];
+        cell.currentUser = self.currentUser;
         
         // Overwrite description in case of a recommended entry
         if (recommendedEntry) {
@@ -641,6 +643,16 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     }
     
     return NO;
+}
+
+#pragma mark - Misc. Helpers
+
+- (User *)currentUser
+{
+    if (!_currentUser) {
+        _currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    }
+    return _currentUser;
 }
 
 @end
