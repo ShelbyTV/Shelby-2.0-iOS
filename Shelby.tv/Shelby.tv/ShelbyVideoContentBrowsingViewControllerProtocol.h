@@ -14,6 +14,7 @@ extern NSString * const kShelbyRequestToShowCurrentlyOnNotification;
 @protocol ShelbyVideoContentBrowsingViewControllerProtocol <NSObject>
 
 - (DisplayChannel *)displayChannel;
+- (NSArray *)singleVideoEntry;
 - (void)scrollCurrentlyPlayingIntoView;
 
 @end
