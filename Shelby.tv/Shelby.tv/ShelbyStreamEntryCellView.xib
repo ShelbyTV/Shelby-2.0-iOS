@@ -228,6 +228,7 @@
                 <outlet property="fullWidthLikeButton" destination="Xjs-VT-hlV" id="kIK-oy-JaH"/>
                 <outlet property="fullWidthShareButton" destination="UQD-hn-vmm" id="G65-pC-bCV"/>
                 <outlet property="fullWidthUnlikeButton" destination="93m-O9-3s1" id="tyg-ai-n0b"/>
+                <outlet property="imageBlockerView" destination="eFb-rC-V1O" id="LiB-KN-5XL"/>
                 <outlet property="leftVerticalBorder" destination="Wfm-yT-Ock" id="khY-7M-YBD"/>
                 <outlet property="likeButton" destination="RSh-DT-HOP" id="9qG-Gc-Xdd"/>
                 <outlet property="likersView" destination="cNL-GX-y23" id="2pZ-sx-If0"/>

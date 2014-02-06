@@ -377,6 +377,9 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setDashboardEntry:dbe andFrame:videoFrame];
         
+        if ([cellIdentifier isEqualToString:kShelbyStreamEntryCell]) {
+            [cell resizeCellAccordingToCaption];
+        }
         // Overwrite description in case of a recommended entry
         if (recommendedEntry) {
             DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
@@ -446,6 +449,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     
     } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
         id streamEntry = self.deduplicatedEntries[indexPath.row];
+        Frame *videoFrame = nil;
         if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
             DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
             if ([dashboardEntry recommendedEntry]) {
@@ -453,15 +457,23 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
             }   else if ([dashboardEntry.frame typeOfFrame] == FrameTypeLightWeight) {
                 return 271.0;
             }
+            videoFrame = dashboardEntry.frame;
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
             Frame *frameEntry = (Frame *)streamEntry;
             if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
                 return 271.0;
             }
+            videoFrame = frameEntry;
         }
-        //what is this for?
-        return 341.0;
-            
+        
+        NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
+        CGSize captionSize = [ShelbyStreamEntryCell sizeForCaptionWithText:captionText];
+        NSInteger delta = captionSize.height - kShelbyStreamEntryCaptionHeight;
+        if (delta > 0) {
+            delta = 0; // we only want to resize down cells.
+        }
+        
+        return 341.0 + delta;
     } else {
         STVAssert(NO, @"unaccoutned for section");
         return 0;

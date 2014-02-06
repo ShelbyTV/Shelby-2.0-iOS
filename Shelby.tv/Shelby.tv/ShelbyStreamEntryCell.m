@@ -15,6 +15,9 @@
 #import "Video.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define kShelbyStreamEntryCaptionMargin 0
+#define kShelbyStreamEntryCaptionWidth 227
+
 @interface ShelbyStreamEntryCell()
 //data model
 @property (nonatomic, strong) Frame *videoFrame;
@@ -41,6 +44,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *fullWidthShareButton;
 @property (nonatomic, weak) IBOutlet UIView *fullWidthButtonsContainer;
 @property (nonatomic, weak) IBOutlet UIView *borderView;
+@property (nonatomic, weak) IBOutlet UIView *imageBlockerView;
 @property (nonatomic, strong) NSMutableArray *likerImageViews;
 @property (nonatomic, strong) NSMutableOrderedSet *likers;
 
@@ -172,6 +176,33 @@
             self.username.text = nickname;
         }
     }
+}
+
+- (void)resizeCellAccordingToCaption
+{
+    NSInteger originalHeight = self.description.frame.size.height;
+    NSString *captionText = [self.videoFrame creatorsInitialCommentWithFallback:YES];
+    
+    CGSize resizedCaption = [ShelbyStreamEntryCell sizeForCaptionWithText:captionText];
+    
+    NSInteger delta = resizedCaption.height - originalHeight;
+    if (delta < 0) {
+        self.description.frame = CGRectMake(self.description.frame.origin.x, self.description.frame.origin.y, self.description.frame.size.width, originalHeight + delta);
+        self.bordersView.frame = CGRectMake(self.bordersView.frame.origin.x, self.bordersView.frame.origin.y + delta, self.bordersView.frame.size.width, self.bordersView.frame.size.height);
+        self.likersView.frame = CGRectMake(self.likersView.frame.origin.x, self.likersView.frame.origin.y + delta, self.likersView.frame.size.width, self.likersView.frame.size.height);
+        self.fullWidthButtonsContainer.frame = CGRectMake(self.fullWidthButtonsContainer.frame.origin.x, self.fullWidthButtonsContainer.frame.origin.y + delta, self.fullWidthButtonsContainer.frame.size.width, self.fullWidthButtonsContainer.frame.size.height);
+        self.unLikersView.frame = CGRectMake(self.unLikersView.frame.origin.x, self.unLikersView.frame.origin.y + delta, self.unLikersView.frame.size.width, self.unLikersView.frame.size.height);
+        self.borderView.frame = CGRectMake(self.borderView.frame.origin.x, self.borderView.frame.origin.y, self.borderView.frame.size.width, self.borderView.frame.size.height + delta);
+        self.imageBlockerView.frame = CGRectMake(self.imageBlockerView.frame.origin.x, self.imageBlockerView.frame.origin.y, self.imageBlockerView.frame.size.width, self.imageBlockerView.frame.size.height + delta);
+    }
+}
+
++ (CGSize)sizeForCaptionWithText:(NSString *)captionText
+{
+    CGSize maxCaptionSize = CGSizeMake(kShelbyStreamEntryCaptionWidth - kShelbyStreamEntryCaptionMargin * 2, kShelbyStreamEntryCaptionHeight - kShelbyStreamEntryCaptionMargin * 2);
+    CGFloat textBasedHeight = [captionText boundingRectWithSize:maxCaptionSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName : kShelbyBodyFont2} context:nil].size.height;
+    
+    return CGSizeMake(maxCaptionSize.width, ceil(textBasedHeight));
 }
 
 - (NSAttributedString *)nicknameAttributedString:(NSString *)username withText:(NSString *)text

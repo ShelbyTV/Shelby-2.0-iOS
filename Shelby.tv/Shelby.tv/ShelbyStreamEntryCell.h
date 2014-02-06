@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Frame.h"
 
+#define kShelbyStreamEntryCaptionHeight 55
+
 @protocol ShelbyStreamEntryProtocol <NSObject>
 - (void)shareVideoWasTappedForFrame:(Frame *)videoFrame;
 - (void)likeFrame:(Frame *)videoFrame;
@@ -25,4 +27,6 @@
 
 - (void)selectStreamEntry;
 - (void)deselectStreamEntry;
+- (void)resizeCellAccordingToCaption;
++ (CGSize)sizeForCaptionWithText:(NSString *)text;
 @end
