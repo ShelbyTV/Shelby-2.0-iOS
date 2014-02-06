@@ -10,79 +10,97 @@
             <rect key="frame" x="0.0" y="0.0" width="760" height="189"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disclosure - when a Fire Starts to Burn (Official Video)" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="550" translatesAutoresizingMaskIntoConstraints="NO" id="2cA-6t-2Mh" userLabel="video title label">
-                    <rect key="frame" x="20" y="40" width="550" height="68"/>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6i2-v5-YoQ" userLabel="holder">
+                    <rect key="frame" x="0.0" y="0.0" width="760" height="147"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="888" verticalCompressionResistancePriority="278" image="playback-overlay-background" translatesAutoresizingMaskIntoConstraints="NO" id="Zqb-9z-rZs" userLabel="background">
+                            <rect key="frame" x="0.0" y="0.0" width="760" height="768"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disclosure - when a Fire Starts to Burn (Official Video)" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="550" translatesAutoresizingMaskIntoConstraints="NO" id="2cA-6t-2Mh" userLabel="video title label">
+                            <rect key="frame" x="20" y="20" width="550" height="67"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="550" id="b3n-hP-Thv"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="28"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                            <size key="shadowOffset" width="-1" height="1"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playback-overlay-user" translatesAutoresizingMaskIntoConstraints="NO" id="Qkv-78-Th0" userLabel="user image">
+                            <rect key="frame" x="20" y="95" width="16" height="15"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="16" id="HuJ-0h-tBb"/>
+                                <constraint firstAttribute="height" constant="15" id="z1E-E2-BxG"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vm0-FH-7M0" userLabel="user label">
+                            <rect key="frame" x="44" y="94" width="102" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <attributedString key="attributedText">
+                                <fragment content="reece via Twitter">
+                                    <attributes>
+                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <size key="shadowOffset" width="-1" height="1"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playback-overlay-like" translatesAutoresizingMaskIntoConstraints="NO" id="Ze5-KF-gOR" userLabel="like image">
+                            <rect key="frame" x="21" y="118" width="14" height="12"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="12" id="SEd-Zy-kCp"/>
+                                <constraint firstAttribute="width" constant="14" id="nZs-AX-pHm"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vn6-tt-aQ3" userLabel="likes label">
+                            <rect key="frame" x="44" y="115" width="53" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <attributedString key="attributedText">
+                                <fragment content="10 Likes">
+                                    <attributes>
+                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                            <size key="shadowOffset" width="-1" height="1"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="550" id="b3n-hP-Thv"/>
+                        <constraint firstItem="Qkv-78-Th0" firstAttribute="centerX" secondItem="Ze5-KF-gOR" secondAttribute="centerX" id="4al-FX-uvu"/>
+                        <constraint firstItem="2cA-6t-2Mh" firstAttribute="top" secondItem="6i2-v5-YoQ" secondAttribute="top" constant="20" id="CZA-7S-pEe"/>
+                        <constraint firstItem="Qkv-78-Th0" firstAttribute="top" secondItem="2cA-6t-2Mh" secondAttribute="bottom" constant="8" id="IJ6-o8-xaI"/>
+                        <constraint firstItem="2cA-6t-2Mh" firstAttribute="leading" secondItem="6i2-v5-YoQ" secondAttribute="leading" constant="20" id="JlV-QY-g0b"/>
+                        <constraint firstItem="Zqb-9z-rZs" firstAttribute="top" secondItem="6i2-v5-YoQ" secondAttribute="top" id="KG1-b9-9ps"/>
+                        <constraint firstItem="vm0-FH-7M0" firstAttribute="leading" secondItem="Qkv-78-Th0" secondAttribute="trailing" constant="8" id="OBK-et-8ux"/>
+                        <constraint firstItem="2cA-6t-2Mh" firstAttribute="height" secondItem="6i2-v5-YoQ" secondAttribute="height" constant="-80" id="RSC-Ri-0uN"/>
+                        <constraint firstItem="vn6-tt-aQ3" firstAttribute="centerY" secondItem="Ze5-KF-gOR" secondAttribute="centerY" constant="-0.5" id="VaB-bx-3eL"/>
+                        <constraint firstItem="Ze5-KF-gOR" firstAttribute="top" secondItem="Qkv-78-Th0" secondAttribute="bottom" constant="8" id="W5e-OX-vpb"/>
+                        <constraint firstAttribute="trailing" secondItem="Zqb-9z-rZs" secondAttribute="trailing" id="Xhp-5G-Fta"/>
+                        <constraint firstItem="Qkv-78-Th0" firstAttribute="leading" secondItem="2cA-6t-2Mh" secondAttribute="leading" id="aeg-Pb-foK"/>
+                        <constraint firstItem="Zqb-9z-rZs" firstAttribute="leading" secondItem="6i2-v5-YoQ" secondAttribute="leading" id="glu-j1-i6Z"/>
+                        <constraint firstItem="Qkv-78-Th0" firstAttribute="centerY" secondItem="vm0-FH-7M0" secondAttribute="centerY" id="obR-Da-kJ5"/>
+                        <constraint firstItem="vn6-tt-aQ3" firstAttribute="leading" secondItem="Ze5-KF-gOR" secondAttribute="trailing" constant="9" id="tj1-80-OTn"/>
+                        <constraint firstItem="Zqb-9z-rZs" firstAttribute="height" secondItem="6i2-v5-YoQ" secondAttribute="height" priority="153" id="weB-uA-kII"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="28"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                    <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    <size key="shadowOffset" width="-1" height="1"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vm0-FH-7M0" userLabel="user label">
-                    <rect key="frame" x="43" y="128" width="103" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <attributedString key="attributedText">
-                        <fragment content="reece via Twitter">
-                            <attributes>
-                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                            </attributes>
-                        </fragment>
-                    </attributedString>
-                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    <size key="shadowOffset" width="-1" height="1"/>
-                </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playback-overlay-user" translatesAutoresizingMaskIntoConstraints="NO" id="Qkv-78-Th0" userLabel="user image">
-                    <rect key="frame" x="20" y="130" width="16" height="15"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="16" id="HuJ-0h-tBb"/>
-                        <constraint firstAttribute="height" constant="15" id="z1E-E2-BxG"/>
-                    </constraints>
-                </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vn6-tt-aQ3" userLabel="likes label">
-                    <rect key="frame" x="42" y="154" width="54" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <attributedString key="attributedText">
-                        <fragment content="10 Likes">
-                            <attributes>
-                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                            </attributes>
-                        </fragment>
-                    </attributedString>
-                    <nil key="highlightedColor"/>
-                    <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    <size key="shadowOffset" width="-1" height="1"/>
-                </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playback-overlay-like" translatesAutoresizingMaskIntoConstraints="NO" id="Ze5-KF-gOR" userLabel="like image">
-                    <rect key="frame" x="21" y="158" width="14" height="12"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="12" id="SEd-Zy-kCp"/>
-                        <constraint firstAttribute="width" constant="14" id="nZs-AX-pHm"/>
-                    </constraints>
-                </imageView>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="vm0-FH-7M0" firstAttribute="centerY" secondItem="Qkv-78-Th0" secondAttribute="centerY" id="63d-Pn-YP8"/>
-                <constraint firstItem="vn6-tt-aQ3" firstAttribute="top" secondItem="vm0-FH-7M0" secondAttribute="bottom" constant="8" id="NMc-ds-uho"/>
-                <constraint firstItem="vm0-FH-7M0" firstAttribute="leading" secondItem="2cA-6t-2Mh" secondAttribute="leading" constant="23" id="ZGT-SF-yzE"/>
-                <constraint firstItem="Ze5-KF-gOR" firstAttribute="centerY" secondItem="vn6-tt-aQ3" secondAttribute="centerY" constant="0.5" id="Zwn-Eo-T69"/>
-                <constraint firstItem="2cA-6t-2Mh" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="bws-zu-xJ5"/>
-                <constraint firstItem="vm0-FH-7M0" firstAttribute="leading" secondItem="Qkv-78-Th0" secondAttribute="trailing" constant="7" id="dHS-FP-MXe"/>
-                <constraint firstItem="vm0-FH-7M0" firstAttribute="top" secondItem="2cA-6t-2Mh" secondAttribute="bottom" constant="20" id="ggx-pp-xQr"/>
-                <constraint firstItem="2cA-6t-2Mh" firstAttribute="top" secondItem="1" secondAttribute="top" constant="40" id="n5F-h0-bAz"/>
-                <constraint firstItem="vm0-FH-7M0" firstAttribute="leading" secondItem="vn6-tt-aQ3" secondAttribute="leading" constant="1" id="rlf-by-hyO"/>
-                <constraint firstItem="vn6-tt-aQ3" firstAttribute="leading" secondItem="Ze5-KF-gOR" secondAttribute="trailing" constant="7" id="vgw-Pg-6yh"/>
+                <constraint firstItem="6i2-v5-YoQ" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="9Ta-yZ-m5i"/>
+                <constraint firstAttribute="trailing" secondItem="6i2-v5-YoQ" secondAttribute="trailing" id="dqc-Rd-s7e"/>
+                <constraint firstItem="6i2-v5-YoQ" firstAttribute="top" secondItem="1" secondAttribute="top" id="dy8-QA-T6K"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -96,6 +114,7 @@
         </view>
     </objects>
     <resources>
+        <image name="playback-overlay-background" width="704" height="768"/>
         <image name="playback-overlay-like" width="14" height="12"/>
         <image name="playback-overlay-user" width="16" height="15"/>
     </resources>
