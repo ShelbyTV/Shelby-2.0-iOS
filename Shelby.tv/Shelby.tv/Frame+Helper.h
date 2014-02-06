@@ -55,7 +55,9 @@ typedef NS_ENUM(NSInteger, FrameType){
 
 //Is this frame, or another with same video, on the likes roll
 //of the current user.  Or has it been offline liked.
-- (BOOL)videoIsLiked;
+- (BOOL)videoIsLikedBy:(User *)user;
+//this is slower, it needs to fetch current user
+- (BOOL)videoIsLikedByCurrentUser;
 
 // The fallback when shortlinking fails
 - (NSString *)longLink;

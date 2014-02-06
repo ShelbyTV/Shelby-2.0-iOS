@@ -317,7 +317,10 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 
 - (BOOL)hasLikedVideoOfFrame:(Frame *)frame
 {
-    return !![self likedFrameWithVideoOfFrame:frame];
+    //TODO: make even faster by caching IDs of likes?
+    return [Frame doesFrameWithVideoID:frame.video.videoID
+                     existOnRollWithID:self.publicRollID
+                             inContext:self.managedObjectContext];
 }
 
 - (Frame *)likedFrameWithVideoOfFrame:(Frame *)frame
