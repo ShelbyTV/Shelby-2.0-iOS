@@ -117,23 +117,13 @@
         self.videoTitle.text = self.videoFrame.video.title;
         NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
         self.description.text = captionText;
-        NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
         
-        NSInteger rand = arc4random() % 3;
-        NSString *noThumbImageName = [NSString stringWithFormat:@"video-no-thumb-%d", rand];
-        __weak ShelbyStreamEntryCell *weakSelf = self;
-        [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:[UIImage imageNamed:noThumbImageName] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            weakSelf.videoThumbnail.image = image;
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            
-        }];
+        NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
+        NSString *noThumbImageName = [NSString stringWithFormat:@"video-no-thumb-%d", arc4random_uniform(3)];
+        [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:[UIImage imageNamed:noThumbImageName] success:nil failure:nil];
         
         NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
-        [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            weakSelf.userAvatar.image = image;
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            
-        }];
+        [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:nil failure:nil];
         
         [self updateViewForCurrentLikeStatus];
         
@@ -330,7 +320,7 @@
 
 - (void)updateViewForCurrentLikeStatus
 {
-    BOOL isLiked = [self.videoFrame videoIsLiked];
+    BOOL isLiked = [self.videoFrame videoIsLikedBy:self.currentUser];
     self.fullWidthLikeButton.hidden = isLiked;
     self.fullWidthUnlikeButton.hidden = !isLiked;
     self.likeButton.hidden = isLiked;
