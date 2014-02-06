@@ -15,7 +15,6 @@
 #import "Video.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define kShelbyStreamEntryCaptionMargin 0
 #define kShelbyStreamEntryCaptionWidth 227
 
 @interface ShelbyStreamEntryCell()
@@ -96,6 +95,12 @@
 
 - (void)prepareForReuse
 {
+    NSInteger currentHeight = self.description.frame.size.height;
+    NSInteger delta = kShelbyStreamEntryCaptionHeight - currentHeight;
+    if (delta != 0) {
+        [self adjustCellByHeight:delta];
+    }
+    
     [self deselectStreamEntry];
 }
 
@@ -170,26 +175,38 @@
 
 - (void)resizeCellAccordingToCaption
 {
-    NSInteger originalHeight = self.description.frame.size.height;
+    NSInteger currentHeight = self.description.frame.size.height;
     NSString *captionText = [self.videoFrame creatorsInitialCommentWithFallback:YES];
     
     CGSize resizedCaption = [ShelbyStreamEntryCell sizeForCaptionWithText:captionText];
     
-    NSInteger delta = resizedCaption.height - originalHeight;
+    NSInteger delta = resizedCaption.height - currentHeight;
     if (delta < 0) {
-        self.description.frame = CGRectMake(self.description.frame.origin.x, self.description.frame.origin.y, self.description.frame.size.width, originalHeight + delta);
-        self.bordersView.frame = CGRectMake(self.bordersView.frame.origin.x, self.bordersView.frame.origin.y + delta, self.bordersView.frame.size.width, self.bordersView.frame.size.height);
-        self.likersView.frame = CGRectMake(self.likersView.frame.origin.x, self.likersView.frame.origin.y + delta, self.likersView.frame.size.width, self.likersView.frame.size.height);
-        self.fullWidthButtonsContainer.frame = CGRectMake(self.fullWidthButtonsContainer.frame.origin.x, self.fullWidthButtonsContainer.frame.origin.y + delta, self.fullWidthButtonsContainer.frame.size.width, self.fullWidthButtonsContainer.frame.size.height);
-        self.unLikersView.frame = CGRectMake(self.unLikersView.frame.origin.x, self.unLikersView.frame.origin.y + delta, self.unLikersView.frame.size.width, self.unLikersView.frame.size.height);
-        self.borderView.frame = CGRectMake(self.borderView.frame.origin.x, self.borderView.frame.origin.y, self.borderView.frame.size.width, self.borderView.frame.size.height + delta);
-        self.imageBlockerView.frame = CGRectMake(self.imageBlockerView.frame.origin.x, self.imageBlockerView.frame.origin.y, self.imageBlockerView.frame.size.width, self.imageBlockerView.frame.size.height + delta);
+        [self adjustCellByHeight:delta];
+    } else {
+        
+        // KP KP? is it needed? because prepare for resue should have been called.
+        NSInteger defaultHeightDelta = kShelbyStreamEntryCaptionHeight - currentHeight;
+        if (defaultHeightDelta != 0) {
+            [self adjustCellByHeight:defaultHeightDelta];
+        }
     }
+}
+
+- (void)adjustCellByHeight:(NSInteger)delta
+{
+    self.description.frame = CGRectMake(self.description.frame.origin.x, self.description.frame.origin.y, self.description.frame.size.width, self.description.frame.size.height + delta);
+    self.bordersView.frame = CGRectMake(self.bordersView.frame.origin.x, self.bordersView.frame.origin.y + delta, self.bordersView.frame.size.width, self.bordersView.frame.size.height);
+    self.likersView.frame = CGRectMake(self.likersView.frame.origin.x, self.likersView.frame.origin.y + delta, self.likersView.frame.size.width, self.likersView.frame.size.height);
+    self.fullWidthButtonsContainer.frame = CGRectMake(self.fullWidthButtonsContainer.frame.origin.x, self.fullWidthButtonsContainer.frame.origin.y + delta, self.fullWidthButtonsContainer.frame.size.width, self.fullWidthButtonsContainer.frame.size.height);
+    self.unLikersView.frame = CGRectMake(self.unLikersView.frame.origin.x, self.unLikersView.frame.origin.y + delta, self.unLikersView.frame.size.width, self.unLikersView.frame.size.height);
+    self.borderView.frame = CGRectMake(self.borderView.frame.origin.x, self.borderView.frame.origin.y, self.borderView.frame.size.width, self.borderView.frame.size.height + delta);
+    self.imageBlockerView.frame = CGRectMake(self.imageBlockerView.frame.origin.x, self.imageBlockerView.frame.origin.y, self.imageBlockerView.frame.size.width, self.imageBlockerView.frame.size.height + delta);
 }
 
 + (CGSize)sizeForCaptionWithText:(NSString *)captionText
 {
-    CGSize maxCaptionSize = CGSizeMake(kShelbyStreamEntryCaptionWidth - kShelbyStreamEntryCaptionMargin * 2, kShelbyStreamEntryCaptionHeight - kShelbyStreamEntryCaptionMargin * 2);
+    CGSize maxCaptionSize = CGSizeMake(kShelbyStreamEntryCaptionWidth, kShelbyStreamEntryCaptionHeight);
     CGFloat textBasedHeight = [captionText boundingRectWithSize:maxCaptionSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName : kShelbyBodyFont2} context:nil].size.height;
     
     return CGSizeMake(maxCaptionSize.width, ceil(textBasedHeight));
