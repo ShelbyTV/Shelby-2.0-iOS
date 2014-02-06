@@ -78,7 +78,7 @@
         ![self.viewControllers containsObject:self.currentlyOnVC] &&
         [viewController conformsToProtocol:@protocol(ShelbyVideoContentBrowsingViewControllerProtocol)]) {
         UIViewController<ShelbyVideoContentBrowsingViewControllerProtocol> *videoVC = (UIViewController<ShelbyVideoContentBrowsingViewControllerProtocol>*)viewController;
-        if ([videoVC displayChannel] == [self.currentlyOnVC displayChannel]) {
+        if ([videoVC displayChannel] == [self.currentlyOnVC displayChannel] && videoVC.singleVideoEntry == self.currentlyOnVC.singleVideoEntry) {
             viewController = self.currentlyOnVC;
         }
     }

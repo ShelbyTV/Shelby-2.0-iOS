@@ -510,7 +510,7 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 - (void)updateViewForCurrentEntity
 {
     if (self.currentEntity){
-        BOOL isLiked = [[Frame frameForEntity:self.currentEntity] videoIsLiked];
+        BOOL isLiked = [[Frame frameForEntity:self.currentEntity] videoIsLikedByCurrentUser];
         self.controlsView.likeButton.hidden = isLiked;
         self.controlsView.nonplaybackLikeButton.hidden = isLiked;
         self.controlsView.unlikeButton.hidden = !isLiked;

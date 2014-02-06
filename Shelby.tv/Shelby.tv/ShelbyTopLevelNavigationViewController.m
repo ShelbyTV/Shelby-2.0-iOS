@@ -268,6 +268,7 @@
             displayChannel.dashboard = fetchedDashboardEntry.dashboard;
             displayChannel.shouldFetchRemoteEntries = NO;
             ShelbyStreamInfoViewController *videoStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:displayChannel titleOverride:nil];
+            videoStreamVC.singleVideoEntry = @[fetchedDashboardEntry];
             videoStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
         }
     }];

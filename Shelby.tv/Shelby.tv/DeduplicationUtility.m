@@ -19,7 +19,8 @@
     NSArray *results = [DeduplicationUtility deduplicatedArrayByMerging:entries intoDeduped:@[]
                                                               didInsert:&indexPathsForInsert
                                                               didDelete:&indexPathsForDelete
-                                                              didUpdate:&indexPathsForReload];
+                                                              didUpdate:&indexPathsForReload
+                                                              inSection:0];
     return results;
 }
 
@@ -38,6 +39,7 @@
                               didInsert:(NSArray *__autoreleasing *)insertedIndexPaths 
                               didDelete:(NSArray *__autoreleasing *)deletedIndexPaths 
                               didUpdate:(NSArray *__autoreleasing *)updatedIndexPaths
+                              inSection:(NSUInteger)sectionForIndexPath
 {
     NSMutableArray *mergedDeduplicatedEntities = [@[] mutableCopy];
 
@@ -67,19 +69,19 @@
             if (entity.duplicates && [entity.duplicates count]) {
                 //this was in the original array it and has duplicates
                 //may have been updated (or may not)... telling caller to update just to be safe
-                [updated addObject:[NSIndexPath indexPathForItem:[dedupedBaseEntities indexOfObject:entity] inSection:0]];
+                [updated addObject:[NSIndexPath indexPathForItem:[dedupedBaseEntities indexOfObject:entity] inSection:sectionForIndexPath]];
             }
         } else {
             //this was not in the original array, it's an insert
             //index path is "where you would like it to appear" in new array, relative to original array
             //if original array was [C E F] and I add [A B D] resulting in [A B C D E F], I am inserting at 0, 1 and 3
-            [inserted addObject:[NSIndexPath indexPathForItem:[mergedDeduplicatedEntities indexOfObject:entity] inSection:0]];
+            [inserted addObject:[NSIndexPath indexPathForItem:[mergedDeduplicatedEntities indexOfObject:entity] inSection:sectionForIndexPath]];
 
             //if this insert has dupe children, may need to account for them
             for (id<ShelbyDuplicateContainer, ShelbyVideoContainer>dupeChild in entity.duplicates) {
                 if ([dedupedBaseEntities containsObject:dupeChild]) {
                     //this dupe child was in the original array, it's now a dupe of an inserted element... need to "delete" the original
-                    [deleted addObject:[NSIndexPath indexPathForItem:[dedupedBaseEntities indexOfObject:dupeChild] inSection:0]];
+                    [deleted addObject:[NSIndexPath indexPathForItem:[dedupedBaseEntities indexOfObject:dupeChild] inSection:sectionForIndexPath]];
                 }
             }
         }

@@ -25,6 +25,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
 
 //KVO
 NSString * const kFramePathClientLikedAt = @"clientLikedAt";
+NSString * const kFramePathUpvoters = @"upvoters";
 
 @implementation Frame (Helper)
 
@@ -264,16 +265,20 @@ NSString * const kFramePathClientLikedAt = @"clientLikedAt";
     return [[ShelbyDataMediator sharedInstance] unlikeFrame:self];
 }
 
-- (BOOL)videoIsLiked
+- (BOOL)videoIsLikedBy:(User *)user
 {
-    User *currentUser = [User currentAuthenticatedUserInContext:self.managedObjectContext];
-    if (currentUser) {
-        return [currentUser hasLikedVideoOfFrame:self] || [self.clientUnsyncedLike boolValue];
+    if (user) {
+        return [user hasLikedVideoOfFrame:self] || [self.clientUnsyncedLike boolValue];
     }
     // FUTURE
     // We could query the DB for any frame with a matching videoID where clientUnsyncedLike==1, but that would require
     // an update to the UNLIKE logic, which I'm not doing right now.
     return [self.clientUnsyncedLike boolValue];
+}
+
+- (BOOL)videoIsLikedByCurrentUser
+{
+    return [self videoIsLikedBy:[User currentAuthenticatedUserInContext:self.managedObjectContext]];
 }
 
 - (NSString *)longLink

@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyStreamEntryCell.h"
+#import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
 #import "ShelbyAnalyticsClient.h"
 #import "UIImageView+AFNetworking.h"
@@ -15,6 +16,11 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface ShelbyStreamEntryCell()
+//data model
+@property (nonatomic, strong) Frame *videoFrame;
+@property (nonatomic, strong) DashboardEntry *dashboardEntry;
+
+//views
 @property (nonatomic, weak) IBOutlet UILabel *username;
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
 @property (nonatomic, weak) IBOutlet UIImageView *currentlyOn;
@@ -57,20 +63,12 @@
 {
     self.userAvatar.layer.cornerRadius = self.userAvatar.frame.size.height / 2;
     self.userAvatar.layer.masksToBounds = YES;
-}
-
-- (void)dealloc
-{
-    [_videoFrame removeObserver:self forKeyPath:kFramePathClientLikedAt];
-}
-
-- (void)prepareForReuse
-{
+    
+    //liker views
     NSMutableArray *likerViews = [@[] mutableCopy];
     CGFloat likerX = 0.f;
     CGFloat likerSharerHeight = 26.f;
     UIImageView *likerImageView;
-    //XXX TODO: the views should only be created once, not on each resuse
     for (int i = 0; i < 6; i++) {
         likerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(likerX, 7, likerSharerHeight, likerSharerHeight)];
         [self.likersView addSubview:likerImageView];
@@ -81,50 +79,45 @@
         likerImageView.layer.cornerRadius = likerImageView.frame.size.height / 2;
         likerImageView.layer.masksToBounds = YES;
     }
-    
-    [self deselectStreamEntry];
-    
     self.likerImageViews = likerViews;
 }
 
+- (void)dealloc
+{
+    [_videoFrame removeObserver:self forKeyPath:kFramePathClientLikedAt];
+    [_videoFrame removeObserver:self forKeyPath:kFramePathUpvoters];
+}
 
-- (void)setVideoFrame:(Frame *)videoFrame
+- (void)prepareForReuse
+{
+    [self deselectStreamEntry];
+}
+
+- (void)setDashboardEntry:(DashboardEntry *)dashboardEntry andFrame:(Frame *)videoFrame
 {
     if (_videoFrame != videoFrame) {
         if (_videoFrame) {
             [_videoFrame removeObserver:self forKeyPath:kFramePathClientLikedAt];
+            [_videoFrame removeObserver:self forKeyPath:kFramePathUpvoters];
         }
         _videoFrame = videoFrame;
+        _dashboardEntry = dashboardEntry;
         [_videoFrame addObserver:self forKeyPath:kFramePathClientLikedAt options:NSKeyValueObservingOptionNew context:nil];
+        [_videoFrame addObserver:self forKeyPath:kFramePathUpvoters options:NSKeyValueObservingOptionNew context:nil];
         
-        // KP KP - need to fetch upvoters from backend like we do on iphone
-        // KP KP TODO- add/remove observer
-        //    [self.videoFrame addObserver:self forKeyPath:@"upvoters" options:NSKeyValueObservingOptionNew context:nil];
-        if ([self.videoFrame.upvoters count]) {
-            [self processLikersAndSharers];
-        }
+        [self processLikersAndSharers];
         [self updateLikersAndSharersVisuals];
         
         self.videoTitle.text = self.videoFrame.video.title;
         NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
         self.description.text = captionText;
-        NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
         
-        NSInteger rand = arc4random() % 3;
-        NSString *noThumbImageName = [NSString stringWithFormat:@"video-no-thumb-%d", rand];
-        __weak ShelbyStreamEntryCell *weakSelf = self;
-        [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:[UIImage imageNamed:noThumbImageName] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            weakSelf.videoThumbnail.image = image;
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            
-        }];
+        NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
+        NSString *noThumbImageName = [NSString stringWithFormat:@"video-no-thumb-%d", arc4random_uniform(3)];
+        [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:[UIImage imageNamed:noThumbImageName] success:nil failure:nil];
         
         NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
-        [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            weakSelf.userAvatar.image = image;
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            
-        }];
+        [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:nil failure:nil];
         
         [self updateViewForCurrentLikeStatus];
         
@@ -190,22 +183,24 @@
         [self updateViewForCurrentLikeStatus];
     }
     
-    //TODO: bring these back, I imagine...
-    //XXX Be sure to remove observer in setVideoFrame: AND dealloc
-//    [self processLikersAndSharers];
-//    [self updateLikersAndSharersVisuals];
+    [self processLikersAndSharers];
+    [self updateLikersAndSharersVisuals];
 }
 
 - (void)processLikersAndSharers
 {
-    if (!self.likers) {
-        self.likers = [NSMutableOrderedSet new];
-    } else {
-        [self.likers removeAllObjects];
-    }
-    
+    self.likers = [NSMutableOrderedSet orderedSet];
     for (User *liker in self.videoFrame.upvoters) {
         [self.likers addObject:liker];
+    }
+    
+    for (DashboardEntry *dupe in self.dashboardEntry.duplicates) {
+        Frame *dupeFrame = dupe.frame;
+        if (dupeFrame) {
+            for (User *liker in dupe.frame.upvoters) {
+                [_likers addObject:liker];
+            }
+        }
     }
 }
 
@@ -292,7 +287,7 @@
 
 - (void)updateViewForCurrentLikeStatus
 {
-    BOOL isLiked = [self.videoFrame videoIsLiked];
+    BOOL isLiked = [self.videoFrame videoIsLikedBy:self.currentUser];
     self.fullWidthLikeButton.hidden = isLiked;
     self.fullWidthUnlikeButton.hidden = !isLiked;
     self.likeButton.hidden = isLiked;

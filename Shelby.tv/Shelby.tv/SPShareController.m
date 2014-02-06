@@ -39,6 +39,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 @property (nonatomic, strong) ShelbyShareViewController *shelbyShare;
 
 @property (nonatomic, strong) SPShareCompletionHandler completionHandler;
+@property (nonatomic, strong) UIPopoverController *popoverVC;
 
 @end
 
@@ -177,7 +178,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 }
 
 
-- (void)nativeShareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link fromViewController:(UIViewController *)viewController 
+- (void)nativeShareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link fromViewController:(UIViewController *)viewController inRect:(CGRect)positionFrame
 {
     UIActivityViewController *activityController = [self activityViewControllerForFrame:frame withMessage:message withLink:link excludeFacebookAndTwitter:YES];
     
@@ -191,7 +192,13 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     }];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyWillPresentModalViewNotification object:self];
-    [viewController presentViewController:activityController animated:YES completion:nil];
+    
+    if (DEVICE_IPAD) {
+        self.popoverVC = [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [self.popoverVC presentPopoverFromRect:positionFrame inView:viewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+     } else {
+        [viewController presentViewController:activityController animated:YES completion:nil];
+    }
 }
 
 
@@ -221,8 +228,13 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 //        }
 //    } else {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyWillPresentModalViewNotification object:self];
-    [viewController presentViewController:activityController animated:YES completion:nil];
-//    }
+    
+    if (DEVICE_IPAD) {
+        self.popoverVC = [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [self.popoverVC presentPopoverFromRect:_rect inView:viewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else {
+        [viewController presentViewController:activityController animated:YES completion:nil];
+    }
 }
 
 

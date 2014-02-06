@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSArray *channels;
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) BrowseChannelsHeaderView *headerView;
+@property (nonatomic, assign) BOOL shouldFireFetchStreamRequestOnDisappear;
 @end
 
 @implementation BrowseChannelsTableViewController
@@ -63,6 +64,7 @@
     [super viewDidAppear:animated];
     
     [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenChannels];
+    self.shouldFireFetchStreamRequestOnDisappear = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -70,6 +72,12 @@
     [super viewWillDisappear:animated];
     
     [self.userEducationVC referenceViewWillDisappear:animated];
+    
+    if (self.shouldFireFetchStreamRequestOnDisappear) {
+        DisplayChannel *currentUsersStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.userID
+                                                                                inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:currentUsersStream sinceEntry:nil];
+    }
 }
 
 #pragma mark - Table view data source
@@ -150,6 +158,7 @@
     [self.currentUser didFollowRoll:channelToFollow.roll.rollID];
     [self.headerView increaseFollowCount];
     [self updateUserEducation];
+    self.shouldFireFetchStreamRequestOnDisappear = YES;
 }
 
 - (void)doUnfollow:(DisplayChannel *)channelToUnfollow
