@@ -29,6 +29,8 @@
 @property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, weak) IBOutlet UILabel *detailNoLikersLabel;
 @property (nonatomic, weak) IBOutlet UIView *likersView;
+@property (nonatomic, weak) IBOutlet UIView *unLikersView;
+@property (nonatomic, weak) IBOutlet UIView *bordersView;
 @property (nonatomic, weak) IBOutlet UIView *leftVerticalBorder;
 @property (nonatomic, weak) IBOutlet UIView *centerVerticalBorder;
 @property (nonatomic, weak) IBOutlet UIView *rightVerticalBorder;
