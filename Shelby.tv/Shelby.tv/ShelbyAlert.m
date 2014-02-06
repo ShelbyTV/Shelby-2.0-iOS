@@ -18,15 +18,22 @@
 
 @implementation ShelbyAlert
 
+- (id)initWithTitle:(NSString *)title message:(NSString *)message dismissButtonTitle:(NSString *)cancelButtonTitle autodimissTime:(NSTimeInterval)seconds onDismiss:(alert_dismiss_block_t)dismissBlock
+{
+    return [self initWithTitle:title message:message dismissButtonTitle:cancelButtonTitle ignoreButtonTitle:nil autodimissTime:seconds onDismiss:dismissBlock];
+}
+
 - (id)initWithTitle:(NSString *)title
             message:(NSString *)message
  dismissButtonTitle:(NSString *)cancelButtonTitle
+  ignoreButtonTitle:(NSString *)ignoreButtonTitle
      autodimissTime:(NSTimeInterval)seconds
           onDismiss:(alert_dismiss_block_t)dismissBlock
 {
     self = [super init];
     if (self) {
-        _alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
+            _alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:ignoreButtonTitle otherButtonTitles:cancelButtonTitle, nil];
+        
         _autodimissTime = seconds;
         _dismissBlock = dismissBlock;
     }
@@ -72,8 +79,19 @@
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // Dismiss initiated by user.
-    [self cancelPressed:NO];
+    switch (buttonIndex) {
+        case 0:
+            //ignore button
+            [self.autodimissTimer invalidate];
+            self.autodimissTimer = nil;
+            break;
+        case 1:
+            //cancel (aka dismiss) button from user
+            [self cancelPressed:NO];
+            
+        default:
+            break;
+    }
 }
 
 @end

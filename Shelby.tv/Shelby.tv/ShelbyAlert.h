@@ -15,6 +15,13 @@ typedef void (^alert_dismiss_block_t)(BOOL didAutoDimiss);
 - (id)initWithTitle:(NSString *)title
             message:(NSString *)message
  dismissButtonTitle:(NSString *)cancelButtonTitle
+  ignoreButtonTitle:(NSString *)ignoreButtonTitle
+     autodimissTime:(NSTimeInterval)seconds
+          onDismiss:(alert_dismiss_block_t)dismissBlock;
+
+- (id)initWithTitle:(NSString *)title
+            message:(NSString *)message
+ dismissButtonTitle:(NSString *)cancelButtonTitle
      autodimissTime:(NSTimeInterval)seconds
           onDismiss:(alert_dismiss_block_t)dismissBlock;
 

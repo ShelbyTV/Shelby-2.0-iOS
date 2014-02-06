@@ -39,9 +39,10 @@
 "PLAYBACK_STALLED_BUTTON" = "Ok";
 
 // --Extraction Fail--
-"EXTRACTION_FAIL_TITLE" = "Problem Video";
+"EXTRACTION_FAIL_TITLE" = "Playback Issue";
 "EXTRACTION_FAIL_MESSAGE" = "This video won't play right now.  Skipping it...";
-"EXTRACTION_FAIL_BUTTON" = "Skip Now";
+"EXTRACTION_FAIL_CANCEL_BUTTON" = "Skip Now";
+"EXTRACTION_FAIL_IGNORE_BUTTON" = "Stop";
 
 // --Already Logged In--
 "ALREADY_LOGGED_IN_TITLE" = "Logged in as '%@'";

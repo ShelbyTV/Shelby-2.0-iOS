@@ -686,7 +686,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             [self.currentVideoAlertView dismiss];
             self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
                                                                     message:NSLocalizedString(@"EXTRACTION_FAIL_MESSAGE", nil)
-                                                         dismissButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_BUTTON", nil)
+                                                         dismissButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_CANCEL_BUTTON", nil)
+                                                          ignoreButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_IGNORE_BUTTON", nil)
                                                              autodimissTime:3.0f
                                                                   onDismiss:^(BOOL didAutoDimiss) {
                                                                       if (self.currentPlayer == player) {

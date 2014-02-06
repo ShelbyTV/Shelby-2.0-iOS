@@ -119,18 +119,27 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         return;
     }
     
+    if (DEVICE_IPAD) {
+        //iPad has a thumbnail overlay
+        [self.view addSubview:self.thumbnailView];
+        self.thumbnailView.video = self.videoFrame.video;
+    }
+    
     // Setup player and observers
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
-    AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
-    if (self.player) {
-        if (!self.player.isExternalPlaybackActive) {
-            //Timing edge cases can get us here, even when not in AirPlay mode
-            //This is okay so long as we're setting the same URL as we already set in the player
-            STVDebugAssert([((AVURLAsset *)self.player.currentItem.asset).URL isEqual:playerAsset.URL], @"expected same URL");
-            return;
+    if (![playerAsset isPlayable]){
+        if ([self.videoURLs count] == 0 && [self shouldBePlaying]) {
+            //no more video URLs to try, and this one is no good
+            [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
         }
-
+        return;
+    }
+    
+    AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
+    
+    if (self.player) {
         //reuse player
+        // for AirPlay or when trying a different asset b/c first one failed to playback)
         self.lastPlayheadPosition = CMTimeMake(0, NSEC_PER_MSEC);
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
         //replacement happens asynchronously.
@@ -162,12 +171,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     }
     
     self.isPlayable = YES;
-    
-    if (DEVICE_IPAD) {
-        //iPad has a thumbnail overlay
-        [self.view addSubview:self.thumbnailView];
-        self.thumbnailView.video = self.videoFrame.video;
-    }
 }
 
 - (void)playerItemReplaced:(NSDictionary *)change
@@ -189,13 +192,15 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         
         //let's try another video URL (if we have one)
         if ([self.videoURLs count] > 0) {
-            [self setupPlayerForURL:[self.videoURLs firstObject]];
+            NSURL *nextURL = [self.videoURLs firstObject];
             [self.videoURLs removeObjectAtIndex:0];
+            [self setupPlayerForURL:nextURL];
+            
             
         } else {
             //fail
             self.isPlayable = NO;
-            if (self.shouldAutoplay) {
+            if ([self shouldBePlaying]) {
                 [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
             }
         }
@@ -327,8 +332,9 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
             BOOL hadExistingPlayer = (self.player != nil);
             
             self.videoURLs = [videoURLs mutableCopy];
-            [self setupPlayerForURL:[videoURLs firstObject]];
+            NSURL *nextURL = [self.videoURLs firstObject];
             [self.videoURLs removeObjectAtIndex:0];
+            [self setupPlayerForURL:nextURL];
             
             if (hadExistingPlayer) {
                 //don't play until async item replacement happens, see -[playerItemReplaced]
@@ -415,6 +421,9 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)play
 {
+    //SPVideoPlayer state is immediatley playing, even if we haven't gotten the underlying AVPlayer to play
+    self.isPlaying = YES;
+    
     if (DEVICE_IPAD && self.player.status == AVPlayerItemStatusReadyToPlay) {
         [UIView animateWithDuration:0.25 animations:^{
             self.playerLayer.hidden = NO;
@@ -422,9 +431,21 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         }];
     }
     
+    if (![self.player.currentItem.asset isPlayable]) {
+        // can't play the current asset?
+        if ([self.videoURLs count] > 0) {
+            //try the next URL
+            NSURL *nextURL = [self.videoURLs firstObject];
+            [self.videoURLs removeObjectAtIndex:0];
+            [self setupPlayerForURL:nextURL];
+            [self play];
+            //video extraction fail is handled by setupPlayerForURL
+        }
+        return;
+    }
+    
     currentPlayingVideoFrame = self.videoFrame;
     [self.player play];
-    self.isPlaying = YES;
     
     [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
     [self.videoPlayerDelegate videoPlaybackStatus:YES forPlayer:self];
