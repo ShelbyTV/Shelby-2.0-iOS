@@ -211,12 +211,10 @@
         [hiddenBackgrounds removeObject:self.currentlyShowingBackground];
         UIImageView *nextBackground = hiddenBackgrounds[arc4random_uniform([hiddenBackgrounds count])];
         nextBackground.alpha = 1.f;
-        nextBackground.transform = CGAffineTransformIdentity;
         [self.view insertSubview:nextBackground belowSubview:self.currentlyShowingBackground];
         
         [UIView animateWithDuration:5.0f animations:^{
             self.currentlyShowingBackground.alpha = 0.f;
-            nextBackground.transform = CGAffineTransformMakeScale(drand48(), drand48());
             
         } completion:^(BOOL finished) {
             self.currentlyShowingBackground = nextBackground;

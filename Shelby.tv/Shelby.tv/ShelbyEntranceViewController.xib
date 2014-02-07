@@ -18,6 +18,7 @@
                 <outletCollection property="allBackgrounds" destination="k13-aF-Bv4" id="TFM-eK-7xL"/>
                 <outletCollection property="allBackgrounds" destination="xpx-qq-dFm" id="rqh-ai-afx"/>
                 <outletCollection property="allBackgrounds" destination="lBX-A1-nmJ" id="4lJ-c0-R8D"/>
+                <outletCollection property="allBackgrounds" destination="bd3-YC-QbE" id="imn-OO-FBK"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -26,15 +27,19 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="entrance-blur-1" translatesAutoresizingMaskIntoConstraints="NO" id="k13-aF-Bv4" userLabel="blur1">
-                    <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                    <rect key="frame" x="0.0" y="-100" width="1024" height="968"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="entrance-blur-2" translatesAutoresizingMaskIntoConstraints="NO" id="xpx-qq-dFm" userLabel="blur2">
-                    <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                    <rect key="frame" x="0.0" y="-100" width="1024" height="968"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="entrance-blur-3" translatesAutoresizingMaskIntoConstraints="NO" id="lBX-A1-nmJ" userLabel="blur3">
-                    <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                    <rect key="frame" x="0.0" y="-100" width="1024" height="968"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="entrance-blur-4" translatesAutoresizingMaskIntoConstraints="NO" id="bd3-YC-QbE" userLabel="blur4">
+                    <rect key="frame" x="0.0" y="-100" width="1024" height="968"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUN-Df-NI8">
@@ -109,13 +114,14 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="k13-aF-Bv4" firstAttribute="top" secondItem="2" secondAttribute="top" id="4FK-61-wcM"/>
+                <constraint firstItem="k13-aF-Bv4" firstAttribute="top" secondItem="2" secondAttribute="top" constant="-100" id="4FK-61-wcM"/>
                 <constraint firstAttribute="centerX" secondItem="GJO-01-6rf" secondAttribute="centerX" id="66S-D4-VaL"/>
                 <constraint firstItem="hYP-M6-cVc" firstAttribute="trailing" secondItem="wUN-Df-NI8" secondAttribute="trailing" constant="-93" id="A6b-Ph-HWz"/>
                 <constraint firstAttribute="trailing" secondItem="lBX-A1-nmJ" secondAttribute="trailing" id="AaA-W9-PFg"/>
                 <constraint firstAttribute="trailing" secondItem="xpx-qq-dFm" secondAttribute="trailing" id="DV7-Km-AFO"/>
-                <constraint firstItem="xpx-qq-dFm" firstAttribute="top" secondItem="2" secondAttribute="top" id="EHy-aE-c4z"/>
+                <constraint firstItem="xpx-qq-dFm" firstAttribute="top" secondItem="2" secondAttribute="top" constant="-100" id="EHy-aE-c4z"/>
                 <constraint firstAttribute="centerX" secondItem="bsu-Cc-7aT" secondAttribute="centerX" id="EI3-dW-wbP"/>
+                <constraint firstItem="bd3-YC-QbE" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="ESx-nR-cyU"/>
                 <constraint firstAttribute="centerX" secondItem="wUN-Df-NI8" secondAttribute="centerX" id="Kzf-z7-oLI"/>
                 <constraint firstItem="xpx-qq-dFm" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="LOv-wI-VuV"/>
                 <constraint firstAttribute="bottom" secondItem="bsu-Cc-7aT" secondAttribute="bottom" constant="20" id="MP9-DF-fRt"/>
@@ -123,12 +129,15 @@
                 <constraint firstItem="k13-aF-Bv4" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="Vs7-PY-P7n"/>
                 <constraint firstAttribute="bottom" secondItem="wUN-Df-NI8" secondAttribute="bottom" constant="118" id="azd-o5-ZQR"/>
                 <constraint firstItem="hYP-M6-cVc" firstAttribute="centerY" secondItem="wUN-Df-NI8" secondAttribute="centerY" constant="-0.5" id="c7B-cf-vuw"/>
-                <constraint firstItem="lBX-A1-nmJ" firstAttribute="top" secondItem="2" secondAttribute="top" id="euh-Fs-nIg"/>
-                <constraint firstAttribute="bottom" secondItem="k13-aF-Bv4" secondAttribute="bottom" id="fbJ-l0-HSk"/>
-                <constraint firstAttribute="bottom" secondItem="lBX-A1-nmJ" secondAttribute="bottom" id="jmb-5c-MF7"/>
-                <constraint firstAttribute="bottom" secondItem="xpx-qq-dFm" secondAttribute="bottom" id="lQp-92-w9R"/>
+                <constraint firstItem="lBX-A1-nmJ" firstAttribute="top" secondItem="2" secondAttribute="top" constant="-100" id="euh-Fs-nIg"/>
+                <constraint firstAttribute="bottom" secondItem="k13-aF-Bv4" secondAttribute="bottom" constant="-100" id="fbJ-l0-HSk"/>
+                <constraint firstAttribute="bottom" secondItem="lBX-A1-nmJ" secondAttribute="bottom" constant="-100" id="jmb-5c-MF7"/>
+                <constraint firstAttribute="bottom" secondItem="xpx-qq-dFm" secondAttribute="bottom" constant="-100" id="lQp-92-w9R"/>
                 <constraint firstItem="GJO-01-6rf" firstAttribute="top" secondItem="2" secondAttribute="top" constant="184" id="mRB-6W-c4n"/>
                 <constraint firstItem="lBX-A1-nmJ" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="r3w-te-mDc"/>
+                <constraint firstAttribute="bottom" secondItem="bd3-YC-QbE" secondAttribute="bottom" constant="-100" id="vaz-Qq-Xxw"/>
+                <constraint firstAttribute="trailing" secondItem="bd3-YC-QbE" secondAttribute="trailing" id="z6t-U9-dJF"/>
+                <constraint firstItem="bd3-YC-QbE" firstAttribute="top" secondItem="2" secondAttribute="top" constant="-100" id="zRN-d5-pxt"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -136,9 +145,10 @@
         </view>
     </objects>
     <resources>
-        <image name="entrance-blur-1" width="512" height="384"/>
-        <image name="entrance-blur-2" width="512" height="384"/>
-        <image name="entrance-blur-3" width="512" height="384"/>
+        <image name="entrance-blur-1" width="1024" height="768"/>
+        <image name="entrance-blur-2" width="1024" height="768"/>
+        <image name="entrance-blur-3" width="1024" height="768"/>
+        <image name="entrance-blur-4" width="1024" height="768"/>
         <image name="entrance-shelby-logo" width="525" height="149"/>
     </resources>
 </document>
