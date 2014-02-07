@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Frame.h"
 
-#define kShelbyStreamEntryCaptionHeight 55
+#define kShelbyStreamEntryCaptionHeight 50
+@class ShelbyStreamEntryCell;
 
 @protocol ShelbyStreamEntryProtocol <NSObject>
 - (void)shareVideoWasTappedForFrame:(Frame *)videoFrame;
@@ -17,6 +18,7 @@
 - (void)unLikeFrame:(Frame *)videoFrame;
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
+- (void)expendCell:(ShelbyStreamEntryCell *)cell;
 @end
 
 @interface ShelbyStreamEntryCell : UITableViewCell
@@ -28,6 +30,6 @@
 
 - (void)selectStreamEntry;
 - (void)deselectStreamEntry;
-- (void)resizeCellAccordingToCaption;
+- (void)resizeCellAccordingToCaption:(BOOL)forceResize;
 + (CGSize)sizeForCaptionWithText:(NSString *)text;
 @end

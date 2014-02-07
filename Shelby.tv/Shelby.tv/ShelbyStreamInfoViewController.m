@@ -42,6 +42,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 @property (nonatomic, strong) id<ShelbyVideoContainer>currentlySelectedEntity;
 @property (nonatomic, weak) IBOutlet UITableView *entriesTable;
+@property (nonatomic, strong) NSIndexPath *expendedCell;
 //refresh and load more
 @property (nonatomic, strong) UITableViewController *entriesTableVC;
 @property (nonatomic, strong) UIActivityIndicatorView *loadMoreSpinner;
@@ -380,7 +381,11 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         cell.currentUser = self.currentUser;
         
         if ([cellIdentifier isEqualToString:kShelbyStreamEntryCell]) {
-            [cell resizeCellAccordingToCaption];
+            BOOL forceResize = NO;
+            if (self.expendedCell) {
+                forceResize = [self.expendedCell compare:indexPath] == NSOrderedSame;
+            }
+            [cell resizeCellAccordingToCaption:forceResize];
         }
         // Overwrite description in case of a recommended entry
         if (recommendedEntry) {
@@ -471,7 +476,17 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         CGSize captionSize = [ShelbyStreamEntryCell sizeForCaptionWithText:captionText];
         NSInteger delta = captionSize.height - kShelbyStreamEntryCaptionHeight;
         if (delta > 0) {
-            delta = 0; // we only want to resize down cells.
+            if (self.expendedCell) {
+                if ([indexPath compare:self.expendedCell] != NSOrderedSame) {
+                    delta = 0;
+                } else {
+                    DLog(@"Taller cell allowed");
+                }
+            } else {
+                delta = 0;
+            }
+        } else {
+            delta = 0; // right now don't minimize cells - this is for testing - KP KP: TODO
         }
         
         return 341.0 + delta;
@@ -528,6 +543,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers
 {
     [self.delegate openLikersViewForVideo:video withLikers:likers];
+}
+
+- (void)expendCell:(ShelbyStreamEntryCell *)cell
+{
+    self.expendedCell = [self.entriesTable indexPathForCell:cell];
+    [self.entriesTable reloadData];
 }
 
 #pragma mark - ShelbyVideoContentBrowsingViewControllerProtocol

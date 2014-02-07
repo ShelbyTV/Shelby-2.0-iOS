@@ -44,6 +44,7 @@
 @property (nonatomic, weak) IBOutlet UIView *fullWidthButtonsContainer;
 @property (nonatomic, weak) IBOutlet UIView *borderView;
 @property (nonatomic, weak) IBOutlet UIView *imageBlockerView;
+@property (nonatomic, weak) IBOutlet UIButton *moreButton;
 @property (nonatomic, strong) NSMutableArray *likerImageViews;
 @property (nonatomic, strong) NSMutableOrderedSet *likers;
 
@@ -52,6 +53,7 @@
 - (IBAction)unLikeVideo:(id)sender;
 - (IBAction)openUserProfile:(id)sender;
 - (IBAction)openLikersView:(id)sender;
+- (IBAction)viewMore:(id)sender;
 @end
 
 @implementation ShelbyStreamEntryCell
@@ -68,6 +70,10 @@
 {
     self.userAvatar.layer.cornerRadius = self.userAvatar.frame.size.height / 2;
     self.userAvatar.layer.masksToBounds = YES;
+    self.moreButton.layer.borderColor = kShelbyColorLightGray.CGColor;
+    self.moreButton.layer.borderWidth = 1;
+    self.moreButton.layer.cornerRadius = 5;
+    self.moreButton.layer.masksToBounds = YES;
     
     //liker views
     NSMutableArray *likerViews = [@[] mutableCopy];
@@ -175,7 +181,7 @@
     }
 }
 
-- (void)resizeCellAccordingToCaption
+- (void)resizeCellAccordingToCaption:(BOOL)forceResize
 {
     NSInteger currentHeight = self.description.frame.size.height;
     NSString *captionText = [self.videoFrame creatorsInitialCommentWithFallback:YES];
@@ -183,10 +189,16 @@
     CGSize resizedCaption = [ShelbyStreamEntryCell sizeForCaptionWithText:captionText];
     
     NSInteger delta = resizedCaption.height - currentHeight;
-    if (delta < 0) {
+    if (delta == 0) {
+        self.moreButton.hidden = YES;
+    } else if (forceResize) {
+        self.moreButton.hidden = NO;
+        [self adjustCellByHeight:delta];
+    } else if (delta < 0) {
+        self.moreButton.hidden = YES;
         [self adjustCellByHeight:delta];
     } else {
-        
+        self.moreButton.hidden = NO;
         // KP KP? is it needed? because prepare for resue should have been called.
         NSInteger defaultHeightDelta = kShelbyStreamEntryCaptionHeight - currentHeight;
         if (defaultHeightDelta != 0) {
@@ -198,17 +210,26 @@
 - (void)adjustCellByHeight:(NSInteger)delta
 {
     self.description.frame = CGRectMake(self.description.frame.origin.x, self.description.frame.origin.y, self.description.frame.size.width, self.description.frame.size.height + delta);
+    self.description.numberOfLines = ceil(self.description.frame.size.height / 15);
+    self.moreButton.frame = CGRectMake(self.moreButton.frame.origin.x, self.description.frame.origin.y + self.description.frame.size.height + 5, self.moreButton.frame.size.width, self.moreButton.frame.size.height);
     self.bordersView.frame = CGRectMake(self.bordersView.frame.origin.x, self.bordersView.frame.origin.y + delta, self.bordersView.frame.size.width, self.bordersView.frame.size.height);
     self.likersView.frame = CGRectMake(self.likersView.frame.origin.x, self.likersView.frame.origin.y + delta, self.likersView.frame.size.width, self.likersView.frame.size.height);
     self.fullWidthButtonsContainer.frame = CGRectMake(self.fullWidthButtonsContainer.frame.origin.x, self.fullWidthButtonsContainer.frame.origin.y + delta, self.fullWidthButtonsContainer.frame.size.width, self.fullWidthButtonsContainer.frame.size.height);
     self.unLikersView.frame = CGRectMake(self.unLikersView.frame.origin.x, self.unLikersView.frame.origin.y + delta, self.unLikersView.frame.size.width, self.unLikersView.frame.size.height);
     self.borderView.frame = CGRectMake(self.borderView.frame.origin.x, self.borderView.frame.origin.y, self.borderView.frame.size.width, self.borderView.frame.size.height + delta);
     self.imageBlockerView.frame = CGRectMake(self.imageBlockerView.frame.origin.x, self.imageBlockerView.frame.origin.y, self.imageBlockerView.frame.size.width, self.imageBlockerView.frame.size.height + delta);
+    
+    if (delta > 0) {
+        [self.moreButton setTitle:@"Less..." forState:UIControlStateNormal];
+    } else {
+        [self.moreButton setTitle:@"More..." forState:UIControlStateNormal];
+    }
+
 }
 
 + (CGSize)sizeForCaptionWithText:(NSString *)captionText
 {
-    CGSize maxCaptionSize = CGSizeMake(kShelbyStreamEntryCaptionWidth, kShelbyStreamEntryCaptionHeight);
+    CGSize maxCaptionSize = CGSizeMake(kShelbyStreamEntryCaptionWidth, kShelbyStreamEntryCaptionHeight * 10);
     CGFloat textBasedHeight = [captionText boundingRectWithSize:maxCaptionSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName : kShelbyBodyFont2} context:nil].size.height;
     
     return CGSizeMake(maxCaptionSize.width, ceil(textBasedHeight));
@@ -320,6 +341,23 @@
 {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardLikersList];
     [self.delegate openLikersViewForVideo:self.videoFrame.video withLikers:self.likers];
+}
+
+- (IBAction)viewMore:(id)sender
+{
+    NSInteger currentHeight = self.description.frame.size.height;
+    
+    if (currentHeight == kShelbyStreamEntryCaptionHeight) {
+        NSString *captionText = [self.videoFrame creatorsInitialCommentWithFallback:YES];
+        CGSize resizedCaption = [ShelbyStreamEntryCell sizeForCaptionWithText:captionText];
+        NSInteger delta = resizedCaption.height - currentHeight;
+        [self adjustCellByHeight:delta];
+        [self.delegate expendCell:self];
+    } else {
+        NSInteger delta = kShelbyStreamEntryCaptionHeight - currentHeight;
+        [self adjustCellByHeight:delta];
+        [self.delegate expendCell:nil];
+    }
 }
 
 - (void)selectStreamEntry

@@ -135,13 +135,25 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="227" translatesAutoresizingMaskIntoConstraints="NO" id="1LM-GZ-NMT" userLabel="CapstionLabel">
-                        <rect key="frame" x="66" y="192" width="227" height="55"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="227" translatesAutoresizingMaskIntoConstraints="NO" id="1LM-GZ-NMT" userLabel="CaptionLabel">
+                        <rect key="frame" x="66" y="195" width="227" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                         <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3Q-KM-vKS">
+                        <rect key="frame" x="63" y="250" width="80" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <state key="normal" title="More...">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="viewMore:" destination="B4N-k2-gmx" eventType="touchUpInside" id="amF-al-aNq"/>
+                        </connections>
+                    </button>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNL-GX-y23" userLabel="LikersView">
                         <rect key="frame" x="59" y="285" width="201" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -232,6 +244,7 @@
                 <outlet property="leftVerticalBorder" destination="Wfm-yT-Ock" id="khY-7M-YBD"/>
                 <outlet property="likeButton" destination="RSh-DT-HOP" id="9qG-Gc-Xdd"/>
                 <outlet property="likersView" destination="cNL-GX-y23" id="2pZ-sx-If0"/>
+                <outlet property="moreButton" destination="C3Q-KM-vKS" id="opA-xv-8w2"/>
                 <outlet property="rightVerticalBorder" destination="ERV-4o-NTn" id="Twe-1A-Bb9"/>
                 <outlet property="unLikersView" destination="QL2-Li-bXH" id="nJn-PH-vso"/>
                 <outlet property="unlikeButton" destination="O3F-qX-GYe" id="VlG-rt-Ptj"/>
