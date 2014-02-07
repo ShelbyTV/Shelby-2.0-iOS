@@ -96,9 +96,11 @@
 - (void)prepareForReuse
 {
     NSInteger currentHeight = self.description.frame.size.height;
-    NSInteger delta = kShelbyStreamEntryCaptionHeight - currentHeight;
-    if (delta != 0) {
-        [self adjustCellByHeight:delta];
+    if (currentHeight) {
+        NSInteger delta = kShelbyStreamEntryCaptionHeight - currentHeight;
+        if (delta != 0) {
+            [self adjustCellByHeight:delta];
+        }
     }
     
     [self deselectStreamEntry];
