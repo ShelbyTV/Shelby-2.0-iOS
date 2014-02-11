@@ -18,14 +18,10 @@
 
 #define PLAYBACK_API_UPDATE_INTERVAL 15.f
 
-static Frame *currentPlayingVideoFrame;
-
 NSString * const kShelbySPVideoExternalPlaybackActiveKey = @"externalPlaybackActive";
 NSString * const kShelbySPVideoCurrentItemKey = @"currentItem";
 NSString * const kShelbySPVideoAirplayDidBegin = @"spAirplayDidBegin";
 NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
-NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVideoPlayerCurrentPlayingVideoChanged";
-
 
 @interface SPVideoPlayer () {
     CGFloat _rateBeforeScrubbing;
@@ -72,11 +68,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     }
     
     return self;
-}
-
-+ (Video *)currentPlayingVideo
-{
-    return [currentPlayingVideoFrame video];
 }
 
 #pragma mark - View Lifecycle Methods
@@ -407,14 +398,11 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         }];
     }
     
-    currentPlayingVideoFrame = self.videoFrame;
     [self.player play];
     self.isPlaying = YES;
     
     [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
     [self.videoPlayerDelegate videoPlaybackStatus:YES forPlayer:self];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoPlayerCurrentPlayingVideoChanged object:nil];
 }
 
 - (void)pause
@@ -576,11 +564,11 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     self.thumbnailView = [[[NSBundle mainBundle] loadNibNamed:@"VideoPlayerThumbnailOverlayView" owner:self options:nil] firstObject];
     [self.view addSubview:self.thumbnailView];
     self.thumbnailView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=1)-[thumb(500)]-(>=1)-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[thumb(500)]"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"thumb":self.thumbnailView}]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=1)-[thumb(250)]-(>=1)-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[thumb(250)]"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"thumb":self.thumbnailView}]];

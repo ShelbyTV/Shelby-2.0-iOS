@@ -119,7 +119,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
-                                                 name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+                                                 name:kShelbyPlaybackEntityDidChangeNotification object:nil];
     
     if (self.mayShowConnectSocial) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSpecialCellStatus) name:kShelbyNotificationFacebookConnectCompleted object:nil];
@@ -197,13 +197,13 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 - (void)playbackEntityDidChangeNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
+    DisplayChannel *channel = userInfo[kShelbyPlaybackCurrentChannelKey];
     if (channel != self.displayChannel) {
         self.currentlySelectedEntity = nil;
         return;
     }
 
-    self.currentlySelectedEntity = userInfo[kShelbyVideoReelEntityKey];
+    self.currentlySelectedEntity = userInfo[kShelbyPlaybackCurrentEntityKey];
 }
 
 - (void)refreshSpecialCellStatus

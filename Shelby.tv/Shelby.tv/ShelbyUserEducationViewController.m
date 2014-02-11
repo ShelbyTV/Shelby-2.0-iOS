@@ -85,7 +85,7 @@ static BOOL videoHasPlayed = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
-                                                 name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+                                                 name:kShelbyPlaybackEntityDidChangeNotification object:nil];
 }
 
 - (void)dealloc

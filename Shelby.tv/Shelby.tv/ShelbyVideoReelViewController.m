@@ -63,7 +63,7 @@
     //we listen to current video changes same as everybody else (even tho we create the video reel)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(videoReelDidChangePlaybackEntityNotification:)
-                                                 name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+                                                 name:kShelbyPlaybackEntityDidChangeNotification object:nil];
     
     //adjust play/pause when modal views obscure video
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -130,7 +130,7 @@
         
     } else if ([self.airPlayController isAirPlayActive]) {
         //B) currently playing via AirPlay (simply play index requested, it has no queue)
-        [self.airPlayController playEntity:deduplicatedEntries[idx]];
+        [self.airPlayController playEntity:deduplicatedEntries[idx] inChannel:channel];
         self.videoReelBackdropView.backdropImageEntity = deduplicatedEntries[idx];
         
     } else {
@@ -245,7 +245,7 @@
 //    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
 //    STVDebugAssert(self.videoReel.channel == channel, @"these should be in sync");
     
-    id<ShelbyVideoContainer> entity = userInfo[kShelbyVideoReelEntityKey];
+    id<ShelbyVideoContainer> entity = userInfo[kShelbyPlaybackCurrentEntityKey];
     self.videoControlsVC.currentEntity = entity;
     self.videoOverlayView.currentEntity = entity;
     self.videoReelBackdropView.backdropImageEntity = entity;

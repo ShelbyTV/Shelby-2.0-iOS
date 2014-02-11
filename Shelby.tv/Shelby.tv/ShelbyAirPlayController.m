@@ -148,7 +148,7 @@
     return self.videoPlayer != nil;
 }
 
-- (void)playEntity:(id<ShelbyVideoContainer>)entity
+- (void)playEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
 {
     Frame *newFrame = [Frame frameForEntity:entity];
     if (newFrame != self.currentFrame) {
@@ -168,6 +168,11 @@
             self.videoPlayer.shouldAutoplay = YES;
             [self.videoPlayer prepareForStreamingPlayback];
         }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyPlaybackEntityDidChangeNotification
+                                                            object:self
+                                                          userInfo:@{kShelbyPlaybackCurrentEntityKey : entity,
+                                                                     kShelbyPlaybackCurrentChannelKey : channel}];
     }
 }
 

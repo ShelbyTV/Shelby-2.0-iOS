@@ -22,12 +22,6 @@
 #import "TwitterHandler.h"
 #import "UIScreen+Resolution.h"
 
-//notifications
-NSString * const kShelbyVideoReelDidChangePlaybackEntityNotification = @"kShelbyVideoReelDidChangePlaybackEntityNotification";
-//userInfo keys
-NSString * const kShelbyVideoReelEntityKey = @"kShelbyVideoReelEntityKey";
-NSString * const kShelbyVideoReelChannelKey = @"kShelbyVideoReelChannelKey";
-
 #define kShelbySPSlowSpeed 0.2
 #define kShelbySPFastSpeed 0.5
 #define kShelbyTutorialIntervalBetweenTutorials 3
@@ -302,7 +296,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     //resetting all possibly playable players (including current player) will pause and free memory of AVPlayer
     //not entirely true: if the player has an extraction pending, that block holds a reference to the player
     //but resetPlayer: is respected by that block; it will do nothing if it's player has been reset.
-    [self.possiblyPlayablePlayers makeObjectsPerformSelector:@selector(resetPlayer)];
+    [self.videoPlayers makeObjectsPerformSelector:@selector(resetPlayer)];
 
     if (self.tutorialTimer) {
         [self.tutorialTimer invalidate];
@@ -476,10 +470,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
         id<ShelbyVideoContainer> entity = self.videoEntities[self.currentVideoPlayingIndex];
         STVDebugAssert([Frame frameForEntity:entity] == self.currentPlayer.videoFrame);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyVideoReelDidChangePlaybackEntityNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyPlaybackEntityDidChangeNotification
                                                             object:self
-                                                          userInfo:@{kShelbyVideoReelEntityKey : entity,
-                                                                     kShelbyVideoReelChannelKey : self.channel}];
+                                                          userInfo:@{kShelbyPlaybackCurrentEntityKey : entity,
+                                                                     kShelbyPlaybackCurrentChannelKey : self.channel}];
     }
 }
 

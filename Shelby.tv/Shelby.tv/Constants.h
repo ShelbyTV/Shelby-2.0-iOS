@@ -29,6 +29,10 @@
 extern NSString * const kShelbyWillPresentModalViewNotification;
 extern NSString * const kShelbyDidDismissModalViewNotification;
 
+extern NSString * const kShelbyPlaybackEntityDidChangeNotification;
+extern NSString * const kShelbyPlaybackCurrentEntityKey;
+extern NSString * const kShelbyPlaybackCurrentChannelKey;
+
 /// Colors - deprecated
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
 #define kShelbyColorOrange                                  [UIColor colorWithHex:@"F38D00" andAlpha:1.0f]

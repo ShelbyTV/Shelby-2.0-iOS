@@ -34,7 +34,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
-                                                 name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+                                                 name:kShelbyPlaybackEntityDidChangeNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(requestToShowCurrentlyOnNotification:)
@@ -163,7 +163,7 @@
 - (void)playbackEntityDidChangeNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
+    DisplayChannel *channel = userInfo[kShelbyPlaybackCurrentChannelKey];
     
     if ([self.visibleViewController conformsToProtocol:@protocol(ShelbyVideoContentBrowsingViewControllerProtocol)]) {
         UIViewController<ShelbyVideoContentBrowsingViewControllerProtocol> *videoVC = (UIViewController<ShelbyVideoContentBrowsingViewControllerProtocol>*)self.visibleViewController;

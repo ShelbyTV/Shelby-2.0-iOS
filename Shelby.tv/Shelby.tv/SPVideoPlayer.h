@@ -13,7 +13,6 @@
 
 extern NSString * const kShelbySPVideoAirplayDidBegin;
 extern NSString * const kShelbySPVideoAirplayDidEnd;
-extern NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged;
 
 @class SPVideoPlayer;
 
@@ -37,8 +36,6 @@ extern NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged;
 @property (readonly) BOOL isPlayable;
 @property (assign, atomic) BOOL shouldAutoplay;
 @property (nonatomic, weak) id<SPVideoPlayerDelegate> videoPlayerDelegate;
-
-+ (Video *)currentPlayingVideo;
 
 // Initialization
 - (id)initWithVideoFrame:(Frame *)videoFrame;
