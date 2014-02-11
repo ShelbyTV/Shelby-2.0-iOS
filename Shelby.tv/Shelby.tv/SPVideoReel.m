@@ -108,6 +108,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     // Our parent sets our frame, which may be different than the last time we were on screen.
     // If so, need to adjust the collection view appropriately (we can reuse our willRotate logic)
     if ([[UIApplication sharedApplication] statusBarOrientation] != _currentlyPresentedInterfaceOrientation) {
