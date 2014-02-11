@@ -620,6 +620,9 @@
 		9103939518A1330A003B911D /* NoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103939418A1330A003B911D /* NoContentView.m */; };
 		9103939618A1330A003B911D /* NoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103939418A1330A003B911D /* NoContentView.m */; };
 		9103939718A1330A003B911D /* NoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103939418A1330A003B911D /* NoContentView.m */; };
+		9103939A18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */; };
+		9103939B18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */; };
+		9103939C18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */; };
 		910933081743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		910933091743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
@@ -1289,6 +1292,7 @@
 		9103938F18A131DC003B911D /* NoContentViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoContentViews.xib; sourceTree = "<group>"; };
 		9103939318A1330A003B911D /* NoContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoContentView.h; sourceTree = "<group>"; };
 		9103939418A1330A003B911D /* NoContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentView.m; sourceTree = "<group>"; };
+		9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoReelAirplayBackdropView.xib; sourceTree = "<group>"; };
 		910933061743E47F00AC038E /* ShelbyAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAlert.h; sourceTree = "<group>"; };
 		910933071743E47F00AC038E /* ShelbyAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAlert.m; sourceTree = "<group>"; };
 		910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyCurrentlyOnViewController.h; sourceTree = "<group>"; };
@@ -1638,6 +1642,7 @@
 				91319BCC189C4EF4000384A0 /* VideoPlayerThumbnailOverlayView.xib */,
 				9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */,
 				9103938F18A131DC003B911D /* NoContentViews.xib */,
+				9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -2721,6 +2726,7 @@
 				1CE5586317DE73CA00C18A30 /* share-large@2x.png in Resources */,
 				1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CE5586B17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
+				9103939B18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1C3A7EDB1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9192ED0F17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				9124A6B0188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
@@ -2858,6 +2864,7 @@
 				1CE5586417DE73CA00C18A30 /* share-large@2x.png in Resources */,
 				1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CE5586C17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
+				9103939C18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1C3A7EDC1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9192ED1017C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				9124A6B1188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
@@ -2992,6 +2999,7 @@
 				1CDCA693179F317A0098C4E1 /* overlay@2x.png in Resources */,
 				1CDCA698179F34BC0098C4E1 /* overlay-landscape.png in Resources */,
 				1C100DCF185F8E01002ADAF2 /* FollowNotificationViewCell.xib in Resources */,
+				9103939A18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1CDCA69B179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
 				9124A67B188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */,
 				1CDCA6A0179F3FB80098C4E1 /* play-standard.png in Resources */,

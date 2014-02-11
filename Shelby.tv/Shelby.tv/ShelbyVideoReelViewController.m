@@ -22,6 +22,7 @@
 @interface ShelbyVideoReelViewController ()
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, strong) VideoReelBackdropView *videoReelBackdropView;
+@property (nonatomic, strong) UIView *airPlayBackdropView;
 @property (nonatomic, strong) ShelbyAirPlayController *airPlayController;
 //we track the current channel and deduped entries for when airplay takes over from video reel
 @property (nonatomic, strong) DisplayChannel *currentChannel;
@@ -53,6 +54,7 @@
     self.currentlyPlayingIndexInChannel = 0;
     self.presentedModalViewCount = 0;
     
+    [self setupAirplayBackdrop];
     [self setupBackdrop];
     [self setupVideoControls];
     [self setupVideoOverlay];
@@ -145,7 +147,23 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
--(void)setupBackdrop
+- (void)setupAirplayBackdrop
+{
+    self.airPlayBackdropView = [[NSBundle mainBundle] loadNibNamed:@"VideoReelAirplayBackdropView" owner:self options:nil][0];
+    [self.view addSubview:self.airPlayBackdropView];
+    self.airPlayBackdropView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[APBackdrop]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"APBackdrop":self.airPlayBackdropView}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[APBackdrop]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"APBackdrop":self.airPlayBackdropView}]];
+    self.airPlayBackdropView.alpha = 0.f;
+}
+
+- (void)setupBackdrop
 {
     self.videoReelBackdropView = [[VideoReelBackdropView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:self.videoReelBackdropView];
@@ -557,6 +575,8 @@
         }
         //enter airplay mode
         [UIView animateWithDuration:0.2 animations:^{
+            self.airPlayBackdropView.alpha = 1.f;
+            self.videoReelBackdropView.alpha = 0.f;
             self.videoControlsVC.view.alpha = 1.f;
             self.videoControlsVC.displayMode = VideoControlsDisplayForAirPlay;
         }];
@@ -565,6 +585,8 @@
         //exit airplay mode
         STVDebugAssert(self.videoControlsVC.displayMode == VideoControlsDisplayForAirPlay, @"shouldn't exit airplay when not in airplay");
         [UIView animateWithDuration:0.2 animations:^{
+            self.airPlayBackdropView.alpha = 0.f;
+            self.videoReelBackdropView.alpha = 1.f;
             self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
         }];
         

@@ -308,6 +308,7 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     [volumeView setShowsRouteButton:YES];
     if (DEVICE_IPAD) {
         [volumeView setRouteButtonImage:[UIImage imageNamed:@"player-controls-airplay"] forState:UIControlStateNormal];
+        [volumeView setRouteButtonImage:[UIImage imageNamed:@"player-controls-airplay-active"] forState:UIControlStateSelected];
     }
     [self.airPlayView addSubview:volumeView];
     
