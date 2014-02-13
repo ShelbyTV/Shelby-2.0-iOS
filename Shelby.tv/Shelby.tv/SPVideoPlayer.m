@@ -44,6 +44,14 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 @property (assign, nonatomic) CMTime lastPlayheadPosition;
 @property (strong, nonatomic) id playerTimeObserver;
 
+//constraints for re-positioning by parent
+@property (nonatomic, strong) NSLayoutConstraint *constrainLeading;
+@property (nonatomic, strong) NSLayoutConstraint *constrainTrailing;
+@property (nonatomic, strong) NSLayoutConstraint *constrainTop;
+@property (nonatomic, strong) NSLayoutConstraint *constrainBottom;
+@property (nonatomic, strong) NSLayoutConstraint *constrainWidth;
+@property (nonatomic, strong) NSLayoutConstraint *constrainHeight;
+
 @end
 
 @implementation SPVideoPlayer
@@ -108,6 +116,65 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     //so we need to update bounds & position of AVPlayerLayer
     self.playerLayer.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.playerLayer.position = CGPointMake(self.view.frame.size.width/2.f, self.view.frame.size.height/2.f);
+}
+
+/* View could have been positioned with frame and allowed to translate autoresize mask into constraints.
+ * But in practice, this is incredibly inefficient as the constraints are recalculated
+ * in a naieve way.  By setting up constraints ourselves, we can be smarter.
+ *
+ * NB: Would be 100x better to have just used a CollectionView instead of doing all
+ * this crap manually.
+ */
+- (void)setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:(CGRect)f
+{
+    //height is local to view (doesn't change when set)
+    if (!self.constrainHeight) {
+        self.constrainHeight = [NSLayoutConstraint constraintWithItem:self.view
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1.0
+                                                             constant:f.size.height];
+        [self.view addConstraint:self.constrainHeight];
+    }
+    self.constrainHeight.constant = f.size.height;
+    
+    //width is relative to superview and constant (grows and shrinks on iPad)
+    if (!self.constrainWidth) {
+        self.constrainWidth = [NSLayoutConstraint constraintWithItem:self.view
+                                                           attribute:NSLayoutAttributeWidth
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.view.superview
+                                                           attribute:NSLayoutAttributeWidth
+                                                          multiplier:1.0
+                                                            constant:0];
+        [self.view.superview addConstraint:self.constrainWidth];
+    }
+    
+    //position is relative to superview (has to tie to all four walls)
+    if (!self.constrainLeading) {
+        self.constrainLeading = [NSLayoutConstraint constraintWithItem:self.view
+                                                             attribute:NSLayoutAttributeLeading
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view.superview
+                                                             attribute:NSLayoutAttributeLeading
+                                                            multiplier:1.0
+                                                              constant:f.origin.x];
+        [self.view.superview addConstraint:self.constrainLeading];
+    }
+    self.constrainLeading.constant = f.origin.x;
+    
+    if (!self.constrainTop) {
+        self.constrainTop = [NSLayoutConstraint constraintWithItem:self.view
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.view.superview
+                                                         attribute:NSLayoutAttributeTop
+                                                        multiplier:1.0
+                                                          constant:f.origin.y];
+        [self.view.superview addConstraint:self.constrainTop];
+    }
+    self.constrainTop.constant = f.origin.y;
 }
 
 - (void)setupPlayerForURL:(NSURL *)playerURL
@@ -573,14 +640,16 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)setupThumbnailOverlay
 {
+    STVDebugAssert(!self.thumbnailView);
+    
     self.thumbnailView = [[[NSBundle mainBundle] loadNibNamed:@"VideoPlayerThumbnailOverlayView" owner:self options:nil] firstObject];
     [self.view addSubview:self.thumbnailView];
     self.thumbnailView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=1)-[thumb(500)]-(>=1)-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[thumb(500)]"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"thumb":self.thumbnailView}]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=1)-[thumb(250)]-(>=1)-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[thumb(250)]"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"thumb":self.thumbnailView}]];

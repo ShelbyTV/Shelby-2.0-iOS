@@ -45,6 +45,9 @@ extern NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged;
 
 - (void)resetPlayer;
 
+// View is sized + positioned by owner (VideoReel) via this
+- (void)setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:(CGRect)f;
+
 // Does not load video
 - (void)warmVideoExtractionCache;
 // Does preload video
