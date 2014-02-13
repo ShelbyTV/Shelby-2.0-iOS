@@ -52,6 +52,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     self.spinner = ({
         UIActivityIndicatorView *v = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         v.hidesWhenStopped = YES;
@@ -63,6 +65,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+
     self.spinner.center = CGPointMake(self.view.bounds.size.width/2.f, -20);
 }
 

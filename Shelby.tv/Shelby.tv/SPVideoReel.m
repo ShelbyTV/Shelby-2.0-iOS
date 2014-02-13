@@ -36,7 +36,8 @@
     CGPoint _autoadvanceTargetOffset;
 }
 
-@property (nonatomic) UIScrollView *videoScrollView;
+@property (nonatomic, strong) UIScrollView *videoScrollView;
+@property (nonatomic, strong) UIView *videoScrollViewContentHolder;
 //Array of DashboardEntry or Frame, technically: id<ShelbyVideoContainer>
 @property (nonatomic) NSMutableArray *videoEntities;
 @property (nonatomic) NSMutableArray *videoPlayers;
@@ -95,20 +96,19 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor blackColor]];
-    
-    // Any setup stuff that *doesn't* rely on frame sizing can go here
-    [self createVideoScrollView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     // Our parent sets our frame, which may be different than the last time we were on screen.
     // If so, need to adjust the collection view appropriately (we can reuse our willRotate logic)
-    if ([[UIApplication sharedApplication] statusBarOrientation] != _currentlyPresentedInterfaceOrientation) {
-        _currentlyPresentedInterfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-        NSInteger newWidth = self.view.frame.size.width;
-        NSInteger newHeight = self.view.frame.size.height;
-        [self adjustScrollViewForNewWidth:newWidth height:newHeight];
+    CGFloat newWidth = self.view.frame.size.width;
+    CGFloat newHeight = self.view.frame.size.height;
+    if (self.videoScrollView && (self.videoScrollViewContentHolder.bounds.size.width != newWidth ||
+                                 self.videoScrollViewContentHolder.bounds.size.height != newHeight)) {
+        [self adjustContentSizingForNewBounds:CGRectMake(0, 0, newWidth, newHeight)];
     }
 }
 
@@ -146,7 +146,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
     NSInteger newWidth = self.view.frame.size.height;
     NSInteger newHeight = self.view.frame.size.width;
-    [self adjustScrollViewForNewWidth:newWidth height:newHeight];
+    [self adjustContentSizingForNewBounds:CGRectMake(0, 0, newWidth, newHeight)];
 }
 
 #pragma mark - Setup Methods
@@ -174,8 +174,28 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         self.videoScrollView.showsVerticalScrollIndicator = NO;
         self.videoScrollView.scrollsToTop = NO;
         [self.videoScrollView setDelaysContentTouches:YES];
-        self.videoScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:self.videoScrollView];
+        // Size Scroll view via "mixed" approach
+        // https://developer.apple.com/library/ios/technotes/tn2154/_index.html
+        //1) position and size scroll view w/ constraints external to the scroll view
+        //2) use a plain UIView as scroll view's content
+        //      - it should have a size defined by it's frame
+        //      - it should translatesAutoresizingMaskIntoConstraints
+        //3) The actual meat and potatoes content is added within the scroll view's content view
+        //      - these sub views can use autolayout
+        self.videoScrollView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"scrollView":self.videoScrollView}]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"scrollView":self.videoScrollView}]];
+        //a simple content view whose size is used by the scroll view to set its content size
+        self.videoScrollViewContentHolder = [[UIView alloc] initWithFrame:self.view.frame];
+        self.videoScrollViewContentHolder.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.videoScrollView addSubview:self.videoScrollViewContentHolder];
     }
 }
 
@@ -184,7 +204,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self createVideoScrollView];
 
     CGSize contentSize;
-    NSInteger videoHeight = self.videoScrollView.bounds.size.height;
+    NSInteger videoHeight = self.view.bounds.size.height;
     if (UIInterfaceOrientationIsLandscape(_currentlyPresentedInterfaceOrientation)) {
         STVDebugAssert(videoHeight == kShelbyFullscreenWidth, @"We set/assumed this pre-iPad");
         STVDebugAssert(DEVICE_IPAD || self.videoScrollView.bounds.size.width == kShelbyFullscreenHeight, @"We set/assumed this pre-iPad");
@@ -196,6 +216,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         contentSize = CGSizeMake(self.videoScrollView.bounds.size.width, [self.videoEntities count] * videoHeight);
     }
     
+    self.videoScrollViewContentHolder.frame = CGRectMake(0, 0, contentSize.width, contentSize.height);
     self.videoScrollView.contentSize = contentSize;
     CGPoint offset = CGPointMake(0, (int)self.videoStartIndex * videoHeight);
     [self.videoScrollView setContentOffset:offset animated:NO];
@@ -212,50 +233,49 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)createVideoPlayerForEntity:(id<ShelbyVideoContainer>)entity atPosition:(NSUInteger)idx
 {
     SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithVideoFrame:[Frame frameForEntity:entity]];
-    player.view.frame = [self rectForPlayerAtPosition:idx];
     player.videoPlayerDelegate = self;
 
     [self.videoPlayers addObject:player];
-    [player willMoveToParentViewController:self];
-    [self addChildViewController:player];
-    [self.videoScrollView addSubview:player.view];
+    [self addChildViewController:player]; //<-- automatically calls willMoveToParentViewController
+    [self.videoScrollViewContentHolder addSubview:player.view];
+    //Position explicity with autolayout (b/c the autolayout that comes with
+    //translatesAutoresizingMaskIntoConstraints is inefficient & problematic)
+    player.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [player setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:[self frameForPlayerAtPosition:idx withBounds:self.view.bounds]];
     [player didMoveToParentViewController:self];
 }
 
-- (CGRect)rectForPlayerAtPosition:(NSUInteger)idx
+- (CGRect)frameForPlayerAtPosition:(NSUInteger)idx withBounds:(CGRect)parentBounds
 {
-    CGRect viewframe = [self.videoScrollView frame];
-
-    NSInteger videoHeight = kShelbyFullscreenHeight;
-    if (UIInterfaceOrientationIsLandscape(_currentlyPresentedInterfaceOrientation)) {
-        videoHeight = kShelbyFullscreenWidth;
-    }
-    viewframe.origin.y = videoHeight * idx;
-    viewframe.origin.x = 0.0f;
-
-    return viewframe;
+    parentBounds.origin.y = parentBounds.size.height * idx;
+    parentBounds.origin.x = 0.0f;
+    
+    return parentBounds;
 }
 
-- (void)adjustScrollViewForNewWidth:(CGFloat)newWidth height:(CGFloat)newHeight
+- (void)adjustContentSizingForNewBounds:(CGRect)newBounds
 {
-    CGSize contentSize =  CGSizeMake(newWidth, newHeight * [self.videoPlayers count]);
-    CGPoint contentOffset = CGPointMake(0, newHeight * self.currentVideoPlayingIndex);
+    //widths of videoScrollView and its inner videoScrollViewContentHolder automatically adjust
+    //just need to change the content size and offset
+    CGSize contentSize =  CGSizeMake(self.view.bounds.size.width, newBounds.size.height * [self.videoPlayers count]);
+    CGPoint contentOffset = CGPointMake(0, newBounds.size.height * self.currentVideoPlayingIndex);
 
+    self.videoScrollViewContentHolder.frame = CGRectMake(0, 0, contentSize.width, contentSize.height);
     self.videoScrollView.contentSize = contentSize;
     self.videoScrollView.contentOffset = contentOffset;
 
-    //the bounds' of the SPVideoPlayers inside of the scroll view are automatically updated,
-    //but that doesn't change their position.  So let's put them into their new position for smooth animation
+    //the players themselves also need new sizes (width is ignored: autolayout matches width of superview)
+    //and new positions
     NSInteger i = 0;
     for (SPVideoPlayer *player in self.videoPlayers) {
-        player.view.frame = CGRectMake(0, newHeight * i, player.view.frame.size.width, player.view.frame.size.height);
+        [player setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:[self frameForPlayerAtPosition:i withBounds:newBounds]];
         i++;
     }
 }
 
 - (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
-    [self.videoScrollView addGestureRecognizer:gestureRecognizer];
+    [self.view addGestureRecognizer:gestureRecognizer];
 }
 
 - (void)setupGestures
@@ -309,37 +329,41 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 // and keep the current player in the correct spot...
 - (void)setDeduplicatedEntries:(NSArray *)deduplicatedEntries
 {
-    _videoEntities = [deduplicatedEntries mutableCopy];
-    
-    //first, resize the content area
-    [self setupVideoScrollView];  // sets content offset to (0,0)
+    if (![deduplicatedEntries isEqualToArray:_videoEntities]) {
+        _videoEntities = [deduplicatedEntries mutableCopy];
+        
+        //first, resize the content area
+        [self setupVideoScrollView];  // sets content offset to (0,0)
 
-    SPVideoPlayer *curPlayer = self.currentPlayer;
-    NSMutableArray *oldNonCurrentPlayers = [self.videoPlayers mutableCopy];
-    [oldNonCurrentPlayers removeObject:curPlayer];
+        SPVideoPlayer *curPlayer = self.currentPlayer;
+        NSMutableArray *oldNonCurrentPlayers = [self.videoPlayers mutableCopy];
+        [oldNonCurrentPlayers removeObject:curPlayer];
 
-    //out with the old
-    for (SPVideoPlayer *player in oldNonCurrentPlayers) {
-        [player resetPlayer];
-        [player removeFromParentViewController];
-    }
-
-    //in with the new
-    self.videoPlayers = [@[] mutableCopy];
-
-    for (NSUInteger i = 0; i < [deduplicatedEntries count]; i++) {
-        id<ShelbyVideoContainer>entity = deduplicatedEntries[i];
-        if (curPlayer.videoFrame == [Frame frameForEntity:entity]) {
-            //the current player matches the new frame, sweet, just use it here
-            curPlayer.view.frame = [self rectForPlayerAtPosition:i];
-            self.currentVideoPlayingIndex = i;
-            curPlayer = nil;
+        //out with the old
+        for (SPVideoPlayer *player in oldNonCurrentPlayers) {
+            [player resetPlayer];
+            [player willMoveToParentViewController:nil];
+            [player removeFromParentViewController]; //<-- calls didMoveToParentViewController:nil after removing
         }
-        [self createVideoPlayerForEntity:entity atPosition:i];
+
+        //in with the new
+        self.videoPlayers = [@[] mutableCopy];
+
+        for (NSUInteger i = 0; i < [deduplicatedEntries count]; i++) {
+            id<ShelbyVideoContainer>entity = deduplicatedEntries[i];
+            if (curPlayer.videoFrame == [Frame frameForEntity:entity]) {
+                //the current player matches the new frame, sweet, just use it here
+                [curPlayer setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:[self frameForPlayerAtPosition:i withBounds:self.view.bounds]];
+                
+                self.currentVideoPlayingIndex = i;
+                curPlayer = nil;
+            }
+            [self createVideoPlayerForEntity:entity atPosition:i];
+        }
+        
+        //reset content offset to stay centered on current player
+        [self.videoScrollView setContentOffset:self.currentPlayer.view.frame.origin animated:NO];
     }
-    
-    //reset content offset to stay centered on current player
-    [self.videoScrollView setContentOffset:curPlayer.view.frame.origin animated:NO];
 }
 
 - (BOOL)isCurrentPlayerPlaying
@@ -405,9 +429,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)scrollForPlaybackAtIndex:(NSUInteger)idx forcingPlayback:(BOOL)forcePlaybackEvenIfPaused
 {
-    CGRect newPlayersRect = [self rectForPlayerAtPosition:idx];
+    CGRect newPlayersFrame = [self frameForPlayerAtPosition:idx withBounds:self.view.bounds];
     
-    if (CGPointEqualToPoint(self.videoScrollView.contentOffset, newPlayersRect.origin) &&
+    if (CGPointEqualToPoint(self.videoScrollView.contentOffset, newPlayersFrame.origin) &&
         self.videoEntities.count > idx &&
         self.currentPlayer.videoFrame == [Frame frameForEntity:self.videoEntities[idx]]) {
         //no scrolling or player changing required, just make sure we respect forcePlaybackEvenIfPaused
@@ -422,7 +446,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self currentVideoShouldChangeToVideo:idx autoplay:shouldAutoplay];
         
         //and scroll it into view
-        [self scrollTo:newPlayersRect.origin];
+        [self scrollTo:newPlayersFrame.origin];
     }
 }
 

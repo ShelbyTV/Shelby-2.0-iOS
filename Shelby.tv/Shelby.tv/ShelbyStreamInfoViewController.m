@@ -428,9 +428,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         
         self.currentlySelectedEntity = self.deduplicatedEntries[indexPath.row];
         
-        [self.videoReelVC playChannel:self.displayChannel
-              withDeduplicatedEntries:self.deduplicatedEntries
-                              atIndex:indexPath.row];
+        //so cell responds quickly
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.videoReelVC playChannel:self.displayChannel
+                  withDeduplicatedEntries:self.deduplicatedEntries
+                                  atIndex:indexPath.row];
+        });
     }
 }
 
