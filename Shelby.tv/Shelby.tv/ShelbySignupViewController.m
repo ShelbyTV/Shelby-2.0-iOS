@@ -117,6 +117,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [UIApplication sharedApplication].statusBarHidden = YES;
     
     if (self.prepareForSignup) {
@@ -128,6 +129,8 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
