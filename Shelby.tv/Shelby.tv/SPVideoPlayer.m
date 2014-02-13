@@ -503,8 +503,10 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 {
     if (CMTIME_IS_VALID([self duration])) {
         CMTime seekTo = CMTimeMultiplyByFloat64([self duration], MAX(0.0,MIN(scrubPct,1.0)));
-        [self.player seekToTime:seekTo];
-        _lastPlaybackUpdateIntervalEnd = seekTo;
+        if (CMTIME_IS_VALID(seekTo) && !CMTIME_IS_INDEFINITE(seekTo)) {
+            [self.player seekToTime:seekTo];
+            _lastPlaybackUpdateIntervalEnd = seekTo;
+        }
     }
 }
 
