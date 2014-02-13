@@ -20,6 +20,7 @@
 
 NSString * const kShelbySPVideoExternalPlaybackActiveKey = @"externalPlaybackActive";
 NSString * const kShelbySPVideoCurrentItemKey = @"currentItem";
+NSString * const kShelbySPVideoPlayerRate = @"rate";
 NSString * const kShelbySPVideoAirplayDidBegin = @"spAirplayDidBegin";
 NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
@@ -37,6 +38,7 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 @property (assign, atomic) BOOL canBecomePlayable;
 @property (assign, nonatomic) BOOL isPlayable;
 @property (assign, nonatomic) BOOL isPlaying;
+@property (assign, nonatomic) BOOL isScrubbing;
 @property (assign, nonatomic) CMTime lastPlayheadPosition;
 @property (strong, nonatomic) id playerTimeObserver;
 
@@ -85,6 +87,7 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     
     self.isPlayable = NO;
     self.isPlaying = NO;
+    self.isScrubbing = NO;
     self.shouldAutoplay = NO;
     
     if (DEVICE_IPAD) {
@@ -274,6 +277,7 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
                                                                    usingBlock:^(CMTime time) {
                                                                        [weakSelf currentTimeUpdated:time];
                                                                    }];
+    [self.player addObserver:self forKeyPath:kShelbySPVideoPlayerRate options:NSKeyValueObservingOptionNew context:nil];
 
 
     // Observe keypaths for buffer states on AVPlayerItem
@@ -309,6 +313,7 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     if (self.playerTimeObserver) {
         [self.player removeTimeObserver:self.playerTimeObserver];
         self.playerTimeObserver = nil;
+        [self.player removeObserver:self forKeyPath:kShelbySPVideoPlayerRate];
     }
 
     if (playerItem && (id)playerItem != [NSNull null]) {
@@ -474,23 +479,23 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
 - (void)pause
 {
-    //djs TODO: should this all be done on the main thread???
-    //b/c of how this gets called, it's not necessarily on main thread
-    [self.player pause];
     self.isPlaying = NO;
     self.shouldAutoplay = NO;
+    [self.player pause];
     
     [self.videoPlayerDelegate videoPlaybackStatus:NO forPlayer:self];
 }
 
 - (void)beginScrubbing
 {
+    self.isScrubbing = YES;
     _rateBeforeScrubbing = self.player.rate;
     self.player.rate = 0.f;
 }
 
 - (void)endScrubbing
 {
+    self.isScrubbing = NO;
     self.player.rate = _rateBeforeScrubbing;
 }
 
@@ -541,6 +546,11 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
                                        withObject:change
                                     waitUntilDone:YES];
             }
+        } else if ([keyPath isEqualToString:kShelbySPVideoPlayerRate]) {
+            if ([self shouldBePlaying] && !self.isScrubbing && self.player.rate == 0.f) {
+                //we should be playing!
+                [self play];
+            }
         }
         return;
     }
@@ -567,7 +577,6 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
     } else if ([keyPath isEqualToString:kShelbySPAVPlayerStatus]) {
         if ([change[NSKeyValueChangeNewKey] isEqual:@(AVPlayerItemStatusReadyToPlay)]) {
-            //TODO finish up
             if (self.shouldBePlaying) {
                 [UIView animateWithDuration:0.25 animations:^{
                     self.playerLayer.hidden = NO;
