@@ -335,39 +335,41 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 // and keep the current player in the correct spot...
 - (void)setDeduplicatedEntries:(NSArray *)deduplicatedEntries
 {
-    _videoEntities = [deduplicatedEntries mutableCopy];
-    
-    //first, resize the content area
-    [self setupVideoScrollView];  // sets content offset to (0,0)
+    if (![deduplicatedEntries isEqualToArray:_videoEntities]) {
+        _videoEntities = [deduplicatedEntries mutableCopy];
+        
+        //first, resize the content area
+        [self setupVideoScrollView];  // sets content offset to (0,0)
 
-    SPVideoPlayer *curPlayer = self.currentPlayer;
-    NSMutableArray *oldNonCurrentPlayers = [self.videoPlayers mutableCopy];
-    [oldNonCurrentPlayers removeObject:curPlayer];
+        SPVideoPlayer *curPlayer = self.currentPlayer;
+        NSMutableArray *oldNonCurrentPlayers = [self.videoPlayers mutableCopy];
+        [oldNonCurrentPlayers removeObject:curPlayer];
 
-    //out with the old
-    for (SPVideoPlayer *player in oldNonCurrentPlayers) {
-        [player resetPlayer];
-        [player willMoveToParentViewController:nil];
-        [player removeFromParentViewController]; //<-- calls didMoveToParentViewController:nil after removing
-    }
-
-    //in with the new
-    self.videoPlayers = [@[] mutableCopy];
-
-    for (NSUInteger i = 0; i < [deduplicatedEntries count]; i++) {
-        id<ShelbyVideoContainer>entity = deduplicatedEntries[i];
-        if (curPlayer.videoFrame == [Frame frameForEntity:entity]) {
-            //the current player matches the new frame, sweet, just use it here
-            [curPlayer setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:[self frameForPlayerAtPosition:i withBounds:self.view.bounds]];
-            
-            self.currentVideoPlayingIndex = i;
-            curPlayer = nil;
+        //out with the old
+        for (SPVideoPlayer *player in oldNonCurrentPlayers) {
+            [player resetPlayer];
+            [player willMoveToParentViewController:nil];
+            [player removeFromParentViewController]; //<-- calls didMoveToParentViewController:nil after removing
         }
-        [self createVideoPlayerForEntity:entity atPosition:i];
+
+        //in with the new
+        self.videoPlayers = [@[] mutableCopy];
+
+        for (NSUInteger i = 0; i < [deduplicatedEntries count]; i++) {
+            id<ShelbyVideoContainer>entity = deduplicatedEntries[i];
+            if (curPlayer.videoFrame == [Frame frameForEntity:entity]) {
+                //the current player matches the new frame, sweet, just use it here
+                [curPlayer setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:[self frameForPlayerAtPosition:i withBounds:self.view.bounds]];
+                
+                self.currentVideoPlayingIndex = i;
+                curPlayer = nil;
+            }
+            [self createVideoPlayerForEntity:entity atPosition:i];
+        }
+        
+        //reset content offset to stay centered on current player
+        [self.videoScrollView setContentOffset:self.currentPlayer.view.frame.origin animated:NO];
     }
-    
-    //reset content offset to stay centered on current player
-    [self.videoScrollView setContentOffset:self.currentPlayer.view.frame.origin animated:NO];
 }
 
 - (BOOL)isCurrentPlayerPlaying
