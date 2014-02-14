@@ -119,8 +119,12 @@
         NSString *noThumbImageName = [NSString stringWithFormat:@"video-no-thumb-%d", arc4random_uniform(3)];
         [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:[UIImage imageNamed:noThumbImageName] success:nil failure:nil];
         
-        NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
-        [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:nil failure:nil];
+        if ([_dashboardEntry recommendedEntry]) {
+            self.userAvatar.image = [UIImage imageNamed:@"recommendation-avatar"];
+        } else {
+            NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
+            [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:nil failure:nil];
+        }
         
         [self updateViewForCurrentLikeStatus];
         
@@ -152,15 +156,22 @@
         
         self.detailAvatarBadge.image = badgeImage;
     
-        // Via Network
-        if (viaNetwork) {
-            suppotingText = [NSString stringWithFormat:@"via %@", viaNetwork];
-        }
-        
-        if (suppotingText) {
-            self.username.attributedText = [self nicknameAttributedString:nickname withText:suppotingText];
+        //username
+        if ([_dashboardEntry recommendedEntry]) {
+            self.username.attributedText = [[NSAttributedString alloc] initWithString:@"Recommended for you"
+                                                                           attributes:@{NSForegroundColorAttributeName: kShelbyColorGreen}];
+            
         } else {
-            self.username.text = nickname;
+            // Via Network
+            if (viaNetwork) {
+                suppotingText = [NSString stringWithFormat:@"via %@", viaNetwork];
+            }
+            
+            if (suppotingText) {
+                self.username.attributedText = [self nicknameAttributedString:nickname withText:suppotingText];
+            } else {
+                self.username.text = nickname;
+            }
         }
     }
 }
@@ -315,14 +326,7 @@
         attrs = @{NSFontAttributeName: prototypeRegularShareCell.bodyLabel.font};
     });
     
-    //NOTE: I am only doing this for the "long winded" shares right now.
-    //But the plan is to use this class (and a single XIB) for all shares
-    // (ie. Regular, Recommended, Lightweight)
-    if ([dashboardEntry recommendedEntry]) {
-        // ------ recommendation ---------
-        return 311.f;
-        
-    } else if ([videoFrame typeOfFrame] == FrameTypeLightWeight) {
+    if ([videoFrame typeOfFrame] == FrameTypeLightWeight) {
         // ------ lightweight share (aka "like")  ---------
         //"thumbnailSection" height in xib: 150
         //"sharerSection" height in xib: >= 60 (sits at 60 for this type b/c there's no body text)
@@ -331,7 +335,7 @@
         return 270.f;
         
     } else {
-        // ------ regular share ---------
+        // ------ regular share & recommendations ---------
         //height with full text: 340
         //height of full text: 82
         //height if there was no text: (340 - 82) = 258

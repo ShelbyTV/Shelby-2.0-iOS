@@ -129,9 +129,6 @@
 		1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
 		1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
 		1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
-		1C496236189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */; };
-		1C496237189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */; };
-		1C496238189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */; };
 		1C49623A18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */; };
 		1C49623B18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */; };
 		1C49623C18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */; };
@@ -1028,7 +1025,6 @@
 		1C3D91341714C6CC00105839 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		1C4110DD17319468009022EA /* ShelbyHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyHomeViewController.h; sourceTree = "<group>"; };
 		1C4110DE17319468009022EA /* ShelbyHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHomeViewController.m; sourceTree = "<group>"; };
-		1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryRecommendedCellView.xib; sourceTree = "<group>"; };
 		1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryCellView.xib; sourceTree = "<group>"; };
 		1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyChannelsCellView.xib; sourceTree = "<group>"; };
 		1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyChannelsCollapsedCellView.xib; sourceTree = "<group>"; };
@@ -1630,7 +1626,6 @@
 				9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */,
 				913AD87B1891C51B00177A25 /* UserFollowing.storyboard */,
 				1CA34E541892C79400A168D1 /* SignupHeaderView.xib */,
-				1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */,
 				1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */,
 				1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */,
 				1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */,
@@ -2751,7 +2746,6 @@
 				912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B4188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */,
-				1C496237189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */,
 				91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585A17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585017DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
@@ -2888,7 +2882,6 @@
 				912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B5188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */,
-				1C496238189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */,
 				91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585B17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585117DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
@@ -3038,7 +3031,6 @@
 				91B7DC5517B29D59009ABF02 /* scrub-track-progress.png in Resources */,
 				91B7DC5817B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 				1C0C7E0218523596008F5506 /* close-icon.png in Resources */,
-				1C496236189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */,
 				9192ED0217C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				911ED32117B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
 				911ED32417B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,

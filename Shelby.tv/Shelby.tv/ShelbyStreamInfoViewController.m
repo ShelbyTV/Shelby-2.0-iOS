@@ -30,7 +30,6 @@
 #define SECTION_FOR_PLAYBACK_ENTITIES 3
 
 NSString * const kShelbyStreamEntryCell = @"StreamEntry";
-NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
 NSString * const kShelbyStreamEntryAddChannelsCell = @"AddChannels";
 NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsCollapsed";
 NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
@@ -124,7 +123,6 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSpecialCellStatus) name:kShelbyNotificationFacebookConnectCompleted object:nil];
     }
 
-    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryRecommendedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryRecommendedCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCollapsedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCollapsedCell];
@@ -352,23 +350,15 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
             videoFrame = (Frame *)streamEntry;
         }
-        
-        // 2) Determine which type of cell to show
-        NSString *cellIdentifier;
-        if ([dbe recommendedEntry]) {
-            cellIdentifier = kShelbyStreamEntryRecommendedCell;
-        } else {
-            cellIdentifier = kShelbyStreamEntryCell;
-        }
 
-        // 3) Display our model in our view
-        ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+        // 2) Display our model in our view
+        ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:kShelbyStreamEntryCell forIndexPath:indexPath];
         cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setDashboardEntry:dbe andFrame:videoFrame];
         cell.currentUser = self.currentUser;
         
-        // 4) Maintain "currently on" state
+        // 3) Maintain "currently on" state
         if (streamEntry == self.currentlySelectedEntity) {
             [cell selectStreamEntry];
         }
