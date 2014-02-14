@@ -31,7 +31,6 @@
 
 NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
-NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
 NSString * const kShelbyStreamEntryAddChannelsCell = @"AddChannels";
 NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsCollapsed";
 NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
@@ -127,7 +126,6 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryRecommendedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryRecommendedCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryCell];
-    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryLikeCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryLikeCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCollapsedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCollapsedCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"StreamConnectFacebookCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamConnectFacebookCell];
@@ -359,8 +357,6 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         NSString *cellIdentifier;
         if ([dbe recommendedEntry]) {
             cellIdentifier = kShelbyStreamEntryRecommendedCell;
-        } else if ([videoFrame typeOfFrame] == FrameTypeLightWeight) {
-            cellIdentifier = kShelbyStreamEntryLikeCell;
         } else {
             cellIdentifier = kShelbyStreamEntryCell;
         }

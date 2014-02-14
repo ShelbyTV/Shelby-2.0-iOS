@@ -324,7 +324,11 @@
         
     } else if ([videoFrame typeOfFrame] == FrameTypeLightWeight) {
         // ------ lightweight share (aka "like")  ---------
-        return 271.f;
+        //"thumbnailSection" height in xib: 150
+        //"sharerSection" height in xib: >= 60 (sits at 60 for this type b/c there's no body text)
+        //"actionSection" height in xib: 50
+        //"bottom border" height in xib: 10
+        return 270.f;
         
     } else {
         // ------ regular share ---------
@@ -332,9 +336,6 @@
         //height of full text: 82
         //height if there was no text: (340 - 82) = 258
         NSString *bodyCopy = [[self class] captionTextForDashboardEntry:dashboardEntry andFrame:videoFrame];
-        if (bodyCopy.length < 1) {
-            bodyCopy = @"ds";
-        }
         CGRect textBoundingRect = [bodyCopy boundingRectWithSize:maxLabelSize options:drawingOptions attributes:attrs context:nil];
         return 258.0f + ceil(textBoundingRect.size.height);
     }
