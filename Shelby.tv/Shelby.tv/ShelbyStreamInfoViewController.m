@@ -344,29 +344,8 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
     } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
     
+        // 1) Setup Data Model
         id<ShelbyVideoContainer> streamEntry = self.deduplicatedEntries[indexPath.row];
-        NSString *cellIdentifier = nil;
-        BOOL recommendedEntry = NO;
-        if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
-            DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-            if ([dashboardEntry recommendedEntry]) {
-                cellIdentifier = kShelbyStreamEntryRecommendedCell;
-                recommendedEntry = YES;
-            } else if ([dashboardEntry.frame typeOfFrame] == FrameTypeLightWeight) {
-                  cellIdentifier = kShelbyStreamEntryLikeCell;
-            }
-        } else if ([streamEntry isKindOfClass:[Frame class]]) {
-            Frame *frameEntry = (Frame *)streamEntry;
-            if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
-                cellIdentifier = kShelbyStreamEntryLikeCell;
-            }
-        }
-        
-        if (!cellIdentifier) {
-            cellIdentifier = kShelbyStreamEntryCell;
-        }
-        
-        ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         Frame *videoFrame = nil;
         DashboardEntry *dbe = nil;
         if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
@@ -375,25 +354,45 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
             videoFrame = (Frame *)streamEntry;
         }
+        
+        // 2) Determine which type of cell to show
+        NSString *cellIdentifier = kShelbyStreamEntryCell;
+        BOOL recommendedEntry = NO;
+        if (dbe) {
+            if ([dbe recommendedEntry]) {
+                cellIdentifier = kShelbyStreamEntryRecommendedCell;
+                recommendedEntry = YES;
+            } else if ([videoFrame typeOfFrame] == FrameTypeLightWeight) {
+                  cellIdentifier = kShelbyStreamEntryLikeCell;
+            }
+        } else if ([streamEntry isKindOfClass:[Frame class]]) {
+            Frame *frameEntry = (Frame *)streamEntry;
+            if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
+                cellIdentifier = kShelbyStreamEntryLikeCell;
+            }
+        }
+
+        // 3) Display our model in our view
+        ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setDashboardEntry:dbe andFrame:videoFrame];
         cell.currentUser = self.currentUser;
         
-        // Overwrite description in case of a recommended entry
+        // 3b) Overwrite description in case of a recommended entry
         if (recommendedEntry) {
-            DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-            if (dashboardEntry.sourceFrameCreatorNickname) {
+            if (dbe.sourceFrameCreatorNickname) {
                 NSString *recoBase = @"This video is Liked by people like ";
-                NSString *recoUsername = dashboardEntry.sourceFrameCreatorNickname;
+                NSString *recoUsername = dbe.sourceFrameCreatorNickname;
                 cell.description.text = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
-            } else if (dashboardEntry.sourceVideoTitle) {
-                cell.description.text = [NSString stringWithFormat:@"Because you Liked \"%@\"", dashboardEntry.sourceVideoTitle];
+            } else if (dbe.sourceVideoTitle) {
+                cell.description.text = [NSString stringWithFormat:@"Because you Liked \"%@\"", dbe.sourceVideoTitle];
             } else {
                 cell.description.text = @"We thought you'd like to see this";
             }
         }
-        cell.delegate = self;
         
+        // 4) Maintain "currently on" state
         if (streamEntry == self.currentlySelectedEntity) {
             [cell selectStreamEntry];
         }
@@ -474,7 +473,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
 #pragma mark - UIScrollViewDelegate
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     STVAssert(scrollView == self.entriesTable);
     
