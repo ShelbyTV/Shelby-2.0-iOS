@@ -23,6 +23,7 @@
 //views
 @property (nonatomic, weak) IBOutlet UILabel *username;
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
+@property (nonatomic, weak) IBOutlet UILabel *bodyLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *currentlyOn;
 @property (nonatomic, weak) IBOutlet UIImageView *videoThumbnail;
 @property (nonatomic, weak) IBOutlet UIImageView *detailAvatarBadge;
@@ -111,8 +112,8 @@
         [self updateLikersAndSharersVisuals];
         
         self.videoTitle.text = self.videoFrame.video.title;
-        NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
-        self.description.text = captionText;
+        self.bodyLabel.text = [[self class] captionTextForDashboardEntry:_dashboardEntry
+                                                                andFrame:_videoFrame];
         
         NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
         NSString *noThumbImageName = [NSString stringWithFormat:@"video-no-thumb-%d", arc4random_uniform(3)];
@@ -285,7 +286,7 @@
     self.currentlyOn.hidden = YES;
 }
 
-#pragma mark - View Helpers
+#pragma mark - Helpers
 
 - (void)updateViewForCurrentLikeStatus
 {
@@ -294,6 +295,67 @@
     self.fullWidthUnlikeButton.hidden = !isLiked;
     self.likeButton.hidden = isLiked;
     self.unlikeButton.hidden = !isLiked;
+}
+
+// NB: We use autolayout when actually displaying the cell.  We could use that here to get the
+// height we will ultimatley be displayed at.  But that's slow.  Since only one area changes size
+// (the description) we just determine the height of that area and add it to a constant to determine
+// the final actual height (which will be equal to height as determined by doing a full autolayout).
++ (CGFloat)heightWithDashboardEntry:(DashboardEntry *)dashboardEntry andFrame:(Frame *)videoFrame
+{
+    static ShelbyStreamEntryCell *prototypeRegularShareCell;
+    static CGSize maxLabelSize;
+    static NSStringDrawingOptions drawingOptions;
+    static dispatch_once_t onceToken;
+    static NSDictionary *attrs;
+    dispatch_once(&onceToken, ^{
+        prototypeRegularShareCell = [[[NSBundle mainBundle] loadNibNamed:@"ShelbyStreamEntryCellView" owner:nil options:nil] firstObject];
+        maxLabelSize = prototypeRegularShareCell.bodyLabel.bounds.size;
+        drawingOptions = (NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine);
+        attrs = @{NSFontAttributeName: prototypeRegularShareCell.bodyLabel.font};
+    });
+    
+    //NOTE: I am only doing this for the "long winded" shares right now.
+    //But the plan is to use this class (and a single XIB) for all shares
+    // (ie. Regular, Recommended, Lightweight)
+    if ([dashboardEntry recommendedEntry]) {
+        // ------ recommendation ---------
+        return 311.f;
+        
+    } else if ([videoFrame typeOfFrame] == FrameTypeLightWeight) {
+        // ------ lightweight share (aka "like")  ---------
+        return 271.f;
+        
+    } else {
+        // ------ regular share ---------
+        //height with full text: 340
+        //height of full text: 82
+        //height if there was no text: (340 - 82) = 258
+        NSString *bodyCopy = [[self class] captionTextForDashboardEntry:dashboardEntry andFrame:videoFrame];
+        if (bodyCopy.length < 1) {
+            bodyCopy = @"ds";
+        }
+        CGRect textBoundingRect = [bodyCopy boundingRectWithSize:maxLabelSize options:drawingOptions attributes:attrs context:nil];
+        return 258.0f + ceil(textBoundingRect.size.height);
+    }
+}
+
++ (NSString *)captionTextForDashboardEntry:(DashboardEntry *)dbe andFrame:(Frame *)videoFrame
+{
+    if ([dbe recommendedEntry]) {
+        if (dbe.sourceFrameCreatorNickname) {
+            NSString *recoBase = @"This video is Liked by people like ";
+            NSString *recoUsername = dbe.sourceFrameCreatorNickname;
+            return [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
+        } else if (dbe.sourceVideoTitle) {
+            return [NSString stringWithFormat:@"Because you Liked \"%@\"", dbe.sourceVideoTitle];
+        } else {
+            return @"We thought you'd like to see this";
+        }
+        
+    } else {
+        return [videoFrame creatorsInitialCommentWithFallback:YES];
+    }
 }
 
 @end

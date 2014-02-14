@@ -356,20 +356,13 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         }
         
         // 2) Determine which type of cell to show
-        NSString *cellIdentifier = kShelbyStreamEntryCell;
-        BOOL recommendedEntry = NO;
-        if (dbe) {
-            if ([dbe recommendedEntry]) {
-                cellIdentifier = kShelbyStreamEntryRecommendedCell;
-                recommendedEntry = YES;
-            } else if ([videoFrame typeOfFrame] == FrameTypeLightWeight) {
-                  cellIdentifier = kShelbyStreamEntryLikeCell;
-            }
-        } else if ([streamEntry isKindOfClass:[Frame class]]) {
-            Frame *frameEntry = (Frame *)streamEntry;
-            if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
-                cellIdentifier = kShelbyStreamEntryLikeCell;
-            }
+        NSString *cellIdentifier;
+        if ([dbe recommendedEntry]) {
+            cellIdentifier = kShelbyStreamEntryRecommendedCell;
+        } else if ([videoFrame typeOfFrame] == FrameTypeLightWeight) {
+            cellIdentifier = kShelbyStreamEntryLikeCell;
+        } else {
+            cellIdentifier = kShelbyStreamEntryCell;
         }
 
         // 3) Display our model in our view
@@ -378,19 +371,6 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setDashboardEntry:dbe andFrame:videoFrame];
         cell.currentUser = self.currentUser;
-        
-        // 3b) Overwrite description in case of a recommended entry
-        if (recommendedEntry) {
-            if (dbe.sourceFrameCreatorNickname) {
-                NSString *recoBase = @"This video is Liked by people like ";
-                NSString *recoUsername = dbe.sourceFrameCreatorNickname;
-                cell.description.text = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
-            } else if (dbe.sourceVideoTitle) {
-                cell.description.text = [NSString stringWithFormat:@"Because you Liked \"%@\"", dbe.sourceVideoTitle];
-            } else {
-                cell.description.text = @"We thought you'd like to see this";
-            }
-        }
         
         // 4) Maintain "currently on" state
         if (streamEntry == self.currentlySelectedEntity) {
@@ -448,25 +428,22 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         return [NoContentView noActivityCellHeight];
     
     } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
-        id streamEntry = self.deduplicatedEntries[indexPath.row];
+        
+        // 1) Setup Data Model
+        id<ShelbyVideoContainer> streamEntry = self.deduplicatedEntries[indexPath.row];
+        Frame *videoFrame = nil;
+        DashboardEntry *dbe = nil;
         if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
-            DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-            if ([dashboardEntry recommendedEntry]) {
-                return 311.0;
-            }   else if ([dashboardEntry.frame typeOfFrame] == FrameTypeLightWeight) {
-                return 271.0;
-            }
+            videoFrame = ((DashboardEntry *)streamEntry).frame;
+            dbe = (DashboardEntry *)streamEntry;
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
-            Frame *frameEntry = (Frame *)streamEntry;
-            if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
-                return 271.0;
-            }
+            videoFrame = (Frame *)streamEntry;
         }
-        //what is this for?
-        return 341.0;
+        // 2) Return height as determined (efficiently, i hope) by cell
+        return [ShelbyStreamEntryCell heightWithDashboardEntry:dbe andFrame:videoFrame];
             
     } else {
-        STVAssert(NO, @"unaccoutned for section");
+        STVAssert(NO, @"unaccounted for section");
         return 0;
     }
 }

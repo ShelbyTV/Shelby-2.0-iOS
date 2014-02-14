@@ -96,12 +96,19 @@
                                         <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="227" translatesAutoresizingMaskIntoConstraints="NO" id="1LM-GZ-NMT" userLabel="CaptionLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="227" translatesAutoresizingMaskIntoConstraints="NO" id="1LM-GZ-NMT" userLabel="bodyLabel">
                                         <rect key="frame" x="66" y="39" width="227" height="82"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <string key="text">All about the video.  And what a video it was!  You could watch it, and pause it, and do all sorts of videoy things with it.  Like watch it.  You know, because it's a video!</string>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                        <attributedString key="attributedText">
+                                            <fragment>
+                                                <string key="content">All about the video.  And what a video it was!  You could watch it, and pause it, and do all sorts of videoy things with it.  Like watch it.  You know, because it's a video! And that's how we do</string>
+                                                <attributes>
+                                                    <color key="NSColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.039999999105930328"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -297,11 +304,11 @@
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="bodyLabel" destination="1LM-GZ-NMT" id="veF-v5-o5S"/>
                 <outlet property="borderView" destination="5md-Js-Zz4" id="aQc-B8-8GT"/>
                 <outlet property="bordersView" destination="5y2-Nn-4FP" id="6el-uY-65r"/>
                 <outlet property="centerVerticalBorder" destination="6E5-lR-Auf" id="K31-Bx-sz9"/>
                 <outlet property="currentlyOn" destination="e7d-Hd-IeN" id="0Mj-Dg-ZHU"/>
-                <outlet property="description" destination="1LM-GZ-NMT" id="yee-4N-adU"/>
                 <outlet property="detailAvatarBadge" destination="hto-qo-nD6" id="585-dd-Rg3"/>
                 <outlet property="detailNoLikersLabel" destination="Iby-GO-uoN" id="os1-N6-ggg"/>
                 <outlet property="fullWidthButtonsContainer" destination="OJR-Sc-j4l" id="nYo-Do-Rlo"/>
