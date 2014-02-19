@@ -139,13 +139,14 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     [super viewWillAppear:animated];
     
     [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
+    
+    [self refreshSpecialCellStatus];
+    [self scrollToTopVideoEntry];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
- 
-    [self refreshSpecialCellStatus];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -255,6 +256,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         // Don't update entries if we have zero entries in cache
         if ([receivedChannelEntries count] != 0 || !cached) {
             [self setEntries:receivedChannelEntries];
+            [self scrollToTopVideoEntry];
         }
         
         if ([receivedChannelEntries count]) {
@@ -329,7 +331,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == SECTION_FOR_ADD_CHANNELS) {
-        NSString *cellIdentifier = self.followCount > 2 ? kShelbyStreamEntryAddChannelsCollapsedCell : kShelbyStreamEntryAddChannelsCell;
+        NSString *cellIdentifier = [self shouldCollapseAddChannelsCell] ? kShelbyStreamEntryAddChannelsCollapsedCell : kShelbyStreamEntryAddChannelsCell;
         return [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         
     } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
@@ -622,6 +624,24 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         _currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     }
     return _currentUser;
+}
+
+- (void)scrollToTopVideoEntry
+{
+    //don't scroll if (1) we have no entries, (2) we're not at the top, (3) we're showing large collapse channels cell
+    if ([self.channelEntries count] == 0 ||
+        self.entriesTable.contentOffset.y > 0.f ||
+        (self.mayShowFollowChannels && ![self shouldCollapseAddChannelsCell])) {
+        return;
+    }
+    [self.entriesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:SECTION_FOR_PLAYBACK_ENTITIES]
+                             atScrollPosition:UITableViewScrollPositionTop
+                                     animated:YES];
+}
+
+- (BOOL)shouldCollapseAddChannelsCell
+{
+    return self.followCount > 2;
 }
 
 @end
