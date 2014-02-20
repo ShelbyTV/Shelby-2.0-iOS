@@ -55,17 +55,6 @@ static BOOL videoHasPlayed = NO;
     videoHasPlayed = played;
 }
 
-+ (void)reset
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    for (NSString *defaultsKey in [[defaults dictionaryRepresentation] keyEnumerator]) {
-        if ([defaultsKey rangeOfString:kShelbyUserEducationDefaultsKeyPrefix].location != NSNotFound) {
-            [defaults removeObjectForKey:defaultsKey];
-        }
-    }
-    [defaults synchronize];
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

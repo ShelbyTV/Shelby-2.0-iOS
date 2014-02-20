@@ -16,9 +16,6 @@
 //return nil if user has already been educated
 + (ShelbyUserEducationViewController *)newChannelsUserEducationViewController;
 
-//resets all user education views
-+ (void)reset;
-
 //only shows view if user hasn't been educated
 - (void)referenceView:(UIView *)referenceView willAppearAnimated:(BOOL)animated;
 

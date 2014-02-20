@@ -17,6 +17,7 @@
 #import "ShelbyModelArrayUtility.h"
 #import "SPShareController.h"
 #import "SPVideoExtractor.h"
+#import "StreamConnectFacebookTableViewCell.h"
 #import "User+Helper.h"
 
 #define LOAD_MORE_ACTIVATION_HEIGHT 200
@@ -112,12 +113,15 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(removeFrameNotification:)
-                                                 name:kShelbyBrainRemoveFrameNotification
-                                               object:nil];
+                                                 name:kShelbyBrainRemoveFrameNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
                                                  name:kShelbyPlaybackEntityDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectFacebookVisiblityChangeNotification) 
+                                                 name:kShelbyStreamConnectFacebookVisibilityChangeNotification object:nil];
     
     if (self.mayShowConnectSocial) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSpecialCellStatus) name:kShelbyNotificationFacebookConnectCompleted object:nil];
@@ -301,6 +305,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     }
 }
 
+- (void)connectFacebookVisiblityChangeNotification
+{
+    [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_CONNECT_SOCIAL]
+                     withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 #pragma mark - UITableDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -314,7 +324,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         return self.mayShowFollowChannels ? 1 : 0;
         
     } else if (section == SECTION_FOR_CONNECT_SOCIAL) {
-        return (self.mayShowConnectSocial && !self.currentUserHasFacebookConnected) ? 1 : 0;
+        return (self.mayShowConnectSocial && !self.currentUserHasFacebookConnected && ![StreamConnectFacebookTableViewCell userWantsHidden]) ? 1 : 0;
         
     } else if (section == SECTION_FOR_NO_CONTENT) {
         return self.showNoContentView ? 1 : 0;
@@ -410,7 +420,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         return self.followCount > 2 ? 110.0 : 210.0;
         
     } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
-        return 110.f;
+        return [StreamConnectFacebookTableViewCell cellHeight];
         
     } else if (indexPath.section == SECTION_FOR_NO_CONTENT) {
         return [NoContentView noActivityCellHeight];
