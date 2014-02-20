@@ -528,10 +528,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         //remove spinner
         [self.loadMoreSpinner stopAnimating];
         [self.loadMoreSpinner removeFromSuperview];
-        self.entriesTable.contentInset = UIEdgeInsetsMake(self.entriesTable.contentInset.top,
-                                                          self.entriesTable.contentInset.left,
-                                                          self.entriesTable.contentInset.bottom - LOAD_MORE_SPINNER_AREA_HEIGHT,
-                                                          self.entriesTable.contentInset.right);
+        [UIView animateWithDuration:0.2 animations:^{
+            self.entriesTable.contentInset = UIEdgeInsetsMake(self.entriesTable.contentInset.top,
+                                                              self.entriesTable.contentInset.left,
+                                                              self.entriesTable.contentInset.bottom - LOAD_MORE_SPINNER_AREA_HEIGHT,
+                                                              self.entriesTable.contentInset.right);
+        }];
         
     } else if (self.entriesTableVC.refreshControl.refreshing) {
         //REFRESH was the request
