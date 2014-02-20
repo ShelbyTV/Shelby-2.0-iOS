@@ -84,27 +84,26 @@
     }
     
     //To account for any view overlapping us on the bottom (ie. "currently on")
-    //Add content offset to bottom of topmost scrollview in pushed VC
-    UIScrollView *scrollView;
-    for (UIView *view in [@[viewController.view] arrayByAddingObjectsFromArray:viewController.view.subviews]) {
-        if ([view isKindOfClass:[UIScrollView class]]) {
-            scrollView = (UIScrollView *)view;
-            break;
+    //Add content offset to bottom of all scrollviews in pushed VC
+    //but don't re-add these offsets for the currently on vc (they were added on its first push)
+    if (viewController != self.currentlyOnVC) {
+        NSMutableArray *pushedScrollViews = [self scrollViewsInViews:@[viewController.view]];
+        if ([pushedScrollViews count]) {
+            for (UIScrollView *scrollView in pushedScrollViews) {
+                UIEdgeInsets curInsets = scrollView.contentInset;
+                [scrollView setContentInset:UIEdgeInsetsMake(curInsets.top,
+                                                             curInsets.left,
+                                                             curInsets.bottom + self.bottomInsetForContainedScrollViews,
+                                                             curInsets.right)];
+                UIEdgeInsets curScrollInsets = scrollView.scrollIndicatorInsets;
+                [scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(curScrollInsets.top,
+                                                                      curScrollInsets.left,
+                                                                      curScrollInsets.bottom + self.bottomInsetForContainedScrollViews,
+                                                                      curScrollInsets.right)];
+            }
         }
     }
-    if (scrollView && viewController != self.currentlyOnVC) {
-        UIEdgeInsets curInsets = scrollView.contentInset;
-        [scrollView setContentInset:UIEdgeInsetsMake(curInsets.top,
-                                                     curInsets.left,
-                                                     curInsets.bottom + self.bottomInsetForContainedScrollViews,
-                                                     curInsets.right)];
-        UIEdgeInsets curScrollInsets = scrollView.scrollIndicatorInsets;
-        [scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(curScrollInsets.top,
-                                                              curScrollInsets.left,
-                                                              curScrollInsets.bottom + self.bottomInsetForContainedScrollViews,
-                                                              curScrollInsets.right)];
-    }
-    
+
     [super pushViewController:viewController animated:animated];
 }
 
@@ -149,6 +148,7 @@
 }
 
 #pragma mark - ShelbyStreamInfoProtocol
+
 - (void)userProfileWasTapped:(NSString *)userID
 {
     [self.topContainerDelegate userProfileWasTapped:userID];
@@ -160,6 +160,7 @@
 }
 
 #pragma mark - Notification Handling
+
 - (void)playbackEntityDidChangeNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
@@ -189,6 +190,25 @@
     }
     
     [self.currentlyOnVC scrollCurrentlyPlayingIntoView];
+}
+
+#pragma mark - Helpers
+
+- (NSMutableArray *)scrollViewsInViews:(NSArray *)views
+{
+    NSMutableArray *scrollViews = [NSMutableArray new];
+    if ([views count]) {
+        for (UIView *v in views) {
+            if ([v isKindOfClass:[UIScrollView class]]) {
+                [scrollViews addObject:v];
+            } else {
+                [scrollViews addObjectsFromArray:[self scrollViewsInViews:v.subviews]];
+            }
+        }
+        return scrollViews;
+    } else {
+        return nil;
+    }
 }
 
 @end

@@ -82,7 +82,10 @@
         _user = user;
         
         if (user){
-            self.tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
+            [self.tableView setContentInset:UIEdgeInsetsMake(self.tableView.contentInset.top + 50,
+                                                             self.tableView.contentInset.left,
+                                                             self.tableView.contentInset.bottom,
+                                                             self.tableView.contentInset.right)];
             [self.spinner startAnimating];
             [[ShelbyDataMediator sharedInstance] fetchRollFollowingsForUser:user withCompletion:^(User *user, NSArray *rawRollFollowings, NSError *error) {
                 if (!error) {
@@ -93,7 +96,10 @@
                     DLog(@"ERROR on roll following fetch %@", error);
                 }
                 [self.spinner stopAnimating];
-                [self.tableView setContentInset:UIEdgeInsetsZero];
+                [self.tableView setContentInset:UIEdgeInsetsMake(self.tableView.contentInset.top - 50,
+                                                                 self.tableView.contentInset.left,
+                                                                 self.tableView.contentInset.bottom,
+                                                                 self.tableView.contentInset.right)];
             }];
         }
     }
