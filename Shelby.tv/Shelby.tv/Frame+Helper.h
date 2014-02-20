@@ -38,6 +38,11 @@ typedef NS_ENUM(NSInteger, FrameType){
            existOnRollWithID:(NSString *)rollID
                    inContext:(NSManagedObjectContext *)moc;
 
+//also checks that clientUnliked is not YES
++ (BOOL)doesLikedFrameWithVideoID:(NSString *)videoID
+                existOnRollWithID:(NSString *)rollID
+                        inContext:(NSManagedObjectContext *)moc;
+
 + (Frame *)frameWithVideoID:(NSString *)videoID
                onRollWithID:(NSString *)rollID
                   inContext:(NSManagedObjectContext *)moc;

@@ -148,6 +148,20 @@ NSString * const kFramePathUpvoters = @"upvoters";
     return !error && count;
 }
 
++ (BOOL)doesLikedFrameWithVideoID:(NSString *)videoID
+                existOnRollWithID:(NSString *)rollID
+                        inContext:(NSManagedObjectContext *)moc
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityFrame];
+    NSPredicate *likedVideoIDPredicate = [NSPredicate predicateWithFormat:@"self.roll.rollID == %@ AND self.video.videoID == %@ AND self.clientUnliked != %@", rollID, videoID, @1];
+    request.predicate = likedVideoIDPredicate;
+    request.fetchLimit = 1;
+    
+    NSError *error;
+    NSUInteger count = [moc countForFetchRequest:request error:&error];
+    return !error && count;
+}
+
 + (Frame *)frameWithVideoID:(NSString *)videoID
                onRollWithID:(NSString *)rollID
                   inContext:(NSManagedObjectContext *)moc

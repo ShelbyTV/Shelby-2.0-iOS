@@ -126,7 +126,7 @@
             [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:nil failure:nil];
         }
         
-        [self updateViewForCurrentLikeStatus];
+        [self updateHeartViewForCurrentLikeStatus];
         
         NSString *nickname = nil;
         NSString *suppotingText = nil;
@@ -193,12 +193,9 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (object == self.videoFrame) {
-        [self updateViewForCurrentLikeStatus];
-    }
-    
     [self processLikersAndSharers];
     [self updateLikersAndSharersVisuals];
+    [self updateHeartViewForCurrentLikeStatus];
 }
 
 - (void)processLikersAndSharers
@@ -262,14 +259,12 @@
 {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardLike];
     [self.delegate likeFrame:self.videoFrame];
-    [self updateViewForCurrentLikeStatus];
 }
 
 - (IBAction)unLikeVideo:(id)sender
 {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardUnlike];
     [self.delegate unLikeFrame:self.videoFrame];
-    [self updateViewForCurrentLikeStatus];
 }
 
 - (IBAction)openUserProfile:(id)sender
@@ -299,7 +294,7 @@
 
 #pragma mark - Helpers
 
-- (void)updateViewForCurrentLikeStatus
+- (void)updateHeartViewForCurrentLikeStatus
 {
     BOOL isLiked = [self.videoFrame videoIsLikedBy:self.currentUser];
     self.fullWidthLikeButton.hidden = isLiked;
