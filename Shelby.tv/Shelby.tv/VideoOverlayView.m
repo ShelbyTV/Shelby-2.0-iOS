@@ -59,9 +59,9 @@
     self.userLabel.attributedText = [self usernameStringFor:f withNetwork:viaNetwork];
     
     if ([self isRecommendedOverlayFor:f]) {
-        self.userGenericImage.hidden = YES;
+        self.userGenericImage.image = [UIImage imageNamed:@"playback-overlay-reco"];
     } else {
-        self.userGenericImage.hidden = NO;
+        self.userGenericImage.image = [UIImage imageNamed:@"playback-overlay-user"];
     }
     
     //likes
