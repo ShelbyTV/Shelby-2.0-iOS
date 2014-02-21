@@ -151,7 +151,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyWillPresentModalViewNotification object:self];
         [self.viewController presentViewController:self.shelbyShare animated:YES completion:nil];
         if (DEVICE_IPAD) {
-            self.shelbyShare.view.superview.bounds = CGRectMake(0, 0, 600, 350);
+            self.shelbyShare.view.superview.bounds = CGRectMake(0, 0, 600, 355);
         }
     } else {
         [self shareOnSocialNetworks:frame message:message andLink:link fromViewController:self.viewController];
