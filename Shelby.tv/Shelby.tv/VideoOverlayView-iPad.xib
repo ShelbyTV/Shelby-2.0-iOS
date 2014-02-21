@@ -14,7 +14,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="760" height="147"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="888" verticalCompressionResistancePriority="278" image="playback-overlay-background" translatesAutoresizingMaskIntoConstraints="NO" id="Zqb-9z-rZs" userLabel="background">
+                        <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="888" verticalCompressionResistancePriority="278" image="playback-overlay-background" translatesAutoresizingMaskIntoConstraints="NO" id="Zqb-9z-rZs" userLabel="background">
                             <rect key="frame" x="0.0" y="0.0" width="760" height="768"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
