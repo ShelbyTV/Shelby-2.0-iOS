@@ -98,9 +98,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [ShelbyDataMediator sharedInstance].delegate = self;
     
     if (DEVICE_IPAD) {
-        self.entranceVC = [[ShelbyEntranceViewController alloc] initWithNibName:@"ShelbyEntranceViewController" bundle:nil];
-        self.entranceVC.brain = self;
-        
         User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
         if (currentUser) {
             [self setCurrentUser:currentUser];
@@ -108,6 +105,8 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
             [self fetchUserChannelsForceSwitchToUsersStream:YES];
             self.mainWindow.rootViewController = self.topContainerVC;
         } else {
+            self.entranceVC = [[ShelbyEntranceViewController alloc] initWithNibName:@"ShelbyEntranceViewController" bundle:nil];
+            self.entranceVC.brain = self;
             self.mainWindow.rootViewController = self.entranceVC;
         }
         
@@ -239,6 +238,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         self.topContainerVC.currentUser = currentUser;
         [self.entranceVC animateDisappearanceWithCompletion:^{
             self.mainWindow.rootViewController = self.topContainerVC;
+            self.entranceVC = nil;
         }];
         
     } else {
@@ -1035,9 +1035,12 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [User sessionDidPause];
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
+    //kill all user defaults on logout
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
     if (DEVICE_IPAD) {
-        [ShelbyUserEducationViewController reset];
         [self.topContainerVC animateDisappearanceWithCompletion:^{
+            self.entranceVC = [[ShelbyEntranceViewController alloc] initWithNibName:@"ShelbyEntranceViewController" bundle:nil];
+            self.entranceVC.brain = self;
             self.mainWindow.rootViewController = self.entranceVC;
             self.mainStoryboard = nil;
             self.topContainerVC = nil;

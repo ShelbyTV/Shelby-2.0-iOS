@@ -426,10 +426,10 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             STVDebugAssert(likedFrame, @"expected liked frame");
             
             //represent unliked state assuming the API call will succeed
+            likedFrame.clientUnliked = @1;
             frame.clientUnsyncedLike = @0;
             [frame removeUpvotersObject:user];
             frame.clientLikedAt = nil;
-            likedFrame.clientUnliked = @1;
 
             NSError *err;
             [frame.managedObjectContext save:&err];

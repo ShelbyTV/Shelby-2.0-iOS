@@ -47,7 +47,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
-                                                 name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+                                                 name:kShelbyPlaybackEntityDidChangeNotification object:nil];
     self.view.alpha = 0.f;
 }
 
@@ -65,7 +65,7 @@
 - (void)playbackEntityDidChangeNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    self.currentEntity = userInfo[kShelbyVideoReelEntityKey];
+    self.currentEntity = userInfo[kShelbyPlaybackCurrentEntityKey];
 
     self.videoTitleLabel.text = [self.currentEntity containedVideo].title;
     [self tryNormalThumbnailForCurrentEntity];

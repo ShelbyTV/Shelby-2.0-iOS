@@ -18,14 +18,11 @@
 
 #define PLAYBACK_API_UPDATE_INTERVAL 15.f
 
-static Frame *currentPlayingVideoFrame;
-
 NSString * const kShelbySPVideoExternalPlaybackActiveKey = @"externalPlaybackActive";
 NSString * const kShelbySPVideoCurrentItemKey = @"currentItem";
+NSString * const kShelbySPVideoPlayerRate = @"rate";
 NSString * const kShelbySPVideoAirplayDidBegin = @"spAirplayDidBegin";
 NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
-NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVideoPlayerCurrentPlayingVideoChanged";
-
 
 @interface SPVideoPlayer () {
     CGFloat _rateBeforeScrubbing;
@@ -41,8 +38,17 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 @property (assign, atomic) BOOL canBecomePlayable;
 @property (assign, nonatomic) BOOL isPlayable;
 @property (assign, nonatomic) BOOL isPlaying;
+@property (assign, nonatomic) BOOL isScrubbing;
 @property (assign, nonatomic) CMTime lastPlayheadPosition;
 @property (strong, nonatomic) id playerTimeObserver;
+
+//constraints for re-positioning by parent
+@property (nonatomic, strong) NSLayoutConstraint *constrainLeading;
+@property (nonatomic, strong) NSLayoutConstraint *constrainTrailing;
+@property (nonatomic, strong) NSLayoutConstraint *constrainTop;
+@property (nonatomic, strong) NSLayoutConstraint *constrainBottom;
+@property (nonatomic, strong) NSLayoutConstraint *constrainWidth;
+@property (nonatomic, strong) NSLayoutConstraint *constrainHeight;
 
 @end
 
@@ -74,11 +80,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     return self;
 }
 
-+ (Video *)currentPlayingVideo
-{
-    return [currentPlayingVideoFrame video];
-}
-
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
@@ -86,6 +87,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     
     self.isPlayable = NO;
     self.isPlaying = NO;
+    self.isScrubbing = NO;
     self.shouldAutoplay = NO;
     
     if (DEVICE_IPAD) {
@@ -108,6 +110,65 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     //so we need to update bounds & position of AVPlayerLayer
     self.playerLayer.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.playerLayer.position = CGPointMake(self.view.frame.size.width/2.f, self.view.frame.size.height/2.f);
+}
+
+/* View could have been positioned with frame and allowed to translate autoresize mask into constraints.
+ * But in practice, this is incredibly inefficient as the constraints are recalculated
+ * in a naieve way.  By setting up constraints ourselves, we can be smarter.
+ *
+ * NB: Would be 100x better to have just used a CollectionView instead of doing all
+ * this crap manually.
+ */
+- (void)setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:(CGRect)f
+{
+    //height is local to view (doesn't change when set)
+    if (!self.constrainHeight) {
+        self.constrainHeight = [NSLayoutConstraint constraintWithItem:self.view
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1.0
+                                                             constant:f.size.height];
+        [self.view addConstraint:self.constrainHeight];
+    }
+    self.constrainHeight.constant = f.size.height;
+    
+    //width is relative to superview and constant (grows and shrinks on iPad)
+    if (!self.constrainWidth) {
+        self.constrainWidth = [NSLayoutConstraint constraintWithItem:self.view
+                                                           attribute:NSLayoutAttributeWidth
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.view.superview
+                                                           attribute:NSLayoutAttributeWidth
+                                                          multiplier:1.0
+                                                            constant:0];
+        [self.view.superview addConstraint:self.constrainWidth];
+    }
+    
+    //position is relative to superview (has to tie to all four walls)
+    if (!self.constrainLeading) {
+        self.constrainLeading = [NSLayoutConstraint constraintWithItem:self.view
+                                                             attribute:NSLayoutAttributeLeading
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view.superview
+                                                             attribute:NSLayoutAttributeLeading
+                                                            multiplier:1.0
+                                                              constant:f.origin.x];
+        [self.view.superview addConstraint:self.constrainLeading];
+    }
+    self.constrainLeading.constant = f.origin.x;
+    
+    if (!self.constrainTop) {
+        self.constrainTop = [NSLayoutConstraint constraintWithItem:self.view
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.view.superview
+                                                         attribute:NSLayoutAttributeTop
+                                                        multiplier:1.0
+                                                          constant:f.origin.y];
+        [self.view.superview addConstraint:self.constrainTop];
+    }
+    self.constrainTop.constant = f.origin.y;
 }
 
 - (void)setupPlayerForURL:(NSURL *)playerURL
@@ -216,6 +277,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
                                                                    usingBlock:^(CMTime time) {
                                                                        [weakSelf currentTimeUpdated:time];
                                                                    }];
+    [self.player addObserver:self forKeyPath:kShelbySPVideoPlayerRate options:NSKeyValueObservingOptionNew context:nil];
 
 
     // Observe keypaths for buffer states on AVPlayerItem
@@ -251,6 +313,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     if (self.playerTimeObserver) {
         [self.player removeTimeObserver:self.playerTimeObserver];
         self.playerTimeObserver = nil;
+        [self.player removeObserver:self forKeyPath:kShelbySPVideoPlayerRate];
     }
 
     if (playerItem && (id)playerItem != [NSNull null]) {
@@ -407,35 +470,32 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         }];
     }
     
-    currentPlayingVideoFrame = self.videoFrame;
     [self.player play];
     self.isPlaying = YES;
     
     [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
     [self.videoPlayerDelegate videoPlaybackStatus:YES forPlayer:self];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoPlayerCurrentPlayingVideoChanged object:nil];
 }
 
 - (void)pause
 {
-    //djs TODO: should this all be done on the main thread???
-    //b/c of how this gets called, it's not necessarily on main thread
-    [self.player pause];
     self.isPlaying = NO;
     self.shouldAutoplay = NO;
+    [self.player pause];
     
     [self.videoPlayerDelegate videoPlaybackStatus:NO forPlayer:self];
 }
 
 - (void)beginScrubbing
 {
+    self.isScrubbing = YES;
     _rateBeforeScrubbing = self.player.rate;
     self.player.rate = 0.f;
 }
 
 - (void)endScrubbing
 {
+    self.isScrubbing = NO;
     self.player.rate = _rateBeforeScrubbing;
 }
 
@@ -443,8 +503,10 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 {
     if (CMTIME_IS_VALID([self duration])) {
         CMTime seekTo = CMTimeMultiplyByFloat64([self duration], MAX(0.0,MIN(scrubPct,1.0)));
-        [self.player seekToTime:seekTo];
-        _lastPlaybackUpdateIntervalEnd = seekTo;
+        if (CMTIME_IS_VALID(seekTo) && !CMTIME_IS_INDEFINITE(seekTo)) {
+            [self.player seekToTime:seekTo];
+            _lastPlaybackUpdateIntervalEnd = seekTo;
+        }
     }
 }
 
@@ -486,6 +548,11 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
                                        withObject:change
                                     waitUntilDone:YES];
             }
+        } else if ([keyPath isEqualToString:kShelbySPVideoPlayerRate]) {
+            if ([self shouldBePlaying] && !self.isScrubbing && self.player.rate == 0.f) {
+                //we should be playing!
+                [self play];
+            }
         }
         return;
     }
@@ -512,7 +579,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
     } else if ([keyPath isEqualToString:kShelbySPAVPlayerStatus]) {
         if ([change[NSKeyValueChangeNewKey] isEqual:@(AVPlayerItemStatusReadyToPlay)]) {
-            //TODO finish up
             if (self.shouldBePlaying) {
                 [UIView animateWithDuration:0.25 animations:^{
                     self.playerLayer.hidden = NO;
@@ -573,14 +639,16 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)setupThumbnailOverlay
 {
+    STVDebugAssert(!self.thumbnailView);
+    
     self.thumbnailView = [[[NSBundle mainBundle] loadNibNamed:@"VideoPlayerThumbnailOverlayView" owner:self options:nil] firstObject];
     [self.view addSubview:self.thumbnailView];
     self.thumbnailView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=1)-[thumb(500)]-(>=1)-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[thumb(500)]"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"thumb":self.thumbnailView}]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=1)-[thumb(250)]-(>=1)-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[thumb(250)]"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"thumb":self.thumbnailView}]];

@@ -17,6 +17,7 @@
 #import "ShelbyModelArrayUtility.h"
 #import "SPShareController.h"
 #import "SPVideoExtractor.h"
+#import "StreamConnectFacebookTableViewCell.h"
 #import "User+Helper.h"
 
 #define LOAD_MORE_ACTIVATION_HEIGHT 200
@@ -30,8 +31,6 @@
 #define SECTION_FOR_PLAYBACK_ENTITIES 3
 
 NSString * const kShelbyStreamEntryCell = @"StreamEntry";
-NSString * const kShelbyStreamEntryRecommendedCell = @"StreamEntryRecommended";
-NSString * const kShelbyStreamEntryLikeCell = @"ShelbyStreamEntryLike";
 NSString * const kShelbyStreamEntryAddChannelsCell = @"AddChannels";
 NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsCollapsed";
 NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
@@ -114,20 +113,21 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(removeFrameNotification:)
-                                                 name:kShelbyBrainRemoveFrameNotification
-                                               object:nil];
+                                                 name:kShelbyBrainRemoveFrameNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackEntityDidChangeNotification:)
-                                                 name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+                                                 name:kShelbyPlaybackEntityDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectFacebookVisiblityChangeNotification) 
+                                                 name:kShelbyStreamConnectFacebookVisibilityChangeNotification object:nil];
     
     if (self.mayShowConnectSocial) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSpecialCellStatus) name:kShelbyNotificationFacebookConnectCompleted object:nil];
     }
 
-    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryRecommendedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryRecommendedCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryCell];
-    [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryLikeCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryLikeCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCollapsedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCollapsedCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"StreamConnectFacebookCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamConnectFacebookCell];
@@ -143,13 +143,14 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     [super viewWillAppear:animated];
     
     [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
+    
+    [self refreshSpecialCellStatus];
+    [self scrollToTopVideoEntry];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
- 
-    [self refreshSpecialCellStatus];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -197,13 +198,13 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 - (void)playbackEntityDidChangeNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
+    DisplayChannel *channel = userInfo[kShelbyPlaybackCurrentChannelKey];
     if (channel != self.displayChannel) {
         self.currentlySelectedEntity = nil;
         return;
     }
 
-    self.currentlySelectedEntity = userInfo[kShelbyVideoReelEntityKey];
+    self.currentlySelectedEntity = userInfo[kShelbyPlaybackCurrentEntityKey];
 }
 
 - (void)refreshSpecialCellStatus
@@ -259,6 +260,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         // Don't update entries if we have zero entries in cache
         if ([receivedChannelEntries count] != 0 || !cached) {
             [self setEntries:receivedChannelEntries];
+            [self scrollToTopVideoEntry];
         }
         
         if ([receivedChannelEntries count]) {
@@ -303,6 +305,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     }
 }
 
+- (void)connectFacebookVisiblityChangeNotification
+{
+    [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_CONNECT_SOCIAL]
+                     withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 #pragma mark - UITableDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -316,7 +324,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         return self.mayShowFollowChannels ? 1 : 0;
         
     } else if (section == SECTION_FOR_CONNECT_SOCIAL) {
-        return (self.mayShowConnectSocial && !self.currentUserHasFacebookConnected) ? 1 : 0;
+        return (self.mayShowConnectSocial && !self.currentUserHasFacebookConnected && ![StreamConnectFacebookTableViewCell userWantsHidden]) ? 1 : 0;
         
     } else if (section == SECTION_FOR_NO_CONTENT) {
         return self.showNoContentView ? 1 : 0;
@@ -333,7 +341,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == SECTION_FOR_ADD_CHANNELS) {
-        NSString *cellIdentifier = self.followCount > 2 ? kShelbyStreamEntryAddChannelsCollapsedCell : kShelbyStreamEntryAddChannelsCell;
+        NSString *cellIdentifier = [self shouldCollapseAddChannelsCell] ? kShelbyStreamEntryAddChannelsCollapsedCell : kShelbyStreamEntryAddChannelsCell;
         return [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         
     } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
@@ -344,27 +352,8 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 
     } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
     
+        // 1) Setup Data Model
         id<ShelbyVideoContainer> streamEntry = self.deduplicatedEntries[indexPath.row];
-        NSString *cellIdentifier = nil;
-        BOOL recommendedEntry = NO;
-        if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
-            DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-            if ([dashboardEntry recommendedEntry]) {
-                cellIdentifier = kShelbyStreamEntryRecommendedCell;
-                recommendedEntry = YES;
-            }
-        } else if ([streamEntry isKindOfClass:[Frame class]]) {
-            Frame *frameEntry = (Frame *)streamEntry;
-            if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
-                cellIdentifier = kShelbyStreamEntryLikeCell;
-            }
-        }
-        
-        if (!cellIdentifier) {
-            cellIdentifier = kShelbyStreamEntryCell;
-        }
-        
-        ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         Frame *videoFrame = nil;
         DashboardEntry *dbe = nil;
         if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
@@ -373,25 +362,15 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
             videoFrame = (Frame *)streamEntry;
         }
+
+        // 2) Display our model in our view
+        ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:kShelbyStreamEntryCell forIndexPath:indexPath];
+        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setDashboardEntry:dbe andFrame:videoFrame];
         cell.currentUser = self.currentUser;
         
-        // Overwrite description in case of a recommended entry
-        if (recommendedEntry) {
-            DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-            if (dashboardEntry.sourceFrameCreatorNickname) {
-                NSString *recoBase = @"This video is Liked by people like ";
-                NSString *recoUsername = dashboardEntry.sourceFrameCreatorNickname;
-                cell.description.text = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
-            } else if (dashboardEntry.sourceVideoTitle) {
-                cell.description.text = [NSString stringWithFormat:@"Because you Liked \"%@\"", dashboardEntry.sourceVideoTitle];
-            } else {
-                cell.description.text = @"We thought you'd like to see this";
-            }
-        }
-        cell.delegate = self;
-        
+        // 3) Maintain "currently on" state
         if (streamEntry == self.currentlySelectedEntity) {
             [cell selectStreamEntry];
         }
@@ -426,9 +405,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         
         self.currentlySelectedEntity = self.deduplicatedEntries[indexPath.row];
         
-        [self.videoReelVC playChannel:self.displayChannel
-              withDeduplicatedEntries:self.deduplicatedEntries
-                              atIndex:indexPath.row];
+        //so cell responds quickly
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.videoReelVC playChannel:self.displayChannel
+                  withDeduplicatedEntries:self.deduplicatedEntries
+                                  atIndex:indexPath.row];
+        });
     }
 }
 
@@ -438,36 +420,35 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         return self.followCount > 2 ? 110.0 : 210.0;
         
     } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
-        return 110.f;
+        return [StreamConnectFacebookTableViewCell cellHeight];
         
     } else if (indexPath.section == SECTION_FOR_NO_CONTENT) {
         return [NoContentView noActivityCellHeight];
     
     } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
-        id streamEntry = self.deduplicatedEntries[indexPath.row];
+        
+        // 1) Setup Data Model
+        id<ShelbyVideoContainer> streamEntry = self.deduplicatedEntries[indexPath.row];
+        Frame *videoFrame = nil;
+        DashboardEntry *dbe = nil;
         if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
-            DashboardEntry *dashboardEntry = (DashboardEntry *)streamEntry;
-            if ([dashboardEntry recommendedEntry]) {
-                return 311.0;
-            }
+            videoFrame = ((DashboardEntry *)streamEntry).frame;
+            dbe = (DashboardEntry *)streamEntry;
         } else if ([streamEntry isKindOfClass:[Frame class]]) {
-            Frame *frameEntry = (Frame *)streamEntry;
-            if ([frameEntry typeOfFrame] == FrameTypeLightWeight) {
-                return 271.0;
-            }
+            videoFrame = (Frame *)streamEntry;
         }
-        //what is this for?
-        return 341.0;
+        // 2) Return height as determined (efficiently, i hope) by cell
+        return [ShelbyStreamEntryCell heightWithDashboardEntry:dbe andFrame:videoFrame];
             
     } else {
-        STVAssert(NO, @"unaccoutned for section");
+        STVAssert(NO, @"unaccounted for section");
         return 0;
     }
 }
 
 #pragma mark - UIScrollViewDelegate
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     STVAssert(scrollView == self.entriesTable);
     
@@ -557,10 +538,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         //remove spinner
         [self.loadMoreSpinner stopAnimating];
         [self.loadMoreSpinner removeFromSuperview];
-        self.entriesTable.contentInset = UIEdgeInsetsMake(self.entriesTable.contentInset.top,
-                                                          self.entriesTable.contentInset.left,
-                                                          self.entriesTable.contentInset.bottom - LOAD_MORE_SPINNER_AREA_HEIGHT,
-                                                          self.entriesTable.contentInset.right);
+        [UIView animateWithDuration:0.2 animations:^{
+            self.entriesTable.contentInset = UIEdgeInsetsMake(self.entriesTable.contentInset.top,
+                                                              self.entriesTable.contentInset.left,
+                                                              self.entriesTable.contentInset.bottom - LOAD_MORE_SPINNER_AREA_HEIGHT,
+                                                              self.entriesTable.contentInset.right);
+        }];
         
     } else if (self.entriesTableVC.refreshControl.refreshing) {
         //REFRESH was the request
@@ -653,6 +636,24 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         _currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     }
     return _currentUser;
+}
+
+- (void)scrollToTopVideoEntry
+{
+    //don't scroll if (1) we have no entries, (2) we're not at the top, (3) we're showing large collapse channels cell
+    if ([self.channelEntries count] == 0 ||
+        self.entriesTable.contentOffset.y > 0.f ||
+        (self.mayShowFollowChannels && ![self shouldCollapseAddChannelsCell])) {
+        return;
+    }
+    [self.entriesTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:SECTION_FOR_PLAYBACK_ENTITIES]
+                             atScrollPosition:UITableViewScrollPositionTop
+                                     animated:YES];
+}
+
+- (BOOL)shouldCollapseAddChannelsCell
+{
+    return self.followCount > 2;
 }
 
 @end

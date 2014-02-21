@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "rec-icon-gray.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "iPadWelcome3.png"
+      "filename" : "rec-icon-gray@2x.png"
     }
   ],
   "info" : {

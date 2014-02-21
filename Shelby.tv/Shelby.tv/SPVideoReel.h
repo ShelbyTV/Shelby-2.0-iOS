@@ -11,12 +11,6 @@
 #import "SPVideoPlayer.h"
 #import "VideoReelBackdropView.h"
 
-//notifications
-extern NSString * const kShelbyVideoReelDidChangePlaybackEntityNotification;
-//userInfo keys
-extern NSString * const kShelbyVideoReelEntityKey;
-extern NSString * const kShelbyVideoReelChannelKey;
-
 @class SPVideoReel;
 
 @protocol SPVideoReelDelegate <NSObject>

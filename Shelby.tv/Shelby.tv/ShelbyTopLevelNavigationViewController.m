@@ -71,6 +71,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     if (self.shouldNavigateToUsersStreamOnAppear && self.currentUser) {
         [self navigateToUsersStream];
         self.shouldNavigateToUsersStreamOnAppear = NO;

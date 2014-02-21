@@ -85,7 +85,7 @@
 //                                                                                 metrics:nil
 //                                                                                   views:@{@"play":_playButton}]];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayingChanged:) name:kShelbySPVideoPlayerCurrentPlayingVideoChanged object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayingChanged:) name:kShelbyPlaybackEntityDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForVideo) name:kShelbySPVideoAirplayDidBegin object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForVideo) name:kShelbySPVideoAirplayDidEnd object:nil];
     }
@@ -160,7 +160,7 @@
         }
 
         [self.foregroundView setInfoForDashboardEntry:dashboardEntry frame:videoFrame];
-        [self setupPlayImageForVideo];
+        [self setupPlayImageForEntity:entry];
     }
 }
 
@@ -263,10 +263,10 @@
 }
 
 
-- (void)setupPlayImageForVideo
+- (void)setupPlayImageForEntity:(id<ShelbyVideoContainer>)newEntity
 {
     if (self.viewMode == ShelbyStreamBrowseViewForAirplay) {
-        if ([SPVideoPlayer currentPlayingVideo] == [self.entry containedVideo]) {
+        if (newEntity == self.entry) {
             self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-current.png"];
         } else {
             self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-airplay.png"];
@@ -278,7 +278,10 @@
 
 - (void)videoPlayingChanged:(NSNotification *)notification
 {
-    [self setupPlayImageForVideo];
+    NSDictionary *userInfo = notification.userInfo;
+    id<ShelbyVideoContainer> newEntity = userInfo[kShelbyPlaybackCurrentEntityKey];
+    
+    [self setupPlayImageForEntity:newEntity];
 }
 
 + (void)cacheEntry:(id<ShelbyVideoContainer>)entry
@@ -322,7 +325,7 @@
 - (void)streamBrowseCellForegroundViewTitleWasTapped
 {
     [self.delegate browseViewCellTitleWasTapped:self];
-    [self setupPlayImageForVideo];
+    [self setupPlayImageForEntity:self.entry];
 }
 
 - (void)shareVideoWasTapped

@@ -11,3 +11,8 @@
 /// Notifications
 NSString * const kShelbyWillPresentModalViewNotification = @"kShelbyWillPresentModalViewNotification";
 NSString * const kShelbyDidDismissModalViewNotification = @"kShelbyDidDismissModalViewNotification";
+NSString * const kShelbyStreamConnectFacebookVisibilityChangeNotification = @"kShelbyStreamConnectFacebookVisibilityChangeNotification";
+
+NSString * const kShelbyPlaybackEntityDidChangeNotification = @"kShelbyPlaybackEntityDidChangeNotification";
+NSString * const kShelbyPlaybackCurrentEntityKey = @"kShelbyPlaybackCurrentEntityKey";
+NSString * const kShelbyPlaybackCurrentChannelKey = @"kShelbyPlaybackChannelKey";

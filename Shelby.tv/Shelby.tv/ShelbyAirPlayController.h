@@ -17,7 +17,7 @@
 @property (nonatomic, weak) VideoControlsViewController *videoControlsVC;
 
 - (BOOL)isAirPlayActive;
-- (void)playEntity:(id<ShelbyVideoContainer>)entity;
+- (void)playEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel;
 - (void)pauseCurrentPlayer;
 - (void)playCurrentPlayer;
 - (void)beginScrubbing;

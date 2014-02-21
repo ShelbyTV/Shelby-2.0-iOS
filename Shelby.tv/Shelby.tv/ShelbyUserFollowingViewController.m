@@ -52,6 +52,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     self.spinner = ({
         UIActivityIndicatorView *v = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         v.hidesWhenStopped = YES;
@@ -63,6 +65,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+
     self.spinner.center = CGPointMake(self.view.bounds.size.width/2.f, -20);
 }
 
@@ -78,7 +82,10 @@
         _user = user;
         
         if (user){
-            self.tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
+            [self.tableView setContentInset:UIEdgeInsetsMake(self.tableView.contentInset.top + 50,
+                                                             self.tableView.contentInset.left,
+                                                             self.tableView.contentInset.bottom,
+                                                             self.tableView.contentInset.right)];
             [self.spinner startAnimating];
             [[ShelbyDataMediator sharedInstance] fetchRollFollowingsForUser:user withCompletion:^(User *user, NSArray *rawRollFollowings, NSError *error) {
                 if (!error) {
@@ -89,7 +96,10 @@
                     DLog(@"ERROR on roll following fetch %@", error);
                 }
                 [self.spinner stopAnimating];
-                [self.tableView setContentInset:UIEdgeInsetsZero];
+                [self.tableView setContentInset:UIEdgeInsetsMake(self.tableView.contentInset.top - 50,
+                                                                 self.tableView.contentInset.left,
+                                                                 self.tableView.contentInset.bottom,
+                                                                 self.tableView.contentInset.right)];
             }];
         }
     }

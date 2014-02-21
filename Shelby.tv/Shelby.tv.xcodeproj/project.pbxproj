@@ -129,15 +129,9 @@
 		1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
 		1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
 		1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
-		1C496236189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */; };
-		1C496237189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */; };
-		1C496238189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */; };
 		1C49623A18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */; };
 		1C49623B18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */; };
 		1C49623C18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */; };
-		1C49623E18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */; };
-		1C49623F18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */; };
-		1C49624018999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */; };
 		1C496242189C4931005F9BD4 /* ShelbyChannelsCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */; };
 		1C496243189C4931005F9BD4 /* ShelbyChannelsCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */; };
 		1C496244189C4931005F9BD4 /* ShelbyChannelsCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */; };
@@ -620,6 +614,9 @@
 		9103939518A1330A003B911D /* NoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103939418A1330A003B911D /* NoContentView.m */; };
 		9103939618A1330A003B911D /* NoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103939418A1330A003B911D /* NoContentView.m */; };
 		9103939718A1330A003B911D /* NoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103939418A1330A003B911D /* NoContentView.m */; };
+		9103939A18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */; };
+		9103939B18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */; };
+		9103939C18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */; };
 		910933081743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		910933091743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
@@ -855,6 +852,9 @@
 		91AEFE2117F126D000B2598B /* welcome-1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE2017F126D000B2598B /* welcome-1.mov */; };
 		91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE2017F126D000B2598B /* welcome-1.mov */; };
 		91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE2017F126D000B2598B /* welcome-1.mov */; };
+		91B5EB1018B69039002736FD /* StreamConnectFacebookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */; };
+		91B5EB1118B69039002736FD /* StreamConnectFacebookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */; };
+		91B5EB1218B69039002736FD /* StreamConnectFacebookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */; };
 		91B7DC3917AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */; };
 		91B7DC3A17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */; };
 		91B7DC3B17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */; };
@@ -1028,9 +1028,7 @@
 		1C3D91341714C6CC00105839 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		1C4110DD17319468009022EA /* ShelbyHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyHomeViewController.h; sourceTree = "<group>"; };
 		1C4110DE17319468009022EA /* ShelbyHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHomeViewController.m; sourceTree = "<group>"; };
-		1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryRecommendedCellView.xib; sourceTree = "<group>"; };
 		1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryCellView.xib; sourceTree = "<group>"; };
-		1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamEntryLikeCellView.xib; sourceTree = "<group>"; };
 		1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyChannelsCellView.xib; sourceTree = "<group>"; };
 		1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyChannelsCollapsedCellView.xib; sourceTree = "<group>"; };
 		1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape-568h.png"; sourceTree = "<group>"; };
@@ -1289,6 +1287,7 @@
 		9103938F18A131DC003B911D /* NoContentViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoContentViews.xib; sourceTree = "<group>"; };
 		9103939318A1330A003B911D /* NoContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoContentView.h; sourceTree = "<group>"; };
 		9103939418A1330A003B911D /* NoContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentView.m; sourceTree = "<group>"; };
+		9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoReelAirplayBackdropView.xib; sourceTree = "<group>"; };
 		910933061743E47F00AC038E /* ShelbyAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAlert.h; sourceTree = "<group>"; };
 		910933071743E47F00AC038E /* ShelbyAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAlert.m; sourceTree = "<group>"; };
 		910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyCurrentlyOnViewController.h; sourceTree = "<group>"; };
@@ -1418,6 +1417,8 @@
 		91AEFE1517ECF3D500B2598B /* StreamBrowseGestureHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBrowseGestureHintView.h; sourceTree = "<group>"; };
 		91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamBrowseGestureHintView.m; sourceTree = "<group>"; };
 		91AEFE2017F126D000B2598B /* welcome-1.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "welcome-1.mov"; sourceTree = "<group>"; };
+		91B5EB0E18B69039002736FD /* StreamConnectFacebookTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamConnectFacebookTableViewCell.h; sourceTree = "<group>"; };
+		91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamConnectFacebookTableViewCell.m; sourceTree = "<group>"; };
 		91B7DC3717AC0C8A009ABF02 /* STVYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVYouTubeExtractor.h; sourceTree = "<group>"; };
 		91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVYouTubeExtractor.m; sourceTree = "<group>"; };
 		91B7DC3D17B16447009ABF02 /* nav-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-shadow.png"; sourceTree = "<group>"; };
@@ -1630,14 +1631,13 @@
 				9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */,
 				913AD87B1891C51B00177A25 /* UserFollowing.storyboard */,
 				1CA34E541892C79400A168D1 /* SignupHeaderView.xib */,
-				1C496235189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib */,
 				1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */,
-				1C49623D18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib */,
 				1C496241189C4931005F9BD4 /* ShelbyChannelsCellView.xib */,
 				1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */,
 				91319BCC189C4EF4000384A0 /* VideoPlayerThumbnailOverlayView.xib */,
 				9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */,
 				9103938F18A131DC003B911D /* NoContentViews.xib */,
+				9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -1701,6 +1701,8 @@
 				91319BD1189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.m */,
 				9103939318A1330A003B911D /* NoContentView.h */,
 				9103939418A1330A003B911D /* NoContentView.m */,
+				91B5EB0E18B69039002736FD /* StreamConnectFacebookTableViewCell.h */,
+				91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */,
 			);
 			name = "Views - iPad";
 			sourceTree = "<group>";
@@ -2695,7 +2697,6 @@
 				1CDCA67F179DCE190098C4E1 /* play.png in Resources */,
 				1CD8112217CCF6C0002FD84B /* play-current@2x.png in Resources */,
 				1CDCA682179DCE190098C4E1 /* play@2x.png in Resources */,
-				1C49623F18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */,
 				1CDCA685179DCE190098C4E1 /* scrubber.png in Resources */,
 				1CE5586F17DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
 				1CDCA688179DCE190098C4E1 /* scrubber@2x.png in Resources */,
@@ -2721,6 +2722,7 @@
 				1CE5586317DE73CA00C18A30 /* share-large@2x.png in Resources */,
 				1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CE5586B17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
+				9103939B18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1C3A7EDB1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9192ED0F17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				9124A6B0188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
@@ -2751,7 +2753,6 @@
 				912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B4188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */,
-				1C496237189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */,
 				91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585A17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585017DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
@@ -2832,7 +2833,6 @@
 				1CDCA680179DCE190098C4E1 /* play.png in Resources */,
 				1CD8112317CCF6C0002FD84B /* play-current@2x.png in Resources */,
 				1CDCA683179DCE190098C4E1 /* play@2x.png in Resources */,
-				1C49624018999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */,
 				1CDCA686179DCE190098C4E1 /* scrubber.png in Resources */,
 				1CE5587017DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
 				1CDCA689179DCE190098C4E1 /* scrubber@2x.png in Resources */,
@@ -2858,6 +2858,7 @@
 				1CE5586417DE73CA00C18A30 /* share-large@2x.png in Resources */,
 				1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CE5586C17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
+				9103939C18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1C3A7EDC1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9192ED1017C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				9124A6B1188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
@@ -2888,7 +2889,6 @@
 				912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B5188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */,
-				1C496238189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */,
 				91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585B17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585117DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
@@ -2985,13 +2985,13 @@
 				912261DC17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
 				1CDCA68D179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA690179F317A0098C4E1 /* overlay.png in Resources */,
-				1C49623E18999DE1005F9BD4 /* ShelbyStreamEntryLikeCellView.xib in Resources */,
 				9192ED0E17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				9192ED0B17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */,
 				1CE5585F17DE73CA00C18A30 /* share-large.png in Resources */,
 				1CDCA693179F317A0098C4E1 /* overlay@2x.png in Resources */,
 				1CDCA698179F34BC0098C4E1 /* overlay-landscape.png in Resources */,
 				1C100DCF185F8E01002ADAF2 /* FollowNotificationViewCell.xib in Resources */,
+				9103939A18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1CDCA69B179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
 				9124A67B188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */,
 				1CDCA6A0179F3FB80098C4E1 /* play-standard.png in Resources */,
@@ -3038,7 +3038,6 @@
 				91B7DC5517B29D59009ABF02 /* scrub-track-progress.png in Resources */,
 				91B7DC5817B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 				1C0C7E0218523596008F5506 /* close-icon.png in Resources */,
-				1C496236189995E2005F9BD4 /* ShelbyStreamEntryRecommendedCellView.xib in Resources */,
 				9192ED0217C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				911ED32117B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
 				911ED32417B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
@@ -3244,6 +3243,7 @@
 				9124A69E188ED0D500175A9C /* BrowseChannelsHeaderView.m in Sources */,
 				914A2FF3187614530042E818 /* STVLabelWithMargins.m in Sources */,
 				915ACBC717EB52DE00FA3EFF /* Conversation.m in Sources */,
+				91B5EB1118B69039002736FD /* StreamConnectFacebookTableViewCell.m in Sources */,
 				91C4444E18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				913AD8791891C4EF00177A25 /* ShelbyUserFollowingViewController.m in Sources */,
@@ -3413,6 +3413,7 @@
 				9124A69F188ED0D500175A9C /* BrowseChannelsHeaderView.m in Sources */,
 				914A2FF4187614530042E818 /* STVLabelWithMargins.m in Sources */,
 				915ACBC817EB52DE00FA3EFF /* Conversation.m in Sources */,
+				91B5EB1218B69039002736FD /* StreamConnectFacebookTableViewCell.m in Sources */,
 				91C4444F18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				913AD87A1891C4EF00177A25 /* ShelbyUserFollowingViewController.m in Sources */,
@@ -3582,6 +3583,7 @@
 				9124A69D188ED0D500175A9C /* BrowseChannelsHeaderView.m in Sources */,
 				914A2FF2187614530042E818 /* STVLabelWithMargins.m in Sources */,
 				915ACBC617EB52DE00FA3EFF /* Conversation.m in Sources */,
+				91B5EB1018B69039002736FD /* StreamConnectFacebookTableViewCell.m in Sources */,
 				91C4444D18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				913AD8781891C4EF00177A25 /* ShelbyUserFollowingViewController.m in Sources */,

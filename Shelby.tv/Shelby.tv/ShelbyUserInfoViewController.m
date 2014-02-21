@@ -245,6 +245,11 @@
     return self.streamInfoVC.displayChannel;
 }
 
+- (NSArray *)singleVideoEntry
+{
+    return nil;
+}
+
 #pragma mark - SignupHeaderDelegate
 - (void)signupUser
 {

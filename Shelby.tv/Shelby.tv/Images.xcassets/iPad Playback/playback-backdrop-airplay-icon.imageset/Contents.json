@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "tv-icon.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "iPadWelcome3.png"
+      "filename" : "tv-icon@2x.png"
     }
   ],
   "info" : {

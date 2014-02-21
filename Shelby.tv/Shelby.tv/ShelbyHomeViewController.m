@@ -105,7 +105,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(focusOnEntityNotification:)
-                                                 name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
+                                                 name:kShelbyPlaybackEntityDidChangeNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleDidBecomeActiveNotification:)
@@ -387,12 +387,12 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)focusOnEntityNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
+    DisplayChannel *channel = userInfo[kShelbyPlaybackCurrentChannelKey];
     if (![self streamBrowseViewControllerForChannel:channel]) {
         return;
     }
     
-    id<ShelbyVideoContainer> entity = userInfo[kShelbyVideoReelEntityKey];
+    id<ShelbyVideoContainer> entity = userInfo[kShelbyPlaybackCurrentEntityKey];
     [self focusOnEntity:entity inChannel:channel];
 }
 
@@ -625,8 +625,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
             STVDebugAssert([channelEntities count] > (NSUInteger)index, @"expected a valid index");
             return;
         }
-        // KP KP DS: TODO: There should be a notification that the AV player is ready for a new video. Ideally, that what we would listen to in SPVideoPlayer. SPVideoPlayer, will only start playing to air play, after knowing AV player is ready. Home should not have to care about this and should send the playEntity immediately.
-        [self.airPlayController performSelector:@selector(playEntity:) withObject:channelEntities[index] afterDelay:2];
+        [self.airPlayController playEntity:channelEntities[index] inChannel:channel];
         [self showAirPlayViewMode:YES];
 
     } else if (self.videoReel) {

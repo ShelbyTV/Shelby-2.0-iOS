@@ -28,6 +28,11 @@
 #define kShelbyNotificationFetchingOlderVideosFailed        @"Fetching Older Videos Failed"
 extern NSString * const kShelbyWillPresentModalViewNotification;
 extern NSString * const kShelbyDidDismissModalViewNotification;
+extern NSString * const kShelbyStreamConnectFacebookVisibilityChangeNotification;
+
+extern NSString * const kShelbyPlaybackEntityDidChangeNotification;
+extern NSString * const kShelbyPlaybackCurrentEntityKey;
+extern NSString * const kShelbyPlaybackCurrentChannelKey;
 
 /// Colors - deprecated
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]

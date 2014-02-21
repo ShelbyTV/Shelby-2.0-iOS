@@ -23,12 +23,15 @@
 //views
 @property (nonatomic, weak) IBOutlet UILabel *username;
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
+@property (nonatomic, weak) IBOutlet UILabel *bodyLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *currentlyOn;
 @property (nonatomic, weak) IBOutlet UIImageView *videoThumbnail;
 @property (nonatomic, weak) IBOutlet UIImageView *detailAvatarBadge;
 @property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, weak) IBOutlet UILabel *detailNoLikersLabel;
 @property (nonatomic, weak) IBOutlet UIView *likersView;
+@property (nonatomic, weak) IBOutlet UIView *unLikersView;
+@property (nonatomic, weak) IBOutlet UIView *bordersView;
 @property (nonatomic, weak) IBOutlet UIView *leftVerticalBorder;
 @property (nonatomic, weak) IBOutlet UIView *centerVerticalBorder;
 @property (nonatomic, weak) IBOutlet UIView *rightVerticalBorder;
@@ -109,17 +112,21 @@
         [self updateLikersAndSharersVisuals];
         
         self.videoTitle.text = self.videoFrame.video.title;
-        NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
-        self.description.text = captionText;
+        self.bodyLabel.text = [[self class] captionTextForDashboardEntry:_dashboardEntry
+                                                                andFrame:_videoFrame];
         
         NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
         NSString *noThumbImageName = [NSString stringWithFormat:@"video-no-thumb-%d", arc4random_uniform(3)];
         [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:[UIImage imageNamed:noThumbImageName] success:nil failure:nil];
         
-        NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
-        [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:nil failure:nil];
+        if ([_dashboardEntry recommendedEntry]) {
+            self.userAvatar.image = [UIImage imageNamed:@"recommendation-avatar"];
+        } else {
+            NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
+            [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:[UIImage imageNamed:@"blank-avatar-med"] success:nil failure:nil];
+        }
         
-        [self updateViewForCurrentLikeStatus];
+        [self updateHeartViewForCurrentLikeStatus];
         
         NSString *nickname = nil;
         NSString *suppotingText = nil;
@@ -149,15 +156,22 @@
         
         self.detailAvatarBadge.image = badgeImage;
     
-        // Via Network
-        if (viaNetwork) {
-            suppotingText = [NSString stringWithFormat:@"via %@", viaNetwork];
-        }
-        
-        if (suppotingText) {
-            self.username.attributedText = [self nicknameAttributedString:nickname withText:suppotingText];
+        //username
+        if ([_dashboardEntry recommendedEntry]) {
+            self.username.attributedText = [[NSAttributedString alloc] initWithString:@"Recommended for you"
+                                                                           attributes:@{NSForegroundColorAttributeName: kShelbyColorGreen}];
+            
         } else {
-            self.username.text = nickname;
+            // Via Network
+            if (viaNetwork) {
+                suppotingText = [NSString stringWithFormat:@"via %@", viaNetwork];
+            }
+            
+            if (suppotingText) {
+                self.username.attributedText = [self nicknameAttributedString:nickname withText:suppotingText];
+            } else {
+                self.username.text = nickname;
+            }
         }
     }
 }
@@ -179,12 +193,9 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (object == self.videoFrame) {
-        [self updateViewForCurrentLikeStatus];
-    }
-    
     [self processLikersAndSharers];
     [self updateLikersAndSharersVisuals];
+    [self updateHeartViewForCurrentLikeStatus];
 }
 
 - (void)processLikersAndSharers
@@ -248,14 +259,12 @@
 {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardLike];
     [self.delegate likeFrame:self.videoFrame];
-    [self updateViewForCurrentLikeStatus];
 }
 
 - (IBAction)unLikeVideo:(id)sender
 {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardUnlike];
     [self.delegate unLikeFrame:self.videoFrame];
-    [self updateViewForCurrentLikeStatus];
 }
 
 - (IBAction)openUserProfile:(id)sender
@@ -283,15 +292,70 @@
     self.currentlyOn.hidden = YES;
 }
 
-#pragma mark - View Helpers
+#pragma mark - Helpers
 
-- (void)updateViewForCurrentLikeStatus
+- (void)updateHeartViewForCurrentLikeStatus
 {
     BOOL isLiked = [self.videoFrame videoIsLikedBy:self.currentUser];
     self.fullWidthLikeButton.hidden = isLiked;
     self.fullWidthUnlikeButton.hidden = !isLiked;
     self.likeButton.hidden = isLiked;
     self.unlikeButton.hidden = !isLiked;
+}
+
+// NB: We use autolayout when actually displaying the cell.  We could use that here to get the
+// height we will ultimatley be displayed at.  But that's slow.  Since only one area changes size
+// (the description) we just determine the height of that area and add it to a constant to determine
+// the final actual height (which will be equal to height as determined by doing a full autolayout).
++ (CGFloat)heightWithDashboardEntry:(DashboardEntry *)dashboardEntry andFrame:(Frame *)videoFrame
+{
+    static ShelbyStreamEntryCell *prototypeRegularShareCell;
+    static CGSize maxLabelSize;
+    static NSStringDrawingOptions drawingOptions;
+    static dispatch_once_t onceToken;
+    static NSDictionary *attrs;
+    dispatch_once(&onceToken, ^{
+        prototypeRegularShareCell = [[[NSBundle mainBundle] loadNibNamed:@"ShelbyStreamEntryCellView" owner:nil options:nil] firstObject];
+        maxLabelSize = prototypeRegularShareCell.bodyLabel.bounds.size;
+        drawingOptions = (NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine);
+        attrs = @{NSFontAttributeName: prototypeRegularShareCell.bodyLabel.font};
+    });
+    
+    if ([videoFrame typeOfFrame] == FrameTypeLightWeight) {
+        // ------ lightweight share (aka "like")  ---------
+        //"thumbnailSection" height in xib: 150
+        //"sharerSection" height in xib: >= 60 (sits at 60 for this type b/c there's no body text)
+        //"actionSection" height in xib: 50
+        //"bottom border" height in xib: 10
+        return 270.f;
+        
+    } else {
+        // ------ regular share & recommendations ---------
+        //height with full text: 340
+        //height of full text: 82
+        //height if there was no text: (340 - 82) = 258
+        NSString *bodyCopy = [[self class] captionTextForDashboardEntry:dashboardEntry andFrame:videoFrame];
+        CGRect textBoundingRect = [bodyCopy boundingRectWithSize:maxLabelSize options:drawingOptions attributes:attrs context:nil];
+        return 258.0f + ceil(textBoundingRect.size.height);
+    }
+}
+
++ (NSString *)captionTextForDashboardEntry:(DashboardEntry *)dbe andFrame:(Frame *)videoFrame
+{
+    if ([dbe recommendedEntry]) {
+        if (dbe.sourceFrameCreatorNickname) {
+            NSString *recoBase = @"This video is Liked by people like ";
+            NSString *recoUsername = dbe.sourceFrameCreatorNickname;
+            return [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
+        } else if (dbe.sourceVideoTitle) {
+            return [NSString stringWithFormat:@"Because you Liked \"%@\"", dbe.sourceVideoTitle];
+        } else {
+            return @"We thought you'd like to see this";
+        }
+        
+    } else {
+        return [videoFrame creatorsInitialCommentWithFallback:YES];
+    }
 }
 
 @end

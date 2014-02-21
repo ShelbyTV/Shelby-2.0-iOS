@@ -70,7 +70,7 @@
     @synchronized(self){
         if (backdropImageEntity != _backdropImageEntity) {
             _backdropImageEntity = backdropImageEntity;
-            [self tryMaxResThumbnailURLForEntry:_backdropImageEntity];
+            [self tryNormalThumbnailURLForEntry:_backdropImageEntity];
         }
     }
 }
@@ -91,48 +91,29 @@
 
 #pragma mark - View Helpers
 
-- (void)swapInBackdropImage:(UIImage *)image
+- (void)swapInBackdropImage:(UIImage *)blurredImage
 {
-    @synchronized(self){
-        UIImage *blurredImage = [_blurFilter imageByFilteringImage:image];
-        self.hiddenBackdropOverlayImageView.image = blurredImage;
-        
-        //swap views
-        [UIView animateWithDuration:0.5 delay:0.f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-            self.hiddenBackdropOverlayImageView.alpha = _showBackdropImage ? 1.f : 0.f;
-            self.backdropOverlayImageView.alpha = 0.f;
-        } completion:^(BOOL finished) {
-            UIImageView *nowHidden = self.backdropOverlayImageView;
-            self.backdropOverlayImageView = self.hiddenBackdropOverlayImageView;
-            self.hiddenBackdropOverlayImageView = nowHidden;
-        }];
-    }
+    self.hiddenBackdropOverlayImageView.image = blurredImage;
+    
+    //swap views
+    [UIView animateWithDuration:0.5 delay:0.f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        self.hiddenBackdropOverlayImageView.alpha = _showBackdropImage ? 1.f : 0.f;
+        self.backdropOverlayImageView.alpha = 0.f;
+    } completion:^(BOOL finished) {
+        UIImageView *nowHidden = self.backdropOverlayImageView;
+        self.backdropOverlayImageView = self.hiddenBackdropOverlayImageView;
+        self.hiddenBackdropOverlayImageView = nowHidden;
+    }];
 }
 
 #pragma mark - Get Thumbnails Helpers
 
-- (void)tryMaxResThumbnailURLForEntry:(id<ShelbyVideoContainer>)entry
-{
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[[entry containedVideo] maxResThumbnailURL]];
-    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest imageProcessingBlock:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        if (self.backdropImageEntity == entry) {
-            [self swapInBackdropImage:image];
-        } else {
-            //cell has been reused, do nothing
-        }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        if (self.backdropImageEntity == entry) {
-            [self tryNormalThumbnailURLForEntry:entry];
-        } else {
-            //cell has been reused, do nothing
-        }
-    }] start];
-}
-
 - (void)tryNormalThumbnailURLForEntry:(id<ShelbyVideoContainer>)entry
 {
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[entry containedVideo].thumbnailURL]];
-    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest imageProcessingBlock:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest imageProcessingBlock:^UIImage *(UIImage *image) {
+        return [_blurFilter imageByFilteringImage:image];
+    } success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         if (self.backdropImageEntity == entry) {
             [self swapInBackdropImage:image];
         } else {
