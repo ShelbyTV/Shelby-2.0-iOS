@@ -113,8 +113,9 @@
     
     NSMutableDictionary *uniqueFollowings = [[NSMutableDictionary alloc] initWithCapacity:[rawRollFollowings count]];
     for (NSDictionary *rollInfo in rawRollFollowings) {
-        //skip watch_later rolls (type 13) and current user's own public roll (when viewing current user's rolls)
+        //skip watch_later rolls (type 13), roll types > 16, and current user's own public roll (when viewing current user's rolls)
         if ([@(13) isEqualToNumber:rollInfo[@"roll_type"]] ||
+            ([@(16) compare:rollInfo[@"roll_type"]] == NSOrderedAscending) ||
             [creatorIdToIgnore isEqualToString:rollInfo[@"creator_id"]]) {
             continue;
         }
