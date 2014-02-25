@@ -149,6 +149,7 @@
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEntranceUserTapGetStarted];
     
     [self.getStartedSpinner startAnimating];
+    [self.getStartedButton setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
     [self setButtonsEnabled:NO];
     [[ShelbyDataMediator sharedInstance] createAnonymousUser];
     //result via notifications, registered above
@@ -190,6 +191,7 @@
     self.loginButton.alpha = enabled ? 1.f : 0.3;
     if (enabled) {
         [self.getStartedSpinner stopAnimating];
+        [self.getStartedButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
 }
 
