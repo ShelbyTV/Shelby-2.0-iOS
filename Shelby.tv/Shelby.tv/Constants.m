@@ -16,3 +16,6 @@ NSString * const kShelbyStreamConnectFacebookVisibilityChangeNotification = @"kS
 NSString * const kShelbyPlaybackEntityDidChangeNotification = @"kShelbyPlaybackEntityDidChangeNotification";
 NSString * const kShelbyPlaybackCurrentEntityKey = @"kShelbyPlaybackCurrentEntityKey";
 NSString * const kShelbyPlaybackCurrentChannelKey = @"kShelbyPlaybackChannelKey";
+
+NSString * const kShelbyUserReceivedFollowRollEducationBoolKey = @"kShelbyUserReceivedFollowRollEducationBoolKey";
+NSString * const kShelbyUserReceivedUnfollowRollEducationBoolKey = @"kShelbyUserReceivedUnfollowRollEducationBoolKey";

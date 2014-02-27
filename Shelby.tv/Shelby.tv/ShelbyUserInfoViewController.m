@@ -12,6 +12,7 @@
 #import "ShelbyUserFollowingViewController.h"
 #import "User+Helper.h"
 #import "UIImageView+AFNetworking.h"
+#import "OneTimeUserEducator.h"
 
 @interface ShelbyUserInfoViewController ()
 @property (nonatomic, strong) IBOutlet UIView *switchContainer;
@@ -214,7 +215,7 @@
     }
     
     [self updateFollowButton:!isFollowing];
-    
+
     if (isFollowing) {
         [[ShelbyDataMediator sharedInstance] unfollowRoll:self.user.publicRollID];
     } else {

@@ -13,6 +13,7 @@
 #import "Roll+Helper.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyNavigationViewController.h"
+#import "OneTimeUserEducator.h"
 
 @interface BrowseChannelsTableViewController ()
 @property (strong, nonatomic) NSArray *channels;

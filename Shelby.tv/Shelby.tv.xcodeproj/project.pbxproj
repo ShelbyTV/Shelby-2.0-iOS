@@ -501,6 +501,9 @@
 		1CFEB3B2186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
 		26C937AA2557465EA2344250 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
 		2FBF3481B7434BDFACD6A5AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
+		3B823B0D18BFFB1F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
+		3B823B0E18BFFB3E007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
+		3B823B0F18BFFB3F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
 		8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
@@ -1170,6 +1173,8 @@
 		1CFEB3AA186DF63F00179AE2 /* UserPreferencesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreferencesCell.h; sourceTree = "<group>"; };
 		1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreferencesCell.m; sourceTree = "<group>"; };
 		1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserPreferencesViewCell.xib; sourceTree = "<group>"; };
+		3B823B0B18BFFB1F007D235B /* OneTimeUserEducator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeUserEducator.h; sourceTree = "<group>"; };
+		3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeUserEducator.m; sourceTree = "<group>"; };
 		4CBDF08619EE4AFB90D8FDD2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0132D916A7CC9C00195D9A /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
@@ -1771,6 +1776,8 @@
 				91649ECC1741B1A000A9265B /* DeduplicationUtility.m */,
 				1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */,
 				1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */,
+				3B823B0B18BFFB1F007D235B /* OneTimeUserEducator.h */,
+				3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */,
 				1C3D91241714C00100105839 /* FacebookHandler.h */,
 				1C3D91251714C00100105839 /* FacebookHandler.m */,
 				1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */,
@@ -3199,6 +3206,7 @@
 				8E7024C91715E71500E8DE46 /* hmac.c in Sources */,
 				1CC32456188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CC1715E71500E8DE46 /* sha1.c in Sources */,
+				3B823B0E18BFFB3E007D235B /* OneTimeUserEducator.m in Sources */,
 				8E7024CF1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D21715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D51715E71500E8DE46 /* OAConsumer.m in Sources */,
@@ -3369,6 +3377,7 @@
 				8E7024CA1715E71500E8DE46 /* hmac.c in Sources */,
 				1CC32457188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CD1715E71500E8DE46 /* sha1.c in Sources */,
+				3B823B0F18BFFB3F007D235B /* OneTimeUserEducator.m in Sources */,
 				8E7024D01715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D31715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D61715E71500E8DE46 /* OAConsumer.m in Sources */,
@@ -3539,6 +3548,7 @@
 				8E7024C81715E71500E8DE46 /* hmac.c in Sources */,
 				1CC32455188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CB1715E71500E8DE46 /* sha1.c in Sources */,
+				3B823B0D18BFFB1F007D235B /* OneTimeUserEducator.m in Sources */,
 				8E7024CE1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D11715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D41715E71500E8DE46 /* OAConsumer.m in Sources */,

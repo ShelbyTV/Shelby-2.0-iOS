@@ -34,6 +34,9 @@ extern NSString * const kShelbyPlaybackEntityDidChangeNotification;
 extern NSString * const kShelbyPlaybackCurrentEntityKey;
 extern NSString * const kShelbyPlaybackCurrentChannelKey;
 
+extern NSString * const kShelbyUserReceivedFollowRollEducationBoolKey;
+extern NSString * const kShelbyUserReceivedUnfollowRollEducationBoolKey;
+
 /// Colors - deprecated
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
 #define kShelbyColorOrange                                  [UIColor colorWithHex:@"F38D00" andAlpha:1.0f]
