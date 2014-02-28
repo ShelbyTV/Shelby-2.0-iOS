@@ -794,9 +794,6 @@
 		91E5D463174E938100AD3746 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D462174E938100AD3746 /* Roll.m */; };
 		91E5D464174E938100AD3746 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D462174E938100AD3746 /* Roll.m */; };
 		91E5D465174E938100AD3746 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D462174E938100AD3746 /* Roll.m */; };
-		91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */; };
-		91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */; };
-		91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */; };
 		91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D46E1757C89F00AD3746 /* YTVimeoExtractor.m */; };
 		91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D46E1757C89F00AD3746 /* YTVimeoExtractor.m */; };
 		91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D46E1757C89F00AD3746 /* YTVimeoExtractor.m */; };
@@ -1249,8 +1246,6 @@
 		91D1C8191778DD5B00CAC1E9 /* STVParallaxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVParallaxView.m; sourceTree = "<group>"; };
 		91E5D461174E938100AD3746 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
 		91E5D462174E938100AD3746 /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
-		91E5D4671757BA1F00AD3746 /* LBYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubeExtractor.h; sourceTree = "<group>"; };
-		91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubeExtractor.m; sourceTree = "<group>"; };
 		91E5D46D1757C89F00AD3746 /* YTVimeoExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTVimeoExtractor.h; sourceTree = "<group>"; };
 		91E5D46E1757C89F00AD3746 /* YTVimeoExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTVimeoExtractor.m; sourceTree = "<group>"; };
 		91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Frame+Helper.h"; sourceTree = "<group>"; };
@@ -1860,7 +1855,6 @@
 				91A36261178F296B00381218 /* AHEasing */,
 				91A3625B178F290300381218 /* UIView+EasingFunctions */,
 				91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */,
-				91E5D4661757BA1F00AD3746 /* LBYouTubeView */,
 				8E70248C1715E71500E8DE46 /* OAuth Consumer */,
 				8E87C5A816F38C2D00AC93C0 /* GoogleAnalyticsSDK */,
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
@@ -2153,16 +2147,6 @@
 			);
 			name = "Nav Bar";
 			sourceTree = "<group>";
-		};
-		91E5D4661757BA1F00AD3746 /* LBYouTubeView */ = {
-			isa = PBXGroup;
-			children = (
-				91E5D4671757BA1F00AD3746 /* LBYouTubeExtractor.h */,
-				91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */,
-			);
-			name = LBYouTubeView;
-			path = Library/LBYouTubeView;
-			sourceTree = SOURCE_ROOT;
 		};
 		91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */ = {
 			isa = PBXGroup;
@@ -2758,7 +2742,6 @@
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D464174E938100AD3746 /* Roll.m in Sources */,
-				91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				9178C9E417CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
 				91D1C81B1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
@@ -2902,7 +2885,6 @@
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D465174E938100AD3746 /* Roll.m in Sources */,
-				91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				9178C9E517CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
 				91D1C81C1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
@@ -3046,7 +3028,6 @@
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D463174E938100AD3746 /* Roll.m in Sources */,
-				91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				9178C9E317CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
 				91D1C81A1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,

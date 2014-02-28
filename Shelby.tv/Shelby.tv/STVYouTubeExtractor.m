@@ -7,6 +7,7 @@
 //
 
 #import "STVYouTubeExtractor.h"
+#import <AVFoundation/AVFoundation.h>
 #import "AFNetworking.h"
 #import "ShelbyAnalyticsClient.h"
 
@@ -179,8 +180,14 @@ static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
     NSString *possibleUrl;
 
     for (NSDictionary *streamMap in _streamMaps) {
-        if (streamMap[@"url"] && streamMap[@"sig"] && streamMap[@"type"] && [streamMap[@"type"] rangeOfString:@"mp4"].location != NSNotFound ) {
-            possibleUrl = [NSString stringWithFormat:@"%@&signature=%@", streamMap[@"url"], streamMap[@"sig"]];
+        if (streamMap[@"url"] && streamMap[@"type"] && [AVURLAsset isPlayableExtendedMIMEType:streamMap[@"type"]]) {
+            if ([streamMap[@"url"] rangeOfString:@"signature"].location != NSNotFound) {
+                //signature is already included in URL (YT moved to this ~2/27/14)
+                possibleUrl = streamMap[@"url"];
+            } else if (streamMap[@"sig"]) {
+                //signature is in map, append to URL (YT pre ~2/27/14 -- unsure if this will/is needed in some future/present cases)
+                possibleUrl = [NSString stringWithFormat:@"%@&signature=%@", streamMap[@"url"], streamMap[@"sig"]];
+            }
             //we can play this back... is it the right quality?
             if (streamMap[@"quality"] && [streamMap[@"quality"] isEqualToString:_qualityString]) {
                 return [NSURL URLWithString:possibleUrl];
