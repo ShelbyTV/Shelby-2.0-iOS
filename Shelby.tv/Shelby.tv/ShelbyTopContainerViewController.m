@@ -71,6 +71,8 @@
 {
     [super viewWillAppear:animated];
     
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    
     self.navigationCenterXConstraint.constant += LEFT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
     self.currentlyOnCenterXConstraint.constant += LEFT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
     self.videoReelHorizontalSpaceRightSideConstraint.constant -= RIGHT_SIDE_CONSTRAINT_HORIZONTAL_ADJUSTMENT;
@@ -214,12 +216,23 @@
         [[UIApplication sharedApplication] setStatusBarHidden:hideStatusBar withAnimation:UIStatusBarAnimationSlide];
         [self.view layoutIfNeeded];
         
+        //The height of the navBar is updated based on statusBar.hidden during rotation.  If rotation occurs
+        //while status bar is hidden (ie. nav is hidden): when status bar and nav come back, nav bar height is incorrect.
+        [self navigationVCLayoutNavigationBar];
+
     } completion:nil];
 }
 
 - (BOOL)isVideoFullscreen
 {
     return self.videoReelWidthConstraint.constant == _fullscreenVideoWidth;
+}
+
+- (void)navigationVCLayoutNavigationBar
+{
+    //This is the only trick I've found to get UINavigationController update the height of it's UINavigationBar.
+    [self.sideNavigationVC setNavigationBarHidden:YES animated:NO];
+    [self.sideNavigationVC setNavigationBarHidden:NO animated:NO];
 }
 
 @end
