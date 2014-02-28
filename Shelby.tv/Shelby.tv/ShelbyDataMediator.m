@@ -378,7 +378,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 {
     STVDebugAssert(frame.managedObjectContext == [self mainThreadContext], @"frame expected on main context (b/c action is from there)");
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
-    
+
+    //first time user likes a video, let them know what that's all about
+    //TODO: this should really be done by sending a notification and having something that subscribes to that
+    //  notification perform this
+    [OneTimeUserEducator doOneTimeVideoLikingUserEducation];
+
     if (user) {
         if (![user hasLikedVideoOfFrame:frame] && ![frame.roll.rollID isEqualToString:user.publicRollID]) {
             [self likeFrame:frame forUser:user];
@@ -926,7 +931,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }];
 
     //first time user follows a roll, let them know what that's all about
-    //NB: this should really be done by sending a notification and having something that subscribes to that
+    //TODO: this should really be done by sending a notification and having something that subscribes to that
     //  notification perform this
     [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:YES roll:rollID];
 }
@@ -946,7 +951,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }];
 
     //first time user unfollows a roll, let them know what that's all about
-    //NB: this should really be done by sending a notification and having something that subscribes to that
+    //TODO: this should really be done by sending a notification and having something that subscribes to that
     //  notification perform this
     [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:NO roll:rollID];
 }

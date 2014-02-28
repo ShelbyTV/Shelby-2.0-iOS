@@ -19,3 +19,4 @@ NSString * const kShelbyPlaybackCurrentChannelKey = @"kShelbyPlaybackChannelKey"
 
 NSString * const kShelbyUserReceivedFollowRollEducationBoolKey = @"kShelbyUserReceivedFollowRollEducationBoolKey";
 NSString * const kShelbyUserReceivedUnfollowRollEducationBoolKey = @"kShelbyUserReceivedUnfollowRollEducationBoolKey";
+NSString * const kShelbyUserReceivedVideoLikingEducationBoolKey = @"kShelbyUserReceivedVideoLikingEducationBoolKey";

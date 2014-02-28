@@ -46,4 +46,17 @@
         [userDefaults synchronize];
     }
 }
+
++ (void)doOneTimeVideoLikingUserEducation
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (![userDefaults boolForKey:kShelbyUserReceivedVideoLikingEducationBoolKey]) {
+        UIAlertView *alert;
+
+        alert = [[UIAlertView alloc] initWithTitle:@"Liked!" message:@"We'll use your likes to recommend videos to you in the future." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+        [userDefaults setBool:YES forKey:kShelbyUserReceivedVideoLikingEducationBoolKey];
+        [userDefaults synchronize];
+    }
+}
 @end

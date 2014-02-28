@@ -12,4 +12,5 @@
 
 @interface OneTimeUserEducator : NSObject
 + (void)doOneTimeFollowingUserEducationForUser:(User *)user whenDidFollow:(BOOL)didFollow roll:(NSString *)rollID;
++ (void)doOneTimeVideoLikingUserEducation;
 @end

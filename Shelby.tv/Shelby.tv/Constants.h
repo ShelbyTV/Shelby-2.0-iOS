@@ -36,6 +36,7 @@ extern NSString * const kShelbyPlaybackCurrentChannelKey;
 
 extern NSString * const kShelbyUserReceivedFollowRollEducationBoolKey;
 extern NSString * const kShelbyUserReceivedUnfollowRollEducationBoolKey;
+extern NSString * const kShelbyUserReceivedVideoLikingEducationBoolKey;
 
 /// Colors - deprecated
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
