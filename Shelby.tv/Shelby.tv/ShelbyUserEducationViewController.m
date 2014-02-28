@@ -45,6 +45,17 @@ static BOOL videoHasPlayed = NO;
     }
 }
 
++ (ShelbyUserEducationViewController *)newExploreUserEducationViewController
+{
+    static NSString *nibName = @"ExploreUserEducationView";
+    if ([ShelbyUserEducationViewController userIsEducatedFor:nibName] || videoHasPlayed) {
+        return nil;
+    } else {
+        return [[ShelbyUserEducationViewController alloc] initWithNibName:nibName
+                                                                   bundle:nil];
+    }
+}
+
 + (BOOL)userIsEducatedFor:(NSString *)educationNibName
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, educationNibName]];

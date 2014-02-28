@@ -504,6 +504,9 @@
 		3B823B0D18BFFB1F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
 		3B823B0E18BFFB3E007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
 		3B823B0F18BFFB3F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
+		3BCC07CB18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
+		3BCC07CC18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
+		3BCC07CD18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
 		8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
@@ -1175,6 +1178,7 @@
 		1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserPreferencesViewCell.xib; sourceTree = "<group>"; };
 		3B823B0B18BFFB1F007D235B /* OneTimeUserEducator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeUserEducator.h; sourceTree = "<group>"; };
 		3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeUserEducator.m; sourceTree = "<group>"; };
+		3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreUserEducationView.xib; sourceTree = "<group>"; };
 		4CBDF08619EE4AFB90D8FDD2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0132D916A7CC9C00195D9A /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
@@ -1634,6 +1638,7 @@
 				9124A697188ECF2100175A9C /* BrowseChannelsHeaderView.xib */,
 				9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */,
 				9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */,
+				3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */,
 				913AD87B1891C51B00177A25 /* UserFollowing.storyboard */,
 				1CA34E541892C79400A168D1 /* SignupHeaderView.xib */,
 				1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */,
@@ -2759,6 +2764,7 @@
 				1CE5584317DE1E1300C18A30 /* button-off@2x.png in Resources */,
 				912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B4188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
+				3BCC07CC18C12892006501BA /* ExploreUserEducationView.xib in Resources */,
 				91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585A17DE73CA00C18A30 /* heart-large.png in Resources */,
@@ -2895,6 +2901,7 @@
 				1CE5584417DE1E1300C18A30 /* button-off@2x.png in Resources */,
 				912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B5188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
+				3BCC07CD18C12892006501BA /* ExploreUserEducationView.xib in Resources */,
 				91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585B17DE73CA00C18A30 /* heart-large.png in Resources */,
@@ -2999,6 +3006,7 @@
 				1CDCA698179F34BC0098C4E1 /* overlay-landscape.png in Resources */,
 				1C100DCF185F8E01002ADAF2 /* FollowNotificationViewCell.xib in Resources */,
 				9103939A18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
+				3BCC07CB18C12892006501BA /* ExploreUserEducationView.xib in Resources */,
 				1CDCA69B179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
 				9124A67B188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */,
 				1CDCA6A0179F3FB80098C4E1 /* play-standard.png in Resources */,
