@@ -279,10 +279,10 @@
         badgeImage = [UIImage imageNamed:@"avatar-badge-heart"];
     } else if ([self.videoFrame.creator isNonShelbyFacebookUser]) {
         badgeImage = [UIImage imageNamed:@"avatar-badge-facebook"];
-        viaNetwork = @"facebook";
+        viaNetwork = @"Facebook";
     } else if ([self.videoFrame.creator isNonShelbyTwitterUser]) {
         badgeImage = [UIImage imageNamed:@"avatar-badge-twitter"];
-        viaNetwork = @"twitter";
+        viaNetwork = @"Twitter";
     } else {
         badgeImage = nil;
     }
