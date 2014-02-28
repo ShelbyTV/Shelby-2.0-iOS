@@ -17,7 +17,6 @@
 //non web-view extractions
 @property (nonatomic, strong) STVVimeoExtractor *stvVimeoExtractor;
 @property (nonatomic, strong) STVYouTubeExtractor *stvYTExtractor;
-@property (nonatomic, strong) LBYouTubeExtractor *ytExtractor;
 @property (nonatomic, strong) YTVimeoExtractor *vimeoExtractor;
 //web-view extractions
 @property (nonatomic) UIWebView *webView;
@@ -239,7 +238,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                 if ([video.providerName isEqualToString:@"youtube"]) {
                     //the LBYouTube extractor parses a regular webpage, which seems to work better for more videos
                     //so we just fall back to the STVYouTubeExtractor when LB fails
-                    [self lbYouTube:video];
+                    [self stvYouTube:video];
                     
                 } else if ([video.providerName isEqualToString:@"vimeo"]) {
                     //the YTVimeoExtractor has stopped working.
@@ -322,13 +321,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     self.stvYTExtractor = nil;
 }
 
-- (void)destroyYTExtractor
-{
-    [self.ytExtractor stopExtracting];
-    self.ytExtractor.delegate = nil;
-    self.ytExtractor = nil;
-}
-
 - (void)destroyVimeoExtractor
 {
     //has no cancel
@@ -352,14 +344,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     self.stvYTExtractor = [[STVYouTubeExtractor alloc] initWithID:video.providerID quality:STVYouTubeVideoQualityMedium];
     self.stvYTExtractor.delegate = self;
     [self.stvYTExtractor startExtracting];
-}
-
-- (void)lbYouTube:(Video *)video
-{
-    //TODO - set Quality based on device (iPad vs iPhone)
-    self.ytExtractor = [[LBYouTubeExtractor alloc] initWithID:video.providerID quality:LBYouTubeVideoQualityLarge];
-    self.ytExtractor.delegate = self;
-    [self.ytExtractor startExtracting];
 }
 
 - (void)ytVimeo:(Video *)video
@@ -437,31 +421,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     [self processFailedExtractionWithError:error];
 }
 
-#pragma mark - LBYouTubeExtractorDelegate
-
-- (void)youTubeExtractor:(LBYouTubeExtractor *)extractor didSuccessfullyExtractYouTubeURL:(NSURL *)videoURL
-{
-    if (videoURL) {
-        [self processExtractedURL:videoURL];
-    } else {
-        [self youTubeExtractor:extractor failedExtractingYouTubeURLWithError:nil];
-    }
-
-}
-
-- (void)youTubeExtractor:(LBYouTubeExtractor *)extractor failedExtractingYouTubeURLWithError:(NSError *)error
-{
-    //falling back to our extractor
-    @synchronized(self) {
-        STVAssert(self.currentlyExtracting[kSPVideoExtractorVideoKey], @"expected currently extracting to have video, but it looks like %@", self.currentlyExtracting);
-        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
-                                              action:kAnalyticsIssueYTExtractionFallback
-                                               nicknameAsLabel:YES];
-        [self destroyCurrentExtractor];
-        [self stvYouTube:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
-    }
-}
-
 #pragma mark - Vimeo Extraction Results
 - (void)vimeoExtractor:(YTVimeoExtractor *)extractor didSuccessfullyExtractVimeoURL:(NSURL *)videoURL
 {
@@ -526,7 +485,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 {
     [self destroySTVVimeoExtractor];
     [self destroySTVYTExtractor];
-    [self destroyYTExtractor];
     [self destroyVimeoExtractor];
 }
 
