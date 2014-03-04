@@ -22,6 +22,7 @@
 #import "ShelbyErrorUtility.h"
 #import "TwitterHandler.h"
 #import "User+Helper.h"
+#import "OneTimeUserEducator.h"
 
 NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 NSString * const kShelbyNotificationFacebookConnectCompleted = @"kShelbyNotificationFacebookConnectCompleted";
@@ -377,7 +378,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 {
     STVDebugAssert(frame.managedObjectContext == [self mainThreadContext], @"frame expected on main context (b/c action is from there)");
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
-    
+
+    //first time user likes a video, let them know what that's all about
+    //TODO: this should really be done by sending a notification and having something that subscribes to that
+    //  notification perform this
+    [OneTimeUserEducator doOneTimeVideoLikingUserEducation];
+
     if (user) {
         if (![user hasLikedVideoOfFrame:frame] && ![frame.roll.rollID isEqualToString:user.publicRollID]) {
             [self likeFrame:frame forUser:user];
@@ -915,7 +921,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     STVAssert(rollID, @"must pass rollID");
     User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
     STVAssert(user.token, @"expect user to have a valid token (so we can follow rolls)");
-    
+
     [ShelbyAPIClient followRoll:rollID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
         if (!error) {
             [user didFollowRoll:rollID];
@@ -923,6 +929,11 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             // TODO: In the future, try to reschedule it
         }
     }];
+
+    //first time user follows a roll, let them know what that's all about
+    //TODO: this should really be done by sending a notification and having something that subscribes to that
+    //  notification perform this
+    [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:YES roll:rollID];
 }
 
 - (void)unfollowRoll:(NSString *)rollID
@@ -938,6 +949,11 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             // TODO: In the future, try to reschedule it
         }
     }];
+
+    //first time user unfollows a roll, let them know what that's all about
+    //TODO: this should really be done by sending a notification and having something that subscribes to that
+    //  notification perform this
+    [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:NO roll:rollID];
 }
 
 - (void)loginUserFacebook

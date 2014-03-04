@@ -314,8 +314,8 @@
 {
     DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
                                                                           inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel titleOverride:@"Explore"];
-    
+    ShelbyStreamInfoViewController *streamInfoVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel titleOverride:@"Explore"];
+    streamInfoVC.userEducationVC = [ShelbyUserEducationViewController newExploreUserEducationViewController];
 }
 
 - (void)navigateToChannels

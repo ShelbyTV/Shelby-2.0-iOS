@@ -501,6 +501,12 @@
 		1CFEB3B2186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
 		26C937AA2557465EA2344250 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
 		2FBF3481B7434BDFACD6A5AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
+		3B823B0D18BFFB1F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
+		3B823B0E18BFFB3E007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
+		3B823B0F18BFFB3F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
+		3BCC07CB18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
+		3BCC07CC18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
+		3BCC07CD18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
 		8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
@@ -1173,6 +1179,9 @@
 		1CFEB3AA186DF63F00179AE2 /* UserPreferencesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreferencesCell.h; sourceTree = "<group>"; };
 		1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreferencesCell.m; sourceTree = "<group>"; };
 		1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserPreferencesViewCell.xib; sourceTree = "<group>"; };
+		3B823B0B18BFFB1F007D235B /* OneTimeUserEducator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeUserEducator.h; sourceTree = "<group>"; };
+		3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeUserEducator.m; sourceTree = "<group>"; };
+		3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreUserEducationView.xib; sourceTree = "<group>"; };
 		4CBDF08619EE4AFB90D8FDD2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0132D916A7CC9C00195D9A /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
@@ -1633,6 +1642,7 @@
 				9124A697188ECF2100175A9C /* BrowseChannelsHeaderView.xib */,
 				9124A6AE188F0F4B00175A9C /* StreamUserEducationView.xib */,
 				9124A6B2188F0F8300175A9C /* ChannelsUserEducationView.xib */,
+				3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */,
 				913AD87B1891C51B00177A25 /* UserFollowing.storyboard */,
 				1CA34E541892C79400A168D1 /* SignupHeaderView.xib */,
 				1C49623918999692005F9BD4 /* ShelbyStreamEntryCellView.xib */,
@@ -1778,6 +1788,8 @@
 				91649ECC1741B1A000A9265B /* DeduplicationUtility.m */,
 				1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */,
 				1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */,
+				3B823B0B18BFFB1F007D235B /* OneTimeUserEducator.h */,
+				3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */,
 				1C3D91241714C00100105839 /* FacebookHandler.h */,
 				1C3D91251714C00100105839 /* FacebookHandler.m */,
 				1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */,
@@ -2749,6 +2761,7 @@
 				1CE5584317DE1E1300C18A30 /* button-off@2x.png in Resources */,
 				912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B4188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
+				3BCC07CC18C12892006501BA /* ExploreUserEducationView.xib in Resources */,
 				91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585A17DE73CA00C18A30 /* heart-large.png in Resources */,
@@ -2886,6 +2899,7 @@
 				1CE5584417DE1E1300C18A30 /* button-off@2x.png in Resources */,
 				912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B5188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
+				3BCC07CD18C12892006501BA /* ExploreUserEducationView.xib in Resources */,
 				91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585B17DE73CA00C18A30 /* heart-large.png in Resources */,
@@ -2990,6 +3004,7 @@
 				1CDCA698179F34BC0098C4E1 /* overlay-landscape.png in Resources */,
 				1C100DCF185F8E01002ADAF2 /* FollowNotificationViewCell.xib in Resources */,
 				9103939A18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
+				3BCC07CB18C12892006501BA /* ExploreUserEducationView.xib in Resources */,
 				1CDCA69B179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
 				9124A67B188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */,
 				1CDCA6A0179F3FB80098C4E1 /* play-standard.png in Resources */,
@@ -3199,6 +3214,7 @@
 				8E7024C91715E71500E8DE46 /* hmac.c in Sources */,
 				1CC32456188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CC1715E71500E8DE46 /* sha1.c in Sources */,
+				3B823B0E18BFFB3E007D235B /* OneTimeUserEducator.m in Sources */,
 				8E7024CF1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D21715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D51715E71500E8DE46 /* OAConsumer.m in Sources */,
@@ -3369,6 +3385,7 @@
 				8E7024CA1715E71500E8DE46 /* hmac.c in Sources */,
 				1CC32457188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CD1715E71500E8DE46 /* sha1.c in Sources */,
+				3B823B0F18BFFB3F007D235B /* OneTimeUserEducator.m in Sources */,
 				8E7024D01715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D31715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D61715E71500E8DE46 /* OAConsumer.m in Sources */,
@@ -3539,6 +3556,7 @@
 				8E7024C81715E71500E8DE46 /* hmac.c in Sources */,
 				1CC32455188F15AA00D72CCA /* ShelbyValidationUtility.m in Sources */,
 				8E7024CB1715E71500E8DE46 /* sha1.c in Sources */,
+				3B823B0D18BFFB1F007D235B /* OneTimeUserEducator.m in Sources */,
 				8E7024CE1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D11715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D41715E71500E8DE46 /* OAConsumer.m in Sources */,

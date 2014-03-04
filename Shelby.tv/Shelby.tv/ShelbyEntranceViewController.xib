@@ -148,10 +148,10 @@
         </view>
     </objects>
     <resources>
-        <image name="entrance-blur-1" width="1024" height="768"/>
-        <image name="entrance-blur-2" width="1024" height="768"/>
-        <image name="entrance-blur-3" width="1024" height="768"/>
-        <image name="entrance-blur-4" width="1024" height="768"/>
+        <image name="entrance-blur-1" width="512" height="384"/>
+        <image name="entrance-blur-2" width="512" height="384"/>
+        <image name="entrance-blur-3" width="512" height="384"/>
+        <image name="entrance-blur-4" width="512" height="384"/>
         <image name="entrance-shelby-logo" width="525" height="149"/>
     </resources>
 </document>

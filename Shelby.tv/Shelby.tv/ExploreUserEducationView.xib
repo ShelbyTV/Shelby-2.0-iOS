@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShelbyUserEducationViewController">
+            <connections>
+                <outlet property="view" destination="1" id="L1F-eq-e8k"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view alpha="0.90000000000000002" contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explore!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2a-gc-5lV">
+                    <rect key="frame" x="116" y="269" width="125" height="39"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="391" translatesAutoresizingMaskIntoConstraints="NO" id="T1L-n2-TaP" userLabel="body copy">
+                    <rect key="frame" x="116" y="316" width="391" height="85"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <attributedString key="attributedText">
+                        <fragment content="Visit the explore section to see likes and shares from people in the Shelby community.">
+                            <attributes>
+                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <font key="NSFont" size="24" name="HelveticaNeue-Light"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-edu-left-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="HPE-be-N8E">
+                    <rect key="frame" x="30" y="335" width="56" height="46"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="N2a-gc-5lV" firstAttribute="top" secondItem="1" secondAttribute="top" constant="269" id="CYf-hz-n05"/>
+                <constraint firstItem="T1L-n2-TaP" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="116" id="NX1-E8-L1t"/>
+                <constraint firstItem="HPE-be-N8E" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="30" id="Tsd-8k-ms5"/>
+                <constraint firstItem="T1L-n2-TaP" firstAttribute="top" secondItem="N2a-gc-5lV" secondAttribute="bottom" constant="8" id="bUz-Ru-Riq"/>
+                <constraint firstItem="N2a-gc-5lV" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="116" id="ldT-E1-5vw"/>
+                <constraint firstItem="HPE-be-N8E" firstAttribute="centerY" secondItem="T1L-n2-TaP" secondAttribute="centerY" id="tiY-au-OHt"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="user-edu-left-arrow" width="56" height="46"/>
+    </resources>
+</document>
