@@ -674,7 +674,7 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 - (void)thumbnailTapped:(UITapGestureRecognizer *)gestureRecognizer
 {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapVideoPlayerOverlayPlay];
-    [self play];
+    [self.videoPlayerDelegate videoThumbnailTappped:self];
 }
 
 @end

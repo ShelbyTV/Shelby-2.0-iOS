@@ -22,6 +22,8 @@
 - (BOOL)canRoll;
 - (void)userAskForFacebookPublishPermissions;
 - (void)userAskForTwitterPublishPermissions;
+@optional
+- (void)userDidRequestPlayCurrentPlayer;
 @end
 
 @protocol VideoPlaybackDelegate <NSObject>

@@ -10,6 +10,8 @@
 #import <CoreMedia/CoreMedia.h>
 #import "SPVideoReel.h"
 
+@class UIButton;
+
 extern NSString * const kShelbyRequestFullscreenPlaybackNotification;
 extern NSString * const kShelbyRequestSmallscreenPlaybackNotification;
 
@@ -39,6 +41,8 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 - (void)videoControls:(VideoControlsViewController *)vcvc isScrubbing:(BOOL)isScrubbing;
 @optional
 - (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc;
+- (void)videoControlsRequestFullScreen:(VideoControlsViewController *)vcvc isExpanding:(BOOL)isExpanding;
+- (void)videoControlsRevealAirplayPicker:(VideoControlsViewController *)vcvc airplayButton:(UIButton *)button;
 @end
 
 @interface VideoControlsViewController : ShelbyViewController<VideoPlaybackDelegate>

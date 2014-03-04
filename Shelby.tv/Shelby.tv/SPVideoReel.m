@@ -734,6 +734,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
+- (void)videoThumbnailTappped:(SPVideoPlayer *)player
+{
+    [self.delegate userDidRequestPlayCurrentPlayer];
+}
+
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {

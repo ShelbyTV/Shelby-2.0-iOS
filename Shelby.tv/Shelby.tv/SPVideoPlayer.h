@@ -26,6 +26,8 @@ extern NSString * const kShelbySPVideoAirplayDidEnd;
 - (void)videoCurrentTime:(CMTime)time forPlayer:(SPVideoPlayer *)player;
 - (void)videoPlaybackStatus:(BOOL)isPlaying forPlayer:(SPVideoPlayer *)player;
 - (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player;
+@optional
+- (void)videoThumbnailTappped:(SPVideoPlayer *)player;
 
 @end
 
