@@ -215,8 +215,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)activateWelcomeViewController
 {
-    UIStoryboard *welcomeStoryboard = [UIStoryboard storyboardWithName:@"Welcome" bundle:nil];
-    self.welcomeVC = [welcomeStoryboard instantiateInitialViewController];
+    self.welcomeVC = [[WelcomeViewController alloc] init];
     self.welcomeVC.delegate = self;
     self.mainWindow.rootViewController = self.welcomeVC;
 }

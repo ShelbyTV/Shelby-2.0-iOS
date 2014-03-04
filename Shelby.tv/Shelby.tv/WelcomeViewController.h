@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 
 @protocol WelcomeViewDelegate;
 
-@interface WelcomeViewController : ShelbyViewController <UIScrollViewDelegate>
+@interface WelcomeViewController : ShelbyViewController
 
 @property (nonatomic, weak) id<WelcomeViewDelegate>delegate;
 

@@ -8,18 +8,15 @@
 
 #import "WelcomeViewController.h"
 #import "WelcomeLoginView.h"
-#import "WelcomeScrollHolderView.h"
 
 NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
 
 @interface WelcomeViewController ()
-@property (weak, nonatomic) IBOutlet UIScrollView *welcomeScrollScroller;
 @property (nonatomic, strong) WelcomeLoginView *welcomeLoginView;
-@property (nonatomic, strong) WelcomeScrollHolderView *welcomeScrollHolderView;
 @end
 
 @implementation WelcomeViewController {
-    NSDate *_phoneScrollingStartedAt, *_viewLoadedAt;
+    NSDate *_viewLoadedAt;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,21 +39,10 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
     
     _viewLoadedAt = [NSDate date];
 
-    //setup the scroller that holds everything
-    self.welcomeScrollScroller.frame = self.view.bounds;
-    self.welcomeScrollScroller.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height*2);
-
-    //add the iphone scrolling stuff at the top
-    self.welcomeScrollHolderView = [[NSBundle mainBundle] loadNibNamed:@"WelcomeScrollHolderView" owner:self options:nil][0];
-    self.welcomeScrollHolderView.frame = self.view.bounds;
-    self.welcomeScrollHolderView.scrollViewDelegate = self;
-    self.welcomeScrollScroller.scrollEnabled = NO;
-    [self.welcomeScrollScroller addSubview:self.welcomeScrollHolderView];
-
-    //add the login view at bottom of scroller
+    //just the simple login/signup/preview view
     self.welcomeLoginView = [[NSBundle mainBundle] loadNibNamed:@"WelcomeLoginView" owner:self options:nil][0];
-    self.welcomeLoginView.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
-    [self.welcomeScrollScroller addSubview:self.welcomeLoginView];
+    self.welcomeLoginView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+    [self.view addSubview:self.welcomeLoginView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -134,43 +120,6 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
 - (NSString *)welcomeDuration
 {
     return [NSString stringWithFormat:@"%f", -[_viewLoadedAt timeIntervalSinceNow]];
-}
-
-#pragma mark - UIScrollViewDelegate
-//NB: these are custom "delegate-of-the-delegate" callbacks for self.welcomeScrollHolderView.scrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    _phoneScrollingStartedAt = [NSDate date];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (scrollView.tracking) {
-        //only want overpull to affect outter when scrolling is due to USER action
-        CGFloat overPull = scrollView.contentOffset.y - (scrollView.contentSize.height - scrollView.bounds.size.height);
-        if (overPull > 0) {
-            self.welcomeScrollScroller.contentOffset = CGPointMake(0, self.welcomeScrollScroller.contentOffset.y + overPull);
-            scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y - overPull);
-        }
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    NSTimeInterval dragTime = -[_phoneScrollingStartedAt timeIntervalSinceNow];
-    CGFloat dragDistance = self.welcomeScrollScroller.contentOffset.y;
-    CGFloat dragVelocity = dragDistance/dragTime;
-    BOOL pulledFastEnough = dragVelocity > 900;
-    BOOL pulledFarEnough = self.welcomeScrollScroller.contentOffset.y > (self.welcomeScrollScroller.bounds.size.height / 4.f);
-    if (pulledFastEnough || pulledFarEnough) {
-        [self.welcomeScrollScroller setContentOffset:CGPointMake(0, self.welcomeScrollScroller.bounds.size.height) animated:YES];
-        self.welcomeScrollScroller.scrollEnabled = YES;
-        [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeB];
-    } else {
-        [self.welcomeScrollScroller setContentOffset:CGPointMake(0, 0) animated:YES];
-        self.welcomeScrollScroller.scrollEnabled = NO;
-    }
 }
 
 @end

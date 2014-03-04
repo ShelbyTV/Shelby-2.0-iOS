@@ -795,15 +795,6 @@
 		9178C9D217CE375000913256 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9D117CE375000913256 /* WelcomeViewController.m */; };
 		9178C9D317CE375000913256 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9D117CE375000913256 /* WelcomeViewController.m */; };
 		9178C9D417CE375000913256 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9D117CE375000913256 /* WelcomeViewController.m */; };
-		9178C9D617CE398400913256 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9D517CE398400913256 /* Welcome.storyboard */; };
-		9178C9D717CE398400913256 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9D517CE398400913256 /* Welcome.storyboard */; };
-		9178C9D817CE398400913256 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9D517CE398400913256 /* Welcome.storyboard */; };
-		9178C9DE17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */; };
-		9178C9DF17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */; };
-		9178C9E017CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */; };
-		9178C9E317CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
-		9178C9E417CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
-		9178C9E517CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
 		9182A1D917E2247500C629FA /* libIntercom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182A1D817E2247500C629FA /* libIntercom.a */; };
 		9182A1DA17E2247500C629FA /* libIntercom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182A1D817E2247500C629FA /* libIntercom.a */; };
 		9182A1DB17E2247500C629FA /* libIntercom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182A1D817E2247500C629FA /* libIntercom.a */; };
@@ -855,9 +846,6 @@
 		91AEFE1717ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */; };
 		91AEFE1817ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */; };
 		91AEFE1917ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */; };
-		91AEFE2117F126D000B2598B /* welcome-1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE2017F126D000B2598B /* welcome-1.mov */; };
-		91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE2017F126D000B2598B /* welcome-1.mov */; };
-		91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE2017F126D000B2598B /* welcome-1.mov */; };
 		91B5EB1018B69039002736FD /* StreamConnectFacebookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */; };
 		91B5EB1118B69039002736FD /* StreamConnectFacebookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */; };
 		91B5EB1218B69039002736FD /* StreamConnectFacebookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */; };
@@ -1396,10 +1384,6 @@
 		916F41BD179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PerformSelectorWithPrimitive.m"; sourceTree = "<group>"; };
 		9178C9D017CE375000913256 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		9178C9D117CE375000913256 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
-		9178C9D517CE398400913256 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
-		9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeScrollHolderView.xib; sourceTree = "<group>"; };
-		9178C9E117CE3B8600913256 /* WelcomeScrollHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeScrollHolderView.h; sourceTree = "<group>"; };
-		9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeScrollHolderView.m; sourceTree = "<group>"; };
 		9182A1D717E2247500C629FA /* Intercom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Intercom.h; sourceTree = "<group>"; };
 		9182A1D817E2247500C629FA /* libIntercom.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIntercom.a; sourceTree = "<group>"; };
 		9184FE5317DA5757006E23E4 /* UITextViewWithPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextViewWithPlaceholder.h; sourceTree = "<group>"; };
@@ -1428,7 +1412,6 @@
 		91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamBrowseGestureHintView.xib; sourceTree = "<group>"; };
 		91AEFE1517ECF3D500B2598B /* StreamBrowseGestureHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBrowseGestureHintView.h; sourceTree = "<group>"; };
 		91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamBrowseGestureHintView.m; sourceTree = "<group>"; };
-		91AEFE2017F126D000B2598B /* welcome-1.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "welcome-1.mov"; sourceTree = "<group>"; };
 		91B5EB0E18B69039002736FD /* StreamConnectFacebookTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamConnectFacebookTableViewCell.h; sourceTree = "<group>"; };
 		91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamConnectFacebookTableViewCell.m; sourceTree = "<group>"; };
 		91B7DC3717AC0C8A009ABF02 /* STVYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVYouTubeExtractor.h; sourceTree = "<group>"; };
@@ -1865,8 +1848,6 @@
 				1C253B76184E452D00FBE054 /* LikerViewCell.xib */,
 				1C100DCE185F8E01002ADAF2 /* FollowNotificationViewCell.xib */,
 				1C100DD2185F8E16002ADAF2 /* LikeNotificationViewCell.xib */,
-				9178C9D517CE398400913256 /* Welcome.storyboard */,
-				9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */,
 				913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */,
 				91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */,
 			);
@@ -2085,7 +2066,6 @@
 				1C309AB617A7149F00D690A8 /* Share Images */,
 				1CD255C517A1DD0A0049FF30 /* Home */,
 				1C154E5517A071CD00C0B76B /* No Content Images */,
-				916F41C1179F06A9001D9DF7 /* Welcome Videos */,
 				1CDCA669179DCE190098C4E1 /* Player Images */,
 				1C90E51F17849DF200E87CC0 /* Parallax View */,
 				1C7B63CF178B5ED6000C1E84 /* Signup Flow */,
@@ -2303,8 +2283,6 @@
 				1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */,
 				1CFEB3AA186DF63F00179AE2 /* UserPreferencesCell.h */,
 				1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */,
-				9178C9E117CE3B8600913256 /* WelcomeScrollHolderView.h */,
-				9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */,
 				913D854B17CEAB0200A6C534 /* WelcomeLoginView.h */,
 				913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */,
 				9184FE5317DA5757006E23E4 /* UITextViewWithPlaceholder.h */,
@@ -2422,14 +2400,6 @@
 			name = Localytics;
 			path = Library/Localytics;
 			sourceTree = SOURCE_ROOT;
-		};
-		916F41C1179F06A9001D9DF7 /* Welcome Videos */ = {
-			isa = PBXGroup;
-			children = (
-				91AEFE2017F126D000B2598B /* welcome-1.mov */,
-			);
-			name = "Welcome Videos";
-			sourceTree = "<group>";
 		};
 		9182A1D617E2247500C629FA /* Intercom */ = {
 			isa = PBXGroup;
@@ -2679,7 +2649,6 @@
 				1C0C7DF61852328B008F5506 /* heart-icon-color@2x.png in Resources */,
 				1C49623B18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */,
 				1C0C7DFE1852357C008F5506 /* share-icon@2x.png in Resources */,
-				9178C9DF17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F1178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C100DE2185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */,
 				1C7B63F4178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
@@ -2727,7 +2696,6 @@
 				9103938918A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */,
 				1CE5585317DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				1CDCA6A9179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
-				9178C9D717CE398400913256 /* Welcome.storyboard in Resources */,
 				1CE5586317DE73CA00C18A30 /* share-large@2x.png in Resources */,
 				1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CE5586B17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
@@ -2762,7 +2730,6 @@
 				912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B4188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				3BCC07CC18C12892006501BA /* ExploreUserEducationView.xib in Resources */,
-				91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585A17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585017DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
@@ -2817,7 +2784,6 @@
 				1C0C7DF71852328B008F5506 /* heart-icon-color@2x.png in Resources */,
 				1C49623C18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */,
 				1C0C7DFF1852357C008F5506 /* share-icon@2x.png in Resources */,
-				9178C9E017CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F2178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C100DE3185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */,
 				1C7B63F5178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
@@ -2865,7 +2831,6 @@
 				9103938A18A0383C003B911D /* StreamConnectFacebookCellView.xib in Resources */,
 				1CE5585417DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				1CDCA6AA179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
-				9178C9D817CE398400913256 /* Welcome.storyboard in Resources */,
 				1CE5586417DE73CA00C18A30 /* share-large@2x.png in Resources */,
 				1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CE5586C17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
@@ -2900,7 +2865,6 @@
 				912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				9124A6B5188F0F8300175A9C /* ChannelsUserEducationView.xib in Resources */,
 				3BCC07CD18C12892006501BA /* ExploreUserEducationView.xib in Resources */,
-				91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585B17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585117DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
@@ -2928,7 +2892,6 @@
 			files = (
 				1CC3244B188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
 				8E20971C162F3A61000A2DFD /* InfoPlist.strings in Resources */,
-				91AEFE2117F126D000B2598B /* welcome-1.mov in Resources */,
 				912261D317B97F070092AF30 /* overlay-likers.png in Resources */,
 				1C100DD3185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */,
 				9137187617DE94F00021A99B /* LICENSE in Resources */,
@@ -2976,7 +2939,6 @@
 				9137187017DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				1CFEB3B0186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */,
 				913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
-				9178C9D617CE398400913256 /* Welcome.storyboard in Resources */,
 				915CDA7B17BE8FC7003C3A38 /* Images.xcassets in Resources */,
 				1CE5586217DE73CA00C18A30 /* share-large@2x.png in Resources */,
 				1CD8111E17CCF6C0002FD84B /* play-current.png in Resources */,
@@ -3012,7 +2974,6 @@
 				1CDCA6A8179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
 				1CCE4C4F17E226F700F0BF5A /* user_default_avatar@2x.png in Resources */,
 				1CDCA6AB179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
-				9178C9DE17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1CE5585917DE73CA00C18A30 /* heart-large.png in Resources */,
 				1C154E5217A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				9192ED0517C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
@@ -3274,7 +3235,6 @@
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D464174E938100AD3746 /* Roll.m in Sources */,
-				9178C9E417CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
 				1C38256E187E014C002177C6 /* ShelbyStreamInfoViewController.m in Sources */,
 				91D1C81B1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
@@ -3445,7 +3405,6 @@
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D465174E938100AD3746 /* Roll.m in Sources */,
-				9178C9E517CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
 				1C38256F187E014C002177C6 /* ShelbyStreamInfoViewController.m in Sources */,
 				91D1C81C1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
@@ -3616,7 +3575,6 @@
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D463174E938100AD3746 /* Roll.m in Sources */,
-				9178C9E317CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
 				1C38256D187E014C002177C6 /* ShelbyStreamInfoViewController.m in Sources */,
 				91D1C81A1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
