@@ -20,12 +20,8 @@
 
 - (void)awakeFromNib
 {
-    self.titleLabel.font = kShelbyFontH2;
-
-    //button backgrounds
     [self.loginButton setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
     [self.signupWithFacebookButton setBackgroundImage:[[UIImage imageNamed:@"facebook-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
-    [self.previewButton setBackgroundImage:[[UIImage imageNamed:@"secondary-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
 }
 
 @end
