@@ -17,7 +17,7 @@
 #import "User+Helper.h"
 #import "VideoReelBackdropView.h"
 
-#define OVERLAY_PEEK_TIME 5.0
+#define VIDEO_CONTROLS_AUTOHIDE_TIME 5.0
 
 @interface ShelbyVideoReelViewController ()
 @property (nonatomic, strong) SPVideoReel *videoReel;
@@ -32,8 +32,7 @@
 @property (nonatomic, strong) SPShareController *shareController;
 @property (nonatomic, assign) BOOL wasPlayingBeforeModalViewWasPresented;
 @property (nonatomic, assign) NSUInteger presentedModalViewCount;
-//overlay hiding with smart delay from last interaction
-@property (nonatomic, strong) NSTimer *hidePeekingOverlayTimer;
+@property (nonatomic, strong) NSTimer *autoHideVideoControlsTimer;
 @end
 
 @implementation ShelbyVideoReelViewController
@@ -72,7 +71,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didDismissModalViewNotification:)
                                                  name:kShelbyDidDismissModalViewNotification object:nil];
-    
 }
 
 -(void)dealloc
@@ -251,8 +249,8 @@
     self.videoReelBackdropView.backdropImageEntity = entity;
     self.currentlyPlayingIndexInChannel = [self.currentDeduplicatedEntries indexOfObject:entity];
     
-    //peek andhide if we're in full screen mode
-    [self peekAndHideOverlay];
+    //show video overlay if we're in full screen mode
+    [self showVideoOverlay];
 }
 
 - (void)handleDidBecomeActiveNotification:(NSNotification *)notification
@@ -298,7 +296,14 @@
 
 - (void)singleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
 {
-    [self togglePlayerChrome];
+    if (self.videoControlsVC.view.alpha == self.videoOverlayView.alpha) {
+        // if the all of the player chrome elements (video controls and video overlay) are in the same visibility state, toggle the player chrome
+        [self togglePlayerChrome];
+    } else {
+        // if their visibility states are unmatched, toggle the video controls to bring
+        // them into the same visibility state as the video overlay
+        [self togglePlayerChromeIncludingVideoControls:YES IncludingInfoOverlay:NO];
+    }
 }
 
 - (void)doubleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
@@ -313,6 +318,7 @@
     [self.airPlayController playCurrentPlayer];
     [self.videoReel playCurrentPlayer];
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    [self scheduleAutoHideVideoControlsTimer];
 }
 
 - (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc
@@ -320,12 +326,14 @@
     [self.airPlayController pauseCurrentPlayer];
     [self.videoReel pauseCurrentPlayer];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    [self invalidateAutoHideVideoControlsTimer];
 }
 
 - (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct
 {
     [self.airPlayController scrubCurrentPlayerTo:pct];
     [self.videoReel scrubCurrentPlayerTo:pct];
+    [self scheduleAutoHideVideoControlsTimer];
 }
 
 - (void)videoControls:(VideoControlsViewController *)vcvc isScrubbing:(BOOL)isScrubbing
@@ -337,6 +345,7 @@
         [self.airPlayController endScrubbing];
         [self.videoReel endScrubbing];
     }
+    [self scheduleAutoHideVideoControlsTimer];
 }
 
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc
@@ -348,7 +357,9 @@
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsLikeVideo];
     // Appirater Event
     [Appirater userDidSignificantEvent:YES];
-    
+
+    [self scheduleAutoHideVideoControlsTimer];
+
     BOOL didLike = [self likeVideo:vcvc.currentEntity];
     if (!didLike) {
         DLog(@"***ERROR*** Tried to Like '%@', but action resulted in UNLIKE of the video", vcvc.currentEntity.containedVideo.title);
@@ -386,6 +397,7 @@
     [ShelbyVideoReelViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                               withAction:kAnalyticsUXUnlike
                                      withNicknameAsLabel:YES];
+    [self scheduleAutoHideVideoControlsTimer];
     BOOL didUnlike = [self unlikeVideo:vcvc.currentEntity];
     if (!didUnlike) {
         DLog(@"***ERROR*** Tried to unlike '%@', but action resulted in LIKE of the video", vcvc.currentEntity.containedVideo.title);
@@ -400,6 +412,16 @@
     [self.shareController shareWithCompletionHandler:^(BOOL completed) {
         self.shareController = nil;
     }];
+}
+
+- (void)videoControlsRequestFullScreen:(VideoControlsViewController *)vcvc isExpanding:(BOOL)isExpanding
+{
+    [self scheduleAutoHideVideoControlsTimer];
+}
+
+- (void)videoControlsRevealAirplayPicker:(VideoControlsViewController *)vcvc airplayButton:(UIButton *)button
+{
+    [self scheduleAutoHideVideoControlsTimer];
 }
 
 #pragma mark - SPVideoReelDelegate
@@ -436,8 +458,8 @@
 
 - (void)videoDidAutoadvance
 {
-    //peek and hide if we're in fullscreen mode (otherwise overlay is still on screen)
-    [self peekAndHideOverlay];
+    //show video overlay if we're in fullscreen mode (otherwise overlay is still on screen)
+    [self showVideoOverlay];
 }
 
 - (void)userDidSwitchChannelForDirectionUp:(BOOL)up
@@ -454,6 +476,11 @@
 {
     STVDebugAssert(NO, @"unused");
     return nil;
+}
+
+- (void)userDidRequestPlayCurrentPlayer
+{
+    [self videoControlsPlayCurrentVideo:nil];
 }
 
 #pragma mark - ShelbyAirPlayControllerDelegate
@@ -580,7 +607,8 @@
             self.videoControlsVC.view.alpha = 1.f;
             self.videoControlsVC.displayMode = VideoControlsDisplayForAirPlay;
         }];
-        
+        // no longer want to autohide video controls
+        [self invalidateAutoHideVideoControlsTimer];
     } else {
         //exit airplay mode
         STVDebugAssert(self.videoControlsVC.displayMode == VideoControlsDisplayForAirPlay, @"shouldn't exit airplay when not in airplay");
@@ -589,54 +617,90 @@
             self.videoReelBackdropView.alpha = 1.f;
             self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
         }];
-        
+
     }
 }
 
-- (void)peekAndHideOverlay
+- (void)togglePlayerChromeIncludingVideoControls:(BOOL)includeVideoControls
+                            IncludingInfoOverlay:(BOOL)includeInfoOverlay
 {
-    //if overlay isn't showing, peek it
-    if (self.videoOverlayView.alpha == 0.f) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.videoOverlayView.alpha = 1.0;
-        }];
-    }
-    
-    //always update the hide peeking timer (it won't hide unless we're actually peeking, see below)
-    if (self.hidePeekingOverlayTimer) {
-        [self.hidePeekingOverlayTimer invalidate];
-    }
-    self.hidePeekingOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:OVERLAY_PEEK_TIME
-                                                                    target:self
-                                                                  selector:@selector(hidePeekingOverlay) userInfo:nil
-                                                                   repeats:NO];
 
-}
-
-- (void)hidePeekingOverlay
-{
-    //only hide if we're currently peeking
-    if (self.videoControlsVC.view.alpha == 0.f &&
-        self.videoOverlayView.alpha == 1.f) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.videoOverlayView.alpha = 0.f;
-        }];
+    CGFloat oldAlpha;
+    if (includeInfoOverlay) {
+        oldAlpha = self.videoOverlayView.alpha;
+    } else {
+        oldAlpha = self.videoControlsVC.view.alpha;
     }
+
+    CGFloat newAlpha;
+    if (oldAlpha == 0.f) {
+        newAlpha = 1.f;
+        [self scheduleAutoHideVideoControlsTimer];
+    } else {
+        newAlpha = 0.f;
+    }
+
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        if (includeVideoControls) {
+            self.videoControlsVC.view.alpha = newAlpha;
+        }
+        if (includeInfoOverlay) {
+            self.videoOverlayView.alpha = newAlpha;
+        }
+    } completion:nil];
 }
 
 - (void)togglePlayerChrome
 {
-    CGFloat newAlpha;
-    if (self.videoControlsVC.view.alpha == 0.f) {
-        newAlpha = 1.f;
-    } else {
-        newAlpha = 0.f;
+    [self togglePlayerChromeIncludingVideoControls:YES IncludingInfoOverlay:YES];
+}
+
+- (void)hidePlayerChrome
+{
+    // if the player chrome is visible, toggle it so it will be hidden
+    // video chrome visibility will always match overlay view visibility so we key off of that
+    if (self.videoOverlayView.alpha == 1.f) {
+        [self togglePlayerChrome];
     }
-    
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.videoControlsVC.view.alpha = newAlpha;
-        self.videoOverlayView.alpha = newAlpha;
-    } completion:nil];
+}
+
+- (void)showVideoOverlay
+{
+    if (self.videoOverlayView.alpha == 0.f) {
+        // if the overlay view is not visible, show it
+        [self togglePlayerChromeIncludingVideoControls:false IncludingInfoOverlay:true];
+    } else {
+        //otherwise, something happened that made us want to display this again, so increase
+        //the amount of time it will be on screen by resetting the autohide timer
+        [self scheduleAutoHideVideoControlsTimer];
+    }
+}
+
+- (void) scheduleAutoHideVideoControlsTimer
+{
+    // we only auto hide the video controls when a video is playing and we're not on airplay
+    if (self.videoControlsVC.videoIsPlaying && (self.videoControlsVC.displayMode != VideoControlsDisplayForAirPlay)) {
+        if (self.autoHideVideoControlsTimer && [self.autoHideVideoControlsTimer isValid]) {
+            //if there's already a timer, reset it to the full autohide timeout
+            [self.autoHideVideoControlsTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:VIDEO_CONTROLS_AUTOHIDE_TIME]];
+        } else {
+            //otherwise, create a new timer and set it to hide the video controls after
+            // the autohide timeout
+            self.autoHideVideoControlsTimer =
+            [NSTimer scheduledTimerWithTimeInterval:VIDEO_CONTROLS_AUTOHIDE_TIME
+                                             target:self
+                                           selector:@selector(hidePlayerChrome)
+                                           userInfo:nil
+                                            repeats:NO];
+        }
+    }
+}
+
+- (void) invalidateAutoHideVideoControlsTimer
+{
+    if (self.autoHideVideoControlsTimer) {
+        [self.autoHideVideoControlsTimer invalidate];
+    }
 }
 
 @end

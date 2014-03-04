@@ -316,6 +316,7 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
         if ( [view isKindOfClass:[UIButton class]] ) {
             self.airPlayButton = (UIButton *)view;
             [self.airPlayButton addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:nil];
+            [self.airPlayButton addTarget:self action:@selector(airPlayButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
             [self adjustForAirplay];
         }
     }
@@ -352,6 +353,7 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyRequestFullscreenPlaybackNotification object:self];
     self.controlsView.iPadExpandButton.hidden = YES;
     self.controlsView.iPadContractButton.hidden = NO;
+    [self.delegate videoControlsRequestFullScreen:self isExpanding:YES];
 }
 
 - (IBAction)contractTapped:(id)sender {
@@ -360,6 +362,7 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyRequestSmallscreenPlaybackNotification object:self];
     self.controlsView.iPadExpandButton.hidden = NO;
     self.controlsView.iPadContractButton.hidden = YES;
+    [self.delegate videoControlsRequestFullScreen:self isExpanding:NO];
 }
 
 - (IBAction)playPauseButtonTapped:(id)sender
@@ -433,6 +436,11 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
         [self.delegate respondsToSelector:@selector(videoControlsShareCurrentVideo:)]) {
         [self.delegate videoControlsShareCurrentVideo:self];
     }
+}
+
+- (IBAction)airPlayButtonTapped:(UIButton *)sender
+{
+    [self.delegate videoControlsRevealAirplayPicker:self airplayButton:sender];
 }
 
 #pragma mark - VideoPlaybackDelegate
