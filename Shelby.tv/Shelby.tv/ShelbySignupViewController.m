@@ -83,7 +83,6 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         self.stepTwoName.text = self.currentUser.name;
         self.stepTwoUsername.text = self.currentUser.nickname;
         self.stepTwoBio.text = self.currentUser.bio;
-        self.stepTwoSaveProfile.enabled = [self stepTwoFieldsValid];
         self.stepTwoTitle.hidden = YES;
         self.signupNavigationItem.title = @"Edit Profile";
     }
@@ -189,6 +188,11 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (IBAction)saveProfile:(id)sender
 {
+    //if fields are invalid, show alert and do nothing
+    if (![self stepTwoFieldsValidShowAlert:YES]) {
+        return;
+    }
+    
     self.stepTwoSaveProfile.enabled = NO;
     [self.stepTwoActivityIndicator startAnimating];
     self.view.userInteractionEnabled = NO;
@@ -239,7 +243,6 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     }
     self.stepTwoUsername.text = username;
     self.stepTwoBio.text = self.currentUser.bio;
-    self.stepTwoSaveProfile.enabled = [self stepTwoFieldsValid];
     
     if (self.stepOnePassword.text) {
         self.stepTwoPassword.text = self.stepOnePassword.text;
@@ -359,22 +362,39 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 }
 
 
-- (BOOL)stepTwoFieldsValid
+- (BOOL)stepTwoFieldsValidShowAlert:(BOOL)showAlertOnInvalid
 {
-    NSString *name = self.stepTwoName.text;
-    NSString *email = self.stepTwoEmail.text;
-    NSString *password = self.stepTwoPassword.text;
-    NSString *username = self.stepTwoUsername.text;
+    BOOL allFieldsValid = YES;
+    NSString *alertMessage;
     
+    if (![ShelbyValidationUtility isNameValid:self.stepTwoName.text]) {
+        allFieldsValid = NO;
+        alertMessage = @"Please enter your full name";
+    }
+    if (![ShelbyValidationUtility isEmailValid:self.stepTwoEmail.text]) {
+        allFieldsValid = NO;
+        alertMessage = @"Please enter a valid email address";
+    }
+    if (![ShelbyValidationUtility isUsernameValid:self.stepTwoUsername.text]) {
+        allFieldsValid = NO;
+        alertMessage = @"Please pick a username";
+    }
     // If a user is editing their profile ignore the password field. Unless they are trying to change it
-    BOOL passwordField = NO;
-    if ([self.stepTwoPassword.text isEqualToString:@""] && ![self.currentUser isAnonymousUser]) {
-        passwordField = YES;
-    } else {
-        passwordField = [ShelbyValidationUtility isPasswordValid:password];
+    if (![ShelbyValidationUtility isPasswordValid:self.stepTwoPassword.text] &&
+        !(![self.currentUser isAnonymousUser] && [self.stepTwoPassword.text isEqualToString:@""])) {
+        allFieldsValid = NO;
+        alertMessage = @"Please enter a password";
     }
     
-    return self.stepTwoSaveProfile.enabled = [ShelbyValidationUtility isNameValid:name] && passwordField && [ShelbyValidationUtility isEmailValid:email] && [ShelbyValidationUtility isUsernameValid:username];
+    if (showAlertOnInvalid && !allFieldsValid) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We need more info"
+                                                        message:alertMessage
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    return  allFieldsValid;
 }
 
 #pragma mark - UITextFieldDelegate Methods
@@ -432,28 +452,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         
         self.stepOneSignUpWithEmail.enabled = [ShelbyValidationUtility isUsernameValid:nickname] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email];
     } else {
-        NSString *name = self.stepTwoName.text;
-        NSString *email = self.stepTwoEmail.text;
-        NSString *password = self.stepTwoPassword.text;
-        NSString *username = self.stepTwoUsername.text;
-        
-        if (textField == self.stepTwoName) {
-            name = [name stringByReplacingCharactersInRange:range withString:string];
-        }
-        
-        if (textField == self.stepTwoEmail) {
-            email = [email stringByReplacingCharactersInRange:range withString:string];
-        }
-        
-        if (textField == self.stepTwoPassword) {
-            password = [password stringByReplacingCharactersInRange:range withString:string];
-        }
-
-        if (textField == self.stepTwoUsername) {
-            username = [username stringByReplacingCharactersInRange:range withString:string];
-        }
-        
-        self.stepTwoSaveProfile.enabled = [ShelbyValidationUtility isNameValid:name] && [ShelbyValidationUtility isPasswordValid:password] && [ShelbyValidationUtility isEmailValid:email] && [ShelbyValidationUtility isUsernameValid:username];
+        //not checking on step 2 (tapping save will throw up alert error)
     }
     
     return YES;
