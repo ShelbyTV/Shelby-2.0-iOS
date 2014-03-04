@@ -52,6 +52,7 @@ NSString * const kLocalyticsFollowChannel                               = @"did_
 NSString * const kLocalyticsUnfollowChannel                             = @"did_unfollow_channel";
 NSString * const kLocalyticsTapAddChannelsInStream                      = @"tap_add_channels_in_stream";
 NSString * const kLocalyticsTapConnectFacebookInStream                  = @"tap_connect_facebook_in_stream";
+NSString * const kLocalyticsTapConnectTwitterInStream                   = @"tap_connect_twitter_in_stream";
 NSString * const kLocalyticsTapCardSharingUser                          = @"view_sharer_profile";
 NSString * const kLocalyticsTapCardLikersList                           = @"view_likers";
 NSString * const kLocalyticsTapCardLike                                 = @"tap_card_like";

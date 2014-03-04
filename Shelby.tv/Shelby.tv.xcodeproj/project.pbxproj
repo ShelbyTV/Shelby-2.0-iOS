@@ -882,6 +882,12 @@
 		91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
 		91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
 		91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
+		91C37C5718C5048300844349 /* StreamConnectTwitterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C37C5618C5048300844349 /* StreamConnectTwitterTableViewCell.m */; };
+		91C37C5818C5048300844349 /* StreamConnectTwitterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C37C5618C5048300844349 /* StreamConnectTwitterTableViewCell.m */; };
+		91C37C5918C5048300844349 /* StreamConnectTwitterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C37C5618C5048300844349 /* StreamConnectTwitterTableViewCell.m */; };
+		91C37C5B18C5052600844349 /* StreamConnectTwitterCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91C37C5A18C5052600844349 /* StreamConnectTwitterCellView.xib */; };
+		91C37C5C18C5052600844349 /* StreamConnectTwitterCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91C37C5A18C5052600844349 /* StreamConnectTwitterCellView.xib */; };
+		91C37C5D18C5052600844349 /* StreamConnectTwitterCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91C37C5A18C5052600844349 /* StreamConnectTwitterCellView.xib */; };
 		91C4444818576B6F00A8F438 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4444718576B6F00A8F438 /* Frame.m */; };
 		91C4444918576B6F00A8F438 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4444718576B6F00A8F438 /* Frame.m */; };
 		91C4444A18576B6F00A8F438 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4444718576B6F00A8F438 /* Frame.m */; };
@@ -1428,6 +1434,9 @@
 		91BEC8931762961400838197 /* DVRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DVRDatePicker.xib; sourceTree = "<group>"; };
 		91BEC8971762976800838197 /* DVRDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVRDatePickerView.h; sourceTree = "<group>"; };
 		91BEC8981762976800838197 /* DVRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVRDatePickerView.m; sourceTree = "<group>"; };
+		91C37C5518C5048300844349 /* StreamConnectTwitterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamConnectTwitterTableViewCell.h; sourceTree = "<group>"; };
+		91C37C5618C5048300844349 /* StreamConnectTwitterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamConnectTwitterTableViewCell.m; sourceTree = "<group>"; };
+		91C37C5A18C5052600844349 /* StreamConnectTwitterCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamConnectTwitterCellView.xib; sourceTree = "<group>"; };
 		91C4444618576B6F00A8F438 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		91C4444718576B6F00A8F438 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		91C4444B18576B6F00A8F438 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
@@ -1631,6 +1640,7 @@
 				1C496245189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib */,
 				91319BCC189C4EF4000384A0 /* VideoPlayerThumbnailOverlayView.xib */,
 				9103938718A0383C003B911D /* StreamConnectFacebookCellView.xib */,
+				91C37C5A18C5052600844349 /* StreamConnectTwitterCellView.xib */,
 				9103938F18A131DC003B911D /* NoContentViews.xib */,
 				9103939918AA6D91003B911D /* VideoReelAirplayBackdropView.xib */,
 			);
@@ -1698,6 +1708,8 @@
 				9103939418A1330A003B911D /* NoContentView.m */,
 				91B5EB0E18B69039002736FD /* StreamConnectFacebookTableViewCell.h */,
 				91B5EB0F18B69039002736FD /* StreamConnectFacebookTableViewCell.m */,
+				91C37C5518C5048300844349 /* StreamConnectTwitterTableViewCell.h */,
+				91C37C5618C5048300844349 /* StreamConnectTwitterTableViewCell.m */,
 			);
 			name = "Views - iPad";
 			sourceTree = "<group>";
@@ -2644,6 +2656,7 @@
 				1CA1914A1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE074A1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 				1CCE4C4D17E226F700F0BF5A /* user_default_avatar.png in Resources */,
+				91C37C5C18C5052600844349 /* StreamConnectTwitterCellView.xib in Resources */,
 				1C253B78184E452D00FBE054 /* LikerViewCell.xib in Resources */,
 				1CC3244C188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
 				9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */,
@@ -2780,6 +2793,7 @@
 				1CA1914B1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE074B1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 				1CCE4C4E17E226F700F0BF5A /* user_default_avatar.png in Resources */,
+				91C37C5D18C5052600844349 /* StreamConnectTwitterCellView.xib in Resources */,
 				1C253B79184E452D00FBE054 /* LikerViewCell.xib in Resources */,
 				1CC3244D188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
 				9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */,
@@ -2992,6 +3006,7 @@
 				9124A6BC1890512B00175A9C /* ShelbyEntranceViewController.xib in Resources */,
 				1CE5583F17DE1E1300C18A30 /* button-off.png in Resources */,
 				1C534E4017A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
+				91C37C5B18C5052600844349 /* StreamConnectTwitterCellView.xib in Resources */,
 				1C0C7DFD1852357C008F5506 /* share-icon@2x.png in Resources */,
 				1CD255C817A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CB17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
@@ -3162,6 +3177,7 @@
 				9124A6A9188F0F0F00175A9C /* ShelbyUserEducationViewController.m in Sources */,
 				1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C38259218806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
+				91C37C5818C5048300844349 /* StreamConnectTwitterTableViewCell.m in Sources */,
 				1C253B7D184E468C00FBE054 /* LikerCell.m in Sources */,
 				1C8109A216EE2CBF0030077C /* AFImageRequestOperation.m in Sources */,
 				1C8109A316EE2CBF0030077C /* AFJSONRequestOperation.m in Sources */,
@@ -3331,6 +3347,7 @@
 				9124A6AA188F0F0F00175A9C /* ShelbyUserEducationViewController.m in Sources */,
 				1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C38259318806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
+				91C37C5918C5048300844349 /* StreamConnectTwitterTableViewCell.m in Sources */,
 				1C253B7E184E468C00FBE054 /* LikerCell.m in Sources */,
 				1C810A5816EE5EED0030077C /* AFImageRequestOperation.m in Sources */,
 				1C810A5916EE5EED0030077C /* AFJSONRequestOperation.m in Sources */,
@@ -3500,6 +3517,7 @@
 				9124A6A8188F0F0F00175A9C /* ShelbyUserEducationViewController.m in Sources */,
 				8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */,
 				1C38259118806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
+				91C37C5718C5048300844349 /* StreamConnectTwitterTableViewCell.m in Sources */,
 				1C253B7C184E468C00FBE054 /* LikerCell.m in Sources */,
 				8E01AFBD16E67365000567D4 /* AFImageRequestOperation.m in Sources */,
 				8E01AFBE16E67365000567D4 /* AFJSONRequestOperation.m in Sources */,

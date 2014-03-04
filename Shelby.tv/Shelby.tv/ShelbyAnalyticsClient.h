@@ -46,6 +46,7 @@ extern NSString * const kLocalyticsFollowChannel;
 extern NSString * const kLocalyticsUnfollowChannel;
 extern NSString * const kLocalyticsTapAddChannelsInStream;
 extern NSString * const kLocalyticsTapConnectFacebookInStream;
+extern NSString * const kLocalyticsTapConnectTwitterInStream;
 extern NSString * const kLocalyticsTapCardSharingUser;
 extern NSString * const kLocalyticsTapCardLikersList;
 extern NSString * const kLocalyticsTapCardLike;

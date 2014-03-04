@@ -29,6 +29,7 @@
 extern NSString * const kShelbyWillPresentModalViewNotification;
 extern NSString * const kShelbyDidDismissModalViewNotification;
 extern NSString * const kShelbyStreamConnectFacebookVisibilityChangeNotification;
+extern NSString * const kShelbyStreamConnectTwitterVisibilityChangeNotification;
 
 extern NSString * const kShelbyPlaybackEntityDidChangeNotification;
 extern NSString * const kShelbyPlaybackCurrentEntityKey;

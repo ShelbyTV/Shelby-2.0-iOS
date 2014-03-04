@@ -18,22 +18,25 @@
 #import "SPShareController.h"
 #import "SPVideoExtractor.h"
 #import "StreamConnectFacebookTableViewCell.h"
+#import "StreamConnectTwitterTableViewCell.h"
 #import "User+Helper.h"
 
 #define LOAD_MORE_ACTIVATION_HEIGHT 200
 #define NOT_LOADING_MORE -1
 #define LOAD_MORE_SPINNER_AREA_HEIGHT 100
 
-#define SECTION_COUNT 4
+#define SECTION_COUNT 5
 #define SECTION_FOR_ADD_CHANNELS 0
-#define SECTION_FOR_CONNECT_SOCIAL 1
-#define SECTION_FOR_NO_CONTENT 2
-#define SECTION_FOR_PLAYBACK_ENTITIES 3
+#define SECTION_FOR_CONNECT_FACEBOOK 1
+#define SECTION_FOR_CONNECT_TWITTER 2
+#define SECTION_FOR_NO_CONTENT 3
+#define SECTION_FOR_PLAYBACK_ENTITIES 4
 
 NSString * const kShelbyStreamEntryCell = @"StreamEntry";
 NSString * const kShelbyStreamEntryAddChannelsCell = @"AddChannels";
 NSString * const kShelbyStreamEntryAddChannelsCollapsedCell = @"AddChannelsCollapsed";
 NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
+NSString * const kShelbyStreamConnectTwitterCell = @"StreamConnectTWT";
 
 @interface ShelbyStreamInfoViewController ()
 @property (nonatomic, strong) User *currentUser;
@@ -52,6 +55,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 //for user education "bonus" sections
 @property (nonatomic, assign) NSInteger followCount;
 @property (nonatomic, assign) BOOL currentUserHasFacebookConnected;
+@property (nonatomic, assign) BOOL currentUserHasTwitterConnected;
 @property (nonatomic, assign) BOOL showNoContentView;
 @end
 
@@ -78,6 +82,7 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     _followCount = 0;
     _mayShowConnectSocial = NO;
     _currentUserHasFacebookConnected = NO;
+    _currentUserHasTwitterConnected = NO;
     _showNoContentView = NO;
     
     _currentlySelectedEntity = nil;
@@ -119,18 +124,31 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
                                              selector:@selector(playbackEntityDidChangeNotification:)
                                                  name:kShelbyPlaybackEntityDidChangeNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(connectFacebookVisiblityChangeNotification) 
-                                                 name:kShelbyStreamConnectFacebookVisibilityChangeNotification object:nil];
-    
     if (self.mayShowConnectSocial) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSpecialCellStatus) name:kShelbyNotificationFacebookConnectCompleted object:nil];
+        //when user taps to hide social connect
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(refreshConnectFacebookVisibility)
+                                                     name:kShelbyStreamConnectFacebookVisibilityChangeNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(refreshConnectTwitterVisibility)
+                                                     name:kShelbyStreamConnectTwitterVisibilityChangeNotification object:nil];
+        
+        //when user actualy connects social
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(refreshSpecialCellStatus)
+                                                     name:kShelbyNotificationFacebookConnectCompleted object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(refreshSpecialCellStatus)
+                                                     name:kShelbyNotificationTwitterConnectCompleted object:nil];
     }
 
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyStreamEntryCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"ShelbyChannelsCollapsedCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamEntryAddChannelsCollapsedCell];
     [self.entriesTable registerNib:[UINib nibWithNibName:@"StreamConnectFacebookCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamConnectFacebookCell];
+    [self.entriesTable registerNib:[UINib nibWithNibName:@"StreamConnectTwitterCellView" bundle:nil] forCellReuseIdentifier:kShelbyStreamConnectTwitterCell];
 }
 
 - (void)dealloc
@@ -174,8 +192,16 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
 {
     if (_currentUserHasFacebookConnected != currentUserHasFacebookConnected) {
         _currentUserHasFacebookConnected = currentUserHasFacebookConnected;
-        [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_CONNECT_SOCIAL] withRowAnimation:UITableViewRowAnimationFade];
     }
+    [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_CONNECT_FACEBOOK] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)setCurrentUserHasTwitterConnected:(BOOL)currentUserHasTwitterConnected
+{
+    if (_currentUserHasTwitterConnected != currentUserHasTwitterConnected) {
+        _currentUserHasTwitterConnected = currentUserHasTwitterConnected;
+    }
+    [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_CONNECT_TWITTER] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma mark - public API
@@ -207,12 +233,23 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     self.currentlySelectedEntity = userInfo[kShelbyPlaybackCurrentEntityKey];
 }
 
+- (void)refreshConnectFacebookVisibility
+{
+    [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_CONNECT_FACEBOOK] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)refreshConnectTwitterVisibility
+{
+    [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_CONNECT_TWITTER] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 - (void)refreshSpecialCellStatus
 {
     if (self.mayShowFollowChannels || self.mayShowConnectSocial) {
         User *currentUser = self.currentUser;
         self.followCount = currentUser ? [currentUser rollFollowingCountIgnoringOwnRolls:YES] : 0;
         self.currentUserHasFacebookConnected = [currentUser isFacebookConnected];
+        self.currentUserHasTwitterConnected = [currentUser isTwitterConnected];
     }
 }
 
@@ -305,12 +342,6 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     }
 }
 
-- (void)connectFacebookVisiblityChangeNotification
-{
-    [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_CONNECT_SOCIAL]
-                     withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
 #pragma mark - UITableDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -323,9 +354,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     if (section == SECTION_FOR_ADD_CHANNELS) {
         return self.mayShowFollowChannels ? 1 : 0;
         
-    } else if (section == SECTION_FOR_CONNECT_SOCIAL) {
+    } else if (section == SECTION_FOR_CONNECT_FACEBOOK) {
         return (self.mayShowConnectSocial && !self.currentUserHasFacebookConnected && ![StreamConnectFacebookTableViewCell userWantsHidden]) ? 1 : 0;
         
+    } else if (section == SECTION_FOR_CONNECT_TWITTER) {
+        return (self.mayShowConnectSocial && !self.currentUserHasTwitterConnected && ![StreamConnectTwitterTableViewCell userWantsHidden]) ? 1 : 0;
+    
     } else if (section == SECTION_FOR_NO_CONTENT) {
         return self.showNoContentView ? 1 : 0;
     
@@ -344,9 +378,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         NSString *cellIdentifier = [self shouldCollapseAddChannelsCell] ? kShelbyStreamEntryAddChannelsCollapsedCell : kShelbyStreamEntryAddChannelsCell;
         return [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         
-    } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
+    } else if (indexPath.section == SECTION_FOR_CONNECT_FACEBOOK) {
         return [tableView dequeueReusableCellWithIdentifier:kShelbyStreamConnectFacebookCell forIndexPath:indexPath];
         
+    } else if (indexPath.section == SECTION_FOR_CONNECT_TWITTER) {
+        return [tableView dequeueReusableCellWithIdentifier:kShelbyStreamConnectTwitterCell forIndexPath:indexPath];
+    
     } else if (indexPath.section == SECTION_FOR_NO_CONTENT) {
         return [NoContentView noActivityView];
 
@@ -395,9 +432,14 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
         [self.navigationController pushViewController:channelsVC animated:YES];
         channelsVC.userEducationVC = [ShelbyUserEducationViewController newChannelsUserEducationViewController];
         
-    } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
+    } else if (indexPath.section == SECTION_FOR_CONNECT_FACEBOOK) {
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapConnectFacebookInStream];
         [self.socialConnectDelegate connectToFacebook];
+        [tableView cellForRowAtIndexPath:indexPath].selected = NO;
+    
+    } else if (indexPath.section == SECTION_FOR_CONNECT_TWITTER) {
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapConnectTwitterInStream];
+        [self.socialConnectDelegate connectToTwitter];
         [tableView cellForRowAtIndexPath:indexPath].selected = NO;
     
     } else if (indexPath.section == SECTION_FOR_PLAYBACK_ENTITIES) {
@@ -419,9 +461,12 @@ NSString * const kShelbyStreamConnectFacebookCell = @"StreamConnectFB";
     if (indexPath.section == SECTION_FOR_ADD_CHANNELS) {
         return self.followCount > 2 ? 110.0 : 210.0;
         
-    } else if (indexPath.section == SECTION_FOR_CONNECT_SOCIAL) {
+    } else if (indexPath.section == SECTION_FOR_CONNECT_FACEBOOK) {
         return [StreamConnectFacebookTableViewCell cellHeight];
         
+    } else if (indexPath.section == SECTION_FOR_CONNECT_TWITTER) {
+        return [self.currentUser isAnonymousUser] ? 0 : [StreamConnectTwitterTableViewCell cellHeight];
+    
     } else if (indexPath.section == SECTION_FOR_NO_CONTENT) {
         return [NoContentView noActivityCellHeight];
     
