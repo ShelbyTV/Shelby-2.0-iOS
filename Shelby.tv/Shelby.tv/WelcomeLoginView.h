@@ -9,4 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface WelcomeLoginView : UIView
+
+@property (nonatomic, assign) BOOL runBackgroundAnimation;
+
 @end

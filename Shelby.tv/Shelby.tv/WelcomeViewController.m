@@ -43,6 +43,7 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
     self.welcomeLoginView = [[NSBundle mainBundle] loadNibNamed:@"WelcomeLoginView" owner:self options:nil][0];
     self.welcomeLoginView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     [self.view addSubview:self.welcomeLoginView];
+    self.welcomeLoginView.runBackgroundAnimation = YES;
 }
 
 - (void)didReceiveMemoryWarning

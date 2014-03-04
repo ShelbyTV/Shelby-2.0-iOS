@@ -11,10 +11,49 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="entrance-blur-3" translatesAutoresizingMaskIntoConstraints="NO" id="xPl-nr-cYm" userLabel="blurry bg">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eeQ-hV-LCI" userLabel="blurry backgrounds">
                     <rect key="frame" x="-300" y="-20" width="1024" height="768"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="entrance-blur-1" translatesAutoresizingMaskIntoConstraints="NO" id="xPl-nr-cYm" userLabel="bg 1">
+                            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="entrance-blur-2" translatesAutoresizingMaskIntoConstraints="NO" id="kZL-fZ-10t" userLabel="bg 2">
+                            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="entrance-blur-3" translatesAutoresizingMaskIntoConstraints="NO" id="5QQ-7L-BlG" userLabel="bg 3">
+                            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="entrance-blur-4" translatesAutoresizingMaskIntoConstraints="NO" id="Wk0-gM-WeK" userLabel="bg 4">
+                            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="0.20569114960000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Wk0-gM-WeK" firstAttribute="leading" secondItem="eeQ-hV-LCI" secondAttribute="leading" id="8n8-pz-jyI"/>
+                        <constraint firstAttribute="height" constant="768" id="F5q-41-o0z"/>
+                        <constraint firstItem="kZL-fZ-10t" firstAttribute="top" secondItem="eeQ-hV-LCI" secondAttribute="top" id="Ffg-jJ-jTj"/>
+                        <constraint firstAttribute="bottom" secondItem="5QQ-7L-BlG" secondAttribute="bottom" id="G51-2V-fJs"/>
+                        <constraint firstAttribute="trailing" secondItem="kZL-fZ-10t" secondAttribute="trailing" id="GFS-Ev-f8a"/>
+                        <constraint firstItem="kZL-fZ-10t" firstAttribute="leading" secondItem="eeQ-hV-LCI" secondAttribute="leading" id="Kbh-J1-fJ1"/>
+                        <constraint firstItem="xPl-nr-cYm" firstAttribute="leading" secondItem="eeQ-hV-LCI" secondAttribute="leading" id="MnS-zh-9uZ"/>
+                        <constraint firstAttribute="width" constant="1024" id="NXQ-ah-APa"/>
+                        <constraint firstAttribute="trailing" secondItem="xPl-nr-cYm" secondAttribute="trailing" id="NfA-rI-FDc"/>
+                        <constraint firstAttribute="trailing" secondItem="5QQ-7L-BlG" secondAttribute="trailing" id="QZt-Sv-8Lv"/>
+                        <constraint firstItem="5QQ-7L-BlG" firstAttribute="top" secondItem="eeQ-hV-LCI" secondAttribute="top" id="Qay-OD-6eW"/>
+                        <constraint firstAttribute="trailing" secondItem="Wk0-gM-WeK" secondAttribute="trailing" id="We1-4F-n0A"/>
+                        <constraint firstAttribute="bottom" secondItem="Wk0-gM-WeK" secondAttribute="bottom" id="fb2-Ws-nkb"/>
+                        <constraint firstItem="xPl-nr-cYm" firstAttribute="top" secondItem="eeQ-hV-LCI" secondAttribute="top" id="fqh-j2-QGv"/>
+                        <constraint firstItem="Wk0-gM-WeK" firstAttribute="top" secondItem="eeQ-hV-LCI" secondAttribute="top" id="hKd-SR-F2u"/>
+                        <constraint firstAttribute="bottom" secondItem="kZL-fZ-10t" secondAttribute="bottom" id="npv-gR-bKd"/>
+                        <constraint firstItem="5QQ-7L-BlG" firstAttribute="leading" secondItem="eeQ-hV-LCI" secondAttribute="leading" id="qoU-N8-x8U"/>
+                        <constraint firstAttribute="bottom" secondItem="xPl-nr-cYm" secondAttribute="bottom" id="y2p-vA-o1a"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnv-KL-bp9" userLabel="logo area">
                     <rect key="frame" x="0.0" y="57" width="320" height="80"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -171,6 +210,7 @@
             <color key="backgroundColor" white="0.89838047450000003" alpha="1" colorSpace="calibratedWhite"/>
             <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="eeQ-hV-LCI" firstAttribute="top" secondItem="1" secondAttribute="top" constant="-20" id="5CW-fV-HXY"/>
                 <constraint firstAttribute="trailing" secondItem="swG-Nd-QLC" secondAttribute="trailing" id="5E1-c3-Qi1"/>
                 <constraint firstItem="gnv-KL-bp9" firstAttribute="top" secondItem="1" secondAttribute="top" constant="57" id="63i-qF-Tac"/>
                 <constraint firstItem="swG-Nd-QLC" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="BuJ-Gr-feY"/>
@@ -180,20 +220,30 @@
                 <constraint firstItem="gnv-KL-bp9" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="fo6-RL-PDZ"/>
                 <constraint firstAttribute="trailing" secondItem="gnv-KL-bp9" secondAttribute="trailing" id="idA-yF-O1H"/>
                 <constraint firstAttribute="bottom" secondItem="swG-Nd-QLC" secondAttribute="bottom" id="kDX-u9-Zlh"/>
+                <constraint firstItem="eeQ-hV-LCI" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="-300" id="vjL-ie-rI0"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="blurryBackgroundHolder" destination="eeQ-hV-LCI" id="hOa-DF-jg6"/>
                 <outlet property="createAccountButton" destination="rma-46-MgZ" id="tb4-ex-02l"/>
+                <outlet property="currentlyShowingBackground" destination="Wk0-gM-WeK" id="u6M-5q-v2e"/>
                 <outlet property="loginButton" destination="z2F-DD-VYf" id="m22-hH-JzL"/>
                 <outlet property="previewButton" destination="GVe-IF-CZ6" id="C7t-XB-5bD"/>
                 <outlet property="signupWithFacebookButton" destination="Nyb-7c-ITc" id="c3C-0X-XkP"/>
                 <outlet property="titleLabel" destination="Pli-eh-kxF" id="yco-qs-oy2"/>
+                <outletCollection property="allBackgrounds" destination="kZL-fZ-10t" id="MTX-vr-xPG"/>
+                <outletCollection property="allBackgrounds" destination="xPl-nr-cYm" id="eC1-X1-HZO"/>
+                <outletCollection property="allBackgrounds" destination="5QQ-7L-BlG" id="NRi-q4-7Yc"/>
+                <outletCollection property="allBackgrounds" destination="Wk0-gM-WeK" id="kAs-TL-OTZ"/>
             </connections>
         </view>
     </objects>
     <resources>
+        <image name="entrance-blur-1" width="512" height="384"/>
+        <image name="entrance-blur-2" width="512" height="384"/>
         <image name="entrance-blur-3" width="512" height="384"/>
+        <image name="entrance-blur-4" width="512" height="384"/>
         <image name="entrance-shelby-logo" width="525" height="149"/>
         <image name="facebook-button-icon" width="9" height="18"/>
     </resources>
