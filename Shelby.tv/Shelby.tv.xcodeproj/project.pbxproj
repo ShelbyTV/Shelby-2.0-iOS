@@ -681,6 +681,9 @@
 		9124A67B188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */; };
 		9124A67C188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */; };
 		9124A67D188D8FBB00175A9C /* BrowseChannels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */; };
+		9124A680188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */; };
+		9124A681188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */; };
+		9124A682188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */; };
 		9124A685188DAB0F00175A9C /* BrowseChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A684188DAB0F00175A9C /* BrowseChannelCell.m */; };
 		9124A686188DAB0F00175A9C /* BrowseChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A684188DAB0F00175A9C /* BrowseChannelCell.m */; };
 		9124A687188DAB0F00175A9C /* BrowseChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9124A684188DAB0F00175A9C /* BrowseChannelCell.m */; };
@@ -1297,6 +1300,8 @@
 		912261DF17BC05C30092AF30 /* ShelbyAnalyticsClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAnalyticsClient.h; sourceTree = "<group>"; };
 		912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAnalyticsClient.m; sourceTree = "<group>"; };
 		9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BrowseChannels.storyboard; sourceTree = "<group>"; };
+		9124A67E188D903100175A9C /* BrowseChannelsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseChannelsTableViewController.h; sourceTree = "<group>"; };
+		9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseChannelsTableViewController.m; sourceTree = "<group>"; };
 		9124A683188DAB0F00175A9C /* BrowseChannelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseChannelCell.h; sourceTree = "<group>"; };
 		9124A684188DAB0F00175A9C /* BrowseChannelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseChannelCell.m; sourceTree = "<group>"; };
 		9124A688188DDA4300175A9C /* TopLevelNavigationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopLevelNavigationCell.h; sourceTree = "<group>"; };
@@ -1650,6 +1655,8 @@
 			isa = PBXGroup;
 			children = (
 				1C38255F187DE373002177C6 /* Xib-iPad */,
+				9124A67E188D903100175A9C /* BrowseChannelsTableViewController.h */,
+				9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */,
 				1CA34E581892C7FE00A168D1 /* SignupHeaderView.h */,
 				1CA34E591892C7FE00A168D1 /* SignupHeaderView.m */,
 				9124A69B188ED0D500175A9C /* BrowseChannelsHeaderView.h */,
@@ -1660,6 +1667,8 @@
 				910F5BEF1884D1A00069E380 /* VideoOverlayView.m */,
 				910F5BF818884F300069E380 /* VideoReelBackdropView.h */,
 				910F5BF918884F300069E380 /* VideoReelBackdropView.m */,
+				9124A67E188D903100175A9C /* BrowseChannelsTableViewController.h */,
+				9124A67F188D903100175A9C /* BrowseChannelsTableViewController.m */,
 				9124A683188DAB0F00175A9C /* BrowseChannelCell.h */,
 				9124A684188DAB0F00175A9C /* BrowseChannelCell.m */,
 				9124A688188DDA4300175A9C /* TopLevelNavigationCell.h */,
@@ -3171,6 +3180,7 @@
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9178C9D317CE375000913256 /* WelcomeViewController.m in Sources */,
 				910933091743E47F00AC038E /* ShelbyAlert.m in Sources */,
+				9124A681188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
 				1CA34E5B1892C7FE00A168D1 /* SignupHeaderView.m in Sources */,
 				9124A6BA1890512B00175A9C /* ShelbyEntranceViewController.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
@@ -3340,6 +3350,7 @@
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9178C9D417CE375000913256 /* WelcomeViewController.m in Sources */,
 				9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */,
+				9124A682188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
 				1CA34E5C1892C7FE00A168D1 /* SignupHeaderView.m in Sources */,
 				9124A6BB1890512B00175A9C /* ShelbyEntranceViewController.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
@@ -3509,6 +3520,7 @@
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9178C9D217CE375000913256 /* WelcomeViewController.m in Sources */,
 				910933081743E47F00AC038E /* ShelbyAlert.m in Sources */,
+				9124A680188D903100175A9C /* BrowseChannelsTableViewController.m in Sources */,
 				1CA34E5A1892C7FE00A168D1 /* SignupHeaderView.m in Sources */,
 				9124A6B91890512B00175A9C /* ShelbyEntranceViewController.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
