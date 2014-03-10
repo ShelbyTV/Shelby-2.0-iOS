@@ -95,7 +95,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self updateSocialButtons];
+    [self updateSocialButtonsAndIgnoreDefaults:NO];
 
     [self.message becomeFirstResponder];
 }
@@ -160,12 +160,8 @@
         if (self.facebookSwitch.on == self.previousFacebookSwitchValue) {
             return;
         }
-        
         self.previousFacebookSwitchValue = self.facebookSwitch.on;
-        
-        if (self.facebookSwitch.on) {
-            [self.shareController toggleSocialFacebookButton:YES selected:YES];
-        }
+        [self.shareController toggleSocialFacebookButton:YES selected:self.facebookSwitch.on];
     } else {
         self.facebookCheck.hidden = !self.facebookCheck.hidden;
         self.facebookButton.selected = !self.facebookCheck.hidden;
@@ -186,12 +182,8 @@
         if (self.twitterSwitch.on == self.previousTwitterSwitchValue) {
             return;
         }
-        
         self.previousTwitterSwitchValue = self.twitterSwitch.on;
-        
-        if (self.twitterSwitch.on) {
-            [self.shareController toggleSocialFacebookButton:NO selected:YES];
-        }
+        [self.shareController toggleSocialFacebookButton:NO selected:self.twitterSwitch.on];
     } else {
         self.twitterCheck.hidden = !self.twitterCheck.hidden;
         self.twitterButton.selected = !self.twitterCheck.hidden;
@@ -247,7 +239,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.facebookButton.enabled = YES;
-        [self updateSocialButtons];
+        [self updateSocialButtonsAndIgnoreDefaults:YES];
     });
 }
 
@@ -255,30 +247,30 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.twitterButton.enabled = YES;
-        [self updateSocialButtons];
+        [self updateSocialButtonsAndIgnoreDefaults:YES];
     });
 }
 
-- (void)updateSocialButtons
+- (void)updateSocialButtonsAndIgnoreDefaults:(BOOL)ignoreDefaults
 {
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
-   if (user) {
+    BOOL defaultsFacebook = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyFacebookShareEnable];
+    BOOL defaultsTwitter = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyTwitterShareEnable];
+
+    if (user) {
        if (DEVICE_IPAD) {
-           self.facebookSwitch.on = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] ? YES : NO;
-           self.twitterSwitch.on = user.twitterNickname ? YES : NO;
+           self.facebookSwitch.on = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] && (defaultsFacebook || ignoreDefaults) ? YES : NO;
+           self.twitterSwitch.on = user.twitterNickname && (defaultsTwitter || ignoreDefaults) ? YES : NO;
        } else {
-           self.facebookConnected = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] ? YES : NO;
-           self.twitterConnected = user.twitterNickname ? YES : NO;
+           self.facebookConnected = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] && (defaultsFacebook || ignoreDefaults) ? YES : NO;
+           self.twitterConnected = user.twitterNickname && (defaultsTwitter || ignoreDefaults) ? YES : NO;
        }
     } else {
         self.facebookConnected = NO;
         self.twitterConnected = NO;
     }
     
-    BOOL defaultsFacebook = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyFacebookShareEnable];
-    BOOL defaultsTwitter = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyTwitterShareEnable];
-    
-    if (self.facebookConnected && defaultsFacebook) {
+    if (self.facebookConnected) {
         self.facebookCheck.hidden = NO;
         self.facebookButton.selected = YES;
     } else {
@@ -286,7 +278,7 @@
         self.facebookButton.selected = NO;
     }
 
-    if (self.twitterConnected && defaultsTwitter) {
+    if (self.twitterConnected) {
         self.twitterCheck.hidden = NO;
         self.twitterButton.selected = YES;
     } else {

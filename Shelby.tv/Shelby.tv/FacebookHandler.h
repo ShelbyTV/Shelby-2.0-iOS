@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^shelby_facebook_request_complete_block_t)(NSDictionary *facebookUser, NSString *facebookToken, NSString *errorMessage);
+typedef void (^shelby_facebook_request_complete_block_t)(BOOL sessionOpen, NSDictionary *facebookUser, NSString *facebookToken, NSString *errorMessage);
 
 extern NSString * const kShelbyNotificationFacebookAuthorizationCompleted;
 extern NSString * const kShelbyNotificationFacebookAuthorizationCompletedWithError;
@@ -24,7 +24,6 @@ extern NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted
 
 // Read/Write Permissions
 - (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI
-            andAskPublishPermission:(BOOL)askForPublishPermission
                           withBlock:(shelby_facebook_request_complete_block_t)completionBlock;
 - (void)askForPublishPermissions;
 - (BOOL)allowPublishActions;
