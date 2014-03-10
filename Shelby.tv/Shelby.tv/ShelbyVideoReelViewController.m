@@ -13,14 +13,14 @@
 #import "ShelbyDataMediator.h"
 #import "SPShareController.h"
 #import "SPVideoExtractor.h"
-#import "SPVideoReel.h"
+#import "SPVideoReelCollectionViewController.h"
 #import "User+Helper.h"
 #import "VideoReelBackdropView.h"
 
 #define VIDEO_CONTROLS_AUTOHIDE_TIME 5.0
 
 @interface ShelbyVideoReelViewController ()
-@property (nonatomic, strong) SPVideoReel *videoReel;
+@property (nonatomic, strong) SPVideoReelCollectionViewController *videoReelCollectionVC;
 @property (nonatomic, strong) VideoReelBackdropView *videoReelBackdropView;
 @property (nonatomic, strong) UIView *airPlayBackdropView;
 @property (nonatomic, strong) ShelbyAirPlayController *airPlayController;
@@ -95,7 +95,7 @@
         
         if (initialChannel) {
             //want a video reel so it's pretty from bootup
-            STVDebugAssert(!self.videoReel);
+            STVDebugAssert(!self.videoReelCollectionVC);
             [self presentVideoReelWithChannel:channel
                           deduplicatedEntries:self.currentDeduplicatedEntries
                                       atIndex:0
@@ -112,11 +112,11 @@
     self.currentDeduplicatedEntries = deduplicatedEntries;
     self.currentlyPlayingIndexInChannel = idx;
     
-    if (self.videoReel) {
+    if (self.videoReelCollectionVC) {
         //A) currently playing via VideReel
-        if (self.videoReel.channel == channel) {
-            [self.videoReel setDeduplicatedEntries:deduplicatedEntries];
-            [self.videoReel scrollForPlaybackAtIndex:idx forcingPlayback:YES];
+        if (self.videoReelCollectionVC.channel == channel) {
+            [self.videoReelCollectionVC setDeduplicatedEntries:deduplicatedEntries];
+            [self.videoReelCollectionVC scrollForPlaybackAtIndex:idx forcingPlayback:YES];
         } else {
             [self dismissCurrentVideoReel];
             [self presentVideoReelWithChannel:channel
@@ -272,7 +272,7 @@
         return;
     }
     
-    self.wasPlayingBeforeModalViewWasPresented = self.videoReel ? [self.videoReel isCurrentPlayerPlaying] : NO;
+    self.wasPlayingBeforeModalViewWasPresented = self.videoReelCollectionVC ? [self.videoReelCollectionVC isCurrentPlayerPlaying] : NO;
     if (self.wasPlayingBeforeModalViewWasPresented) {
         [self videoControlsPauseCurrentVideo:nil];
     }
@@ -316,7 +316,7 @@
 - (void)videoControlsPlayCurrentVideo:(VideoControlsViewController *)vcvc
 {
     [self.airPlayController playCurrentPlayer];
-    [self.videoReel playCurrentPlayer];
+    [self.videoReelCollectionVC playCurrentPlayer];
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     [self scheduleAutoHideVideoControlsTimer];
 }
@@ -324,7 +324,7 @@
 - (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc
 {
     [self.airPlayController pauseCurrentPlayer];
-    [self.videoReel pauseCurrentPlayer];
+    [self.videoReelCollectionVC pauseCurrentPlayer];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self invalidateAutoHideVideoControlsTimer];
 }
@@ -332,7 +332,7 @@
 - (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct
 {
     [self.airPlayController scrubCurrentPlayerTo:pct];
-    [self.videoReel scrubCurrentPlayerTo:pct];
+    [self.videoReelCollectionVC scrubCurrentPlayerTo:pct];
     [self scheduleAutoHideVideoControlsTimer];
 }
 
@@ -340,10 +340,10 @@
 {
     if (isScrubbing) {
         [self.airPlayController beginScrubbing];
-        [self.videoReel beginScrubbing];
+        [self.videoReelCollectionVC beginScrubbing];
     } else {
         [self.airPlayController endScrubbing];
-        [self.videoReel endScrubbing];
+        [self.videoReelCollectionVC endScrubbing];
     }
     [self scheduleAutoHideVideoControlsTimer];
 }
@@ -488,7 +488,7 @@
 - (void)airPlayControllerDidBeginAirPlay:(ShelbyAirPlayController *)airPlayController
 {
     // current player has a new owner: _airPlayController, we can kill the reel
-    if (self.videoReel) {
+    if (self.videoReelCollectionVC) {
         // current SPVideoPlayer will not reset itself b/c it's in external playback mode
         [self dismissCurrentVideoReel];
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
@@ -547,19 +547,19 @@
 - (void)dismissCurrentVideoReel
 {
     STVDebugAssert([NSThread isMainThread], @"expecting to be called on main thread");
-    if (!self.videoReel) {
+    if (!self.videoReelCollectionVC) {
         return;
     }
     
     if (!self.airPlayController.isAirPlayActive){
-        [self.videoReel pauseCurrentPlayer];
+        [self.videoReelCollectionVC pauseCurrentPlayer];
     }
     
-    [self.videoReel shutdown];
-    [self.videoReel willMoveToParentViewController:nil];
-    [self.videoReel.view removeFromSuperview];
-    [self.videoReel removeFromParentViewController];
-    self.videoReel = nil;
+    [self.videoReelCollectionVC shutdown];
+    [self.videoReelCollectionVC willMoveToParentViewController:nil];
+    [self.videoReelCollectionVC.view removeFromSuperview];
+    [self.videoReelCollectionVC removeFromParentViewController];
+    self.videoReelCollectionVC = nil;
 }
 
 - (void)presentVideoReelWithChannel:(DisplayChannel *)channel
@@ -567,11 +567,12 @@
                             atIndex:(NSUInteger)videoStartIndex
                            autoplay:(BOOL)autoplay
 {
-    self.videoReel = ({
-        SPVideoReel *reel = [[SPVideoReel alloc] initWithChannel:channel andVideoEntities:deduplicatedChannelEntries atIndex:videoStartIndex];
+    self.videoReelCollectionVC = ({
+        //initialize with default layout
+        SPVideoReelCollectionViewController *reel = [[SPVideoReelCollectionViewController alloc] init];
         reel.delegate = self;
         reel.videoPlaybackDelegate = self.videoControlsVC;
-        reel.autoplayOnInitialLoad = autoplay;
+        
         reel.view.frame = self.view.bounds;
         //iPad only modifications to SPVideoReel
         reel.view.backgroundColor = [UIColor clearColor];
@@ -579,16 +580,20 @@
         reel;
     });
     
-    [self addChildViewController:self.videoReel];
-    [self.view insertSubview:self.videoReel.view belowSubview:self.videoControlsVC.view];
-    [self.videoReel didMoveToParentViewController:self];
+    [self addChildViewController:self.videoReelCollectionVC];
+    [self.view insertSubview:self.videoReelCollectionVC.view belowSubview:self.videoControlsVC.view];
+    [self.videoReelCollectionVC didMoveToParentViewController:self];
+    
+    self.videoReelCollectionVC.channel = channel;
+    [self.videoReelCollectionVC setDeduplicatedEntries:deduplicatedChannelEntries];
+    [self.videoReelCollectionVC scrollForPlaybackAtIndex:videoStartIndex forcingPlayback:autoplay];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnVideoReelDetected:)];
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOnVideoReelDetected:)];
     doubleTap.numberOfTapsRequired = 2;
     [singleTap requireGestureRecognizerToFail:doubleTap];
-    [self.videoReel addGestureRecognizer:singleTap];
-    [self.videoReel addGestureRecognizer:doubleTap];
+    [self.videoReelCollectionVC addGestureRecognizer:singleTap];
+    [self.videoReelCollectionVC addGestureRecognizer:doubleTap];
     
     //to allow SPVideoReel controls the hidden state of backdrop image
     self.videoReelBackdropView.showBackdropImage = YES;
