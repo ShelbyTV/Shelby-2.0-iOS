@@ -36,6 +36,7 @@ NSString * const kLocalyticsWatchVideo                                  = @"watc
 NSString * const kLocalyticsWatchVideo25pct                             = @"watch_25_pct";
 NSString * const kLocalyticsLikeVideo                                   = @"like";
 NSString * const kLocalyticsShareComplete                               = @"share_complete";
+NSString * const kLocalyticsShareCompleteAnonymousUser                  = @"share_complete_anonymous_user";
 NSString * const kLocalyticsEntranceStart                               = @"entrance_start";
 NSString * const kLocalyticsEntranceUserTapGetStarted                   = @"entrance_get_started";
 NSString * const kLocalyticsEntranceUserTapLogin                        = @"entrance_login";
