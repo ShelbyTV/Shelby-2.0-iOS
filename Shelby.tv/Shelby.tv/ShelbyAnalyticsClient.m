@@ -16,12 +16,6 @@
 
 // Shared Constants
 //--Screens--
-NSString * const kAnalyticsScreenWelcomeA1                              = @"Welcome A1";
-NSString * const kAnalyticsScreenWelcomeA2                              = @"Welcome A2";
-NSString * const kAnalyticsScreenWelcomeA3                              = @"Welcome A3";
-NSString * const kAnalyticsScreenWelcomeA4l                             = @"Welcome A4-left";
-NSString * const kAnalyticsScreenWelcomeA4r                             = @"Welcome A4-right";
-NSString * const kAnalyticsScreenWelcomeB                               = @"Welcome B";
 NSString * const kAnalyticsScreenLogin                                  = @"Login";
 NSString * const kAnalyticsScreenEntrance                               = @"Entrance";
 NSString * const kAnalyticsScreenChannels                               = @"Channels";

@@ -10,12 +10,6 @@
 
 // Shared Constants
 //--Screens--
-extern NSString * const kAnalyticsScreenWelcomeA1;
-extern NSString * const kAnalyticsScreenWelcomeA2;
-extern NSString * const kAnalyticsScreenWelcomeA3;
-extern NSString * const kAnalyticsScreenWelcomeA4l;
-extern NSString * const kAnalyticsScreenWelcomeA4r;
-extern NSString * const kAnalyticsScreenWelcomeB;
 extern NSString * const kAnalyticsScreenLogin;
 extern NSString * const kAnalyticsScreenEntrance;
 extern NSString * const kAnalyticsScreenChannels;
