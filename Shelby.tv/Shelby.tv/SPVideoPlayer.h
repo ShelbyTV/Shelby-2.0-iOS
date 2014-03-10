@@ -48,6 +48,7 @@ extern NSString * const kShelbySPVideoAirplayDidEnd;
 - (void)resetUI;
 
 // View is sized + positioned by owner (VideoReel) via this
+//DEPRECATED
 - (void)setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:(CGRect)f;
 
 // Does not load video

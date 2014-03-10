@@ -343,6 +343,7 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 	return kCMTimeInvalid;
 }
 
+//DEPRECATED
 - (void)warmVideoExtractionCache
 {
     Video *video = self.videoFrame.video;
