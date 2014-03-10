@@ -31,6 +31,11 @@ NSString * const kShelbyCoreDataEntityRollIDPredicate = @"rollID == %@";
         roll.rollID = rollID;
     }
     
+    NSString *creatorID = rollDict[@"creator_id"];
+    if (creatorID) {
+        roll.creatorID = creatorID;
+    }
+    
     NSString *displayColor = rollDict[@"display_channel_color"];
     if (displayColor) {
         roll.displayColor = displayColor;
