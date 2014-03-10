@@ -282,8 +282,9 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
         self.currentPlayer.shouldAutoplay = YES;
         [self.currentPlayer play];
     } else {
-        //show backdrop unless an active player is showing
-        self.backdropView.showBackdropImage = ![self.currentPlayer isShowingPlayerLayer];
+        //show the paused UI with backdrop and thumbnail
+        self.backdropView.showBackdropImage = YES;
+        [self.currentPlayer resetUI];
     }
 }
 

@@ -436,8 +436,14 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
         _lastPlaybackUpdateIntervalEnd = CMTimeMake(0, NSEC_PER_MSEC);
         
-        self.thumbnailView.alpha = 1.f;
+        [self resetUI];
     }
+}
+
+- (void)resetUI
+{
+    self.playerLayer.hidden = YES;
+    self.thumbnailView.alpha = 1.f;
 }
 
 #pragma mark - Video Playback Methods (Public)
