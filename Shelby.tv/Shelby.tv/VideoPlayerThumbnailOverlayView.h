@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) Video *video;
 
+- (void)showSpinner:(BOOL)spinnerInsteadOfPlay;
+
 @end

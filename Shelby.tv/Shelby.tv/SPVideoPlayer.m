@@ -621,12 +621,15 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
                                                        UIViewAutoresizingFlexibleRightMargin |
                                                        UIViewAutoresizingFlexibleTopMargin |
                                                        UIViewAutoresizingFlexibleBottomMargin);
-        [self.view addSubview:self.videoLoadingIndicator];
     }
+    [self.view addSubview:self.videoLoadingIndicator];
+    
     if(animate){
         [self.videoLoadingIndicator startAnimating];
+        [self.thumbnailView showSpinner:YES];
     } else {
         [self.videoLoadingIndicator stopAnimating];
+        [self.thumbnailView showSpinner:NO];
     }
 }
 
