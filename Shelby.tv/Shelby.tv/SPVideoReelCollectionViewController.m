@@ -427,8 +427,6 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
 
 - (void)manageLoadedVideoPlayersForCurrentPlayer:(SPVideoPlayer *)expectedCurrentPlayer
 {
-    DLog(@"Managing loaded video players based on current: %@", expectedCurrentPlayer.videoFrame.video.title);
-    
     //1) build an array of the players we want to keep warm
     NSMutableArray *playersToKeepWarm = [NSMutableArray new];
     SPVideoPlayer *additionalPlayer;
@@ -439,7 +437,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
             if (additionalPlayer) {
                 [playersToKeepWarm addObject:additionalPlayer];
             }
-            //2 ahead, plus the following:
+            //2 ahead, plus...
             
         case SPVideoReelCollectionPreloadNextKeepPrevious:
             if (self.currentPlayersIndexPath.row > 0) {
@@ -449,7 +447,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
                     [playersToKeepWarm addObject:additionalPlayer];
                 }
             }
-            //1 behind, plus the following:
+            //1 behind, plus...
             
         case SPVideoReelCollectionPreloadNextOnly:
             additionalPlayer = [self playerForIndexPath:[NSIndexPath indexPathForRow:self.currentPlayersIndexPath.row+1
@@ -457,7 +455,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
             if (additionalPlayer) {
                 [playersToKeepWarm addObject:additionalPlayer];
             }
-            //1 ahead, plus the following:
+            //1 ahead, plus...
             
         case SPVideoReelCollectionPreloadNone:
         case SPVideoReelCollectionPreloadStrategyNotSet:
@@ -470,7 +468,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
     }
     
     //2) reset the players we dont want warm, freeing the AVPlayer
-    //we still keep the SPVideoPlayer around b/c it maintains state (like last playhead position)
+    //we still keep the SPVideoPlayer around b/c it maintains some state
     NSMutableArray *playersToReset = [[self.players allValues] mutableCopy];
     [playersToReset removeObjectsInArray:playersToKeepWarm];
     for (SPVideoPlayer *player in playersToReset) {
@@ -484,17 +482,17 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
         if (DEVICE_IPAD) {
             if ([[UIScreen mainScreen] isRetinaDisplay]) {
                 preloadStrategy = SPVideoReelCollectionPreloadNextKeepPrevious;
-                DLog(@"iPad Retina Preload strategy: next + current + previous");
+                //DLog(@"iPad Retina Preload strategy: next + current + previous");
             } else if ([DeviceUtilities isIpadMini1]) {
                 preloadStrategy = SPVideoReelCollectionPreloadNone;
-                DLog(@"iPad mini Preload strategy: none");
+                //DLog(@"iPad mini Preload strategy: none");
             } else {
                 preloadStrategy = SPVideoReelCollectionPreloadNone;
-                DLog(@"iPad 2,3 Preload strategy: none");
+                //DLog(@"iPad 2,3 Preload strategy: none");
             }
         } else {
             preloadStrategy = SPVideoReelCollectionPreloadNextKeepPrevious;
-            DLog(@"iPhone Preload strategy: next + current + previous");
+            //DLog(@"iPhone Preload strategy: next + current + previous");
         }
     }
 }
