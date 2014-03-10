@@ -52,6 +52,8 @@ extern NSString * const kLocalyticsTapCardLikersList;
 extern NSString * const kLocalyticsTapCardLike;
 extern NSString * const kLocalyticsTapCardUnlike;
 extern NSString * const kLocalyticsTapCardPlay;
+extern NSString * const kLocalyticsTapHideFacebookInStream;
+extern NSString * const kLocalyticsTapHideTwitterInStream;
 extern NSString * const kLocalyticsTapLikerListLiker;
 extern NSString * const kLocalyticsTapTopNavSignup;
 extern NSString * const kLocalyticsTapPlayerControlsPlay;

@@ -7,6 +7,7 @@
 //
 
 #import "StreamConnectTwitterTableViewCell.h"
+#import "ShelbyAnalyticsClient.h"
 
 static NSString * const kStreamConnectTwitterUserWantsHidden = @"kStreamConnectTwitterUserWantsHidden";
 
@@ -32,6 +33,8 @@ static NSString * const kStreamConnectTwitterUserWantsHidden = @"kStreamConnectT
 }
 
 - (IBAction)hideTapped:(id)sender {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapHideTwitterInStream];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:YES
                forKey:kStreamConnectTwitterUserWantsHidden];

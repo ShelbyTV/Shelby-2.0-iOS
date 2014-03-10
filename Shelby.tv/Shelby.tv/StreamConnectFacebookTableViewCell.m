@@ -7,6 +7,7 @@
 //
 
 #import "StreamConnectFacebookTableViewCell.h"
+#import "ShelbyAnalyticsClient.h"
 
 static NSString * const kStreamConnectFacebookUserWantsHidden = @"kStreamConnectFacebookUserWantsHidden";
 
@@ -32,6 +33,8 @@ static NSString * const kStreamConnectFacebookUserWantsHidden = @"kStreamConnect
 }
 
 - (IBAction)hideTapped:(id)sender {
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapHideFacebookInStream];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:YES
                forKey:kStreamConnectFacebookUserWantsHidden];
