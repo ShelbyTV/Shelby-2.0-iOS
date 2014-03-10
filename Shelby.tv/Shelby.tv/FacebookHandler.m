@@ -75,60 +75,60 @@ NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kS
 
 #pragma mark - Facebook Read/Write Permissions (Public)
 - (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI
-            andAskPublishPermission:(BOOL)askForPublishPermission
                           withBlock:(shelby_facebook_request_complete_block_t)completionBlock
 {
     // KP KP TODO: this needs to be refactored. Was fine when its purpose was more limited. But now, when it is dealing with login/signup/connect it is getting out of control.
-    
-    if ([[FBSession activeSession] isOpen]) {
-        if (askForPublishPermission) {
-            [self askForPublishPermissions];
-        }
-        return;
-    }
-    
-    [FBSession openActiveSessionWithReadPermissions:@[@"email", @"read_stream"]
+
+    [FBSession openActiveSessionWithReadPermissions:@[@"basic_info", @"email", @"read_stream"]
                                        allowLoginUI:allowLoginUI
                                   completionHandler:^(FBSession *session,
                                                       FBSessionState status,
                                                       NSError *error) {
-        if (status == FBSessionStateClosedLoginFailed || status == FBSessionStateCreatedOpening) {
-            [self facebookCleanup];
-            
-            if (status == FBSessionStateClosedLoginFailed) {
-                completionBlock(nil, nil, @"Go to Settings -> Privacy -> Facebook and turn Shelby ON");
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
-            }
-        } else if(status == FBSessionStateClosed) {
-            if (self.facebookCleanupInProgress) {
-                // If we manually initialize cleanup, we don't want to send error message to user
-                return;
-            }
-            [self facebookCleanup];
-            completionBlock(nil, nil, @"There was an error connecting to Facebook. Please try again.");
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
-        } else {
-            if (askForPublishPermission) {
-                [self askForPublishPermissions];
-            }
-            // If status is OpenTokenExtended - we had a session - no need to change a thing - just call the completion block to let the delegate know facebookSessionDidComplete
-            if (status == FBSessionStateOpenTokenExtended) {
-                completionBlock(nil, [self facebookToken], nil);
-            } else {
-                // Get request for user object - send user and token back.
-                [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
-                    if (!error && [user isKindOfClass:[NSDictionary class]]) {
-                        completionBlock(user, [self facebookToken], nil);
-                        
-                    } else {
-                        [self facebookCleanup];
-                        // error? could not fetch user.
-                    }
-                }];
-            }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
-        }
-     }];
+
+      if (error) {
+          //Log Facebook errors that we're not handling
+          NSLog(@"Guess what there's a Facebook session error we're not handling with category %d", [FBErrorUtility errorCategoryForError:error]);
+          NSString *alertText;
+          if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
+              alertText = [FBErrorUtility userMessageForError:error];
+          } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+              alertText = [NSString stringWithFormat:@"User cancelled login: %@",[error localizedDescription]];
+          } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession){
+              alertText = @"Current session is no longer valid.";
+          } else {
+              NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
+              alertText = [NSString stringWithFormat:@"Other error catgory, error code: %@", [errorInformation objectForKey:@"message"]];
+          }
+          NSLog(@"%@", alertText);
+      }
+      if (status == FBSessionStateClosedLoginFailed) {
+          completionBlock(NO, nil, nil, @"Go to Settings -> Privacy -> Facebook and turn Shelby ON");
+          [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
+      } else if(status == FBSessionStateClosed) {
+          if (self.facebookCleanupInProgress) {
+              // If we manually initialize cleanup, we don't want to send error message to user
+              return;
+          }
+          completionBlock(NO, nil, nil, @"There was an error connecting to Facebook. Please try again.");
+          [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
+      } else if (status == FBSessionStateOpen || status == FBSessionStateOpenTokenExtended){
+          // If status is OpenTokenExtended - we had a session - no need to change a thing - just call the completion block to let the delegate know facebookSessionDidComplete
+          if (status == FBSessionStateOpenTokenExtended) {
+              completionBlock(YES, nil, [self facebookToken], nil);
+          } else {
+              // Get request for user object - send user and token back.
+              [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+                  if (!error && [user isKindOfClass:[NSDictionary class]]) {
+                      completionBlock(YES, user, [self facebookToken], nil);
+                  } else {
+                      [self facebookCleanup];
+                      // error? could not fetch user.
+                  }
+              }];
+          }
+          [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
+      }
+  }];
 }
 
 - (BOOL)allowPublishActions
