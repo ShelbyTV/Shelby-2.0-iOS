@@ -26,6 +26,8 @@ NSString * const kAnalyticsScreenUserProfile                            = @"User
 NSString * const kAnalyticsScreenLikersList                             = @"Likers List";
 
 // Localytics Constants
+NSString * const kLocalyticsAnonymousConvertViaEmail                    = @"anonymous_convert_via_email";
+NSString * const kLocalyticsAnonymousConvertViaFacebook                 = @"anonymous_convert_via_facebook";
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
 NSString * const kLocalyticsWatchVideo25pct                             = @"watch_25_pct";
 NSString * const kLocalyticsLikeVideo                                   = @"like";

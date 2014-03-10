@@ -20,6 +20,8 @@ extern NSString * const kAnalyticsScreenUserProfile;
 extern NSString * const kAnalyticsScreenLikersList;
 
 // Localytics Constants
+extern NSString * const kLocalyticsAnonymousConvertViaEmail;
+extern NSString * const kLocalyticsAnonymousConvertViaFacebook;
 extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsWatchVideo25pct;
 extern NSString * const kLocalyticsLikeVideo;
