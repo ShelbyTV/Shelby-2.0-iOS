@@ -472,6 +472,11 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
     for (SPVideoPlayer *player in playersToReset) {
         [player resetPlayer];
     }
+    
+    //3) and make sure the players we want warm, are warm
+    for (SPVideoPlayer *player in playersToKeepWarm) {
+        [player prepareForStreamingPlayback];
+    }
 }
 
 - (void)setupVideoPreloadStrategy
@@ -482,11 +487,11 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
                 preloadStrategy = SPVideoReelCollectionPreloadNextKeepPrevious;
                 //DLog(@"iPad Retina Preload strategy: next + current + previous");
             } else if ([DeviceUtilities isIpadMini1]) {
-                preloadStrategy = SPVideoReelCollectionPreloadNone;
-                //DLog(@"iPad mini Preload strategy: none");
+                preloadStrategy = SPVideoReelCollectionPreloadNextOnly;
+                //DLog(@"iPad mini Preload strategy: next only");
             } else {
-                preloadStrategy = SPVideoReelCollectionPreloadNone;
-                //DLog(@"iPad 2,3 Preload strategy: none");
+                preloadStrategy = SPVideoReelCollectionPreloadNextOnly;
+                //DLog(@"iPad 2,3 Preload strategy: next only");
             }
         } else {
             preloadStrategy = SPVideoReelCollectionPreloadNextKeepPrevious;
