@@ -36,6 +36,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
 @property (nonatomic, weak) NSTimer *playerManagementTimer;
 //state
 @property (nonatomic, strong) NSIndexPath *lastRequestedScrollToIndexPath;
+@property (nonatomic, assign) BOOL shouldBePlaying;
 @property (nonatomic, assign) BOOL isShutdown;
 //alerts
 @property (nonatomic, strong) ShelbyAlert *currentVideoAlertView;
@@ -49,6 +50,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
     self = [super initWithCollectionViewLayout:[UICollectionViewFlowLayout new]];
     if (self) {
         _flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
+        _shouldBePlaying = NO;
         _isShutdown = NO;
     }
     return self;
@@ -124,6 +126,20 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
         
         id<ShelbyVideoContainer> entity = self.deduplicatedEntries[self.currentPlayersIndexPath.row];
         STVDebugAssert([Frame frameForEntity:entity] == self.currentPlayer.videoFrame);
+        
+        //configure current player
+        _currentPlayer.shouldAutoplay = self.shouldBePlaying;
+        if (!self.shouldBePlaying) {
+            self.backdropView.showBackdropImage = YES;
+            [_currentPlayer resetUI];
+        }
+        [_currentPlayer prepareForStreamingPlayback];
+        
+        //pre-cache future players and URLs
+        [self manageLoadedVideoPlayersForCurrentPlayer:_currentPlayer];
+        [self warmURLExtractionCache];
+        
+        //let the world know
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyPlaybackEntityDidChangeNotification
                                                             object:self
                                                           userInfo:@{kShelbyPlaybackCurrentEntityKey : entity,
@@ -137,14 +153,12 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
 {
     self.lastRequestedScrollToIndexPath = [NSIndexPath indexPathForRow:idx inSection:0];
     
-    [self playerForIndexPath:self.lastRequestedScrollToIndexPath].shouldAutoplay = self.currentPlayer.shouldBePlaying || forcePlaybackEvenIfPaused;
+    self.shouldBePlaying |= forcePlaybackEvenIfPaused;
     
     //Cold Start?
     if (!self.currentPlayersIndexPath) {
         self.currentPlayersIndexPath = self.lastRequestedScrollToIndexPath;
-        //above sets current player and sends notifications
-        [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer];
-        [self warmURLExtractionCache];
+        //above sets & sets up current player, sends notifications
     }
     
     [self.collectionView scrollToItemAtIndexPath:self.lastRequestedScrollToIndexPath
@@ -154,6 +168,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
 
 - (void)playCurrentPlayer
 {
+    self.shouldBePlaying = YES;
     [self.currentPlayer play];
     // prevent display from sleeping while watching video
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
@@ -166,6 +181,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
 
 - (void)pauseCurrentPlayer
 {
+    self.shouldBePlaying = NO;
     [self.currentPlayer pause];
     // allow display to sleep
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
@@ -189,6 +205,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
 - (void)shutdown
 {
     STVDebugAssert(!self.isShutdown, @"shoult not already be shutdown");
+    self.shouldBePlaying = NO;
     self.isShutdown = YES;
     
     //UIScrollView seems to have a problem with its delegate...
@@ -236,7 +253,6 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
                                                                                              forIndexPath:indexPath];
     
     SPVideoPlayer *player = [self playerForIndexPath:indexPath];
-    [player prepareForStreamingPlayback];
     [cell addSubview:player.view];
     [cell addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[playerView]|"
                                                                  options:0
@@ -258,54 +274,35 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
     //since we're full screen, this indicates a transition from one player to the next
     ShelbyVideoReelCollectionViewCell *videoCell = (ShelbyVideoReelCollectionViewCell *)cell;
     SPVideoPlayer *previousPlayer = videoCell.player;
-    BOOL previousPlayerShouldHaveBeenPlaying = [previousPlayer shouldBePlaying];
     
     //hibernate the previous player
     previousPlayer.shouldAutoplay = NO;
     [previousPlayer pause];
     [previousPlayer.view removeFromSuperview];
-    
-    if (self.currentPlayer != previousPlayer || self.isShutdown) {
-        //"previous player" may have been drawn on screen but never became the focused cell
-        return;
-    }
-    
-    //remove any alert particular to current video
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentVideoAlertView dismiss];
-    });
-    
-    //determine new player and get it going
-    //setting currentPlayersIndexPath sets currentPlayer and sends notification
-    self.currentPlayersIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(0, self.collectionView.contentOffset.y + (self.collectionView.bounds.size.height / 2.f))];
-    if (previousPlayerShouldHaveBeenPlaying) {
-        self.currentPlayer.shouldAutoplay = YES;
-        [self.currentPlayer play];
-    } else {
-        //show the paused UI with backdrop and thumbnail
-        self.backdropView.showBackdropImage = YES;
-        [self.currentPlayer resetUI];
-    }
 }
 
 #pragma mark - UISCrollViewDelegate
 
+//this is hit when user is manually scrolling
+//it's NOT hit if we do a programatic scroll
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     STVAssert(scrollView == self.collectionView);
-    //this is hit when user is manually scrolling
-    //it's NOT hit if we do a programatic scroll
-    [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer];
-    [self warmURLExtractionCache];
+    
+    //determine new player and get it going
+    //setting currentPlayersIndexPath sets & sets up currentPlayer, sends notification
+    self.currentPlayersIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(0, self.collectionView.contentOffset.y + (self.collectionView.bounds.size.height / 2.f))];
 }
 
+//this is hit if we do a programatic scroll (with animation)
+//it's NOT hit when user is manually scrolling
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     STVAssert(scrollView == self.collectionView);
-    //this is hit if we do a programatic scroll (with animation)
-    //it's NOT hit when user is manually scrolling
-    [self manageLoadedVideoPlayersForCurrentPlayer:[self playerForIndexPath:self.lastRequestedScrollToIndexPath]];
-    [self warmURLExtractionCache];
+    
+    //determine new player and get it going
+    //setting currentPlayersIndexPath sets & sets up currentPlayer, sends notification
+    self.currentPlayersIndexPath = self.lastRequestedScrollToIndexPath;
 }
 
 #pragma mark - SPVideoPlayerDelegate
