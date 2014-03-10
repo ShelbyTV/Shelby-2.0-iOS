@@ -751,8 +751,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 - (void)createUserWithFacebook
 {
     [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES
-                                          andAskPublishPermission:NO
-                                                        withBlock:^(NSDictionary *facebookUser,
+                                                        withBlock:^(BOOL sessionOpen,
+                                                                    NSDictionary *facebookUser,
                                                                     NSString *facebookToken,
                                                                     NSString *errorMessage)
      {
@@ -959,8 +959,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 - (void)loginUserFacebook
 {
     [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES
-                                          andAskPublishPermission:NO
-                                                        withBlock:^(NSDictionary *facebookUser,
+                                                        withBlock:^(BOOL sessionOpen,
+                                                                    NSDictionary *facebookUser,
                                                                     NSString *facebookToken,
                                                                     NSString *errorMessage)
     {
@@ -1035,11 +1035,16 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI andAskPublishPermissions:(BOOL)askForPublishPermission
 {
+    __block BOOL publishPermissionsAskedFor = NO;
     [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES
-                                          andAskPublishPermission:askForPublishPermission
-                                                        withBlock:^(NSDictionary *facebookUser,
-                                                                                  NSString *facebookToken,
-                                                                                  NSString *errorMessage) {
+                                                        withBlock:^(BOOL sessionOpen,
+                                                                    NSDictionary *facebookUser,
+                                                                    NSString *facebookToken,
+                                                                    NSString *errorMessage) {
+        if (askForPublishPermission && !publishPermissionsAskedFor && sessionOpen) {
+            [[FacebookHandler sharedInstance] askForPublishPermissions];
+            publishPermissionsAskedFor = YES;
+        }
         User *user = nil;
         if (facebookUser) {
             NSManagedObjectContext *context = [self mainThreadContext];
