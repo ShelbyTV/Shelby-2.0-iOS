@@ -26,9 +26,9 @@
     self.avatar.layer.cornerRadius = self.avatar.bounds.size.width/2.f;
     self.avatar.layer.masksToBounds = YES;
     
-    self.name.font = kShelbyFontH3;
-    self.userName.font = kShelbyFontH4Medium;
-    self.email.font = kShelbyFontH4Medium;
+    self.name.font = kShelbyBodyFont1;
+    self.userName.font = kShelbyBodyFont2Bold;
+    self.email.font = kShelbyBodyFont2Bold;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

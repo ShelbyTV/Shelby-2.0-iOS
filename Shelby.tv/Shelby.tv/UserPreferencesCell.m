@@ -33,7 +33,7 @@
 
 - (void)awakeFromNib
 {
-    self.preferenceText.font = kShelbyFontH3;
+    self.preferenceText.font = kShelbyBodyFont1;
 }
 
 - (IBAction)togglePreferences:(id)sender
