@@ -73,6 +73,11 @@ NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kS
     return [[[FBSession activeSession] accessTokenData] accessToken];
 }
 
+- (BOOL)hasOpenSession
+{
+    return [[FBSession activeSession] isOpen];
+}
+
 #pragma mark - Facebook Read/Write Permissions (Public)
 - (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI
                           withBlock:(shelby_facebook_request_complete_block_t)completionBlock
