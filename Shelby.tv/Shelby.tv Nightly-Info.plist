@@ -48,7 +48,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
-	<array/>
+	<array>
+		<string>Ubuntu-C.ttf</string>
+		<string>Ubuntu-L.ttf</string>
+		<string>Ubuntu-R.ttf</string>
+		<string>Ubuntu-B.ttf</string>
+		<string>Ubuntu-M.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

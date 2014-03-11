@@ -1034,8 +1034,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [User sessionDidPause];
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
-    //kill all user defaults on logout
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+    [self resetUserDefaults];
     if (DEVICE_IPAD) {
         [self.topContainerVC animateDisappearanceWithCompletion:^{
             self.entranceVC = [[ShelbyEntranceViewController alloc] initWithNibName:@"ShelbyEntranceViewController" bundle:nil];
@@ -1048,6 +1047,19 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     } else {
         [self.homeVC logoutUser];
         [self goToCommunityChannel];
+    }
+}
+
+- (void)resetUserDefaults
+{
+    //want to persist this across logout //hacky :(
+    BOOL hasUserLoggedIn = [[ShelbyDataMediator sharedInstance] hasUserLoggedIn];
+    
+    //kills all user defaults
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+    
+    if (hasUserLoggedIn) {
+        [[ShelbyDataMediator sharedInstance] userLoggedIn];
     }
 }
 
