@@ -21,6 +21,7 @@ extern NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted
 // Facebook state
 - (NSString *)facebookToken;
 - (NSString *)facebookAppID;
+- (BOOL)hasOpenSession;
 
 // Read/Write Permissions
 - (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI

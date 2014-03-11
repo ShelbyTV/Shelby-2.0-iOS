@@ -1024,7 +1024,11 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 
 - (void)userAskForFacebookPublishPermissions
 {
-    [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];
+    if ([[FacebookHandler sharedInstance] hasOpenSession]) {
+        [[FacebookHandler sharedInstance] askForPublishPermissions];
+    } else {
+        [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];
+    }
 }
 
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI
