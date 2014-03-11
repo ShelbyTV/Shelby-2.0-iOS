@@ -567,6 +567,9 @@
                             atIndex:(NSUInteger)videoStartIndex
                            autoplay:(BOOL)autoplay
 {
+    //to allow SPVideoReel controls the hidden state of backdrop image
+    self.videoReelBackdropView.showBackdropImage = YES;
+    
     self.videoReelCollectionVC = ({
         //initialize with default layout
         SPVideoReelCollectionViewController *reel = [[SPVideoReelCollectionViewController alloc] init];
@@ -594,9 +597,6 @@
     [singleTap requireGestureRecognizerToFail:doubleTap];
     [self.videoReelCollectionVC addGestureRecognizer:singleTap];
     [self.videoReelCollectionVC addGestureRecognizer:doubleTap];
-    
-    //to allow SPVideoReel controls the hidden state of backdrop image
-    self.videoReelBackdropView.showBackdropImage = YES;
 }
 
 - (void)showAirPlayViewMode:(BOOL)airplayMode
