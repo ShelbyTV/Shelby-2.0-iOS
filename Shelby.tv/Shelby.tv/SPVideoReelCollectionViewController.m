@@ -149,7 +149,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
 
 #pragma mark - Primary API
 
-- (void)scrollForPlaybackAtIndex:(NSUInteger)idx forcingPlayback:(BOOL)forcePlaybackEvenIfPaused
+- (void)scrollForPlaybackAtIndex:(NSUInteger)idx forcingPlayback:(BOOL)forcePlaybackEvenIfPaused animated:(BOOL)animatedScroll
 {
     self.lastRequestedScrollToIndexPath = [NSIndexPath indexPathForRow:idx inSection:0];
     
@@ -169,7 +169,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
     
     [self.collectionView scrollToItemAtIndexPath:self.lastRequestedScrollToIndexPath
                                 atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-                                        animated:YES];
+                                        animated:animatedScroll];
 }
 
 - (void)playCurrentPlayer
@@ -338,7 +338,7 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
         [player scrubToPct:0.f];
         
         //autoadvance to next player
-        [self scrollForPlaybackAtIndex:(self.currentPlayersIndexPath.row + 1) forcingPlayback:YES];
+        [self scrollForPlaybackAtIndex:(self.currentPlayersIndexPath.row + 1) forcingPlayback:YES animated:YES];
     }
 }
 
@@ -412,7 +412,8 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
                                                                  if (self.currentPlayer == player) {
                                                                      //autoadvance to next player
                                                                      [self scrollForPlaybackAtIndex:(self.currentPlayersIndexPath.row + 1)
-                                                                                    forcingPlayback:YES];
+                                                                                    forcingPlayback:YES
+                                                                                           animated:YES];
                                                                  }
                                                                  self.currentVideoAlertView = nil;
                                                              }];

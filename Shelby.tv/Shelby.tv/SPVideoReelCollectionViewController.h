@@ -38,7 +38,7 @@
 @property (nonatomic, weak) id<SPVideoReelDelegate> delegate;
 @property (nonatomic, weak) id<VideoPlaybackDelegate> videoPlaybackDelegate;
 //primary API
-- (void)scrollForPlaybackAtIndex:(NSUInteger)idx forcingPlayback:(BOOL)forcePlayback;
+- (void)scrollForPlaybackAtIndex:(NSUInteger)idx forcingPlayback:(BOOL)forcePlayback animated:(BOOL)animatedScroll;
 - (void)playCurrentPlayer;
 - (BOOL)isCurrentPlayerPlaying;
 - (void)pauseCurrentPlayer;

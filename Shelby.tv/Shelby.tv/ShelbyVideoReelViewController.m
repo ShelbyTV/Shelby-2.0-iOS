@@ -116,7 +116,7 @@
         //A) currently playing via VideReel
         if (self.videoReelCollectionVC.channel == channel) {
             [self.videoReelCollectionVC setDeduplicatedEntries:deduplicatedEntries];
-            [self.videoReelCollectionVC scrollForPlaybackAtIndex:idx forcingPlayback:YES];
+            [self.videoReelCollectionVC scrollForPlaybackAtIndex:idx forcingPlayback:YES animated:YES];
         } else {
             [self dismissCurrentVideoReel];
             [self presentVideoReelWithChannel:channel
@@ -573,7 +573,7 @@
     
     self.videoReelCollectionVC.channel = channel;
     [self.videoReelCollectionVC setDeduplicatedEntries:deduplicatedChannelEntries];
-    [self.videoReelCollectionVC scrollForPlaybackAtIndex:videoStartIndex forcingPlayback:autoplay];
+    [self.videoReelCollectionVC scrollForPlaybackAtIndex:videoStartIndex forcingPlayback:autoplay animated:NO];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnVideoReelDetected:)];
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOnVideoReelDetected:)];

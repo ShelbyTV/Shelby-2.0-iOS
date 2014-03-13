@@ -717,7 +717,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     
     self.videoReelCollectionVC.channel = channel;
     [self.videoReelCollectionVC setDeduplicatedEntries:[self deduplicatedEntriesForChannel:channel]];
-    [self.videoReelCollectionVC scrollForPlaybackAtIndex:index forcingPlayback:YES];
+    [self.videoReelCollectionVC scrollForPlaybackAtIndex:index forcingPlayback:YES animated:NO];
 }
 
 - (void)videoDidAutoadvanceNotification:(NSNotification *)notification
