@@ -80,7 +80,6 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
 {
     [super viewWillAppear:animated];
     
-    //TODO: this has to change when we rotate (does viewWillLayoutSubviews take care of that?)
     self.flowLayout.itemSize = self.collectionView.bounds.size;
 }
 
@@ -88,6 +87,16 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
 {
     [self.flowLayout invalidateLayout];
     self.flowLayout.itemSize = self.collectionView.bounds.size;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation) != UIInterfaceOrientationIsLandscape(fromInterfaceOrientation)) {
+        //aspect ratio has changed, make sure current cell is still centered
+        [self.collectionView scrollToItemAtIndexPath:self.currentPlayersIndexPath
+                                    atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                            animated:NO];
+    }
 }
 
 - (void)didReceiveMemoryWarning
