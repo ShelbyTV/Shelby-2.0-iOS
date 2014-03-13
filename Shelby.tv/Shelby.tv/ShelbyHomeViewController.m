@@ -20,8 +20,8 @@
 #import "ShelbyModelArrayUtility.h"
 #import "ShelbyNotificationCenterViewController.h"
 #import "ShelbyVideoContainer.h"
-#import "SPVideoReel.h"
 #import "SPVideoExtractor.h"
+#import "SPVideoReelCollectionViewController.h"
 #import "User+Helper.h"
 
 NSString * const kShelbyShareVideoHasCompleted = @"kShelbyShareVideoHasCompleted";
@@ -38,7 +38,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 @property (nonatomic, strong) NSMutableArray *streamBrowseVCs;
 @property (nonatomic, strong) ShelbyStreamBrowseViewController *currentStreamBrowseVC;
 @property (nonatomic, strong) ShelbyNotificationCenterViewController *notificationCenterVC;
-@property (nonatomic, strong) SPVideoReel *videoReel;
+@property (nonatomic, strong) SPVideoReelCollectionViewController *videoReelCollectionVC;
 @property (nonatomic, assign) BOOL animationInProgress;
 
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
@@ -495,7 +495,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
     @synchronized(self) {
-        BOOL playingThisChannel = (self.videoReel && self.videoReel.channel == channel);
+        BOOL playingThisChannel = (self.videoReelCollectionVC && self.videoReelCollectionVC.channel == channel);
 
         ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
         [sbvc addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel maintainingCurrentFocus:playingThisChannel];
@@ -505,7 +505,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         }
 
         if (playingThisChannel) {
-            [self.videoReel setDeduplicatedEntries:sbvc.deduplicatedEntries];
+            [self.videoReelCollectionVC setDeduplicatedEntries:sbvc.deduplicatedEntries];
         }
     }
 }
@@ -628,39 +628,30 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         [self.airPlayController playEntity:channelEntities[index] inChannel:channel];
         [self showAirPlayViewMode:YES];
 
-    } else if (self.videoReel) {
-        if (self.videoReel.channel != channel) {
-            STVDebugAssert(self.videoReel.channel == channel, @"videoReel should have been shutdown or changed when channel was changed");
+    } else if (self.videoReelCollectionVC) {
+        if (self.videoReelCollectionVC.channel != channel) {
+            STVDebugAssert(self.videoReelCollectionVC.channel == channel, @"videoReel should have been shutdown or changed when channel was changed");
             return;
         }
-        [self.videoReel playCurrentPlayer];
+        [self.videoReelCollectionVC playCurrentPlayer];
 
     } else {
-        [self prepareToShowVideoReel];
+        // prevent display from sleeping while watching video
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+        
         [self initializeVideoReelWithChannel:channel atIndex:index];
 
-        STVDebugAssert([self.videoReel getCurrentPlaybackEntity] == self.videoControlsVC.currentEntity, @"reel entity (%@) should be same as controls entity (%@)", [self.videoReel getCurrentPlaybackEntity], self.videoControlsVC.currentEntity);
+        STVDebugAssert([self.videoReelCollectionVC getCurrentPlaybackEntity] == self.videoControlsVC.currentEntity, @"reel entity (%@) should be same as controls entity (%@)", [self.videoReelCollectionVC getCurrentPlaybackEntity], self.videoControlsVC.currentEntity);
 
-        [self.videoReel willMoveToParentViewController:self];
-        [self addChildViewController:self.videoReel];
-        [self.view insertSubview:self.videoReel.view belowSubview:self.currentStreamBrowseVC.view];
-        [self.videoReel didMoveToParentViewController:self];
-        self.videoReel.view.frame = self.currentStreamBrowseVC.view.frame;
         //entering playback: hide the overlays and update controls state
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
             self.navBar.alpha = 0.0;
             self.videoControlsVC.view.alpha = 0.0;
-            [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
+            [self streamBrowseViewControllerForChannel:self.videoReelCollectionVC.channel].viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
         } completion:^(BOOL finished) {
             [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
         }];
     }
-}
-
-- (void)prepareToShowVideoReel
-{
-    // prevent display from sleeping while watching video
-    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 - (void)dismissVideoReelNotification:(NSNotification *)notification
@@ -671,20 +662,20 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)dismissVideoReel
 {
     STVDebugAssert([NSThread isMainThread], @"expecting to be called on main thread");
-    if (!self.videoReel) {
+    if (!self.videoReelCollectionVC) {
         return;
     }
     
     if (!self.airPlayController.isAirPlayActive){
-        [self.videoReel pauseCurrentPlayer];
+        [self.videoReelCollectionVC pauseCurrentPlayer];
     }
     
-    [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewDefault;
+    [self streamBrowseViewControllerForChannel:self.videoReelCollectionVC.channel].viewMode = ShelbyStreamBrowseViewDefault;
     
-    [self.videoReel shutdown];
-    [self.videoReel.view removeFromSuperview];
-    [self.videoReel removeFromParentViewController];
-    self.videoReel = nil;
+    [self.videoReelCollectionVC shutdown];
+    [self.videoReelCollectionVC.view removeFromSuperview];
+    [self.videoReelCollectionVC removeFromParentViewController];
+    self.videoReelCollectionVC = nil;
 
     //video controls are different w/ and w/o videoReel
     [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
@@ -697,14 +688,36 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    STVAssert(!_videoReel, @"expected video reel to be shutdown and nil before initializing a new one");
+    STVAssert(!_videoReelCollectionVC, @"expected video reel to be shutdown and nil before initializing a new one");
     
-    _videoReel = [[SPVideoReel alloc] initWithChannel:channel
-                                     andVideoEntities:[self deduplicatedEntriesForChannel:channel]
-                                              atIndex:index];
-    self.videoReel.delegate = self.masterDelegate;
-    self.videoReel.videoPlaybackDelegate = self.videoControlsVC;
-    self.videoReel.airPlayView = self.videoControlsVC.airPlayView;
+    //XXX didn't need to implement this for iPad... do we need it for iPhone?
+//    self.videoReelCollectionVC.airPlayView = self.videoControlsVC.airPlayView;
+    
+    //XXX re-enable this for blurry backdrop view stuff
+    //to allow SPVideoReel controls the hidden state of backdrop image
+//    self.videoReelBackdropView.showBackdropImage = YES;
+    
+    self.videoReelCollectionVC = ({
+        //initialize with default layout
+        SPVideoReelCollectionViewController *reel = [[SPVideoReelCollectionViewController alloc] init];
+        reel.delegate = self.masterDelegate;
+        reel.videoPlaybackDelegate = self.videoControlsVC;
+        
+        reel.view.frame = self.currentStreamBrowseVC.view.frame;
+//        //iPad only modifications to SPVideoReel
+//        reel.view.backgroundColor = [UIColor clearColor];
+//        reel.backdropView = self.videoReelBackdropView;
+        reel;
+    });
+    
+    [self addChildViewController:self.videoReelCollectionVC];
+    [self.view insertSubview:self.videoReelCollectionVC.view belowSubview:self.currentStreamBrowseVC.view];
+    
+    [self.videoReelCollectionVC didMoveToParentViewController:self];
+    
+    self.videoReelCollectionVC.channel = channel;
+    [self.videoReelCollectionVC setDeduplicatedEntries:[self deduplicatedEntriesForChannel:channel]];
+    [self.videoReelCollectionVC scrollForPlaybackAtIndex:index forcingPlayback:YES];
 }
 
 - (void)videoDidAutoadvanceNotification:(NSNotification *)notification
@@ -758,7 +771,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)noInternetConnectionNotification:(NSNotification *)notification
 {
-    if (!self.videoReel) {
+    if (!self.videoReelCollectionVC) {
         return;
     }
     
@@ -789,7 +802,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 {
     if (vc == self.currentStreamBrowseVC) {
         // StreamBrowseView is our leader, videoReel is our follower.  Keep their scrolling synchronized...
-        [self.videoReel scrollTo:contentOffset];
+        [self.videoReelCollectionVC scrollTo:contentOffset];
 
         // and fade the video controls when between pages
         [self fadeVideoControlsForOffset:contentOffset frameHeight:vc.view.frame.size.height];
@@ -803,11 +816,11 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         return;
     }
 
-    if (self.videoReel) {
-        BOOL videoShouldHaveBeenPlaying = [self.videoReel shouldCurrentPlayerBePlaying];
-        id<ShelbyVideoContainer> previousPlaybackEntity = [self.videoReel getCurrentPlaybackEntity];
-        [self.videoReel endDecelerating];
-        id<ShelbyVideoContainer> currentPlaybackEntity = [self.videoReel getCurrentPlaybackEntity];
+    if (self.videoReelCollectionVC) {
+        BOOL videoShouldHaveBeenPlaying = self.videoReelCollectionVC.shouldBePlaying;
+        id<ShelbyVideoContainer> previousPlaybackEntity = [self.videoReelCollectionVC getCurrentPlaybackEntity];
+        [self.videoReelCollectionVC endDecelerating];
+        id<ShelbyVideoContainer> currentPlaybackEntity = [self.videoReelCollectionVC getCurrentPlaybackEntity];
         self.videoControlsVC.currentEntity = currentPlaybackEntity;
 
         if (!videoShouldHaveBeenPlaying && currentPlaybackEntity != previousPlaybackEntity) {
@@ -846,7 +859,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)browseVC cellParallaxDidChange:(ShelbyStreamBrowseViewCell *)cell
 {
-    if (self.currentStreamBrowseVC == browseVC && self.videoReel) {
+    if (self.currentStreamBrowseVC == browseVC && self.videoReelCollectionVC) {
         [self showPlaybackOverlayForCurrentBrowseViewController];
     }
 }
@@ -854,7 +867,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)browseVC wasTapped:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     if (self.currentStreamBrowseVC == browseVC) {
-        if (self.videoReel) {
+        if (self.videoReelCollectionVC) {
             [self togglePlaybackOverlayForCurrentBrowseViewController];
         } else {
             STVDebugAssert(browseVC.viewMode == ShelbyStreamBrowseViewDefault || browseVC.viewMode == ShelbyStreamBrowseViewForAirplay, @"should be in play mode w/o video reel");
@@ -945,7 +958,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)pauseCurrentVideo
 {
     [self.airPlayController pauseCurrentPlayer];
-    [self.videoReel pauseCurrentPlayer];
+    [self.videoReelCollectionVC pauseCurrentPlayer];
 }
 
 #pragma mark - VideoControlsDelegate
@@ -953,7 +966,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)videoControlsPlayCurrentVideo:(VideoControlsViewController *)vcvc
 {
     [self.airPlayController playCurrentPlayer];
-    [self.videoReel playCurrentPlayer];
+    [self.videoReelCollectionVC playCurrentPlayer];
 }
 
 - (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc
@@ -964,7 +977,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct
 {
     [self.airPlayController scrubCurrentPlayerTo:pct];
-    [self.videoReel scrubCurrentPlayerTo:pct];
+    [self.videoReelCollectionVC scrubCurrentPlayerTo:pct];
 }
 
 -(void)videoControls:(VideoControlsViewController *)vcvc isScrubbing:(BOOL)isScrubbing
@@ -979,7 +992,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                 self.navBar.alpha = 0.0;
                 self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
             }];
-            [self.videoReel beginScrubbing];
+            [self.videoReelCollectionVC beginScrubbing];
         }
     } else {
         if (self.airPlayController.isAirPlayActive) {
@@ -990,7 +1003,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                 self.navBar.alpha = 1.0;
                 self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
             }];
-            [self.videoReel endScrubbing];
+            [self.videoReelCollectionVC endScrubbing];
         }
     }
 }
@@ -1077,14 +1090,14 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                                 withNicknameAsLabel:YES];
     SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:frame fromViewController:self atRect:CGRectZero];
     shareController.delegate = self;
-    BOOL shouldResume = [self.videoReel isCurrentPlayerPlaying];
-    [self.videoReel pauseCurrentPlayer];
+    BOOL shouldResume = self.videoReelCollectionVC.shouldBePlaying;
+    [self.videoReelCollectionVC pauseCurrentPlayer];
     
     __weak ShelbyHomeViewController *weakSelf  = self;
     [shareController shareWithCompletionHandler:^(BOOL completed) {
         weakSelf.shareVideoInProgress = NO;
         if (shouldResume) {
-            [self.videoReel playCurrentPlayer];
+            [self.videoReelCollectionVC playCurrentPlayer];
         }
         
         // KP KP: Share is no longer in video controls
@@ -1139,7 +1152,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)airPlayControllerDidBeginAirPlay:(ShelbyAirPlayController *)airPlayController
 {
     // current SPVideoPlayer has a new owner: _airPlayController
-    if (self.videoReel) {
+    if (self.videoReelCollectionVC) {
         // current SPVideoPlayer will not reset itself b/c it's in external playback mode
         [self dismissVideoReel];
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
@@ -1223,7 +1236,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     }
 
     [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
-        if (self.videoReel) {
+        if (self.videoReelCollectionVC) {
             //playback, summary or detail page
             self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
         } else {
@@ -1280,7 +1293,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     if (selectedNewRow) {
-        if (self.videoReel) {
+        if (self.videoReelCollectionVC) {
             [self dismissVideoReel];
         }
         [self updateVideoControlsForPage:0];
@@ -1294,7 +1307,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     if (selectedNewRow) {
-        if (self.videoReel) {
+        if (self.videoReelCollectionVC) {
             [self dismissVideoReel];
         }
         [self updateVideoControlsForPage:0];
@@ -1313,7 +1326,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     if (selectedNewRow) {
-        if (self.videoReel) {
+        if (self.videoReelCollectionVC) {
             [self dismissVideoReel];
         }
         [self updateVideoControlsForPage:0];
@@ -1326,7 +1339,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     if (selectedNewRow) {
-        if (self.videoReel) {
+        if (self.videoReelCollectionVC) {
             [self dismissVideoReel];
         }
         [self presentSettings];
@@ -1348,7 +1361,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)navBarViewControllerNotificationCenterWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     if (selectedNewRow) {
-        if (self.videoReel) {
+        if (self.videoReelCollectionVC) {
             [self dismissVideoReel];
         }
         [self presentNotificationCenter];

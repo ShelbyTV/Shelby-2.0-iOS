@@ -241,6 +241,23 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
     [self.view addGestureRecognizer:gestureRecognizer];
 }
 
+#pragma mark - iPhone API
+
+- (id<ShelbyVideoContainer>)getCurrentPlaybackEntity
+{
+    return self.deduplicatedEntries[self.currentPlayersIndexPath.row];
+}
+
+- (void)scrollTo:(CGPoint)contentOffset
+{
+    [self.collectionView setContentOffset:contentOffset animated:NO];
+}
+
+- (void)endDecelerating
+{
+    [self scrollViewDidEndDecelerating:self.collectionView];
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

@@ -33,6 +33,11 @@
 - (void)shutdown;
 //utility API
 - (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer;
+//iPhone API
+- (id<ShelbyVideoContainer>)getCurrentPlaybackEntity;
+- (void)scrollTo:(CGPoint)contentOffset;
+- (void)endDecelerating;
+@property (nonatomic, readonly) BOOL shouldBePlaying;
 //visual API
 //set on iPad only (we adjust state of showing yes/no)
 @property (nonatomic, strong) VideoReelBackdropView *backdropView;
