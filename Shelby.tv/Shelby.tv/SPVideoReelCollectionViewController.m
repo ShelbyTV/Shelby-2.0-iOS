@@ -155,6 +155,12 @@ static SPVideoReelCollectionPreloadStrategy preloadStrategy = SPVideoReelCollect
     
     self.shouldBePlaying |= forcePlaybackEvenIfPaused;
     
+    if ([self.currentPlayersIndexPath isEqual:self.lastRequestedScrollToIndexPath] && self.shouldBePlaying) {
+        //asked to play the currently focused video, just play
+        [self playCurrentPlayer];
+        return;
+    }
+    
     //Cold Start?
     if (!self.currentPlayersIndexPath) {
         self.currentPlayersIndexPath = self.lastRequestedScrollToIndexPath;
