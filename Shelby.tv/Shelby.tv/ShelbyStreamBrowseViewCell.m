@@ -33,6 +33,8 @@
 #define PARALLAX_BG_WIDTH_LANDSCAPE (kShelbyFullscreenHeight*(1+PARALLAX_RATIO_LANDSCAPE))
 #define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth
 
+static id<ShelbyVideoContainer> _currentlyPlayingEntity;
+
 @implementation ShelbyStreamBrowseViewCell
 
 - (id)initWithFrame:(CGRect)frame
@@ -65,29 +67,10 @@
         _parallaxView.foregroundContent = _foregroundView;
         _parallaxView.backgroundContent = _backgroundThumbnailsView;
         _parallaxView.parallaxRatio = PARALLAX_RATIO_PORTRAIT;
-
-        // KP: For now, moving the play button to the VideoControlsView.
-        //a big play button on top of the parallax view (shown when video controls aren't)
-//        _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        _playButton.titleLabel.font = kShelbyFontH5Bold;
-//        [_playButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
-//        [_playButton addTarget:self action:@selector(playButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-//        [_playButton setTitle:@"PLAY" forState:UIControlStateNormal];
-//        
-//        [self.contentView insertSubview:_playButton aboveSubview:_parallaxView];
-//        _playButton.translatesAutoresizingMaskIntoConstraints = NO;
-//        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[play(100)]"
-//                                                                                 options:0
-//                                                                                 metrics:nil
-//                                                                                   views:@{@"play":_playButton}]];
-//        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[play]-40-|"
-//                                                                                 options:0
-//                                                                                 metrics:nil
-//                                                                                   views:@{@"play":_playButton}]];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayingChanged:) name:kShelbyPlaybackEntityDidChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForVideo) name:kShelbySPVideoAirplayDidBegin object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForVideo) name:kShelbySPVideoAirplayDidEnd object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForCurrentlyPlayingEntity) name:kShelbySPVideoAirplayDidBegin object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForCurrentlyPlayingEntity) name:kShelbySPVideoAirplayDidEnd object:nil];
     }
     return self;
 }
@@ -160,7 +143,7 @@
         }
 
         [self.foregroundView setInfoForDashboardEntry:dashboardEntry frame:videoFrame];
-        [self setupPlayImageForEntity:entry];
+        [self setupPlayImageForCurrentlyPlayingEntity];
     }
 }
 
@@ -262,11 +245,10 @@
     }
 }
 
-
-- (void)setupPlayImageForEntity:(id<ShelbyVideoContainer>)newEntity
+- (void)setupPlayImageForCurrentlyPlayingEntity
 {
     if (self.viewMode == ShelbyStreamBrowseViewForAirplay) {
-        if (newEntity == self.entry) {
+        if (_currentlyPlayingEntity == self.entry) {
             self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-current.png"];
         } else {
             self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-airplay.png"];
@@ -280,8 +262,9 @@
 {
     NSDictionary *userInfo = notification.userInfo;
     id<ShelbyVideoContainer> newEntity = userInfo[kShelbyPlaybackCurrentEntityKey];
+    _currentlyPlayingEntity = newEntity;
     
-    [self setupPlayImageForEntity:newEntity];
+    [self setupPlayImageForCurrentlyPlayingEntity];
 }
 
 + (void)cacheEntry:(id<ShelbyVideoContainer>)entry
@@ -325,7 +308,7 @@
 - (void)streamBrowseCellForegroundViewTitleWasTapped
 {
     [self.delegate browseViewCellTitleWasTapped:self];
-    [self setupPlayImageForEntity:self.entry];
+    [self setupPlayImageForCurrentlyPlayingEntity];
 }
 
 - (void)shareVideoWasTapped

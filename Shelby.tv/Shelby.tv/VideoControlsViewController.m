@@ -440,7 +440,9 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 
 - (IBAction)airPlayButtonTapped:(UIButton *)sender
 {
-    [self.delegate videoControlsRevealAirplayPicker:self airplayButton:sender];
+    if ([self.delegate respondsToSelector:@selector(videoControlsRevealAirplayPicker:airplayButton:)]) {
+        [self.delegate videoControlsRevealAirplayPicker:self airplayButton:sender];
+    }
 }
 
 #pragma mark - VideoPlaybackDelegate
