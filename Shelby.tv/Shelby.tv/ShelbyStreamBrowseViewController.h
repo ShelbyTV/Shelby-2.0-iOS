@@ -82,7 +82,7 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus;
 @property (nonatomic, assign) NSUInteger currentPage;
 
 // To allow our superview to adjust visual stylings
-@property (readonly) UICollectionView *collectionView;
+@property (readonly, weak) UICollectionView *collectionView;
 @property (nonatomic, readonly) BOOL hasNoContent;
 
 @end
