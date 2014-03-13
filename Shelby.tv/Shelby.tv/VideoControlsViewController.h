@@ -8,7 +8,7 @@
 
 #import "ShelbyViewController.h"
 #import <CoreMedia/CoreMedia.h>
-#import "SPVideoReel.h"
+#import "SPVideoReelCollectionViewController.h"
 
 @class UIButton;
 

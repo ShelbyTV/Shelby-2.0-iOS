@@ -17,7 +17,7 @@
 #import "ShelbyLikersViewController.h"
 #import "ShelbyUserProfileViewController.h"
 #import "ShelbyTopContainerViewController.h"
-#import "SPVideoReel.h"
+#import "SPVideoReelCollectionViewController.h"
 #import "TwitterHandler.h"
 #import "WelcomeViewController.h"
 

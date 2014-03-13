@@ -854,46 +854,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     }
 }
 
-
 #pragma mark - SPVideoReelProtocol Methods
-- (void)userDidSwitchChannelForDirectionUp:(BOOL)up
-{
-    [self.homeVC dismissVideoReel];
-    NSInteger nextChannel = [self nextChannelForDirection:up];
-    BOOL didChangeChannels = [self launchChannel:self.homeVC.channels[nextChannel] atIndex:0];
-    if(!didChangeChannels){
-        [self userDidSwitchChannelForDirectionUp:up];
-    }
-    
-//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistVerticalSwipe withLabel:nil];
-}
-
-- (void)userDidCloseChannelAtFrame:(Frame *)frame
-{
-    //we used to do this with an old animated dismiss... no longer
-    [self.homeVC dismissVideoReel];
-    
-//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionClosePlayerByPinch withLabel:nil];
-
-}
-
-//DEPRECATED
-- (DisplayChannel *)displayChannelForDirection:(BOOL)up
-{
-//    if (self.currentPlayerTutorialMode != SPTutorialModeNone) {
-//        self.currentPlayerTutorialMode = SPTutorialModePinch;
-//    }
-//
-//    NSUInteger nextChannel = [self nextChannelForDirection:up];
-//    
-//    if (nextChannel < [self.userChannels count]) {
-//        return self.userChannels[nextChannel];
-//    } else {
-//        return self.fetchedChannels[nextChannel - [self.userChannels count]];
-//    }
-    STVAssert(NO, @"DEPRECATED");
-    return nil;
-}
 
 - (void)videoDidAutoadvance
 {

@@ -7,13 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SPVideoPlayer.h"
 
 @class DisplayChannel;
+@class Frame;
 @class VideoReelBackdropView;
 
-//TODO: all the delegate work
-//XXX TODO: pull the delegates into here when we kill SPVideoReel
-#import "SPVideoReel.h"
+@protocol SPVideoReelDelegate <NSObject>
+- (void)videoDidAutoadvance;
+- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
+- (BOOL)canRoll;
+- (void)userAskForFacebookPublishPermissions;
+- (void)userAskForTwitterPublishPermissions;
+@optional
+- (void)userDidRequestPlayCurrentPlayer;
+@end
+
+@protocol VideoPlaybackDelegate <NSObject>
+- (void)setVideoIsPlaying:(BOOL)videoIsPlaying;
+- (void)setBufferedRange:(CMTimeRange)bufferedRange;
+- (void)setCurrentTime:(CMTime)time;
+- (void)setDuration:(CMTime)duration;
+@end
 
 @interface SPVideoReelCollectionViewController : UICollectionViewController <SPVideoPlayerDelegate>
 //model

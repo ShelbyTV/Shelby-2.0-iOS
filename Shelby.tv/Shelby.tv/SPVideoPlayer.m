@@ -13,7 +13,6 @@
 #import "ShelbyErrorUtility.h"
 #import "SPVideoDownloader.h"
 #import "SPVideoExtractor.h"
-#import "SPVideoReel.h"
 #import "VideoPlayerThumbnailOverlayView.h"
 
 #define PLAYBACK_API_UPDATE_INTERVAL 15.f

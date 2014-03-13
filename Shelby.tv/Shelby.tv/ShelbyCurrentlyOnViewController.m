@@ -9,8 +9,6 @@
 #import "ShelbyCurrentlyOnViewController.h"
 #import "AFNetworking.h"
 #import "DisplayChannel+Helper.h"
-//TODO Refactor kShelbyVideoReelDidChangePlaybackEntityNotification out of SPVideoReel.h?
-#import "SPVideoReel.h"
 #import "ShelbyVideoContentBrowsingViewControllerProtocol.h"
 #import "ShelbyVideoContainer.h"
 

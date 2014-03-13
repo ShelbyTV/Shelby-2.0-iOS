@@ -462,22 +462,6 @@
     [self showVideoOverlay];
 }
 
-- (void)userDidSwitchChannelForDirectionUp:(BOOL)up
-{
-    STVDebugAssert(NO, @"unused");
-}
-
-- (void)userDidCloseChannelAtFrame:(Frame *)frame
-{
-    STVDebugAssert(NO, @"unused");
-}
-
-- (DisplayChannel *)displayChannelForDirection:(BOOL)up
-{
-    STVDebugAssert(NO, @"unused");
-    return nil;
-}
-
 - (void)userDidRequestPlayCurrentPlayer
 {
     [self videoControlsPlayCurrentVideo:nil];

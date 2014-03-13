@@ -7,8 +7,6 @@
 //
 
 #import "ShelbyUserEducationViewController.h"
-//for the constant kShelbyVideoReelDidChangePlaybackEntityNotification :-/
-#import "SPVideoReel.h"
 
 static NSString * const kShelbyUserEducationDefaultsKeyPrefix = @"userEd-";
 
