@@ -108,11 +108,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ShelbyUserInfoViewController *userInfoVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfile"];
+    [(ShelbyNavigationViewController *)self.navigationController pushUserProfileViewController:userInfoVC];
+    
     DisplayChannel *selectedChannel = self.channels[indexPath.row];
- 
-    //TODO iPad: i think we need to push a different kind of view controller
-    // or at least a slightly different setup (need mockups)
-    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:selectedChannel titleOverride:nil];
+    [userInfoVC setupStreamInfoDisplayChannel:selectedChannel];
+    [[ShelbyDataMediator sharedInstance] fetchUserWithID:selectedChannel.roll.creatorID inContext:selectedChannel.managedObjectContext completion:^(User *fetchedUser) {
+        userInfoVC.user = fetchedUser;
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -122,7 +125,6 @@
     } else {
         return 0;
     }
-    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
