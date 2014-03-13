@@ -930,10 +930,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         }
     }];
 
-    //first time user follows a roll, let them know what that's all about
-    //TODO: this should really be done by sending a notification and having something that subscribes to that
-    //  notification perform this
-    [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:YES roll:rollID];
+    if (DEVICE_IPAD) {
+        //first time user follows a roll, let them know what that's all about
+        //TODO: this should really be done by sending a notification and having something that subscribes to that
+        //  notification perform this
+        [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:YES roll:rollID];
+    }
 }
 
 - (void)unfollowRoll:(NSString *)rollID
@@ -950,10 +952,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         }
     }];
 
-    //first time user unfollows a roll, let them know what that's all about
-    //TODO: this should really be done by sending a notification and having something that subscribes to that
-    //  notification perform this
-    [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:NO roll:rollID];
+    if (DEVICE_IPAD) {
+        //first time user unfollows a roll, let them know what that's all about
+        //TODO: this should really be done by sending a notification and having something that subscribes to that
+        //  notification perform this
+        [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:NO roll:rollID];
+    }
 }
 
 - (void)loginUserFacebook
@@ -1020,7 +1024,11 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 
 - (void)userAskForFacebookPublishPermissions
 {
-    [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];
+    if ([[FacebookHandler sharedInstance] hasOpenSession]) {
+        [[FacebookHandler sharedInstance] askForPublishPermissions];
+    } else {
+        [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];
+    }
 }
 
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI

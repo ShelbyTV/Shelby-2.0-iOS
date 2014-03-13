@@ -1095,7 +1095,11 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
             [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                                  withAction:kAnalyticsUXShareFinish
                                         withNicknameAsLabel:YES];
-            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsShareComplete];
+            if ([weakSelf.currentUser isAnonymousUser]) {
+                [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsShareCompleteAnonymousUser];
+            } else {
+                [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsShareComplete];
+            }
             
             // Appirater Event
             [Appirater userDidSignificantEvent:YES];

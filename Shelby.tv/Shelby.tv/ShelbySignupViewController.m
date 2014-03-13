@@ -173,6 +173,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         [weakSelf.stepOneActivityIndicator stopAnimating];
         if (!error) {
             [weakSelf goToStepTwo];
+            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsAnonymousConvertViaEmail];
         } else {
             weakSelf.stepOneSignUpWithEmail.enabled = YES;
             NSString *errorMessage = nil;
@@ -309,6 +310,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         email = facebookUser[@"email"];
         name = facebookUser[@"name"];
         nickname = facebookUser[@"username"];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsAnonymousConvertViaFacebook];
     }
     
     [self removeObservers];

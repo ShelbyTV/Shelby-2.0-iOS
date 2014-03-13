@@ -16,12 +16,6 @@
 
 // Shared Constants
 //--Screens--
-NSString * const kAnalyticsScreenWelcomeA1                              = @"Welcome A1";
-NSString * const kAnalyticsScreenWelcomeA2                              = @"Welcome A2";
-NSString * const kAnalyticsScreenWelcomeA3                              = @"Welcome A3";
-NSString * const kAnalyticsScreenWelcomeA4l                             = @"Welcome A4-left";
-NSString * const kAnalyticsScreenWelcomeA4r                             = @"Welcome A4-right";
-NSString * const kAnalyticsScreenWelcomeB                               = @"Welcome B";
 NSString * const kAnalyticsScreenLogin                                  = @"Login";
 NSString * const kAnalyticsScreenEntrance                               = @"Entrance";
 NSString * const kAnalyticsScreenChannels                               = @"Channels";
@@ -32,10 +26,13 @@ NSString * const kAnalyticsScreenUserProfile                            = @"User
 NSString * const kAnalyticsScreenLikersList                             = @"Likers List";
 
 // Localytics Constants
+NSString * const kLocalyticsAnonymousConvertViaEmail                    = @"anonymous_convert_via_email";
+NSString * const kLocalyticsAnonymousConvertViaFacebook                 = @"anonymous_convert_via_facebook";
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
 NSString * const kLocalyticsWatchVideo25pct                             = @"watch_25_pct";
 NSString * const kLocalyticsLikeVideo                                   = @"like";
 NSString * const kLocalyticsShareComplete                               = @"share_complete";
+NSString * const kLocalyticsShareCompleteAnonymousUser                  = @"share_complete_anonymous_user";
 NSString * const kLocalyticsEntranceStart                               = @"entrance_start";
 NSString * const kLocalyticsEntranceUserTapGetStarted                   = @"entrance_get_started";
 NSString * const kLocalyticsEntranceUserTapLogin                        = @"entrance_login";
@@ -58,6 +55,8 @@ NSString * const kLocalyticsTapCardLikersList                           = @"view
 NSString * const kLocalyticsTapCardLike                                 = @"tap_card_like";
 NSString * const kLocalyticsTapCardUnlike                               = @"tap_card_unlike";
 NSString * const kLocalyticsTapCardPlay                                 = @"tap_card_play";
+NSString * const kLocalyticsTapHideFacebookInStream                     = @"tap_hide_facebook_in_stream";
+NSString * const kLocalyticsTapHideTwitterInStream                      = @"tap_hide_twitter_in_stream";
 NSString * const kLocalyticsTapLikerListLiker                           = @"view_liker";
 NSString * const kLocalyticsTapTopNavSignup                             = @"tap_top_nav_signup";
 NSString * const kLocalyticsTapPlayerControlsPlay                       = @"tap_player_controls_play";

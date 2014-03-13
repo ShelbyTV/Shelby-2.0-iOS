@@ -42,9 +42,13 @@ extern NSString * const kShelbySPVideoAirplayDidEnd;
 // Initialization
 - (id)initWithVideoFrame:(Frame *)videoFrame;
 
+// free AVPlayer and AVPLayerLayer
 - (void)resetPlayer;
+// hide player and show thubmnail, keep AVPlayer (if present)
+- (void)resetUI;
 
 // View is sized + positioned by owner (VideoReel) via this
+//DEPRECATED
 - (void)setConstraintsForSuperviewWidthAndOtherwiseEquivalentToFrame:(CGRect)f;
 
 // Does not load video

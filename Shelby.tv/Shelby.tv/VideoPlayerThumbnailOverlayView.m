@@ -13,6 +13,7 @@
 @interface VideoPlayerThumbnailOverlayView()
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnail;
 @property (weak, nonatomic) IBOutlet UIImageView *playIcon;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @end
 
 @implementation VideoPlayerThumbnailOverlayView
@@ -37,7 +38,20 @@
 - (void)setImage:(UIImage *)image
 {
     self.thumbnail.image = image;
-    self.playIcon.hidden = (image == nil);
+    if (image == nil) {
+        self.playIcon.hidden = YES;
+    }
+}
+
+- (void)showSpinner:(BOOL)spinnerInsteadOfPlay
+{
+    if (spinnerInsteadOfPlay) {
+        self.playIcon.hidden = YES;
+        [self.spinner startAnimating];
+    } else {
+        self.playIcon.hidden = NO;
+        [self.spinner stopAnimating];
+    }
 }
 
 #pragma mark - Image Fetch Helpers

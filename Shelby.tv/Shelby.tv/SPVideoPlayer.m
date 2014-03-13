@@ -343,6 +343,7 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 	return kCMTimeInvalid;
 }
 
+//DEPRECATED
 - (void)warmVideoExtractionCache
 {
     Video *video = self.videoFrame.video;
@@ -436,8 +437,14 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
         _lastPlaybackUpdateIntervalEnd = CMTimeMake(0, NSEC_PER_MSEC);
         
-        self.thumbnailView.alpha = 1.f;
+        [self resetUI];
     }
+}
+
+- (void)resetUI
+{
+    self.playerLayer.hidden = YES;
+    self.thumbnailView.alpha = 1.f;
 }
 
 #pragma mark - Video Playback Methods (Public)
@@ -615,12 +622,15 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
                                                        UIViewAutoresizingFlexibleRightMargin |
                                                        UIViewAutoresizingFlexibleTopMargin |
                                                        UIViewAutoresizingFlexibleBottomMargin);
-        [self.view addSubview:self.videoLoadingIndicator];
     }
+    [self.view addSubview:self.videoLoadingIndicator];
+    
     if(animate){
         [self.videoLoadingIndicator startAnimating];
+        [self.thumbnailView showSpinner:YES];
     } else {
         [self.videoLoadingIndicator stopAnimating];
+        [self.thumbnailView showSpinner:NO];
     }
 }
 

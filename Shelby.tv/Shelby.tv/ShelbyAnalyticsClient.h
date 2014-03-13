@@ -10,12 +10,6 @@
 
 // Shared Constants
 //--Screens--
-extern NSString * const kAnalyticsScreenWelcomeA1;
-extern NSString * const kAnalyticsScreenWelcomeA2;
-extern NSString * const kAnalyticsScreenWelcomeA3;
-extern NSString * const kAnalyticsScreenWelcomeA4l;
-extern NSString * const kAnalyticsScreenWelcomeA4r;
-extern NSString * const kAnalyticsScreenWelcomeB;
 extern NSString * const kAnalyticsScreenLogin;
 extern NSString * const kAnalyticsScreenEntrance;
 extern NSString * const kAnalyticsScreenChannels;
@@ -26,10 +20,13 @@ extern NSString * const kAnalyticsScreenUserProfile;
 extern NSString * const kAnalyticsScreenLikersList;
 
 // Localytics Constants
+extern NSString * const kLocalyticsAnonymousConvertViaEmail;
+extern NSString * const kLocalyticsAnonymousConvertViaFacebook;
 extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsWatchVideo25pct;
 extern NSString * const kLocalyticsLikeVideo;
 extern NSString * const kLocalyticsShareComplete;
+extern NSString * const kLocalyticsShareCompleteAnonymousUser;
 extern NSString * const kLocalyticsEntranceStart;
 extern NSString * const kLocalyticsEntranceUserTapGetStarted;
 extern NSString * const kLocalyticsEntranceUserTapLogin;
@@ -52,6 +49,8 @@ extern NSString * const kLocalyticsTapCardLikersList;
 extern NSString * const kLocalyticsTapCardLike;
 extern NSString * const kLocalyticsTapCardUnlike;
 extern NSString * const kLocalyticsTapCardPlay;
+extern NSString * const kLocalyticsTapHideFacebookInStream;
+extern NSString * const kLocalyticsTapHideTwitterInStream;
 extern NSString * const kLocalyticsTapLikerListLiker;
 extern NSString * const kLocalyticsTapTopNavSignup;
 extern NSString * const kLocalyticsTapPlayerControlsPlay;

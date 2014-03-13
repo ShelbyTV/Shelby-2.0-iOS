@@ -24,8 +24,8 @@
 
 - (void)awakeFromNib
 {
-    self.mainTitle.font = kShelbyFontH3;
-    self.secondaryTitle.font = kShelbyFontH4Medium;
+    self.mainTitle.font = kShelbyBodyFont1;
+    self.secondaryTitle.font = kShelbyBodyFont2Bold;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
