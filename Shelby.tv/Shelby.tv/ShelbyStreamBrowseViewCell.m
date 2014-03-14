@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
+#import "GPUImage.h"
 #import "ShelbyViewController.h"
 #import "SPVideoPlayer.h"
 #import "Video+Helper.h"
@@ -23,12 +24,14 @@
 @property (nonatomic, strong) UIImageView *thumbnailBlurredView;
 @property (nonatomic, strong) StreamBrowseCellForegroundView *foregroundView;
 @property (nonatomic, strong) UIButton *playButton;
+
+@property (nonatomic, strong) GPUImageiOSBlurFilter *blurFilter;
 @end
 
 //configure parallax configuration
-#define PARALLAX_RATIO_PORTRAIT 0.75
-#define PARALLAX_BG_WIDTH_PORTRAIT kShelbyFullscreenWidth*0.8
-#define PARALLAX_BG_HEIGHT_PORTRAIT kShelbyFullscreenHeight*1.2
+#define PARALLAX_RATIO_PORTRAIT 0.1
+#define PARALLAX_BG_WIDTH_PORTRAIT (kShelbyFullscreenWidth*(1+PARALLAX_RATIO_LANDSCAPE))
+#define PARALLAX_BG_HEIGHT_PORTRAIT kShelbyFullscreenHeight*1.15
 #define PARALLAX_RATIO_LANDSCAPE 0.1
 #define PARALLAX_BG_WIDTH_LANDSCAPE (kShelbyFullscreenHeight*(1+PARALLAX_RATIO_LANDSCAPE))
 #define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth
@@ -53,12 +56,11 @@ static id<ShelbyVideoContainer> _currentlyPlayingEntity;
         CGRect bgFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH_PORTRAIT, PARALLAX_BG_HEIGHT_PORTRAIT);
         _backgroundThumbnailsView = [[UIView alloc] initWithFrame:bgFrame];
         _thumbnailRegularView = [[UIImageView alloc] initWithFrame:bgFrame];
-        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFill;
-        [_backgroundThumbnailsView addSubview:_thumbnailRegularView];
+        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFit;
         _thumbnailBlurredView = [[UIImageView alloc] initWithFrame:bgFrame];
         _thumbnailBlurredView.contentMode = UIViewContentModeScaleAspectFill;
-        _thumbnailBlurredView.alpha = 0.0;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
+        [_backgroundThumbnailsView addSubview:_thumbnailRegularView];
 
         //parallax for foreground and background (above)
         _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
@@ -67,6 +69,11 @@ static id<ShelbyVideoContainer> _currentlyPlayingEntity;
         _parallaxView.foregroundContent = _foregroundView;
         _parallaxView.backgroundContent = _backgroundThumbnailsView;
         _parallaxView.parallaxRatio = PARALLAX_RATIO_PORTRAIT;
+        
+        //blur filter
+        self.blurFilter = [[GPUImageiOSBlurFilter alloc] init];
+        self.blurFilter.saturation = 0.7;
+        self.blurFilter.blurRadiusInPixels = 6.f;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayingChanged:) name:kShelbyPlaybackEntityDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForCurrentlyPlayingEntity) name:kShelbySPVideoAirplayDidBegin object:nil];
@@ -195,7 +202,19 @@ static id<ShelbyVideoContainer> _currentlyPlayingEntity;
         //regular background
         self.thumbnailRegularView.image = image;
 
-        //No longer using blurred (or any) background in iOS6 or 7
+        //blurry background
+        __block UIImage *blurred;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            blurred = [_blurFilter imageByFilteringImage:image];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self.thumbnailRegularView.image == image) {
+                    self.thumbnailBlurredView.image = blurred;
+                } else {
+                    //we've been re-used, don't set incorrect background
+                }
+                
+            });
+        });
     }
 }
 
