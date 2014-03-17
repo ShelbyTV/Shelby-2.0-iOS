@@ -34,7 +34,7 @@
 #define PARALLAX_BG_HEIGHT_PORTRAIT kShelbyFullscreenHeight*1.15
 #define PARALLAX_RATIO_LANDSCAPE 0.1
 #define PARALLAX_BG_WIDTH_LANDSCAPE (kShelbyFullscreenHeight*(1+PARALLAX_RATIO_LANDSCAPE))
-#define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth
+#define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth*1.15
 
 static id<ShelbyVideoContainer> _currentlyPlayingEntity;
 
