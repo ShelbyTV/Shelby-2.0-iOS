@@ -32,9 +32,9 @@
 #define PARALLAX_RATIO_PORTRAIT 0.1
 #define PARALLAX_BG_WIDTH_PORTRAIT (kShelbyFullscreenWidth*(1+PARALLAX_RATIO_LANDSCAPE))
 #define PARALLAX_BG_HEIGHT_PORTRAIT kShelbyFullscreenHeight*1.15
-#define PARALLAX_RATIO_LANDSCAPE 0.1
-#define PARALLAX_BG_WIDTH_LANDSCAPE (kShelbyFullscreenHeight*(1+PARALLAX_RATIO_LANDSCAPE))
-#define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth*1.15
+#define PARALLAX_RATIO_LANDSCAPE 0.05
+#define PARALLAX_BG_WIDTH_LANDSCAPE (kShelbyFullscreenHeight*(1.1+PARALLAX_RATIO_LANDSCAPE))
+#define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth*1.4
 
 static id<ShelbyVideoContainer> _currentlyPlayingEntity;
 
@@ -91,7 +91,7 @@ static id<ShelbyVideoContainer> _currentlyPlayingEntity;
 {
     CGRect bgFrame, fullScreenFrame;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-        bgFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH_LANDSCAPE, PARALLAX_BG_HEIGHT_LANDSCAPE);
+        bgFrame = CGRectMake(-15, -20, PARALLAX_BG_WIDTH_LANDSCAPE, PARALLAX_BG_HEIGHT_LANDSCAPE);
         fullScreenFrame = CGRectMake(0, 0, kShelbyFullscreenHeight, kShelbyFullscreenWidth);
         _parallaxView.parallaxRatio = PARALLAX_RATIO_LANDSCAPE;
     } else {
