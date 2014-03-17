@@ -18,7 +18,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompletedWithError = @"
 NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kShelbyNotificationFacebookPublishAuthorizationCompleted";
 
 @interface FacebookHandler()
-@property (nonatomic, assign) BOOL allowPublishActions;
 @property (nonatomic, assign) BOOL facebookCleanupInProgress;
 
 // Helper methods
