@@ -4,3 +4,8 @@ link_with 'Shelby.tv', 'Shelby.tv Enterprise', 'Shelby.tv Nightly'
 
 #blurring and other GPU accelerated image effects
 pod 'GPUImage'
+
+pod 'Intercom'
+pod 'GoogleAnalytics-iOS-SDK'
+pod 'HockeySDK'
+pod 'Localytics-AMP'

@@ -191,8 +191,6 @@
 		1C7B63F8178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */; };
 		1C7B63F9178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */; };
 		1C7B63FA178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */; };
-		1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
-		1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C81096B16EE22B70030077C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81096916EE22AD0030077C /* CoreText.framework */; };
 		1C81097616EE2CBF0030077C /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
 		1C81097816EE2CBF0030077C /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
@@ -232,9 +230,7 @@
 		1C8109B616EE2CBF0030077C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209711162F3A60000A2DFD /* UIKit.framework */; };
 		1C8109B716EE2CBF0030077C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209713162F3A60000A2DFD /* Foundation.framework */; };
 		1C8109B816EE2CBF0030077C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209715162F3A60000A2DFD /* CoreGraphics.framework */; };
-		1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C8109BC16EE2CBF0030077C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E20971A162F3A61000A2DFD /* InfoPlist.strings */; };
-		1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C810A2C16EE5EED0030077C /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
 		1C810A2E16EE5EED0030077C /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
 		1C810A2F16EE5EED0030077C /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
@@ -273,9 +269,7 @@
 		1C810A6C16EE5EED0030077C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209711162F3A60000A2DFD /* UIKit.framework */; };
 		1C810A6D16EE5EED0030077C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209713162F3A60000A2DFD /* Foundation.framework */; };
 		1C810A6E16EE5EED0030077C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209715162F3A60000A2DFD /* CoreGraphics.framework */; };
-		1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E20971A162F3A61000A2DFD /* InfoPlist.strings */; };
-		1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C836DD417F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
 		1C836DD517F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
 		1C836DD617F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
@@ -356,9 +350,6 @@
 		1CCE4C5417E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */; };
 		1CCE4C5517E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */; };
 		1CCE4C5617E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */; };
-		1CCE4C5B17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */; };
-		1CCE4C5C17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */; };
-		1CCE4C5D17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */; };
 		1CD255C817A1DD170049FF30 /* top-nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */; };
 		1CD255C917A1DD170049FF30 /* top-nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */; };
 		1CD255CA17A1DD170049FF30 /* top-nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */; };
@@ -719,15 +710,6 @@
 		91319BD2189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91319BD1189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.m */; };
 		91319BD3189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91319BD1189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.m */; };
 		91319BD4189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91319BD1189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.m */; };
-		9137187017DE94EF0021A99B /* iOSa_2.18.5.version in Resources */ = {isa = PBXBuildFile; fileRef = 9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */; };
-		9137187117DE94EF0021A99B /* iOSa_2.18.5.version in Resources */ = {isa = PBXBuildFile; fileRef = 9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */; };
-		9137187217DE94EF0021A99B /* iOSa_2.18.5.version in Resources */ = {isa = PBXBuildFile; fileRef = 9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */; };
-		9137187317DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */; };
-		9137187417DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */; };
-		9137187517DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */; };
-		9137187617DE94F00021A99B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9137186D17DE94EF0021A99B /* LICENSE */; };
-		9137187717DE94F00021A99B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9137186D17DE94EF0021A99B /* LICENSE */; };
-		9137187817DE94F00021A99B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9137186D17DE94EF0021A99B /* LICENSE */; };
 		9137187A17DE950E0021A99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187917DE950E0021A99B /* libz.dylib */; };
 		9137187C17DE95140021A99B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187B17DE95140021A99B /* libsqlite3.dylib */; };
 		9137187D17DE951A0021A99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187917DE950E0021A99B /* libz.dylib */; };
@@ -792,9 +774,6 @@
 		9178C9D217CE375000913256 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9D117CE375000913256 /* WelcomeViewController.m */; };
 		9178C9D317CE375000913256 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9D117CE375000913256 /* WelcomeViewController.m */; };
 		9178C9D417CE375000913256 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9D117CE375000913256 /* WelcomeViewController.m */; };
-		9182A1D917E2247500C629FA /* libIntercom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182A1D817E2247500C629FA /* libIntercom.a */; };
-		9182A1DA17E2247500C629FA /* libIntercom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182A1D817E2247500C629FA /* libIntercom.a */; };
-		9182A1DB17E2247500C629FA /* libIntercom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182A1D817E2247500C629FA /* libIntercom.a */; };
 		9184FE5517DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */; };
 		9184FE5617DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */; };
 		9184FE5717DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */; };
@@ -1062,9 +1041,6 @@
 		1C7B63EF178C5379000C1E84 /* navbar_back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_back_button@2x.png"; sourceTree = "<group>"; };
 		1C7B63F6178DD4B1000C1E84 /* SignupUserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupUserInfoCell.h; sourceTree = "<group>"; };
 		1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupUserInfoCell.m; sourceTree = "<group>"; };
-		1C81095F16EE21230030077C /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
-		1C81096116EE21230030077C /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
-		1C81096216EE21230030077C /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		1C81096916EE22AD0030077C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		1C810A2716EE2CBF0030077C /* Shelby.tv Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C810ADD16EE5EED0030077C /* Shelby.tv Nightly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv Nightly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1117,10 +1093,6 @@
 		1CCE4C4B17E226F700F0BF5A /* user_default_avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user_default_avatar@2x.png"; path = "../user_default_avatar@2x.png"; sourceTree = "<group>"; };
 		1CCE4C5217E258DE00F0BF5A /* ShelbyErrorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyErrorUtility.h; sourceTree = "<group>"; };
 		1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyErrorUtility.m; sourceTree = "<group>"; };
-		1CCE4C5717EA520400F0BF5A /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
-		1CCE4C5817EA521400F0BF5A /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
-		1CCE4C5917EA521400F0BF5A /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
-		1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-nav-bkgd.png"; sourceTree = "<group>"; };
 		1CD255C717A1DD170049FF30 /* top-nav-bkgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-nav-bkgd@2x.png"; sourceTree = "<group>"; };
 		1CD8110C17CCF6C0002FD84B /* play-airplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-airplay.png"; path = "../play-airplay.png"; sourceTree = "<group>"; };
@@ -1272,9 +1244,6 @@
 		8E7C341916D58252007494DF /* SPShareController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPShareController.m; sourceTree = "<group>"; };
 		8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E82EE111631C7B90044D97E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		8E87C5A916F38C2D00AC93C0 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		8E87C5AA16F38C2D00AC93C0 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		8E87C5AB16F38C2D00AC93C0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
 		8E91173016DC288600719F9B /* SPVideoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoDownloader.h; sourceTree = "<group>"; };
@@ -1343,11 +1312,6 @@
 		91319BD0189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerThumbnailOverlayView.h; sourceTree = "<group>"; };
 		91319BD1189C4FF8000384A0 /* VideoPlayerThumbnailOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerThumbnailOverlayView.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
-		9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iOSa_2.18.5.version; sourceTree = "<group>"; };
-		9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLocalyticsAMP.a; sourceTree = "<group>"; };
-		9137186D17DE94EF0021A99B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		9137186E17DE94EF0021A99B /* LocalyticsAmpSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsAmpSession.h; sourceTree = "<group>"; };
-		9137186F17DE94EF0021A99B /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsSession.h; sourceTree = "<group>"; };
 		9137187917DE950E0021A99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9137187B17DE95140021A99B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		913AD8761891C4EF00177A25 /* ShelbyUserFollowingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyUserFollowingViewController.h; sourceTree = "<group>"; };
@@ -1388,8 +1352,6 @@
 		916F41BD179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PerformSelectorWithPrimitive.m"; sourceTree = "<group>"; };
 		9178C9D017CE375000913256 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		9178C9D117CE375000913256 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
-		9182A1D717E2247500C629FA /* Intercom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Intercom.h; sourceTree = "<group>"; };
-		9182A1D817E2247500C629FA /* libIntercom.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIntercom.a; sourceTree = "<group>"; };
 		9184FE5317DA5757006E23E4 /* UITextViewWithPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextViewWithPlaceholder.h; sourceTree = "<group>"; };
 		9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextViewWithPlaceholder.m; sourceTree = "<group>"; };
 		9188F230178C99F7002F342B /* ShelbyNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyNavBarView.xib; sourceTree = "<group>"; };
@@ -1516,11 +1478,7 @@
 				1C8109B516EE2CBF0030077C /* AVFoundation.framework in Frameworks */,
 				1C8109B616EE2CBF0030077C /* UIKit.framework in Frameworks */,
 				1C8109B716EE2CBF0030077C /* Foundation.framework in Frameworks */,
-				1CCE4C5C17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */,
 				1C8109B816EE2CBF0030077C /* CoreGraphics.framework in Frameworks */,
-				1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */,
-				9182A1DA17E2247500C629FA /* libIntercom.a in Frameworks */,
-				9137187417DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 				1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 				047584B2D1534EC8AB4DD835 /* libPods.a in Frameworks */,
 			);
@@ -1550,11 +1508,7 @@
 				1C810A6B16EE5EED0030077C /* AVFoundation.framework in Frameworks */,
 				1C810A6C16EE5EED0030077C /* UIKit.framework in Frameworks */,
 				1C810A6D16EE5EED0030077C /* Foundation.framework in Frameworks */,
-				1CCE4C5D17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */,
 				1C810A6E16EE5EED0030077C /* CoreGraphics.framework in Frameworks */,
-				1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */,
-				9182A1DB17E2247500C629FA /* libIntercom.a in Frameworks */,
-				9137187517DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 				1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 				2FBF3481B7434BDFACD6A5AF /* libPods.a in Frameworks */,
 			);
@@ -1585,11 +1539,7 @@
 				8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */,
 				8E209712162F3A60000A2DFD /* UIKit.framework in Frameworks */,
 				8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */,
-				1CCE4C5B17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */,
 				8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */,
-				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
-				9182A1D917E2247500C629FA /* libIntercom.a in Frameworks */,
-				9137187317DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 				1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 				26C937AA2557465EA2344250 /* libPods.a in Frameworks */,
 			);
@@ -1752,25 +1702,6 @@
 				1CCE4C4B17E226F700F0BF5A /* user_default_avatar@2x.png */,
 			);
 			path = "Signup Flow";
-			sourceTree = "<group>";
-		};
-		1C81095E16EE21230030077C /* HockeySDK.embeddedframework */ = {
-			isa = PBXGroup;
-			children = (
-				1C81095F16EE21230030077C /* HockeySDK.framework */,
-				1C81096016EE21230030077C /* Resources */,
-			);
-			name = HockeySDK.embeddedframework;
-			path = "Library/HockeySDK-iOS/HockeySDK.embeddedframework";
-			sourceTree = SOURCE_ROOT;
-		};
-		1C81096016EE21230030077C /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				1C81096116EE21230030077C /* HockeySDK.xcconfig */,
-				1C81096216EE21230030077C /* HockeySDKResources.bundle */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		1C85A22916D6CEB300B6EE49 /* Utilities */ = {
@@ -2182,35 +2113,16 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				9182A1D617E2247500C629FA /* Intercom */,
-				9137186A17DE94EF0021A99B /* Localytics */,
 				1C56F11417BABD8C00EE9206 /* Appirater */,
 				91A36261178F296B00381218 /* AHEasing */,
 				91A3625B178F290300381218 /* UIView+EasingFunctions */,
 				91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */,
 				8E70248C1715E71500E8DE46 /* OAuth Consumer */,
-				8E87C5A816F38C2D00AC93C0 /* GoogleAnalyticsSDK */,
-				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
 				8E01AFA716E67365000567D4 /* AFNetworking */,
 			);
 			name = Library;
 			path = Shelby.tv;
 			sourceTree = "<group>";
-		};
-		8E87C5A816F38C2D00AC93C0 /* GoogleAnalyticsSDK */ = {
-			isa = PBXGroup;
-			children = (
-				8E87C5A916F38C2D00AC93C0 /* GAI.h */,
-				8E87C5AA16F38C2D00AC93C0 /* GAITrackedViewController.h */,
-				8E87C5AB16F38C2D00AC93C0 /* GAITracker.h */,
-				1CCE4C5717EA520400F0BF5A /* GAIDictionaryBuilder.h */,
-				1CCE4C5817EA521400F0BF5A /* GAIFields.h */,
-				1CCE4C5917EA521400F0BF5A /* GAILogger.h */,
-				1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */,
-			);
-			name = GoogleAnalyticsSDK;
-			path = Library/GoogleAnalyticsSDK;
-			sourceTree = SOURCE_ROOT;
 		};
 		8E98F7B3165C2F750095E985 /* ShelbyPlayer */ = {
 			isa = PBXGroup;
@@ -2397,29 +2309,6 @@
 			);
 			name = Constants;
 			sourceTree = "<group>";
-		};
-		9137186A17DE94EF0021A99B /* Localytics */ = {
-			isa = PBXGroup;
-			children = (
-				9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */,
-				9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */,
-				9137186D17DE94EF0021A99B /* LICENSE */,
-				9137186E17DE94EF0021A99B /* LocalyticsAmpSession.h */,
-				9137186F17DE94EF0021A99B /* LocalyticsSession.h */,
-			);
-			name = Localytics;
-			path = Library/Localytics;
-			sourceTree = SOURCE_ROOT;
-		};
-		9182A1D617E2247500C629FA /* Intercom */ = {
-			isa = PBXGroup;
-			children = (
-				9182A1D717E2247500C629FA /* Intercom.h */,
-				9182A1D817E2247500C629FA /* libIntercom.a */,
-			);
-			name = Intercom;
-			path = Library/Intercom;
-			sourceTree = SOURCE_ROOT;
 		};
 		9194D01F18C8D5200010A8F7 /* Views */ = {
 			isa = PBXGroup;
@@ -2641,11 +2530,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C8109BC16EE2CBF0030077C /* InfoPlist.strings in Resources */,
-				9137187717DE94F00021A99B /* LICENSE in Resources */,
 				1CD8111F17CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14917BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				912261D717B97F070092AF30 /* overlay-likers@2x.png in Resources */,
-				1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				1C0C7DF31852328B008F5506 /* heart-icon-color.png in Resources */,
 				8E7024ED1715E71500E8DE46 /* OATestServer.rb in Resources */,
@@ -2678,7 +2565,6 @@
 				1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 				9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 				9194D02718C8D8470010A8F7 /* ShelbyVideoReelCollectionViewCell.xib in Resources */,
-				9137187117DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				1CD8111917CCF6C0002FD84B /* play-all.png in Resources */,
 				913AD87D1891C51B00177A25 /* UserFollowing.storyboard in Resources */,
 				1CD8111C17CCF6C0002FD84B /* play-all@2x.png in Resources */,
@@ -2777,11 +2663,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */,
-				9137187817DE94F00021A99B /* LICENSE in Resources */,
 				1CD8112017CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14A17BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				912261D817B97F070092AF30 /* overlay-likers@2x.png in Resources */,
-				1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C0C7DF41852328B008F5506 /* heart-icon-color.png in Resources */,
 				8E7024EE1715E71500E8DE46 /* OATestServer.rb in Resources */,
@@ -2814,7 +2698,6 @@
 				1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 				9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 				9194D02818C8D8470010A8F7 /* ShelbyVideoReelCollectionViewCell.xib in Resources */,
-				9137187217DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				1CD8111A17CCF6C0002FD84B /* play-all.png in Resources */,
 				913AD87E1891C51B00177A25 /* UserFollowing.storyboard in Resources */,
 				1CD8111D17CCF6C0002FD84B /* play-all@2x.png in Resources */,
@@ -2918,8 +2801,6 @@
 				912261D317B97F070092AF30 /* overlay-likers.png in Resources */,
 				1C100DD3185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */,
 				91E4FF3C18CF4C5800005650 /* Ubuntu-L.ttf in Resources */,
-				9137187617DE94F00021A99B /* LICENSE in Resources */,
-				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
 				1CCAC9D21848F0DD008E603C /* ShelbyUserProfileCell.xib in Resources */,
 				1C0025FB16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C0C7DFA1852357C008F5506 /* share-icon.png in Resources */,
@@ -2961,7 +2842,6 @@
 				916658B618D21EDA00289943 /* play-airplay@2x.png in Resources */,
 				910F5BE718847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */,
 				91E4FF3918CF4C5800005650 /* Ubuntu-C.ttf in Resources */,
-				9137187017DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				1CFEB3B0186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */,
 				913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
 				915CDA7B17BE8FC7003C3A38 /* Images.xcassets in Resources */,
@@ -3711,9 +3591,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
-					"$(SRCROOT)/Library/Localytics",
-					"$(SRCROOT)/Library/Intercom",
+					"$(SRCROOT)/Library/**",
 				);
 				OTHER_CFLAGS = (
 					"-Wall",
@@ -3777,9 +3655,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
-					"$(SRCROOT)/Library/Localytics",
-					"$(SRCROOT)/Library/Intercom",
+					"$(SRCROOT)/Library/**",
 				);
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
@@ -3845,11 +3721,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
-					"$(SRCROOT)/Library/Localytics",
-					"$(SRCROOT)/Library/Intercom",
+					"$(SRCROOT)/Library/**",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
 					"-Wextra",
@@ -3880,7 +3754,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3913,9 +3787,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
-					"$(SRCROOT)/Library/Localytics",
-					"$(SRCROOT)/Library/Intercom",
+					"$(SRCROOT)/Library/**",
 				);
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
@@ -3949,7 +3821,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3957,7 +3829,6 @@
 		};
 		8E20973D162F3A61000A2DFD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C81096116EE21230030077C /* HockeySDK.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3980,6 +3851,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
@@ -3996,7 +3868,6 @@
 		};
 		8E20973E162F3A61000A2DFD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C81096116EE21230030077C /* HockeySDK.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -4012,6 +3883,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-Wall",
@@ -4055,9 +3927,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
-					"$(SRCROOT)/Library/Localytics",
-					"$(SRCROOT)/Library/Intercom",
+					"$(SRCROOT)/Library/**",
 				);
 				OTHER_CFLAGS = (
 					"-Wall",
@@ -4121,9 +3991,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
-					"$(SRCROOT)/Library/Localytics",
-					"$(SRCROOT)/Library/Intercom",
+					"$(SRCROOT)/Library/**",
 				);
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
