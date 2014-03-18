@@ -46,7 +46,7 @@
     if (self.runBackgroundAnimation) {
         NSMutableArray *hiddenBackgrounds = [self.allBackgrounds mutableCopy];
         [hiddenBackgrounds removeObject:self.currentlyShowingBackground];
-        UIImageView *nextBackground = hiddenBackgrounds[arc4random_uniform([hiddenBackgrounds count])];
+        UIImageView *nextBackground = hiddenBackgrounds[arc4random_uniform((u_int32_t) [hiddenBackgrounds count])];
         nextBackground.alpha = 1.f;
         [self.blurryBackgroundHolder insertSubview:nextBackground belowSubview:self.currentlyShowingBackground];
         

@@ -49,7 +49,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
         return nil;
     }
 
-    displayChannel.order = [NSNumber numberWithInt:order];
+    displayChannel.order = [NSNumber numberWithInteger:order];
     displayChannel.roll = roll;
     
     return displayChannel;
@@ -76,7 +76,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
         return nil;
     }
     
-    displayChannel.order = [NSNumber numberWithInt:order];
+    displayChannel.order = [NSNumber numberWithInteger:order];
     displayChannel.dashboard = dashboard;
     
     return displayChannel;

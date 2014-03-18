@@ -191,7 +191,7 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
     
     NSUInteger count = [activeBuckets count];
     if (count > 0) {
-        return activeBuckets[arc4random_uniform(count)];
+        return activeBuckets[arc4random_uniform((u_int32_t) count)];
     } else {
         return nil;
     }

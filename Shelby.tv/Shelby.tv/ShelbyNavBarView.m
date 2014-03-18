@@ -31,7 +31,13 @@
 #define FRAME_ANIMATION_TIME 0.4
 #define ALPHA_ANIMATION_TIME 0.3
 
-#define EASING_FUNCTION QuinticEaseInOut
+static CGFloat QuinticEaseInOutCGF(CGFloat p){
+    return QuinticEaseInOut(p);
+}
+
+static CGFloat BackEaseInOutCGF(CGFloat p) {
+    return BackEaseInOut(p);
+}
 
 @implementation ShelbyNavBarView
 
@@ -101,9 +107,9 @@
 - (void)didMoveToSuperview
 {
     //see bottom of file for animation notes
-    [self.slider setEasingFunction:EASING_FUNCTION forKeyPath:@"frame"];
+    [self.slider setEasingFunction:&QuinticEaseInOutCGF forKeyPath:@"frame"];
     for (UIView *l in _separatorLines) {
-        [l setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
+        [l setEasingFunction:&BackEaseInOutCGF forKeyPath:@"frame"];
     }
 }
 

@@ -361,11 +361,11 @@
     
     BOOL selected = NO;
     if (title) {
-        NSInteger index = 0;
+        NSUInteger index = 0;
         for (NSDictionary *rollInfo in self.selectedCellsTitlesArray) {
             if ([title isEqualToString:rollInfo[@"title"]]) {
                 selected = YES;
-                cell.selectionCounter.text = [NSString stringWithFormat:@"%u", index + 1];
+                cell.selectionCounter.text = [NSString stringWithFormat:@"%ld", index + 1];
                 break;
             }
             index++;
