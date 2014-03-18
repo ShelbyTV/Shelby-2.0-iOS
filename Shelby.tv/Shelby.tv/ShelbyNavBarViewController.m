@@ -143,7 +143,7 @@
 
 - (void)setUnseenNotificationCount:(NSInteger)unseenNotificationCount
 {
-    self.navBarView.notificationLabel.text = [NSString stringWithFormat:@"%d", unseenNotificationCount];
+    self.navBarView.notificationLabel.text = [NSString stringWithFormat:@"%ld", (long)unseenNotificationCount];
     if (unseenNotificationCount) {
         self.navBarView.shouldHideNotificationLabel = NO;
     } else {

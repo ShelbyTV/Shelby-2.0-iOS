@@ -44,7 +44,7 @@
 {
     if (count > 0) {
         self.badgeLabel.alpha = 1.f;
-        self.badgeLabel.text = [NSString stringWithFormat:@"%i", count];
+        self.badgeLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)count];
     } else {
         self.badgeLabel.alpha = 1.f;
         self.badgeLabel.text = nil;

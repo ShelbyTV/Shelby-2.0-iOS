@@ -639,8 +639,8 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     NSInteger to = (NSInteger)CMTimeGetSeconds(toTime);
     [ShelbyAPIClient postUserWatchedFrame:self.videoFrame.frameID
                                completely:complete
-                                     from:[NSString stringWithFormat:@"%01d", from]
-                                       to:[NSString stringWithFormat:@"%01d", to]];
+                                     from:[NSString stringWithFormat:@"%01ld", (long)from]
+                                       to:[NSString stringWithFormat:@"%01ld", (long)to]];
     _lastPlaybackUpdateIntervalEnd = toTime;
 }
 

@@ -12,8 +12,9 @@
 
 + (NSDate *)dateFromBSONObjectID:(NSString *)identifier
 {
-    NSUInteger result;
-    [[NSScanner scannerWithString:[identifier substringToIndex:8]] scanHexInt:&result];
+    unsigned int scannedInt;
+    [[NSScanner scannerWithString:[identifier substringToIndex:8]] scanHexInt:&scannedInt];
+    NSUInteger result = scannedInt;
     return [NSDate dateWithTimeIntervalSince1970:result];
 }
 

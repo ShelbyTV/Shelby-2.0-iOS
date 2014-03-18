@@ -627,11 +627,11 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     elapsedTimeHours = ((NSInteger)time / 3600);
 
     if (elapsedTimeHours > 0) {
-        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", elapsedTimeHours, elapsedTimeMinutes, elapsedTimeSeconds];
+        convertedTime = [NSString stringWithFormat:@"%.2ld:%.2ld:%.2ld", (long)elapsedTimeHours, (long)elapsedTimeMinutes, (long)elapsedTimeSeconds];
     } else if (elapsedTimeMinutes > 0) {
-        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d", elapsedTimeMinutes, elapsedTimeSeconds];
+        convertedTime = [NSString stringWithFormat:@"%.2ld:%.2ld", (long)elapsedTimeMinutes, (long)elapsedTimeSeconds];
     } else {
-        convertedTime = [NSString stringWithFormat:@"0:%.2d", elapsedTimeSeconds];
+        convertedTime = [NSString stringWithFormat:@"0:%.2ld", (long)elapsedTimeSeconds];
     }
 
     return convertedTime;
