@@ -8,6 +8,7 @@
 
 #import "ShelbyEntranceViewController.h"
 #import "ShelbyDataMediator.h"
+#import "AnimationUtilities.h"
 
 @interface ShelbyEntranceViewController ()
 @property (weak, nonatomic) IBOutlet UIView *logo;
@@ -23,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *currentlyShowingBackground;
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *allBackgrounds;
 
+@property (nonatomic) BOOL hasDisappeared;
 @end
 
 @implementation ShelbyEntranceViewController {
@@ -57,16 +59,18 @@
     
     //initial/proper position constants
     _properLogoVerticalSpaceToTopConstant = self.logoVerticalSpaceToTop.constant;
-    _initialLogoVerticalSpaceToTopConstant = _properLogoVerticalSpaceToTopConstant - 500.f;
+    _initialLogoVerticalSpaceToTopConstant = _properLogoVerticalSpaceToTopConstant - 625.f;
     _properGetStartedVerticalSpaceToBottomConstant = self.getStartedVerticalSpaceToBottom.constant;
-    _initialGetStartedVerticalSpaceToBottomConstant = _properGetStartedVerticalSpaceToBottomConstant - 1500.f;
+    _initialGetStartedVerticalSpaceToBottomConstant = _properGetStartedVerticalSpaceToBottomConstant - 1875.f;
     _properLoginVerticalSpaceToBottomConstant = self.loginVerticalSpaceToBottom.constant;
-    _initialLoginVerticalSpaceToBottomConstant = _properLoginVerticalSpaceToBottomConstant - 1000.f;
-    
+    _initialLoginVerticalSpaceToBottomConstant = _properLoginVerticalSpaceToBottomConstant - 1250.f;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+
     srand48(time(0));
 }
 
@@ -74,9 +78,11 @@
 {
     [super viewWillAppear:animated];
     
-    [self setInitialViewStates];
-    [self.view layoutIfNeeded];
-    
+    if (!self.hasDisappeared) {
+        [self setInitialViewStates];
+        [self.view layoutIfNeeded];
+    }
+
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
@@ -89,26 +95,42 @@
     
     [self setButtonsEnabled:YES];
     
-    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState) animations:^{
-        
-        [self setProperViewStates];
+    if (!self.hasDisappeared) {
+        [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState) animations:^{
+
+            [self setProperViewStates];
+            [self.view layoutIfNeeded];
+
+        } completion:^(BOOL finished) {
+            self.runBackgroundAnimation = YES;
+        }];
+    } else {
         [self.view layoutIfNeeded];
-        
-    } completion:^(BOOL finished) {
         self.runBackgroundAnimation = YES;
-    }];
+    }
+
+    self.hasDisappeared = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+    self.runBackgroundAnimation = NO;
+    self.hasDisappeared = YES;
 }
 
 - (void)animateDisappearanceWithCompletion:(void (^)())completion
 {
-    self.runBackgroundAnimation = NO;
-    
-    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:8.0 options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState) animations:^{
+    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:4.0 options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState) animations:^{
         
         [self setInitialViewStates];
         [self.view layoutIfNeeded];
         
     } completion:^(BOOL finished) {
+        for (UIView *view in self.allBackgrounds) {
+            [AnimationUtilities pauseLayer:view.layer];
+        }
         if (completion) {
             completion();
         }
@@ -118,11 +140,10 @@
 //aka "off screen"
 - (void)setInitialViewStates
 {
-    [self.getStartedSpinner stopAnimating];
     self.logoVerticalSpaceToTop.constant = _initialLogoVerticalSpaceToTopConstant;
     self.getStartedVerticalSpaceToBottom.constant = _initialGetStartedVerticalSpaceToBottomConstant;
     self.loginVerticalSpaceToBottom.constant = _initialLoginVerticalSpaceToBottomConstant;
-    
+
     for (UIView *backgroundView in self.allBackgrounds) {
         backgroundView.alpha = 0.f;
     }
@@ -160,6 +181,16 @@
     [self.brain presentUserLogin];
 }
 
+#pragma mark - Supported Device Orientations
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if (DEVICE_IPAD) {
+        return UIInterfaceOrientationMaskAll;
+    } else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+}
+
 #pragma mark - Notifications
 
 - (void)userSignupDidSucceed:(NSNotification *)notification
@@ -178,6 +209,20 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self setButtonsEnabled:YES];
     });
+}
+
+- (void)onAppDidEnterBackground:(NSNotification *)notification
+{
+    if (!self.hasDisappeared) {
+        self.runBackgroundAnimation = NO;
+    }
+}
+
+- (void)onAppWillEnterForeground:(NSNotification *)notification
+{
+    if (!self.hasDisappeared) {
+        self.runBackgroundAnimation = YES;
+    }
 }
 
 #pragma mark - Helpers

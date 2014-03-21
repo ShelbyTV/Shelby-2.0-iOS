@@ -58,8 +58,7 @@ NSString * const kShelbyBrainFrameKey = @"frame";
 NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 @interface ShelbyBrain()
 
-//our two primary view controllers
-@property (strong, nonatomic) WelcomeViewController *welcomeVC;
+// primary iphone view controller
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 
 // ipad
@@ -96,54 +95,17 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 - (void)handleDidFinishLaunching
 {
     [ShelbyDataMediator sharedInstance].delegate = self;
-    
-    if (DEVICE_IPAD) {
-        User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-        if (currentUser) {
-            [self setCurrentUser:currentUser];
-            [self activateHomeViewController];
-            [self fetchUserChannelsForceSwitchToUsersStream:YES];
-            self.mainWindow.rootViewController = self.topContainerVC;
-        } else {
-            self.entranceVC = [[ShelbyEntranceViewController alloc] initWithNibName:@"ShelbyEntranceViewController" bundle:nil];
-            self.entranceVC.brain = self;
-            self.mainWindow.rootViewController = self.entranceVC;
-        }
-        
+
+    User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+    if (currentUser) {
+        [self setCurrentUser:currentUser];
+        [self activateHomeViewController];
+        [self fetchUserChannelsForceSwitchToUsersStream:YES];
+        self.mainWindow.rootViewController = DEVICE_IPAD ? self.topContainerVC : self.homeVC;
     } else {
-        
-        // This needs to be done before we decide what VC to activate
-        // If welcome screen is completed and user started the signup screen and never logged in.
-        // We should not reset Welcome screen in the case where user didn't even open signup, because maybe they just went for perview app.
-        // Odd case is, user finished welcome, going to preview, then hit signup, kill the app... and now next time they open, we will take them to welcome again.
-        if ([WelcomeViewController isWelcomeComplete]) {
-            if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
-                // Cleanup cache, logout user to prevent funcky case when a user that logged-in in the past tries to go thru signup but kills the app in the middle
-                [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
-                [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
-                if (![[ShelbyDataMediator sharedInstance] hasUserLoggedIn]) {
-                    [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusUnstarted];
-                    [[ShelbyDataMediator sharedInstance] nuclearCleanup];
-                }
-            }
-        }
-        
-        if (![WelcomeViewController isWelcomeComplete]) {
-            [self activateWelcomeViewController];
-        } else {
-            [self activateHomeViewController];
-            User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-            if (currentUser) {
-                [self fetchUserChannelsForceSwitchToUsersStream:YES];
-                [[ShelbyDataMediator sharedInstance] updateRollFollowingsForCurrentUser];
-                [self registerForPushNotifications];
-            } else {
-                [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
-            }
-        }
-        
+        [self setupPresentEntranceVC];
     }
-    
+
     [self.mainWindow makeKeyAndVisible];
 }
 
@@ -213,20 +175,12 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
 }
 
-- (void)activateWelcomeViewController
-{
-    self.welcomeVC = [[WelcomeViewController alloc] init];
-    self.welcomeVC.delegate = self;
-    self.mainWindow.rootViewController = self.welcomeVC;
-}
-
 - (void)activateHomeViewController
 {
     if (self.homeVC || self.mainStoryboard) {
         return;
     }
-    
-    NSString *rootViewControllerNibName = nil;
+
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
 
     if (DEVICE_IPAD) {
@@ -241,15 +195,14 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         }];
         
     } else {
-        rootViewControllerNibName = @"ShelbyHomeView-iPhone";
-        self.homeVC = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
-
+        self.homeVC = [[ShelbyHomeViewController alloc] initWithNibName:nil bundle:nil];
         self.homeVC.currentUser = currentUser;
         self.homeVC.masterDelegate = self;
-        self.mainWindow.rootViewController = self.homeVC;
+        [self.entranceVC animateDisappearanceWithCompletion:^{
+            self.mainWindow.rootViewController = self.homeVC;
+            self.entranceVC = nil;
+        }];
     }
-    
-    self.welcomeVC = nil;
 
     [self setupDVR];
 
@@ -279,7 +232,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         UINavigationController *loginNav = [loginStoryboard instantiateInitialViewController];
         self.loginVC = loginNav.viewControllers[0];
         self.loginVC.delegate = self;
-        [self.mainWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
+        [self.entranceVC presentViewController:loginNav animated:YES completion:nil];
         
         // When user goes to login, reset signup status.
         if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
@@ -894,6 +847,17 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     }
 }
 
+- (void)setupPresentEntranceVC
+{
+    // We pass initWithName:nil to make the view controller find the appropriate nib
+    //  file on its own, checking file names in the following order:
+    //      1. ShelbyEntranceView.xib
+    //      2. ShelbyEntranceView~ipad.xib if we're on iPad or ShelbyEntranceView~iphone.xib if we're on iPhone
+    self.entranceVC = [[ShelbyEntranceViewController alloc] initWithNibName:nil bundle:nil];
+    self.entranceVC.brain = self;
+    self.mainWindow.rootViewController = self.entranceVC;
+}
+
 - (BOOL)checkPushNotificationStatus
 {
     if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes] == UIRemoteNotificationTypeNone) {
@@ -998,16 +962,14 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [self resetUserDefaults];
     if (DEVICE_IPAD) {
         [self.topContainerVC animateDisappearanceWithCompletion:^{
-            self.entranceVC = [[ShelbyEntranceViewController alloc] initWithNibName:@"ShelbyEntranceViewController" bundle:nil];
-            self.entranceVC.brain = self;
-            self.mainWindow.rootViewController = self.entranceVC;
+            [self setupPresentEntranceVC];
             self.mainStoryboard = nil;
             self.topContainerVC = nil;
+
         }];
-        
     } else {
-        [self.homeVC logoutUser];
-        [self goToCommunityChannel];
+        [self setupPresentEntranceVC];
+        self.homeVC = nil;
     }
 }
 
