@@ -6,16 +6,16 @@ PODS:
   - Localytics-AMP (2.23.1)
 
 DEPENDENCIES:
-  - GoogleAnalytics-iOS-SDK
-  - GPUImage
-  - HockeySDK
-  - Intercom
-  - Localytics-AMP
+  - GoogleAnalytics-iOS-SDK (~> 3.0)
+  - GPUImage (= 0.1.2)
+  - HockeySDK (~> 3.5)
+  - Intercom (~> 1.1)
+  - Localytics-AMP (~> 2.23)
 
 SPEC CHECKSUMS:
   GoogleAnalytics-iOS-SDK: 7b0e55cfe5e70d60478a7b105f15ac71e8bc373e
   GPUImage: 007145faa0e27f1ddbcab93e07f026c9776e2fa2
-  HockeySDK: 4f7f7e15c1f594e8ca1e16a09f04e7418289de7a
+  HockeySDK: aa28abb106de7804d31acf515f2c9aa4e6481fd0
   Intercom: 974527a0cdab43290010044a31ad38485ce25bc4
   Localytics-AMP: 9972faed0f7bd9a94ba371492ddb34b9f108fa13
 

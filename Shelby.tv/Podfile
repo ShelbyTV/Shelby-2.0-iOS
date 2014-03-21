@@ -3,9 +3,9 @@ platform :ios, "7.0"
 link_with 'Shelby.tv', 'Shelby.tv Enterprise', 'Shelby.tv Nightly'
 
 #blurring and other GPU accelerated image effects
-pod 'GPUImage'
+pod 'GPUImage', '0.1.2'
 
-pod 'Intercom'
-pod 'GoogleAnalytics-iOS-SDK'
-pod 'HockeySDK'
-pod 'Localytics-AMP'
+pod 'Intercom', '~>1.1'
+pod 'GoogleAnalytics-iOS-SDK','~>3.0'
+pod 'HockeySDK', '~>3.5'
+pod 'Localytics-AMP', '~>2.23'
