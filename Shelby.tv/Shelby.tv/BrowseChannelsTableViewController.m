@@ -36,7 +36,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    if (!DEVICE_IPAD) {
+        UIEdgeInsets contentInset = self.tableView.contentInset;
+        contentInset.top += 44.0;
+        self.tableView.contentInset = contentInset;
+    }
+
     [[ShelbyDataMediator sharedInstance] fetchFeaturedChannelsWithCompletionHandler:^(NSArray *channels, NSError *error) {
         if (channels) {
             self.channels = [channels copy];
@@ -56,7 +62,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [self.userEducationVC referenceView:self.view willAppearAnimated:animated];
 }
 
@@ -97,10 +103,13 @@
 {
     static NSString *CellIdentifier = @"ChannelCell";
     BrowseChannelCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+
     cell.user = self.currentUser;
     cell.roll = ((DisplayChannel *)self.channels[indexPath.row]).roll;
-    
+    if (!self.navigationController) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+
     return cell;
 }
 
@@ -108,14 +117,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ShelbyUserInfoViewController *userInfoVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfile"];
-    [(ShelbyNavigationViewController *)self.navigationController pushUserProfileViewController:userInfoVC];
-    
     DisplayChannel *selectedChannel = self.channels[indexPath.row];
-    [userInfoVC setupStreamInfoDisplayChannel:selectedChannel];
-    [[ShelbyDataMediator sharedInstance] fetchUserWithID:selectedChannel.roll.creatorID inContext:selectedChannel.managedObjectContext completion:^(User *fetchedUser) {
-        userInfoVC.user = fetchedUser;
-    }];
+    if (self.navigationController) {
+        ShelbyUserInfoViewController *userInfoVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfile"];
+        [(ShelbyNavigationViewController *)self.navigationController pushUserProfileViewController:userInfoVC];
+
+        [userInfoVC setupStreamInfoDisplayChannel:selectedChannel];
+        [[ShelbyDataMediator sharedInstance] fetchUserWithID:selectedChannel.roll.creatorID inContext:selectedChannel.managedObjectContext completion:^(User *fetchedUser) {
+            userInfoVC.user = fetchedUser;
+        }];
+    } else {
+        [self.delegate userProfileWasTapped:selectedChannel.roll.creatorID];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

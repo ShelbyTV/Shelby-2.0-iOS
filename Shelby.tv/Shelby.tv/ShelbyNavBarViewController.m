@@ -50,6 +50,14 @@
     _lastSelectedRow = self.navBarView.communityButton;
 }
 
+- (void)didNavigateToChannels
+{
+    if (self.navBarView.channelsButton != self.navBarView.currentRow){
+        self.navBarView.currentRow = self.navBarView.channelsButton;
+    }
+    _lastSelectedRow = self.navBarView.channelsButton;
+}
+
 - (void)didNavigateToUsersStream
 {
     if (self.navBarView.streamButton != self.navBarView.currentRow) {
@@ -112,6 +120,11 @@
             [self.delegate navBarViewControllerCommunityWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
             [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                                    withAction:kAnalyticsUXTapNavBarRowFeatured
+                                          withNicknameAsLabel:YES];
+        } else if (sender == self.navBarView.channelsButton) {
+            [self.delegate navBarViewControllerChannelsWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+            [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                   withAction:kAnalyticsUXTapNavBarRowChannels
                                           withNicknameAsLabel:YES];
         } else if (sender == self.navBarView.settingsButton) {
             [self.delegate navBarViewControllerSettingsWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];

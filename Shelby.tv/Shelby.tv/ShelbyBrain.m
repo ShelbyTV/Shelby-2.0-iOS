@@ -1137,7 +1137,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     }];
 }
 
-// This method is going to be called from two protocols.. not that great. Need to have a nicer protocols.
+// This method is going to be called from three (or more) protocols.. not that great. Need to have a nicer protocols.
 - (void)userProfileWasTapped:(NSString *)userID
 {
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];

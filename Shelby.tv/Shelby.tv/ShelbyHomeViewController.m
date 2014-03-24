@@ -23,12 +23,14 @@
 #import "SPVideoExtractor.h"
 #import "SPVideoReelCollectionViewController.h"
 #import "User+Helper.h"
+#import "BrowseChannelsTableViewController.h"
 
 NSString * const kShelbyShareVideoHasCompleted = @"kShelbyShareVideoHasCompleted";
 NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 @interface ShelbyHomeViewController () {
     SettingsViewController *_settingsVC;
+    BrowseChannelsTableViewController *_channelsVC;
     UIViewController *_currentFullScreenVC;
 }
 @property (nonatomic, strong) ShelbyNavBarViewController *navBarVC;
@@ -1336,6 +1338,20 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     }
 }
 
+- (void)navBarViewControllerChannelsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
+{
+    if (selectedNewRow) {
+        if (self.videoReelCollectionVC) {
+            [self dismissVideoReel];
+        }
+        [self presentChannels];
+        [navBarVC didNavigateToChannels];
+    } else {
+        //already showing settings, nothing to do
+    }
+
+}
+
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     if (selectedNewRow) {
@@ -1416,6 +1432,33 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                                                                           metrics:nil
                                                                             views:@{@"settings":_settingsVC.view}]];
         
+        self.videoControlsVC.view.hidden = YES;
+    } andTransitionAnimationCompleted:nil];
+}
+
+- (void)presentChannels
+{
+    if (_channelsVC) {
+        _channelsVC = nil;
+    }
+
+    _channelsVC = [[UIStoryboard storyboardWithName:@"BrowseChannels" bundle:nil] instantiateInitialViewController];
+    _channelsVC.delegate = self.masterDelegate;
+    //this gets overriden by autolayout, just using it to set starting point for transition
+
+    _channelsVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+
+    [self swapOutViewController:_currentFullScreenVC forViewController:_channelsVC viewDidInsert:^{
+        _channelsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[channels]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"channels":_channelsVC.view}]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[channels]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"channels":_channelsVC.view}]];
+
         self.videoControlsVC.view.hidden = YES;
     } andTransitionAnimationCompleted:nil];
 }
