@@ -91,7 +91,7 @@ NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kS
 
       if (error) {
           //Log Facebook errors that we're not handling
-          NSLog(@"Guess what there's a Facebook session error we're not handling with category %ld", [FBErrorUtility errorCategoryForError:error]);
+          NSLog(@"Guess what there's a Facebook session error we're not handling with category %d", [FBErrorUtility errorCategoryForError:error]);
           NSString *alertText;
           if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
               alertText = [FBErrorUtility userMessageForError:error];
