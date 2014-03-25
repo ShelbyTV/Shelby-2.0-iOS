@@ -104,7 +104,10 @@ NSString *token_not_renewable = @"token_not_renewable";
 }
 
 - (int)code {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
 	return [[[self class] validProblems] indexOfObject:problem];
+#pragma clang diagnostic pop
 }
 
 - (NSString *)description

@@ -46,7 +46,10 @@ u_int8_t k_opad[B + 1]; /* outer padding - key XORd with opad */
 if (inKeyLength > B)
 	{
 	SHA1Init(&theSHA1Context);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
 	SHA1Update(&theSHA1Context, inKey, inKeyLength);
+#pragma clang diagnostic pop
 	SHA1Final(inKey, &theSHA1Context);
 	inKeyLength = L;
 	}
@@ -70,7 +73,10 @@ for (i = 0; i < B; i++)
 */
 SHA1Init(&theSHA1Context);                 /* init context for 1st pass */
 SHA1Update(&theSHA1Context, k_ipad, B);     /* start with inner pad */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
 SHA1Update(&theSHA1Context, (u_int8_t *)inText, inTextLength); /* then text of datagram */
+#pragma clang diagnostic pop
 SHA1Final((u_int8_t *)outDigest, &theSHA1Context);                /* finish up 1st pass */
 
 /*
