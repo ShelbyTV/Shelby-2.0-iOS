@@ -119,6 +119,7 @@ extern NSString * const kAnalyticsUXShareFinish;
 extern NSString * const kAnalyticsUXTapNavBar;
 extern NSString * const kAnalyticsUXTapNavBarButton;
 extern NSString * const kAnalyticsUXTapNavBarRowFeatured;
+extern NSString * const kAnalyticsUXTapNavBarRowChannels;
 extern NSString * const kAnalyticsUXTapNavBarRowLikes;
 extern NSString * const kAnalyticsUXTapNavBarRowLogin;
 extern NSString * const kAnalyticsUXTapNavBarRowSettings;

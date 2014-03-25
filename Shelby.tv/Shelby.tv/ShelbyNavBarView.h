@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *streamButton;
 @property (weak, nonatomic) IBOutlet UIButton *sharesButton;
 @property (weak, nonatomic) IBOutlet UIButton *communityButton;
+@property (weak, nonatomic) IBOutlet UIButton *channelsButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
 @property (weak, nonatomic) IBOutlet UIButton *notificationCenterButton;

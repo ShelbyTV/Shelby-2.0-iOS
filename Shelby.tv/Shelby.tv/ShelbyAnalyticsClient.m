@@ -124,6 +124,7 @@ NSString * const kAnalyticsUXShareFinish                                = @"Shar
 NSString * const kAnalyticsUXTapNavBar                                  = @"Tap Nav Bar";
 NSString * const kAnalyticsUXTapNavBarButton                            = @"Tap Nav Bar Button";
 NSString * const kAnalyticsUXTapNavBarRowFeatured                       = @"Tap Nav Bar - Featured";
+NSString * const kAnalyticsUXTapNavBarRowChannels                       = @"Tap Nav Bar - Channels";
 NSString * const kAnalyticsUXTapNavBarRowLikes                          = @"Tap Nav Bar - Likes";
 NSString * const kAnalyticsUXTapNavBarRowLogin                          = @"Tap Nav Bar - Login";
 NSString * const kAnalyticsUXTapNavBarRowSettings                       = @"Tap Nav Bar - Settings";

@@ -18,6 +18,7 @@
 - (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
+- (void)navBarViewControllerChannelsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerSignupWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerNotificationCenterWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
@@ -33,6 +34,7 @@
 @property (nonatomic, weak) id<ShelbyNavBarDelegate> delegate;
 
 - (void)didNavigateToCommunityChannel;
+- (void)didNavigateToChannels;
 - (void)didNavigateToUsersStream;
 - (void)didNavigateToUsersShares;
 - (void)didNavigateToSettings;

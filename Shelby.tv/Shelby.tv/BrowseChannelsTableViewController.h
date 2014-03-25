@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "ShelbyUserEducationViewController.h"
 
+@protocol BrowseChannelsTableViewDelegate <NSObject>
+- (void)userProfileWasTapped:(NSString *)userID;
+@end
+
 @interface BrowseChannelsTableViewController : UITableViewController
 @property (strong, nonatomic) ShelbyUserEducationViewController *userEducationVC;
+@property (nonatomic, assign) id<BrowseChannelsTableViewDelegate> delegate;
 @end

@@ -930,12 +930,10 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         }
     }];
 
-    if (DEVICE_IPAD) {
-        //first time user follows a roll, let them know what that's all about
-        //TODO: this should really be done by sending a notification and having something that subscribes to that
-        //  notification perform this
-        [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:YES roll:rollID];
-    }
+    //first time user follows a roll, let them know what that's all about
+    //TODO: this should really be done by sending a notification and having something that subscribes to that
+    //  notification perform this
+    [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:YES roll:rollID];
 }
 
 - (void)unfollowRoll:(NSString *)rollID
@@ -952,12 +950,10 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         }
     }];
 
-    if (DEVICE_IPAD) {
-        //first time user unfollows a roll, let them know what that's all about
-        //TODO: this should really be done by sending a notification and having something that subscribes to that
-        //  notification perform this
-        [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:NO roll:rollID];
-    }
+    //first time user unfollows a roll, let them know what that's all about
+    //TODO: this should really be done by sending a notification and having something that subscribes to that
+    //  notification perform this
+    [OneTimeUserEducator doOneTimeFollowingUserEducationForUser:user whenDidFollow:NO roll:rollID];
 }
 
 - (void)loginUserFacebook
