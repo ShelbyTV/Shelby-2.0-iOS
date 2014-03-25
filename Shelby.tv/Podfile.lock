@@ -1,4 +1,5 @@
 PODS:
+  - AFNetworking (1.3.3)
   - GoogleAnalytics-iOS-SDK (3.0.3)
   - GPUImage (0.1.2)
   - HockeySDK (3.5.4)
@@ -6,6 +7,7 @@ PODS:
   - Localytics-AMP (2.23.1)
 
 DEPENDENCIES:
+  - AFNetworking (~> 1.3)
   - GoogleAnalytics-iOS-SDK (~> 3.0)
   - GPUImage (= 0.1.2)
   - HockeySDK (~> 3.5)
@@ -13,6 +15,7 @@ DEPENDENCIES:
   - Localytics-AMP (~> 2.23)
 
 SPEC CHECKSUMS:
+  AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
   GoogleAnalytics-iOS-SDK: 7b0e55cfe5e70d60478a7b105f15ac71e8bc373e
   GPUImage: 007145faa0e27f1ddbcab93e07f026c9776e2fa2
   HockeySDK: aa28abb106de7804d31acf515f2c9aa4e6481fd0
