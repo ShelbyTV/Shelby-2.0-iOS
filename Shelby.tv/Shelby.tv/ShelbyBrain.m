@@ -1026,7 +1026,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)openSingleVideoViewWithDashboardEntryID:(NSString *)dashboardID
 {
-    ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
+    ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView" bundle:nil];
     singleVideoVC.masterDelegate = self;
     
     UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
@@ -1069,7 +1069,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)openSingleVideoViewWithFrameID:(NSString *)frameID
 {
-    ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
+    ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView" bundle:nil];
     singleVideoVC.masterDelegate = self;
     
     UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
@@ -1109,7 +1109,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         userInfoVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
         [self.topContainerVC pushUserProfileViewController:userInfoVC];
     } else {
-        userProfileVC = [[ShelbyUserProfileViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
+        userProfileVC = [[ShelbyUserProfileViewController alloc] initWithNibName:@"ShelbyHomeView" bundle:nil];
         userProfileVC.masterDelegate = self;
         userProfileVC.currentUser = currentUser;
         
