@@ -8,8 +8,6 @@
 
 #import "ShelbyUserEducationViewController.h"
 
-static NSString * const kShelbyUserEducationDefaultsKeyPrefix = @"userEd-";
-
 @interface ShelbyUserEducationViewController ()
 @property (nonatomic, assign) BOOL hasSeenPlaybackEntityChange;
 @property (nonatomic, assign) CGFloat nibAlpha;

@@ -19,6 +19,7 @@
 #define kShelbyDefaultOfflineModeEnabled                    @"Shelby Offline Mode Enabled"
 #define kShelbyDefaultOfflineViewModeEnabled                @"Shelby View Mode Enabled"
 #define kShelbyDefaultHMACStoredValue                       @"Shelby HMAC Stored Value"
+extern NSString * const kShelbyUserEducationDefaultsKeyPrefix; //prefix for user defaults that record whether a user has been educated with a certain user education view
 
 /// Notifications
 #define kShelbyNotificationUserAuthenticationDidSucceed     @"User Did Successfully Authenticate with Shelby Notification"

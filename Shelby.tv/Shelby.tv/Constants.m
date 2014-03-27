@@ -8,6 +8,9 @@
 
 //TODO: convert all #define strings to const strings
 
+/// NSUserDefaults
+NSString * const kShelbyUserEducationDefaultsKeyPrefix = @"userEd-";
+
 /// Notifications
 NSString * const kShelbyWillPresentModalViewNotification = @"kShelbyWillPresentModalViewNotification";
 NSString * const kShelbyDidDismissModalViewNotification = @"kShelbyDidDismissModalViewNotification";

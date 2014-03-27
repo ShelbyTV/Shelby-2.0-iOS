@@ -24,6 +24,7 @@
 #import "SPVideoReelCollectionViewController.h"
 #import "User+Helper.h"
 #import "BrowseChannelsTableViewController.h"
+#import "UserEducationFullOverlayView.h"
 
 NSString * const kShelbyShareVideoHasCompleted = @"kShelbyShareVideoHasCompleted";
 NSString * const kShelbyShareFrameIDKey = @"frameID";
@@ -759,6 +760,8 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)didNavigateToUsersStream
 {
     [self.navBarVC didNavigateToUsersStream];
+    UserEducationFullOverlayView *userEducationView = [UserEducationFullOverlayView viewForType:UserEducationFullOverlayViewTypeStream];
+    [self.view addSubview:userEducationView];
 }
 
 - (void)didNavigateToUsersOfflineLikes

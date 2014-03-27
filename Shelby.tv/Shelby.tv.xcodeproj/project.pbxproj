@@ -477,6 +477,12 @@
 		3BA1952418DCA70D00167D63 /* AnimationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1952318DCA70D00167D63 /* AnimationUtilities.m */; };
 		3BA1952518DCA70D00167D63 /* AnimationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1952318DCA70D00167D63 /* AnimationUtilities.m */; };
 		3BA1952618DCA70D00167D63 /* AnimationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1952318DCA70D00167D63 /* AnimationUtilities.m */; };
+		3BA23BB118E37490005FE081 /* StreamUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA23BB018E37490005FE081 /* StreamUserEducationFullOverlay.xib */; };
+		3BA23BB218E37490005FE081 /* StreamUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA23BB018E37490005FE081 /* StreamUserEducationFullOverlay.xib */; };
+		3BA23BB318E37490005FE081 /* StreamUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA23BB018E37490005FE081 /* StreamUserEducationFullOverlay.xib */; };
+		3BA23BB618E376C1005FE081 /* UserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA23BB518E376C1005FE081 /* UserEducationFullOverlayView.m */; };
+		3BA23BB718E376C1005FE081 /* UserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA23BB518E376C1005FE081 /* UserEducationFullOverlayView.m */; };
+		3BA23BB818E376C1005FE081 /* UserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA23BB518E376C1005FE081 /* UserEducationFullOverlayView.m */; };
 		3BA603C418D8EDB00078B952 /* ShelbyEntranceView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA603C318D8EDB00078B952 /* ShelbyEntranceView~iphone.xib */; };
 		3BA603C518D8EDB00078B952 /* ShelbyEntranceView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA603C318D8EDB00078B952 /* ShelbyEntranceView~iphone.xib */; };
 		3BA603C618D8EDB00078B952 /* ShelbyEntranceView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA603C318D8EDB00078B952 /* ShelbyEntranceView~iphone.xib */; };
@@ -1128,6 +1134,9 @@
 		3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeUserEducator.m; sourceTree = "<group>"; };
 		3BA1952218DCA70D00167D63 /* AnimationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationUtilities.h; sourceTree = "<group>"; };
 		3BA1952318DCA70D00167D63 /* AnimationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationUtilities.m; sourceTree = "<group>"; };
+		3BA23BB018E37490005FE081 /* StreamUserEducationFullOverlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamUserEducationFullOverlay.xib; path = ../StreamUserEducationFullOverlay.xib; sourceTree = "<group>"; };
+		3BA23BB418E376C1005FE081 /* UserEducationFullOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserEducationFullOverlayView.h; sourceTree = "<group>"; };
+		3BA23BB518E376C1005FE081 /* UserEducationFullOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserEducationFullOverlayView.m; sourceTree = "<group>"; };
 		3BA603C318D8EDB00078B952 /* ShelbyEntranceView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyEntranceView~iphone.xib"; sourceTree = "<group>"; };
 		3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreUserEducationView.xib; sourceTree = "<group>"; };
 		4CBDF08619EE4AFB90D8FDD2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1756,6 +1765,7 @@
 				1C100DD2185F8E16002ADAF2 /* LikeNotificationViewCell.xib */,
 				913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */,
 				91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */,
+				3BA23BB018E37490005FE081 /* StreamUserEducationFullOverlay.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -2151,6 +2161,8 @@
 				91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */,
 				914A2FF0187614530042E818 /* STVLabelWithMargins.h */,
 				914A2FF1187614530042E818 /* STVLabelWithMargins.m */,
+				3BA23BB418E376C1005FE081 /* UserEducationFullOverlayView.h */,
+				3BA23BB518E376C1005FE081 /* UserEducationFullOverlayView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2545,6 +2557,7 @@
 				9103939B18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1C3A7EDB1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9124A6B0188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
+				3BA23BB218E37490005FE081 /* StreamUserEducationFullOverlay.xib in Resources */,
 				1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1CA34E561892C79400A168D1 /* SignupHeaderView.xib in Resources */,
@@ -2679,6 +2692,7 @@
 				9103939C18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1C3A7EDC1887354C00458718 /* LoginView-iPad.xib in Resources */,
 				9124A6B1188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
+				3BA23BB318E37490005FE081 /* StreamUserEducationFullOverlay.xib in Resources */,
 				1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1CA34E571892C79400A168D1 /* SignupHeaderView.xib in Resources */,
@@ -2829,6 +2843,7 @@
 				91C37C5B18C5052600844349 /* StreamConnectTwitterCellView.xib in Resources */,
 				1C0C7DFD1852357C008F5506 /* share-icon@2x.png in Resources */,
 				1CD255C817A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
+				3BA23BB118E37490005FE081 /* StreamUserEducationFullOverlay.xib in Resources */,
 				1CD255CB17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB317A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
 				910F5BEB1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */,
@@ -2999,6 +3014,7 @@
 				1CC32451188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */,
 				1C8109A916EE2CBF0030077C /* NSString+HMAC.m in Sources */,
 				8E7024BA1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
+				3BA23BB718E376C1005FE081 /* UserEducationFullOverlayView.m in Sources */,
 				8E7024BD1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C01715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
 				8E7024C31715E71500E8DE46 /* NSURL+Base.m in Sources */,
@@ -3162,6 +3178,7 @@
 				1CC32452188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */,
 				1C810A5F16EE5EED0030077C /* NSString+HMAC.m in Sources */,
 				8E7024BB1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
+				3BA23BB818E376C1005FE081 /* UserEducationFullOverlayView.m in Sources */,
 				8E7024BE1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C11715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
 				8E7024C41715E71500E8DE46 /* NSURL+Base.m in Sources */,
@@ -3325,6 +3342,7 @@
 				1CC32450188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */,
 				8E3DCC8216E8F6F5000AF8A2 /* NSString+HMAC.m in Sources */,
 				8E7024B91715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
+				3BA23BB618E376C1005FE081 /* UserEducationFullOverlayView.m in Sources */,
 				8E7024BC1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024BF1715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
 				8E7024C21715E71500E8DE46 /* NSURL+Base.m in Sources */,
