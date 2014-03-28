@@ -37,7 +37,6 @@
 
 @property (nonatomic, weak) IBOutlet UINavigationItem *signupNavigationItem;
 
-@property (nonatomic, strong) UIPopoverController *popoverVC;
 @property (nonatomic, strong) UIImagePickerController *imagePickerVC;
 
 @property (nonatomic, strong) User *currentUser;
@@ -66,12 +65,17 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     return self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     self.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
-    
+
     if (self.prepareForSignup) {
         self.stepTwoView.alpha = 0;
         self.stepOneSignUpWithEmail.enabled = [self stepOneFieldsValid];
@@ -85,6 +89,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         self.stepTwoBio.text = self.currentUser.bio;
         self.stepTwoTitle.hidden = YES;
         self.signupNavigationItem.title = @"Edit Profile";
+        [self doStepTwoCustomSetupForNavItem:self.signupNavigationItem];
     }
     
     UIImage *textFieldBackground = [[UIImage imageNamed:@"textfield-outline-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
@@ -114,35 +119,25 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     self.avatarImage.layer.masksToBounds = YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [UIApplication sharedApplication].statusBarHidden = YES;
-    
-    if (self.prepareForSignup) {
-        [self.stepOneNickname becomeFirstResponder];
-    } else {
-        [self.stepTwoUsername becomeFirstResponder];
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    [UIApplication sharedApplication].statusBarHidden = NO;
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+- (void)doStepTwoCustomSetupForNavItem:(UINavigationItem *)navItem
+{
+    // don't need to do anything but subclasses can override if they need to
+}
+
+- (void)doStepTwoCustomActionsOnSaveProfile
+{
+    // don't need to do anything but subclasses can override if they need to
+}
+
 - (IBAction)assignAvatar:(id)sender
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera Roll", @"Take Photo", nil];
-    [actionSheet showFromRect:((UIView *)sender).frame inView:self.view animated:YES];
+    [self presentImageChooserActionSheetForAvatarView:sender];
 }
 
 - (IBAction)signupWithFacebook:(id)sender
@@ -153,6 +148,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
                                           action:kAnalyticsSignupWithFacebookStart
                                            label:nil];
 
+    [self.view endEditing:YES];
     [self.stepOneActivityIndicator startAnimating];
     self.stepOneView.userInteractionEnabled = NO;
     
@@ -164,6 +160,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [self addObserversForUpdateType:UserUpdateTypeEmail];
     self.stepOneSignUpWithEmail.enabled = NO;
     
+    [self.view endEditing:YES];
     [self.stepOneActivityIndicator startAnimating];
     self.view.userInteractionEnabled = NO;
     
@@ -187,7 +184,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     }];
 }
 
-- (IBAction)saveProfile:(id)sender
+- (IBAction)saveProfile:(UIButton *)sender
 {
     //if fields are invalid, show alert and do nothing
     if (![self stepTwoFieldsValidShowAlert:YES]) {
@@ -195,9 +192,13 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     }
     
     self.stepTwoSaveProfile.enabled = NO;
+    sender.enabled = NO;
+    [self.view endEditing:YES];
     [self.stepTwoActivityIndicator startAnimating];
     self.view.userInteractionEnabled = NO;
-    
+
+    [self doStepTwoCustomActionsOnSaveProfile];
+
     [self addObserversForUpdateType:UserUpdateTypeProfile];
     __weak ShelbySignupViewController *weakSelf = self;
     [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepTwoName.text nickname:self.stepTwoUsername.text password:self.stepTwoPassword.text email:self.stepTwoEmail.text avatar:self.avatarImage.image bio:self.stepTwoBio.text completion:^(NSError *error) {
@@ -227,7 +228,6 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 - (void)goToStepTwoWithUsername:(NSString *)username fullname:(NSString *)fullname email:(NSString *)email
 {
     self.stepTwoView.alpha = 0;
-    self.stepTwoView.frame = CGRectMake(0, 44, 768, 350);
     
     if (!email) {
         email = @"";
@@ -265,6 +265,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         self.stepOneView.alpha = 0;
     } completion:^(BOOL finished) {
         self.prepareForSignup = NO;
+        [self doStepTwoCustomSetupForNavItem:self.signupNavigationItem];
     }];
 }
 
@@ -351,7 +352,12 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (void)removeObservers
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidSucceed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidFail object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationFacebookConnectCompleted object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserUpdateDidSucceed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserUpdateDidFail object:nil];
 }
 
 - (BOOL)stepOneFieldsValid
@@ -399,38 +405,50 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     return  allFieldsValid;
 }
 
-#pragma mark - UITextFieldDelegate Methods
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+#pragma mark - Abstract Methods
+- (void)presentImageChooserActionSheetForAvatarView:(UIView *)avatarView
 {
-    return YES;
+    NSAssert(NO, @"Invoked non-overidden abstract method [ShelbySignupViewController presentImageChooserActionSheet]");
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
+- (void)presentPhotoAlbumImagePickerController:(UIImagePickerController *)imagePickerController forAvatarView:(UIView *)avatarView;
 {
+    NSAssert(NO, @"Invoked non-overidden abstract method [ShelbySignupViewController presentPhotoAlbumImagePickerController]");
 }
+
+#pragma mark - Supported Device Orientations
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+#pragma mark - UITextFieldDelegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ([self.stepOneNickname isFirstResponder]) {
-        [self.stepOneNickname resignFirstResponder];
         [self.stepOneEmail becomeFirstResponder];
     } else if ([self.stepOneEmail isFirstResponder]) {
-        [self.stepOneEmail resignFirstResponder];
         [self.stepOnePassword becomeFirstResponder];
+    } else if ([self.stepOnePassword isFirstResponder] && self.stepOneSignUpWithEmail.enabled) {
+        // if all step one fields are valid and we hit the "done" button while in the final field,
+        // just go ahead and do the sign up, don't wait for the user to additionally tap the
+        // Sign Up button
+        [self signupWithEmail:self.stepOneSignUpWithEmail];
     } else if ([self.stepTwoUsername isFirstResponder]) {
-        [self.stepTwoUsername resignFirstResponder];
         [self.stepTwoName becomeFirstResponder];
     } else if ([self.stepTwoName isFirstResponder]) {
-        [self.stepTwoName resignFirstResponder];
         [self.stepTwoEmail becomeFirstResponder];
     } else if ([self.stepTwoEmail isFirstResponder]) {
-        [self.stepTwoEmail resignFirstResponder];
         [self.stepTwoPassword becomeFirstResponder];
+    } else if ([self.stepTwoPassword isFirstResponder]) {
+        [self.stepTwoBio becomeFirstResponder];
     } else {
         [textField resignFirstResponder];
+        return YES;
     }
     
-    return YES;
+    return NO;
 }
 
 //NB: confusingly, this is the delegate for name/email on step 1 and username/password on step 4
@@ -467,7 +485,6 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     } else {
         self.stepTwoView.alpha = 0;
         [self.imagePickerVC dismissViewControllerAnimated:YES completion:^{
-            self.stepTwoView.frame = CGRectMake(0, 64, self.stepTwoView.frame.size.width, self.stepTwoView.frame.size.height);
             self.stepTwoView.alpha = 1;
         }];
     }
@@ -510,8 +527,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     self.imagePickerVC.delegate = self;
     
     if (sourceType == UIImagePickerControllerSourceTypeSavedPhotosAlbum) {
-        self.popoverVC = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerVC];
-        [self.popoverVC presentPopoverFromRect:self.avatarImage.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+        [self presentPhotoAlbumImagePickerController:self.imagePickerVC forAvatarView:self.avatarImage];
     } else {
         self.popoverVC = nil;
         self.imagePickerVC.modalPresentationStyle = UIModalPresentationFullScreen;

@@ -295,9 +295,9 @@
 		1CBF0936175CD6C7001D471A /* ShelbyHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView.xib */; };
 		1CBF0937175CD6C7001D471A /* ShelbyHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView.xib */; };
 		1CBF0938175CD6C7001D471A /* ShelbyHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView.xib */; };
-		1CC3244B188EEEC200D72CCA /* SignupView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */; };
-		1CC3244C188EEEC200D72CCA /* SignupView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */; };
-		1CC3244D188EEEC200D72CCA /* SignupView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */; };
+		1CC3244B188EEEC200D72CCA /* ShelbySignupView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3244A188EEEC200D72CCA /* ShelbySignupView~ipad.xib */; };
+		1CC3244C188EEEC200D72CCA /* ShelbySignupView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3244A188EEEC200D72CCA /* ShelbySignupView~ipad.xib */; };
+		1CC3244D188EEEC200D72CCA /* ShelbySignupView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3244A188EEEC200D72CCA /* ShelbySignupView~ipad.xib */; };
 		1CC32450188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */; };
 		1CC32451188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */; };
 		1CC32452188EF2D000D72CCA /* ShelbySignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */; };
@@ -471,6 +471,12 @@
 		1CFEB3B2186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
 		26C937AA2557465EA2344250 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
 		2FBF3481B7434BDFACD6A5AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
+		3B0096F618E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0096F518E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m */; };
+		3B0096F718E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0096F518E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m */; };
+		3B0096F818E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0096F518E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m */; };
+		3B5E816E18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5E816D18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m */; };
+		3B5E816F18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5E816D18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m */; };
+		3B5E817018E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5E816D18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m */; };
 		3B823B0D18BFFB1F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
 		3B823B0E18BFFB3E007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
 		3B823B0F18BFFB3F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
@@ -483,6 +489,12 @@
 		3BCC07CB18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
 		3BCC07CC18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
 		3BCC07CD18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
+		3BF9D33318E47D910067AFF6 /* ShelbySignupView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */; };
+		3BF9D33418E47D910067AFF6 /* ShelbySignupView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */; };
+		3BF9D33518E47D910067AFF6 /* ShelbySignupView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */; };
+		3BF9D33D18E4C3220067AFF6 /* ShelbySignupiPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF9D33C18E4C3220067AFF6 /* ShelbySignupiPadViewController.m */; };
+		3BF9D33E18E4C3220067AFF6 /* ShelbySignupiPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF9D33C18E4C3220067AFF6 /* ShelbySignupiPadViewController.m */; };
+		3BF9D33F18E4C3220067AFF6 /* ShelbySignupiPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF9D33C18E4C3220067AFF6 /* ShelbySignupiPadViewController.m */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
 		8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		8E1B2E9B16700B1F00D2C0DC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */; };
@@ -1051,7 +1063,7 @@
 		1CB709081862320B00D1C803 /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
 		1CB709091862320B00D1C803 /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		1CBF0935175CD6C7001D471A /* ShelbyHomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyHomeView.xib; sourceTree = "<group>"; };
-		1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SignupView-iPad.xib"; sourceTree = "<group>"; };
+		1CC3244A188EEEC200D72CCA /* ShelbySignupView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbySignupView~ipad.xib"; sourceTree = "<group>"; };
 		1CC3244E188EF2D000D72CCA /* ShelbySignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbySignupViewController.h; sourceTree = "<group>"; };
 		1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbySignupViewController.m; sourceTree = "<group>"; };
 		1CC32453188F15AA00D72CCA /* ShelbyValidationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyValidationUtility.h; sourceTree = "<group>"; };
@@ -1124,12 +1136,19 @@
 		1CFEB3AA186DF63F00179AE2 /* UserPreferencesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreferencesCell.h; sourceTree = "<group>"; };
 		1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreferencesCell.m; sourceTree = "<group>"; };
 		1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserPreferencesViewCell.xib; sourceTree = "<group>"; };
+		3B0096F418E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyCustomNavBarButtoniPhone.h; sourceTree = "<group>"; };
+		3B0096F518E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyCustomNavBarButtoniPhone.m; sourceTree = "<group>"; };
+		3B5E816C18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbySignupiPhoneViewController.h; sourceTree = "<group>"; };
+		3B5E816D18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbySignupiPhoneViewController.m; sourceTree = "<group>"; };
 		3B823B0B18BFFB1F007D235B /* OneTimeUserEducator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeUserEducator.h; sourceTree = "<group>"; };
 		3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeUserEducator.m; sourceTree = "<group>"; };
 		3BA1952218DCA70D00167D63 /* AnimationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationUtilities.h; sourceTree = "<group>"; };
 		3BA1952318DCA70D00167D63 /* AnimationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationUtilities.m; sourceTree = "<group>"; };
 		3BA603C318D8EDB00078B952 /* ShelbyEntranceView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyEntranceView~iphone.xib"; sourceTree = "<group>"; };
 		3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreUserEducationView.xib; sourceTree = "<group>"; };
+		3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbySignupView~iphone.xib"; sourceTree = "<group>"; };
+		3BF9D33B18E4C3220067AFF6 /* ShelbySignupiPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbySignupiPadViewController.h; sourceTree = "<group>"; };
+		3BF9D33C18E4C3220067AFF6 /* ShelbySignupiPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbySignupiPadViewController.m; sourceTree = "<group>"; };
 		4CBDF08619EE4AFB90D8FDD2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0132D916A7CC9C00195D9A /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
@@ -1540,7 +1559,7 @@
 				1C382560187DE387002177C6 /* Main.Storyboard */,
 				910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */,
 				1C3A7ED91887354C00458718 /* LoginView-iPad.xib */,
-				1CC3244A188EEEC200D72CCA /* SignupView-iPad.xib */,
+				1CC3244A188EEEC200D72CCA /* ShelbySignupView~ipad.xib */,
 				910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */,
 				1C3A7ED5188717D900458718 /* ShelbyShareView-iPad.xib */,
 				9124A67A188D8FBB00175A9C /* BrowseChannels.storyboard */,
@@ -1565,6 +1584,8 @@
 		1C38256A187E011D002177C6 /* View Controllers - iPad */ = {
 			isa = PBXGroup;
 			children = (
+				3BF9D33B18E4C3220067AFF6 /* ShelbySignupiPadViewController.h */,
+				3BF9D33C18E4C3220067AFF6 /* ShelbySignupiPadViewController.m */,
 				9124A6B61890512B00175A9C /* ShelbyEntranceViewController.h */,
 				9124A6B71890512B00175A9C /* ShelbyEntranceViewController.m */,
 				1C382575187E069A002177C6 /* ShelbyNavigationViewController.h */,
@@ -1579,8 +1600,6 @@
 				1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */,
 				1C38257F187F033D002177C6 /* ShelbyVideoReelViewController.h */,
 				1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */,
-				1CC3244E188EF2D000D72CCA /* ShelbySignupViewController.h */,
-				1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */,
 				910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */,
 				910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */,
 				9124A6A0188ED9DB00175A9C /* ShelbyVideoContentBrowsingViewControllerProtocol.h */,
@@ -1730,6 +1749,7 @@
 		1CBF0934175CD69D001D471A /* Xib-iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */,
 				3BA603C318D8EDB00078B952 /* ShelbyEntranceView~iphone.xib */,
 				1CBF0935175CD6C7001D471A /* ShelbyHomeView.xib */,
 				1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */,
@@ -2097,6 +2117,8 @@
 		8EF5C351162F41BA0075C35F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3B0096F418E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.h */,
+				3B0096F518E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m */,
 				91A3626C1790684F00381218 /* Signup Views */,
 				1CBF0934175CD69D001D471A /* Xib-iPhone */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
@@ -2172,6 +2194,10 @@
 				1CDB27DC18453D2C008E1C36 /* ShelbyUserProfileViewController.m */,
 				1C0C7E08185A19AD008F5506 /* ShelbySingleVideoViewController.h */,
 				1C0C7E09185A19AD008F5506 /* ShelbySingleVideoViewController.m */,
+				1CC3244E188EF2D000D72CCA /* ShelbySignupViewController.h */,
+				1CC3244F188EF2D000D72CCA /* ShelbySignupViewController.m */,
+				3B5E816C18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.h */,
+				3B5E816D18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m */,
 				1C06C5C41742F5CA004E8E20 /* ShelbyViewController.h */,
 				1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */,
 				1CCAC9CC1848EFCF008E603C /* ShelbyUserStreamBrowseViewController.h */,
@@ -2472,6 +2498,7 @@
 				1C56F14917BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				912261D717B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
+				3BF9D33418E47D910067AFF6 /* ShelbySignupView~iphone.xib in Resources */,
 				1C0C7DF31852328B008F5506 /* heart-icon-color.png in Resources */,
 				8E7024ED1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				910F5BEC1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */,
@@ -2486,7 +2513,7 @@
 				1CCE4C4D17E226F700F0BF5A /* user_default_avatar.png in Resources */,
 				91C37C5C18C5052600844349 /* StreamConnectTwitterCellView.xib in Resources */,
 				1C253B78184E452D00FBE054 /* LikerViewCell.xib in Resources */,
-				1CC3244C188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
+				1CC3244C188EEEC200D72CCA /* ShelbySignupView~ipad.xib in Resources */,
 				9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C3178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
 				9124A6BD1890512B00175A9C /* ShelbyEntranceView~ipad.xib in Resources */,
@@ -2606,6 +2633,7 @@
 				1C56F14A17BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				912261D817B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
+				3BF9D33518E47D910067AFF6 /* ShelbySignupView~iphone.xib in Resources */,
 				1C0C7DF41852328B008F5506 /* heart-icon-color.png in Resources */,
 				8E7024EE1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				910F5BED1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */,
@@ -2620,7 +2648,7 @@
 				1CCE4C4E17E226F700F0BF5A /* user_default_avatar.png in Resources */,
 				91C37C5D18C5052600844349 /* StreamConnectTwitterCellView.xib in Resources */,
 				1C253B79184E452D00FBE054 /* LikerViewCell.xib in Resources */,
-				1CC3244D188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
+				1CC3244D188EEEC200D72CCA /* ShelbySignupView~ipad.xib in Resources */,
 				9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C4178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
 				9124A6BE1890512B00175A9C /* ShelbyEntranceView~ipad.xib in Resources */,
@@ -2735,7 +2763,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CC3244B188EEEC200D72CCA /* SignupView-iPad.xib in Resources */,
+				1CC3244B188EEEC200D72CCA /* ShelbySignupView~ipad.xib in Resources */,
 				9194D02618C8D8470010A8F7 /* ShelbyVideoReelCollectionViewCell.xib in Resources */,
 				8E20971C162F3A61000A2DFD /* InfoPlist.strings in Resources */,
 				912261D317B97F070092AF30 /* overlay-likers.png in Resources */,
@@ -2832,6 +2860,7 @@
 				1CD255CB17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB317A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
 				910F5BEB1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */,
+				3BF9D33318E47D910067AFF6 /* ShelbySignupView~iphone.xib in Resources */,
 				1C496246189C4E4E005F9BD4 /* ShelbyChannelsCollapsedCellView.xib in Resources */,
 				1C56F14817BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				91319BCD189C4EF4000384A0 /* VideoPlayerThumbnailOverlayView.xib in Resources */,
@@ -2972,6 +3001,7 @@
 				1C81097816EE2CBF0030077C /* SPVideoPlayer.m in Sources */,
 				1C81097916EE2CBF0030077C /* SPVideoExtractor.m in Sources */,
 				1C81097D16EE2CBF0030077C /* main.m in Sources */,
+				3B0096F718E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m in Sources */,
 				1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */,
 				1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */,
 				1C81098316EE2CBF0030077C /* NSDate+Extension.m in Sources */,
@@ -3104,6 +3134,7 @@
 				91AEFE1817ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */,
 				91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36267178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
+				3B5E816F18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m in Sources */,
 				91A3626A178F296B00381218 /* easing.c in Sources */,
 				1C382578187E069A002177C6 /* ShelbyNavigationViewController.m in Sources */,
 				1CDBEE731795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
@@ -3122,6 +3153,7 @@
 				1CDB0C3417A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3A17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				1C836DD517F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
+				3BF9D33E18E4C3220067AFF6 /* ShelbySignupiPadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3135,6 +3167,7 @@
 				1C810A2E16EE5EED0030077C /* SPVideoPlayer.m in Sources */,
 				1C810A2F16EE5EED0030077C /* SPVideoExtractor.m in Sources */,
 				1C810A3316EE5EED0030077C /* main.m in Sources */,
+				3B0096F818E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m in Sources */,
 				1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */,
 				1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */,
 				1C810A3916EE5EED0030077C /* NSDate+Extension.m in Sources */,
@@ -3267,6 +3300,7 @@
 				91AEFE1917ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */,
 				91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36268178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
+				3B5E817018E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m in Sources */,
 				91A3626B178F296B00381218 /* easing.c in Sources */,
 				1C382579187E069A002177C6 /* ShelbyNavigationViewController.m in Sources */,
 				1CDBEE741795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
@@ -3285,6 +3319,7 @@
 				1CDB0C3517A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3B17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				1C836DD617F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
+				3BF9D33F18E4C3220067AFF6 /* ShelbySignupiPadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3298,6 +3333,7 @@
 				8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */,
 				8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */,
 				8E20971E162F3A61000A2DFD /* main.m in Sources */,
+				3B0096F618E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m in Sources */,
 				8E209722162F3A61000A2DFD /* AppDelegate.m in Sources */,
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
 				8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */,
@@ -3430,6 +3466,7 @@
 				91AEFE1717ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */,
 				91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36266178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
+				3B5E816E18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m in Sources */,
 				91A36269178F296B00381218 /* easing.c in Sources */,
 				1C382577187E069A002177C6 /* ShelbyNavigationViewController.m in Sources */,
 				1CDBEE721795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
@@ -3448,6 +3485,7 @@
 				1CDB0C3317A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3917AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				1C836DD417F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
+				3BF9D33D18E4C3220067AFF6 /* ShelbySignupiPadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

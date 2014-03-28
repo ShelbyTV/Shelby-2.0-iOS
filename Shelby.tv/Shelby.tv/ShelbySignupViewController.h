@@ -10,5 +10,5 @@
 
 @interface ShelbySignupViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic, assign) BOOL prepareForSignup;
-
+@property (nonatomic, strong) UIPopoverController *popoverVC;
 @end
