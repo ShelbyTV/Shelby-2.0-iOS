@@ -195,7 +195,7 @@
         [cell.preferenceSwitch setOn:[self.user.likeNotificationsIOS boolValue]];
         cell.delegate = self;
         //HACK: anonymous users aren't shown push notifications in settings
-        cell.contentView.hidden = [self.user isAnonymousUser];
+        cell.hidden = [self.user isAnonymousUser];
         return cell;
     } else {
         SettingsViewCell *cell = (SettingsViewCell *)[self.table dequeueReusableCellWithIdentifier:@"SettingsViewCell" forIndexPath:indexPath];
@@ -232,7 +232,7 @@
                 self.twitterConnected= NO;
             }
             //HACK: anonymous users aren't shown twitter connect in settings
-            cell.contentView.hidden = [self.user isAnonymousUser];
+            cell.hidden = [self.user isAnonymousUser];
             
         } else if (indexPath.row == 3) {
             cell.mainTitle.text = @"Give us Feedback";
