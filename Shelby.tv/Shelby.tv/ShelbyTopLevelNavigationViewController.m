@@ -129,6 +129,8 @@
     } else if (indexPath.row == 4) {
         cell.titleLabel.text = @"Notifications";
         [cell setBadge:self.notificationCenterVC.unseenNotifications];
+        //HACK: anonymous user shouldn't be shown notifications
+        cell.hidden = [self.currentUser isAnonymousUser];
     } else {
         cell.titleLabel.text = @"Settings";
     }

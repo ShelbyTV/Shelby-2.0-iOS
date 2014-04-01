@@ -489,7 +489,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 {
     [self setCurrentUser:user];
     [self activateHomeViewController]; // <-- automatically navigates to stream on load
-    [self fetchUserChannelsForceSwitchToUsersStream:NO]; //<-- iPad does not switch to user stream with this mechanism
+    [self fetchUserChannelsForceSwitchToUsersStream:!DEVICE_IPAD]; //<-- iPad does not switch to user stream with this mechanism
 }
 
 #pragma mark - ShelbyDataMediatorDelegate
@@ -894,6 +894,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [User sessionDidPause];
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
+    self.channelsLoadedAt = nil;
     [self resetUserDefaults];
     if (DEVICE_IPAD) {
         [self.topContainerVC animateDisappearanceWithCompletion:^{
