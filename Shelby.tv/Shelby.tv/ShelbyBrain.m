@@ -959,6 +959,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [User sessionDidPause];
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
+    self.channelsLoadedAt = nil;
     [self resetUserDefaults];
     if (DEVICE_IPAD) {
         [self.topContainerVC animateDisappearanceWithCompletion:^{
