@@ -72,8 +72,6 @@
 {
     UIView *containerView = self.prepareForSignup ? self.stepOneView : self.stepTwoView;
     self.scrollView.contentSize = containerView ? containerView.frame.size : CGSizeZero;
-    NSLog(@"Here's the container size, width: %f height: %f", containerView.frame.size.width, containerView.frame.size.height);
-    NSLog(@"And here's the container size, width: %f height: %f", self.stepTwoView.frame.size.width, self.stepTwoView.frame.size.height);
 }
 
 #pragma mark - Overidden Superclass Methods
@@ -90,7 +88,7 @@
 
 - (void)doStepTwoCustomActionsOnSaveProfile
 {
-    self.coveringDimmerView.hidden = nil;
+    self.coveringDimmerView.hidden = NO;
 }
 
 #pragma mark - Overidden Abstract Methods

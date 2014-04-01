@@ -293,7 +293,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 {
     self.stepOneView.userInteractionEnabled = YES;
     
-    [self removeObservers];
+    [self removeSignupNotificationObservers];
     if ([notification.object isKindOfClass:[NSString class]]) {
         [self showErrorMessage:notification.object];
     } else {
@@ -314,13 +314,13 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsAnonymousConvertViaFacebook];
     }
     
-    [self removeObservers];
+    [self removeSignupNotificationObservers];
     [self goToStepTwoWithUsername:nickname fullname:name email:email];
 }
 
 - (void)userUpdateDidFail:(NSNotification *)notification
 {
-    [self removeObservers];
+    [self removeSignupNotificationObservers];
     
     if ([notification.object isKindOfClass:[NSString class]]) {
         [self showErrorMessage:notification.object];
@@ -331,7 +331,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (void)userUpdateDidSucceed:(NSNotification *)notification
 {
-    [self removeObservers];
+    [self removeSignupNotificationObservers];
     
 //    [self signupSuccess];
 }
@@ -350,7 +350,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     }
 }
 
-- (void)removeObservers
+- (void)removeSignupNotificationObservers
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidSucceed object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidFail object:nil];
@@ -408,12 +408,12 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 #pragma mark - Abstract Methods
 - (void)presentImageChooserActionSheetForAvatarView:(UIView *)avatarView
 {
-    NSAssert(NO, @"Invoked non-overidden abstract method [ShelbySignupViewController presentImageChooserActionSheet]");
+    STVAssert(NO, @"Invoked non-overidden abstract method [ShelbySignupViewController presentImageChooserActionSheet]");
 }
 
 - (void)presentPhotoAlbumImagePickerController:(UIImagePickerController *)imagePickerController forAvatarView:(UIView *)avatarView;
 {
-    NSAssert(NO, @"Invoked non-overidden abstract method [ShelbySignupViewController presentPhotoAlbumImagePickerController]");
+    STVAssert(NO, @"Invoked non-overidden abstract method [ShelbySignupViewController presentPhotoAlbumImagePickerController]");
 }
 
 #pragma mark - Supported Device Orientations
