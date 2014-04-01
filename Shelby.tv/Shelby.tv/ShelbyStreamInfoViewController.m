@@ -358,7 +358,7 @@ NSString * const kShelbyStreamConnectTwitterCell = @"StreamConnectTWT";
         return (self.mayShowConnectSocial && !self.currentUserHasFacebookConnected && ![StreamConnectFacebookTableViewCell userWantsHidden]) ? 1 : 0;
         
     } else if (section == SECTION_FOR_CONNECT_TWITTER) {
-        return (self.mayShowConnectSocial && !self.currentUserHasTwitterConnected && ![StreamConnectTwitterTableViewCell userWantsHidden]) ? 1 : 0;
+        return (self.mayShowConnectSocial && ![self.currentUser isAnonymousUser] && !self.currentUserHasTwitterConnected && ![StreamConnectTwitterTableViewCell userWantsHidden]) ? 1 : 0;
     
     } else if (section == SECTION_FOR_NO_CONTENT) {
         return self.showNoContentView ? 1 : 0;
@@ -465,7 +465,7 @@ NSString * const kShelbyStreamConnectTwitterCell = @"StreamConnectTWT";
         return [StreamConnectFacebookTableViewCell cellHeight];
         
     } else if (indexPath.section == SECTION_FOR_CONNECT_TWITTER) {
-        return [self.currentUser isAnonymousUser] ? 0 : [StreamConnectTwitterTableViewCell cellHeight];
+        return (self.mayShowConnectSocial && ![self.currentUser isAnonymousUser] && !self.currentUserHasTwitterConnected && ![StreamConnectTwitterTableViewCell userWantsHidden]) ? [StreamConnectTwitterTableViewCell cellHeight] : 0;
     
     } else if (indexPath.section == SECTION_FOR_NO_CONTENT) {
         return [NoContentView noActivityCellHeight];
