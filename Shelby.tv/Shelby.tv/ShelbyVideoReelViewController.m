@@ -223,15 +223,10 @@
     //it will update video controls w/ current state of SPVideoPlayer
     self.airPlayController.videoControlsVC = _videoControlsVC;
     
-    //airplay cares when we become/resign active
+    //airplay cares when we become active
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleDidBecomeActiveNotification:)
                                                  name:kShelbyBrainDidBecomeActiveNotification object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleWillResignActiveNotification:)
-                                                 name:kShelbyBrainWillResignActiveNotification object:nil];
 }
 
 #pragma mark - Notification Handlers
@@ -256,11 +251,6 @@
 - (void)handleDidBecomeActiveNotification:(NSNotification *)notification
 {
     [self.airPlayController checkForExistingScreenAndInitializeIfPresent];
-}
-
-- (void)handleWillResignActiveNotification:(NSNotification *)notification
-{
-    [self videoControlsPauseCurrentVideo:nil];
 }
 
 - (void)willPresentModalViewNotification:(NSNotification *)notification

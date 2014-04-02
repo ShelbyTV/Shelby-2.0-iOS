@@ -152,11 +152,15 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)handleDidBecomeActiveNotification:(NSNotification *)notification
 {
-    [self.airPlayController checkForExistingScreenAndInitializeIfPresent];
+    //airplay controller does its own thing
 }
 
 - (void)handleWillResignActiveNotification:(NSNotification *)notification
 {
+    if (self.airPlayController.isAirPlayActive) {
+        //do not pause when air playing
+        return;
+    }
     [self pauseCurrentVideo];
 }
 
