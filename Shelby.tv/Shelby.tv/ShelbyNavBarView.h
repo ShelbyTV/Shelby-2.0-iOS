@@ -24,6 +24,6 @@
 //our model, set to update display state
 @property (weak, nonatomic) UIView *currentRow;
 
-- (void)showLoggedInUserRows:(BOOL)showUserRows;
+- (void)hideRowsForAnonymousUser:(BOOL)hideAnonymousRows;
 
 @end

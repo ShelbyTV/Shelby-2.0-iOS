@@ -1378,9 +1378,21 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     [self dismissVideoReel];
-    [self.masterDelegate presentUserLogin];
-    //presentation is modal, nav hasn't actually changed...
+    [[[UIAlertView alloc] initWithTitle:@"Already Have an Account?"
+                                message:@"You're using Shelby without an account. You can continue like this and convert to an account later, or log in with an existing account. Logging in will erase your progress so far."
+                               delegate:self
+                      cancelButtonTitle:@"Keep Using"
+                      otherButtonTitles:@"Erase & Log in", nil] show];
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
+}
+
+#pragma mark - UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self.masterDelegate logoutUser];
+    }
 }
 
 #pragma mark - ShelbyNotificationDelegate Methods

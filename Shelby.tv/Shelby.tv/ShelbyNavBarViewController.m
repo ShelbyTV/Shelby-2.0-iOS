@@ -39,7 +39,7 @@
 - (void)setCurrentUser:(User *)currentUser
 {
     _currentUser = currentUser;
-    [self.navBarView showLoggedInUserRows:(_currentUser != nil)];
+    [self.navBarView hideRowsForAnonymousUser:[_currentUser isAnonymousUser]];
 }
 
 - (void)didNavigateToCommunityChannel
