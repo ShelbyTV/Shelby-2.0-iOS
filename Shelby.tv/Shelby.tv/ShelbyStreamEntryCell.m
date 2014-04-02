@@ -269,6 +269,10 @@
 
 - (IBAction)openUserProfile:(id)sender
 {
+    if ([self.dashboardEntry recommendedEntry]) {
+        //there is no profile
+        return;
+    }
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardSharingUser];
     [self.delegate userProfileWasTapped:self.videoFrame.creator.userID];
 }
