@@ -489,6 +489,9 @@
 		3BCC07CB18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
 		3BCC07CC18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
 		3BCC07CD18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
+		3BF6B9A918EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */; };
+		3BF6B9AA18EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */; };
+		3BF6B9AB18EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
 		8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		8E1B2E9B16700B1F00D2C0DC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */; };
@@ -1139,6 +1142,8 @@
 		3BA23BB518E376C1005FE081 /* UserEducationFullOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserEducationFullOverlayView.m; sourceTree = "<group>"; };
 		3BA603C318D8EDB00078B952 /* ShelbyEntranceView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyEntranceView~iphone.xib"; sourceTree = "<group>"; };
 		3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreUserEducationView.xib; sourceTree = "<group>"; };
+		3BF6B9A718EDBBD900DDC62B /* StreamUserEducationFullOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamUserEducationFullOverlayView.h; sourceTree = "<group>"; };
+		3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamUserEducationFullOverlayView.m; sourceTree = "<group>"; };
 		4CBDF08619EE4AFB90D8FDD2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0132D916A7CC9C00195D9A /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
@@ -2163,6 +2168,8 @@
 				914A2FF1187614530042E818 /* STVLabelWithMargins.m */,
 				3BA23BB418E376C1005FE081 /* UserEducationFullOverlayView.h */,
 				3BA23BB518E376C1005FE081 /* UserEducationFullOverlayView.m */,
+				3BF6B9A718EDBBD900DDC62B /* StreamUserEducationFullOverlayView.h */,
+				3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3029,6 +3036,7 @@
 				8E7024D21715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D51715E71500E8DE46 /* OAConsumer.m in Sources */,
 				910F5BF11884D1A00069E380 /* VideoOverlayView.m in Sources */,
+				3BF6B9AA18EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */,
 				8E7024D81715E71500E8DE46 /* OADataFetcher.m in Sources */,
 				8E7024DB1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DE1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
@@ -3193,6 +3201,7 @@
 				8E7024D31715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D61715E71500E8DE46 /* OAConsumer.m in Sources */,
 				910F5BF21884D1A00069E380 /* VideoOverlayView.m in Sources */,
+				3BF6B9AB18EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */,
 				8E7024D91715E71500E8DE46 /* OADataFetcher.m in Sources */,
 				8E7024DC1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DF1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
@@ -3357,6 +3366,7 @@
 				8E7024D11715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D41715E71500E8DE46 /* OAConsumer.m in Sources */,
 				910F5BF01884D1A00069E380 /* VideoOverlayView.m in Sources */,
+				3BF6B9A918EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */,
 				8E7024D71715E71500E8DE46 /* OADataFetcher.m in Sources */,
 				8E7024DA1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DD1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,

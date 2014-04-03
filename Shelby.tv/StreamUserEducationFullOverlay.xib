@@ -2,33 +2,114 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view opaque="NO" contentMode="scaleToFill" id="iN0-l3-epB" customClass="UserEducationFullOverlayView">
+        <view opaque="NO" contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Stream User Education Full Overlay View" customClass="StreamUserEducationFullOverlayView">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vN4-rs-c73">
-                    <rect key="frame" x="65" y="228" width="191" height="111"/>
+                <view opaque="NO" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GRK-pu-SIa" userLabel="Full Container">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ofd-eh-AIh" userLabel="Content Container">
+                    <rect key="frame" x="0.0" y="44" width="320" height="480"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="We'll add videos from channels and people you follow to your stream." lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="180" translatesAutoresizingMaskIntoConstraints="NO" id="hb2-XV-Yfz">
-                            <rect key="frame" x="11" y="-4" width="180" height="120"/>
+                        <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TBN-dF-ZS5" userLabel="Top Text Container">
+                            <rect key="frame" x="20" y="0.0" width="280" height="143"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="o2k-D2-HZw" userLabel="Top Text">
+                                    <rect key="frame" x="0.0" y="0.0" width="280" height="143"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <string key="text">We'll add videos
+from channels
+and people you follow
+to your stream.</string>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="o2k-D2-HZw" secondAttribute="trailing" id="5Ng-l0-KUC"/>
+                                <constraint firstItem="o2k-D2-HZw" firstAttribute="leading" secondItem="TBN-dF-ZS5" secondAttribute="leading" id="BZb-SQ-1sU"/>
+                                <constraint firstAttribute="bottom" secondItem="o2k-D2-HZw" secondAttribute="bottom" id="dlB-PY-1Ro"/>
+                                <constraint firstItem="o2k-D2-HZw" firstAttribute="top" secondItem="TBN-dF-ZS5" secondAttribute="top" id="vK8-kd-rqa"/>
+                            </constraints>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-up-down" translatesAutoresizingMaskIntoConstraints="NO" id="MkT-es-0g7">
+                            <rect key="frame" x="143" y="151" width="35" height="178"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="MkT-es-0g7" secondAttribute="height" multiplier="35:178" id="j14-wB-owe"/>
+                            </constraints>
+                        </imageView>
+                        <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXq-EU-K8e" userLabel="Bottom Text Container">
+                            <rect key="frame" x="20" y="337" width="280" height="143"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="yzc-kj-lGO" userLabel="Bottom Text">
+                                    <rect key="frame" x="0.0" y="0.0" width="280" height="143"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <string key="text">Swipe up/down to flip
+between videos.</string>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="yzc-kj-lGO" secondAttribute="trailing" id="0vR-CM-vwP"/>
+                                <constraint firstItem="yzc-kj-lGO" firstAttribute="top" secondItem="hXq-EU-K8e" secondAttribute="top" id="COX-0c-0hQ"/>
+                                <constraint firstItem="yzc-kj-lGO" firstAttribute="leading" secondItem="hXq-EU-K8e" secondAttribute="leading" id="R5y-Ai-S3M"/>
+                                <constraint firstAttribute="bottom" secondItem="yzc-kj-lGO" secondAttribute="bottom" id="sru-nZ-VZK"/>
+                            </constraints>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="hXq-EU-K8e" secondAttribute="bottom" id="3eZ-o4-DkE"/>
+                        <constraint firstItem="MkT-es-0g7" firstAttribute="top" secondItem="TBN-dF-ZS5" secondAttribute="bottom" constant="8" symbolic="YES" id="C0P-eh-8zh"/>
+                        <constraint firstItem="TBN-dF-ZS5" firstAttribute="top" secondItem="Ofd-eh-AIh" secondAttribute="top" id="XW4-Z3-L7z"/>
+                        <constraint firstAttribute="centerX" secondItem="MkT-es-0g7" secondAttribute="centerX" id="Y9p-q2-fIg"/>
+                        <constraint firstItem="hXq-EU-K8e" firstAttribute="top" secondItem="MkT-es-0g7" secondAttribute="bottom" constant="8" symbolic="YES" id="agO-TY-oca"/>
+                        <constraint firstItem="TBN-dF-ZS5" firstAttribute="leading" secondItem="Ofd-eh-AIh" secondAttribute="leading" constant="20" symbolic="YES" id="dxC-9e-LoR"/>
+                        <constraint firstItem="MkT-es-0g7" firstAttribute="height" secondItem="Ofd-eh-AIh" secondAttribute="height" multiplier="0.370833" id="fFF-n7-KV7"/>
+                        <constraint firstAttribute="trailing" secondItem="hXq-EU-K8e" secondAttribute="trailing" constant="20" symbolic="YES" id="jEL-j4-ALw"/>
+                        <constraint firstItem="hXq-EU-K8e" firstAttribute="leading" secondItem="Ofd-eh-AIh" secondAttribute="leading" constant="20" symbolic="YES" id="mpv-WU-VHz"/>
+                        <constraint firstAttribute="centerY" secondItem="MkT-es-0g7" secondAttribute="centerY" id="oMV-1b-Nx3"/>
+                        <constraint firstAttribute="trailing" secondItem="TBN-dF-ZS5" secondAttribute="trailing" constant="20" symbolic="YES" id="zD1-ca-AoU"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="GRK-pu-SIa" secondAttribute="trailing" id="7Oc-Xj-3LG"/>
+                <constraint firstAttribute="trailing" secondItem="Ofd-eh-AIh" secondAttribute="trailing" id="9Pq-Km-M9h"/>
+                <constraint firstAttribute="bottom" secondItem="GRK-pu-SIa" secondAttribute="bottom" id="Idn-UZ-k7w"/>
+                <constraint firstAttribute="bottom" secondItem="Ofd-eh-AIh" secondAttribute="bottom" constant="44" id="TGU-SV-Vq8"/>
+                <constraint firstItem="Ofd-eh-AIh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="44" id="XQY-gG-MNL"/>
+                <constraint firstItem="GRK-pu-SIa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="iJz-zI-2cc"/>
+                <constraint firstItem="GRK-pu-SIa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="iev-23-Isn"/>
+                <constraint firstItem="Ofd-eh-AIh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wZb-Bw-6o2"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <connections>
+                <outlet property="topTextLabel" destination="o2k-D2-HZw" id="iKy-Gh-VP3"/>
+            </connections>
         </view>
     </objects>
+    <resources>
+        <image name="arrow-up-down" width="35" height="176"/>
+    </resources>
 </document>
