@@ -97,8 +97,13 @@
     
     self.detailUserAvatar.layer.cornerRadius = CGRectGetWidth(self.detailUserAvatar.bounds)/2.f;
     self.detailUserAvatar.layer.masksToBounds = YES;
+    self.detailAvatarBadge.layer.cornerRadius = CGRectGetWidth(self.detailAvatarBadge.bounds)/2.f;
+    self.detailAvatarBadge.layer.masksToBounds = YES;
     self.summaryUserAvatar.layer.cornerRadius = CGRectGetWidth(self.summaryUserAvatar.bounds)/2.f;
     self.summaryUserAvatar.layer.masksToBounds = YES;
+    self.summaryAvatarBadge.layer.cornerRadius = CGRectGetWidth(self.summaryAvatarBadge.bounds)/2.f;
+    self.summaryAvatarBadge.layer.masksToBounds = YES;
+
 
     [self setupOverlayImageView];
     [self insertSubview:self.overlayImageView atIndex:0];
