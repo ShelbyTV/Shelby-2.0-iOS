@@ -40,6 +40,8 @@
 - (void)didNavigateToSettings;
 - (void)didNavigateToNotificationCenter;
 
+- (BOOL)expand;
+
 - (void)returnSelectionToPreviousRow;
 - (void)setUnseenNotificationCount:(NSInteger)unseenNotificationCount;
 @end

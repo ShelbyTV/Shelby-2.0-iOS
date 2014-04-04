@@ -144,6 +144,16 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // if the user still needs to be educated about channels, pop open the nav bar and show the channels education overlay
+    if (![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeChannels]) {
+        [self presentUserEducationFullOverlayViewForType:UserEducationFullOverlayViewTypeChannels];
+        [self.navBarVC expand];
+    }
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -760,8 +770,11 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)didNavigateToUsersStream
 {
     [self.navBarVC didNavigateToUsersStream];
-    UserEducationFullOverlayView *userEducationView = [UserEducationFullOverlayView viewForType:UserEducationFullOverlayViewTypeStream];
-    [self.view addSubview:userEducationView];
+    // if the user has already been educated about channels but not the stream, show them stream education now
+    if ([UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeChannels] &&
+        ![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeStream]) {
+        [self presentUserEducationFullOverlayViewForType:UserEducationFullOverlayViewTypeStream];
+    }
 }
 
 - (void)didNavigateToUsersOfflineLikes
@@ -800,6 +813,21 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     });
 }
 
+- (void)presentUserEducationFullOverlayViewForType:(UserEducationFullOverlayViewType)overlayViewType
+{
+    UserEducationFullOverlayView *userEducationView = [UserEducationFullOverlayView viewForType:overlayViewType];
+
+    // add the user education view as the last child of my view so it will cover everything
+    userEducationView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:userEducationView];
+
+    // setup constraints to have the user education view completely fill its superview
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:userEducationView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:userEducationView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+    NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:userEducationView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0];
+    NSLayoutConstraint *trailingConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:userEducationView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0];
+    [self.view addConstraints:@[topConstraint, bottomConstraint, leadingConstraint, trailingConstraint]];
+}
 
 #pragma mark - ShelbyStreamBrowseViewDelegate
 

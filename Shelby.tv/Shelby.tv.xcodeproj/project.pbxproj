@@ -471,6 +471,12 @@
 		1CFEB3B2186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
 		26C937AA2557465EA2344250 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
 		2FBF3481B7434BDFACD6A5AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBDF08619EE4AFB90D8FDD2 /* libPods.a */; };
+		3B473E3418EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */; };
+		3B473E3518EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */; };
+		3B473E3618EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */; };
+		3B5985C718EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */; };
+		3B5985C818EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */; };
+		3B5985C918EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */; };
 		3B823B0D18BFFB1F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
 		3B823B0E18BFFB3E007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
 		3B823B0F18BFFB3F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
@@ -1133,6 +1139,9 @@
 		1CFEB3AA186DF63F00179AE2 /* UserPreferencesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreferencesCell.h; sourceTree = "<group>"; };
 		1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreferencesCell.m; sourceTree = "<group>"; };
 		1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserPreferencesViewCell.xib; sourceTree = "<group>"; };
+		3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelsUserEducationFullOverlay.xib; sourceTree = "<group>"; };
+		3B5985C518EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelsUserEducationFullOverlayView.h; sourceTree = "<group>"; };
+		3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelsUserEducationFullOverlayView.m; sourceTree = "<group>"; };
 		3B823B0B18BFFB1F007D235B /* OneTimeUserEducator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeUserEducator.h; sourceTree = "<group>"; };
 		3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeUserEducator.m; sourceTree = "<group>"; };
 		3BA1952218DCA70D00167D63 /* AnimationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationUtilities.h; sourceTree = "<group>"; };
@@ -1770,6 +1779,7 @@
 				1C100DD2185F8E16002ADAF2 /* LikeNotificationViewCell.xib */,
 				913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */,
 				91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */,
+				3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */,
 				3BA23BB018E37490005FE081 /* StreamUserEducationFullOverlay.xib */,
 			);
 			name = "Xib-iPhone";
@@ -2168,6 +2178,8 @@
 				914A2FF1187614530042E818 /* STVLabelWithMargins.m */,
 				3BA23BB418E376C1005FE081 /* UserEducationFullOverlayView.h */,
 				3BA23BB518E376C1005FE081 /* UserEducationFullOverlayView.m */,
+				3B5985C518EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.h */,
+				3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */,
 				3BF6B9A718EDBBD900DDC62B /* StreamUserEducationFullOverlayView.h */,
 				3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */,
 			);
@@ -2517,6 +2529,7 @@
 				1C7B63F1178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C100DE2185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */,
 				1C7B63F4178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
+				3B473E3518EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib in Resources */,
 				1C0C7DFB1852357C008F5506 /* share-icon.png in Resources */,
 				91E4FF4018CF4C5800005650 /* Ubuntu-M.ttf in Resources */,
 				1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
@@ -2652,6 +2665,7 @@
 				1C7B63F2178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C100DE3185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */,
 				1C7B63F5178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
+				3B473E3618EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib in Resources */,
 				1C0C7DFC1852357C008F5506 /* share-icon.png in Resources */,
 				91E4FF4118CF4C5800005650 /* Ubuntu-M.ttf in Resources */,
 				1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
@@ -2767,6 +2781,7 @@
 				1C0C7DFA1852357C008F5506 /* share-icon.png in Resources */,
 				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				8E7024EC1715E71500E8DE46 /* OATestServer.rb in Resources */,
+				3B473E3418EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib in Resources */,
 				91E4FF3F18CF4C5800005650 /* Ubuntu-M.ttf in Resources */,
 				8E7024F51715E71500E8DE46 /* README in Resources */,
 				9103939018A131DC003B911D /* NoContentViews.xib in Resources */,
@@ -3120,6 +3135,7 @@
 				1CB7090B1862320B00D1C803 /* DashboardEntry.m in Sources */,
 				1C7B63CD178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E4178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
+				3B5985C818EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m in Sources */,
 				1C56F13A17BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63F9178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
@@ -3285,6 +3301,7 @@
 				1CB7090C1862320B00D1C803 /* DashboardEntry.m in Sources */,
 				1C7B63CE178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E5178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
+				3B5985C918EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m in Sources */,
 				1C56F13B17BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63FA178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
@@ -3450,6 +3467,7 @@
 				1CB7090A1862320B00D1C803 /* DashboardEntry.m in Sources */,
 				1C7B63CC178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E3178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
+				3B5985C718EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m in Sources */,
 				1C56F13917BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63F8178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,

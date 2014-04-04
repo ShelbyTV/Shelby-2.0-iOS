@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view opaque="NO" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GRK-pu-SIa" userLabel="Full Container">
+                <view opaque="NO" alpha="0.875" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GRK-pu-SIa" userLabel="Dimmed Background">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -45,7 +45,7 @@ to your stream.</string>
                                 <constraint firstItem="o2k-D2-HZw" firstAttribute="top" secondItem="TBN-dF-ZS5" secondAttribute="top" id="vK8-kd-rqa"/>
                             </constraints>
                         </view>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-up-down" translatesAutoresizingMaskIntoConstraints="NO" id="MkT-es-0g7">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="arrow-up-down" translatesAutoresizingMaskIntoConstraints="NO" id="MkT-es-0g7">
                             <rect key="frame" x="143" y="151" width="35" height="178"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <constraints>

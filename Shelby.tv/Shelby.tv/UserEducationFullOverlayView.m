@@ -15,14 +15,15 @@ static NSDictionary *typeToNibMap;
 + (void)initialize {
     typeToNibMap =
         @{
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeStream] : @"StreamUserEducationFullOverlay"
+          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeStream] : @"StreamUserEducationFullOverlay",
+          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeChannels] : @"ChannelsUserEducationFullOverlay"
           };
 }
 
 + (UserEducationFullOverlayView *)viewForType:(UserEducationFullOverlayViewType)overlayViewType
 {
     NSString *nibName = [typeToNibMap objectForKey:[NSNumber numberWithInteger:overlayViewType]];
-    if (nibName && ![UserEducationFullOverlayView isUserEducatedFor:nibName]) {
+    if (nibName && ![UserEducationFullOverlayView isUserEducatedForType:overlayViewType]) {
         UserEducationFullOverlayView *view = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil][0];
         view.overlayViewType = overlayViewType;
         return view;
@@ -31,17 +32,14 @@ static NSDictionary *typeToNibMap;
     return nil;
 }
 
-+ (BOOL)isUserEducatedFor:(NSString *)nibName
++ (BOOL)isUserEducatedForType:(UserEducationFullOverlayViewType)overlayViewType
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, nibName]];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, [NSNumber numberWithInteger:overlayViewType]]];
 }
 
 + (void)setUserIsEducatedForType:(UserEducationFullOverlayViewType)overlayViewType
 {
-    NSString *nibName = [typeToNibMap objectForKey:[NSNumber numberWithInteger:overlayViewType]];
-    if (nibName) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, nibName]];
-    }
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, [NSNumber numberWithInteger:overlayViewType]]];
 }
 
 - (id)initWithFrame:(CGRect)frame
