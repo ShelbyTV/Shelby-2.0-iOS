@@ -504,6 +504,9 @@
 		3BF6B9A918EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */; };
 		3BF6B9AA18EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */; };
 		3BF6B9AB18EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */; };
+		3BF6B9AD18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6B9AC18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib */; };
+		3BF6B9AE18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6B9AC18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib */; };
+		3BF6B9AF18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6B9AC18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib */; };
 		3BF9D33318E47D910067AFF6 /* ShelbySignupView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */; };
 		3BF9D33418E47D910067AFF6 /* ShelbySignupView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */; };
 		3BF9D33518E47D910067AFF6 /* ShelbySignupView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */; };
@@ -1169,6 +1172,7 @@
 		3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreUserEducationView.xib; sourceTree = "<group>"; };
 		3BF6B9A718EDBBD900DDC62B /* StreamUserEducationFullOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamUserEducationFullOverlayView.h; sourceTree = "<group>"; };
 		3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamUserEducationFullOverlayView.m; sourceTree = "<group>"; };
+		3BF6B9AC18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoColumnUserEducationFullOverlay.xib; sourceTree = "<group>"; };
 		3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbySignupView~iphone.xib"; sourceTree = "<group>"; };
 		3BF9D33B18E4C3220067AFF6 /* ShelbySignupiPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbySignupiPadViewController.h; sourceTree = "<group>"; };
 		3BF9D33C18E4C3220067AFF6 /* ShelbySignupiPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbySignupiPadViewController.m; sourceTree = "<group>"; };
@@ -1801,6 +1805,7 @@
 				91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */,
 				3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */,
 				3BA23BB018E37490005FE081 /* StreamUserEducationFullOverlay.xib */,
+				3BF6B9AC18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -2142,8 +2147,6 @@
 		8EF5C351162F41BA0075C35F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3B0096F418E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.h */,
-				3B0096F518E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m */,
 				91A3626C1790684F00381218 /* Signup Views */,
 				1CBF0934175CD69D001D471A /* Xib-iPhone */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
@@ -2174,6 +2177,8 @@
 				91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */,
 				1C253B6D184D458300FBE054 /* ShelbyLikersViewController.h */,
 				1C253B6E184D458300FBE054 /* ShelbyLikersViewController.m */,
+				3B0096F518E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m */,
+				3B0096F418E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.h */,
 				9119AB7617821A5C001C9190 /* VideoControlsView.h */,
 				1C7B63E1178B7B60000C1E84 /* SignupVideoTypeViewCell.h */,
 				1C7B63E2178B7B60000C1E84 /* SignupVideoTypeViewCell.m */,
@@ -2603,6 +2608,7 @@
 				1CE5586B17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
 				9103939B18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1C3A7EDB1887354C00458718 /* LoginView-iPad.xib in Resources */,
+				3BF6B9AE18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib in Resources */,
 				9124A6B0188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
 				3BA23BB218E37490005FE081 /* StreamUserEducationFullOverlay.xib in Resources */,
 				1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */,
@@ -2740,6 +2746,7 @@
 				1CE5586C17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
 				9103939C18AA6D91003B911D /* VideoReelAirplayBackdropView.xib in Resources */,
 				1C3A7EDC1887354C00458718 /* LoginView-iPad.xib in Resources */,
+				3BF6B9AF18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib in Resources */,
 				9124A6B1188F0F4B00175A9C /* StreamUserEducationView.xib in Resources */,
 				3BA23BB318E37490005FE081 /* StreamUserEducationFullOverlay.xib in Resources */,
 				1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */,
@@ -2864,6 +2871,7 @@
 				9124A698188ECF2100175A9C /* BrowseChannelsHeaderView.xib in Resources */,
 				1CDCA687179DCE190098C4E1 /* scrubber@2x.png in Resources */,
 				1C56F13617BABD8C00EE9206 /* .gitignore in Resources */,
+				3BF6B9AD18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib in Resources */,
 				912261D617B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				1C49623A18999692005F9BD4 /* ShelbyStreamEntryCellView.xib in Resources */,
 				912261DC17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,

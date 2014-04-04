@@ -16,7 +16,8 @@ static NSDictionary *typeToNibMap;
     typeToNibMap =
         @{
           [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeStream] : @"StreamUserEducationFullOverlay",
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeChannels] : @"ChannelsUserEducationFullOverlay"
+          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeChannels] : @"ChannelsUserEducationFullOverlay",
+          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeTwoColumn] : @"TwoColumnUserEducationFullOverlay"
           };
 }
 
