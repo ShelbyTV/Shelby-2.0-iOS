@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShelbySignupViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShelbySignupiPadViewController">
             <connections>
                 <outlet property="avatarImage" destination="Yxc-9n-mh0" id="Lys-9X-1SX"/>
                 <outlet property="signupNavigationItem" destination="POl-02-Ky0" id="kzW-82-AKb"/>
                 <outlet property="stepOneActivityIndicator" destination="97k-gM-dMd" id="ume-He-lGR"/>
                 <outlet property="stepOneEmail" destination="1kr-mB-xRh" id="6Hx-em-lSu"/>
-                <outlet property="stepOneNickname" destination="o9Q-kS-Azh" id="Ui5-Et-Gz8"/>
+                <outlet property="stepOneNickname" destination="o9Q-kS-Azh" id="4GE-YB-y6N"/>
                 <outlet property="stepOneOr" destination="BQw-bS-fO5" id="WcX-eg-IUt"/>
                 <outlet property="stepOnePassword" destination="qc7-PO-NOA" id="Vwt-Ae-NA5"/>
                 <outlet property="stepOneSignUpWithEmail" destination="rTE-6V-vPp" id="rBD-g8-PHm"/>
@@ -23,7 +23,7 @@
                 <outlet property="stepTwoPassword" destination="pfv-LR-IVf" id="wpK-IS-qtR"/>
                 <outlet property="stepTwoSaveProfile" destination="TH0-pU-ni6" id="BCi-pe-5Ac"/>
                 <outlet property="stepTwoTitle" destination="S4h-Dh-hCC" id="1Ea-lT-Mgg"/>
-                <outlet property="stepTwoUsername" destination="mxi-dc-wWz" id="ce8-dJ-xUq"/>
+                <outlet property="stepTwoUsername" destination="mxi-dc-wWz" id="WTc-Tq-DSv"/>
                 <outlet property="stepTwoView" destination="5fn-ri-bS4" id="6qu-nB-4fk"/>
                 <outlet property="view" destination="1" id="opX-Va-iFh"/>
             </connections>
@@ -80,7 +80,7 @@
                             <rect key="frame" x="452" y="202" width="221" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="ACN-i1-izW"/>
                             </connections>
@@ -228,7 +228,7 @@
                                 <action selector="saveProfile:" destination="-1" eventType="touchUpInside" id="6Dp-SJ-8Lf"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blank-avarar-large" translatesAutoresizingMaskIntoConstraints="NO" id="Yxc-9n-mh0">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blank-avatar-large" translatesAutoresizingMaskIntoConstraints="NO" id="Yxc-9n-mh0">
                             <rect key="frame" x="53" y="105" width="80" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -268,6 +268,9 @@
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="5Vv-lm-xVN"/>
+                            </connections>
                         </textView>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="d7H-D6-0Vs">
                             <rect key="frame" x="613" y="296" width="20" height="20"/>
@@ -283,7 +286,7 @@
         </view>
     </objects>
     <resources>
-        <image name="blank-avarar-large" width="100" height="100"/>
+        <image name="blank-avatar-large" width="100" height="100"/>
         <image name="close-icon.png" width="18" height="18"/>
         <image name="facebook-button-icon" width="9" height="18"/>
     </resources>

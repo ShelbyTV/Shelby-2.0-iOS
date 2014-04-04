@@ -242,6 +242,7 @@
                                                          liveIdentifier:HOCKEY_LIVE
                                                                delegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     
     // Agressive re-crash prevention
     if([[BITHockeyManager sharedHockeyManager].crashManager didCrashInLastSession]){

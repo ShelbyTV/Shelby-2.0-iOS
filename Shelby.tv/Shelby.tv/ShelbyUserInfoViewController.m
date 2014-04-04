@@ -8,7 +8,7 @@
 
 #import "ShelbyUserInfoViewController.h"
 #import "ShelbyBrain.h"
-#import "ShelbySignupViewController.h"
+#import "ShelbySignupiPadViewController.h"
 #import "ShelbyUserFollowingViewController.h"
 #import "User+Helper.h"
 #import "UIImageView+AFNetworking.h"
@@ -149,7 +149,7 @@
     
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.user avatarURL]];
     __weak ShelbyUserInfoViewController *weakSelf = self;
-    [self.userAvatar setImageWithURLRequest:imageRequest placeholderImage:[UIImage imageNamed:@"blank-avarar-large"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    [self.userAvatar setImageWithURLRequest:imageRequest placeholderImage:[UIImage imageNamed:@"blank-avatar-large"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         weakSelf.userAvatar.image = image;
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         //
@@ -226,7 +226,7 @@
 
 - (IBAction)editProfile:(id)sender
 {
-    ShelbySignupViewController *signupVC = [[ShelbySignupViewController alloc] initWithNibName:@"SignupView-iPad" bundle:nil];
+    ShelbySignupViewController *signupVC = [[ShelbySignupiPadViewController alloc] initWithNibName:@"ShelbySignupView~ipad" bundle:nil];
     signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
     signupVC.prepareForSignup = NO;
     
@@ -256,10 +256,10 @@
 {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapUserProfileSignup];
     
-    ShelbySignupViewController *signupVC = [[ShelbySignupViewController alloc] initWithNibName:@"SignupView-iPad" bundle:nil];
+    ShelbySignupViewController *signupVC = [[ShelbySignupiPadViewController alloc] initWithNibName:@"ShelbySignupView~ipad" bundle:nil];
     signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
     signupVC.prepareForSignup = YES;
-    
+
     [((ShelbyNavigationViewController *)self.navigationController) presentViewController:signupVC animated:YES completion:nil];
 }
 @end

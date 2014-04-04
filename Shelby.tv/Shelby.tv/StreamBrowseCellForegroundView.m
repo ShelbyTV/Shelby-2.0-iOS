@@ -95,10 +95,15 @@
     self.summaryTitle.font = kShelbyFontH2;
     self.detailTitle.font = kShelbyFontH4Bold;
     
-    self.detailUserAvatar.layer.cornerRadius = 5;
+    self.detailUserAvatar.layer.cornerRadius = CGRectGetWidth(self.detailUserAvatar.bounds)/2.f;
     self.detailUserAvatar.layer.masksToBounds = YES;
-    self.summaryUserAvatar.layer.cornerRadius = 5;
+    self.detailAvatarBadge.layer.cornerRadius = CGRectGetWidth(self.detailAvatarBadge.bounds)/2.f;
+    self.detailAvatarBadge.layer.masksToBounds = YES;
+    self.summaryUserAvatar.layer.cornerRadius = CGRectGetWidth(self.summaryUserAvatar.bounds)/2.f;
     self.summaryUserAvatar.layer.masksToBounds = YES;
+    self.summaryAvatarBadge.layer.cornerRadius = CGRectGetWidth(self.summaryAvatarBadge.bounds)/2.f;
+    self.summaryAvatarBadge.layer.masksToBounds = YES;
+
 
     [self setupOverlayImageView];
     [self insertSubview:self.overlayImageView atIndex:0];
@@ -149,7 +154,7 @@
     for (int i = 0; i < 6; i++) {
         likerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(likerX, 5, likerSharerHeight, likerSharerHeight)];
         [self.detailLikersSubview addSubview:likerImageView];
-        likerImageView.layer.cornerRadius = 3.0f;
+        likerImageView.layer.cornerRadius = CGRectGetWidth(likerImageView.bounds)/2.f;
         likerImageView.layer.masksToBounds = YES;
         [likerViews addObject:likerImageView];
         likerX += likerSharerHeight + 10;

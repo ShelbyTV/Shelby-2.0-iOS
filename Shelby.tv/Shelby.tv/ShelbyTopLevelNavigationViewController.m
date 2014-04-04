@@ -13,7 +13,7 @@
 #import "ShelbyBrain.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyNavigationViewController.h"
-#import "ShelbySignupViewController.h"
+#import "ShelbySignupiPadViewController.h"
 #import "ShelbyUserEducationViewController.h"
 #import "ShelbyUserInfoViewController.h"
 #import "SignupHeaderView.h"
@@ -129,6 +129,8 @@
     } else if (indexPath.row == 4) {
         cell.titleLabel.text = @"Notifications";
         [cell setBadge:self.notificationCenterVC.unseenNotifications];
+        //HACK: anonymous user shouldn't be shown notifications
+        cell.hidden = [self.currentUser isAnonymousUser];
     } else {
         cell.titleLabel.text = @"Settings";
     }
@@ -282,7 +284,7 @@
 {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapTopNavSignup];
     
-    ShelbySignupViewController *signupVC = [[ShelbySignupViewController alloc] initWithNibName:@"SignupView-iPad" bundle:nil];
+    ShelbySignupViewController *signupVC = [[ShelbySignupiPadViewController alloc] initWithNibName:@"ShelbySignupView~ipad" bundle:nil];
     signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
     signupVC.prepareForSignup = YES;
     [((ShelbyNavigationViewController *)self.navigationController) presentViewController:signupVC animated:YES completion:nil];

@@ -42,7 +42,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>n134</string>
+	<string>n136</string>
 	<key>FacebookAppID</key>
 	<string>115071338568035</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -57,6 +57,7 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>audio</string>
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>

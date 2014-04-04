@@ -25,6 +25,7 @@
 #import "User+Helper.h"
 #import "BrowseChannelsTableViewController.h"
 #import "UserEducationFullOverlayView.h"
+#import "ShelbyCustomNavBarButtoniPhone.h"
 
 NSString * const kShelbyShareVideoHasCompleted = @"kShelbyShareVideoHasCompleted";
 NSString * const kShelbyShareFrameIDKey = @"frameID";
@@ -162,11 +163,15 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)handleDidBecomeActiveNotification:(NSNotification *)notification
 {
-    [self.airPlayController checkForExistingScreenAndInitializeIfPresent];
+    //airplay controller does its own thing
 }
 
 - (void)handleWillResignActiveNotification:(NSNotification *)notification
 {
+    if (self.airPlayController.isAirPlayActive) {
+        //do not pause when air playing
+        return;
+    }
     [self pauseCurrentVideo];
 }
 
@@ -556,7 +561,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 {
     _currentUser = currentUser;
 
-    if (_currentUser) {
+    if (_currentUser && ![_currentUser isAnonymousUser]) {
         [self.navBarButtonView removeFromSuperview];
         self.navBarButtonView = nil;
     } else {
@@ -582,25 +587,16 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         [UIView animateWithDuration:NAV_BUTTON_FADE_TIME animations:^{
             self.navBarButtonView.alpha = 1.0;
         }];
-    } else if (!self.currentUser) {
+    } else if (!self.currentUser || [self.currentUser isAnonymousUser]) {
         self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(5, 5, 80, 34)];
-        UIButton *signup = [UIButton buttonWithType:UIButtonTypeCustom];
-        signup.frame = CGRectMake(10, 3, 70, 28);
-        signup.layer.cornerRadius = 5;
-        signup.layer.masksToBounds = YES;
-        signup.backgroundColor = kShelbyColorGreen;
-        
-        // Once user has logged in to the app, don't show them the Sign Up button.
-        if ([[ShelbyDataMediator sharedInstance] hasUserLoggedIn]) {
-            [signup setTitle:@"LOGIN" forState:UIControlStateNormal];
-        } else {
-            [signup setTitle:@"SIGN UP" forState:UIControlStateNormal];
-        }
-        [[signup titleLabel] setFont:kShelbyFontH4Bold];
-        [signup setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
+        UIButton *signup = [[ShelbyCustomNavBarButtoniPhone alloc] init];
+        [signup setTitle:@"SIGN UP" forState:UIControlStateNormal];
+        [signup sizeToFit];
+        // move the button away from the edge of the superview a bit
+        signup.frame = CGRectOffset(signup.frame, 10, 3);
         [signup addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.navBarButtonView addSubview:signup];
-        
+
         [self.navBar addSubview:self.navBarButtonView];
         [self.navBarButtonView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin];
     }
@@ -619,11 +615,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                                          withAction:kAnalyticsUXTapNavBarButton
                                 withNicknameAsLabel:YES];
     [self dismissVideoReel];
-    if ([[ShelbyDataMediator sharedInstance] hasUserLoggedIn]) {
-        [self.masterDelegate presentUserLogin];
-    } else {
-        [self.masterDelegate presentUserSignup];
-    }
+    [self.masterDelegate presentUserSignup];
 }
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
@@ -1421,9 +1413,21 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     [self dismissVideoReel];
-    [self.masterDelegate presentUserLogin];
-    //presentation is modal, nav hasn't actually changed...
+    [[[UIAlertView alloc] initWithTitle:@"Already Have an Account?"
+                                message:@"You're using Shelby without an account. You can continue like this and convert to an account later, or log in with an existing account. Logging in will erase your progress so far."
+                               delegate:self
+                      cancelButtonTitle:@"Keep Using"
+                      otherButtonTitles:@"Erase & Log in", nil] show];
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
+}
+
+#pragma mark - UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self.masterDelegate logoutUser];
+    }
 }
 
 #pragma mark - ShelbyNotificationDelegate Methods

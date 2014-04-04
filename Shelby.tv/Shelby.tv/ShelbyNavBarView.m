@@ -174,28 +174,20 @@ static CGFloat BackEaseInOutCGF(CGFloat p) {
     }
 }
 
-- (void)showLoggedInUserRows:(BOOL)showUserRows
+- (void)hideRowsForAnonymousUser:(BOOL)hideAnonymousRows
 {
-    if (showUserRows) {
-        _streamRowHeight.constant = 44;
-        _streamButton.hidden = NO;
-        _settingsRowHeight.constant = 44;
-        _settingsButton.hidden = NO;
-        _loginRowHeight.constant = 0;
-        _signupButton.hidden = YES;
-        _notificationCenterButton.hidden = NO;
-        _notificationCenterRowHeight.constant = 44;
-    } else {
-        _streamRowHeight.constant = 0;
-        _streamButton.hidden = YES;
-        _settingsRowHeight.constant = 0;
-        _settingsButton.hidden = YES;
+    if (hideAnonymousRows) {
         _loginRowHeight.constant = 44;
         _signupButton.hidden = NO;
         _notificationCenterRowHeight.constant = 0;
         _notificationCenterButton.hidden = YES;
+    } else {
+        _loginRowHeight.constant = 0;
+        _signupButton.hidden = YES;
+        _notificationCenterButton.hidden = NO;
+        _notificationCenterRowHeight.constant = 44;
     }
-
+    
     [self layoutIfNeeded];
     if (_currentRow) {
         self.currentRow = _currentRow;

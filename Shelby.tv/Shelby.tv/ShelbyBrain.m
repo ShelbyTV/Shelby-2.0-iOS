@@ -25,7 +25,7 @@
 #import "ShelbyUserProfileViewController.h"
 #import "ShelbyUserInfoViewController.h"
 #import "ShelbyTopContainerViewController.h"
-#import "SignupFlowViewController.h"
+#import "ShelbySignupiPhoneViewController.h"
 #import "SPVideoExtractor.h"
 #import "User+Helper.h"
 
@@ -66,9 +66,8 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 @property (nonatomic, strong) ShelbyTopContainerViewController *topContainerVC;
 
-//login and signup view controllers
+//login view controller
 @property (strong, nonatomic) LoginViewController *loginVC;
-@property (strong, nonatomic) SignupFlowNavigationViewController *signupFlowVC;
 
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
 @property (nonatomic, strong) DisplayChannel *currentChannel;
@@ -118,8 +117,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [User sessionDidBecomeActive];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainDidBecomeActiveNotification object:self];
-    
-    [self.signupFlowVC handleDidBecomeActive];
 
     //see method comments for explanation
     [self refreshUsersStreamAfterDelay];
@@ -233,11 +230,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         self.loginVC = loginNav.viewControllers[0];
         self.loginVC.delegate = self;
         [self.entranceVC presentViewController:loginNav animated:YES completion:nil];
-        
-        // When user goes to login, reset signup status.
-        if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
-            [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
-        }
     }
 }
 
@@ -255,21 +247,10 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)presentSignupVC
 {
-    UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow" bundle:nil];
-    self.signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard instantiateInitialViewController];
-    self.signupFlowVC.signupDelegate = self;
-
-    [self.mainWindow.rootViewController presentViewController:self.signupFlowVC animated:YES completion:nil];
-}
-
-- (void)dismissSigupVCCompletion:(void (^)(void))completion
-{
-    [self.mainWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
-        self.signupFlowVC = nil;
-        if (completion) {
-            completion();
-        }
-    }];
+    ShelbySignupiPhoneViewController *signupVC = [[ShelbySignupiPhoneViewController alloc] initWithNibName:@"ShelbySignupView~iphone" bundle:nil];
+    signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
+    signupVC.prepareForSignup = YES;
+    [self.mainWindow.rootViewController presentViewController:signupVC animated:YES completion:nil];
 }
 
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification
@@ -508,7 +489,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 {
     [self setCurrentUser:user];
     [self activateHomeViewController]; // <-- automatically navigates to stream on load
-    [self fetchUserChannelsForceSwitchToUsersStream:NO]; //<-- iPad does not switch to user stream with this mechanism
+    [self fetchUserChannelsForceSwitchToUsersStream:!DEVICE_IPAD]; //<-- iPad does not switch to user stream with this mechanism
 }
 
 #pragma mark - ShelbyDataMediatorDelegate
@@ -867,52 +848,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     return YES;
 }
 
-#pragma mark - SignupFlowNavigationViewDelegate
-
-- (void)createUserWithName:(NSString *)name
-                  andEmail:(NSString *)email
-{
-    [[ShelbyDataMediator sharedInstance] createUserWithName:name andEmail:email];
-}
-
-- (void)updateSignupUserWithName:(NSString *)name
-                           email:(NSString *)email
-{
-    [[ShelbyDataMediator sharedInstance] updateUserWithName:name nickname:nil password:nil email:email avatar:nil rolls:nil completion:nil];
-}
-
-- (void)completeSignupUserWithName:(NSString *)name
-                          username:(NSString *)username
-                          password:(NSString *)password
-                             email:(NSString *)email
-                            avatar:(UIImage *)avatar
-                          andRolls:(NSArray *)rolls
-{
-    [[ShelbyDataMediator sharedInstance] updateUserWithName:name
-                                                   nickname:username
-                                                   password:password
-                                                      email:email
-                                                     avatar:avatar
-                                                      rolls:rolls
-                                                 completion:^(NSError *error) {
-                                                     if (!error) {
-                                                         [self dismissSigupVCCompletion:^{
-                                                             //if we came from welcomeVC, switch over to homeVC (call is idempotent)
-                                                             [self activateHomeViewController];
-                                                             //make sure we're showing updated stream (whether we came from welcome or home)
-                                                             [self fetchUserChannelsForceSwitchToUsersStream:YES];
-                                                         }];
-                                                     }
-                                                 }];
-}
-
-- (void)signupFlowNavigationViewControllerWantsLogin:(SignupFlowNavigationViewController *)signupVC
-{
-    [self dismissSigupVCCompletion:^{
-        [self presentLoginVC];
-    }];
-}
-
 // Some of these methods are also for SettingsViewDelefate
 #pragma mark - ShelbyUserProfileDelegate
 // follow user is also called from another delegate..
@@ -959,6 +894,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [User sessionDidPause];
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
+    self.channelsLoadedAt = nil;
     [self resetUserDefaults];
     if (DEVICE_IPAD) {
         [self.topContainerVC animateDisappearanceWithCompletion:^{
@@ -1261,44 +1197,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyTutorialMode];
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-# pragma mark - WelcomeDelegate
-
-- (void)welcomeDidTapSignup:(WelcomeViewController *)welcomeVC
-{
-    [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
-
-    [self presentSignupVC];
-}
-
-- (void)welcomeDidTapSignupWithFacebook:(WelcomeViewController *)welcomeVC
-{
-    UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow" bundle:nil];
-    self.signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard instantiateInitialViewController];
-    self.signupFlowVC.signupDelegate = self;
-    
-    [self.mainWindow.rootViewController presentViewController:self.signupFlowVC animated:YES completion:^{
-        [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
-        [self.signupFlowVC startWithFacebookSignup];
-    }];
-}
-
-- (void)welcomeDidTapLogin:(WelcomeViewController *)welcomeVC
-{
-    [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
-
-    [self presentLoginVC];
-}
-
-- (void)welcomeDidTapPreview:(WelcomeViewController *)welcomeVC
-{
-    [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
-    // When a user goes to preview, we want to make sure that if he ever started the signup process and stopped in the middle, we reset that. To make sure we don't reset the welcome screen and open it again.
-    if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
-        [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
-    }
-    [self activateHomeViewController];
 }
 
 #pragma mark - LoginViewControllerDelegate
