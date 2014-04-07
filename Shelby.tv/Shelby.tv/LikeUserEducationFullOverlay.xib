@@ -12,12 +12,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view opaque="NO" alpha="0.875" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOg-LC-hxt" userLabel="Dimmed Background">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="184" translatesAutoresizingMaskIntoConstraints="NO" id="dUR-sZ-9HA">
-                    <rect key="frame" x="68" y="249" width="184" height="77"/>
+                    <rect key="frame" x="68" y="233" width="184" height="77"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <attributedString key="attributedText">
                         <fragment>
@@ -42,7 +42,7 @@ recommendations.</string>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-like" translatesAutoresizingMaskIntoConstraints="NO" id="x3P-BI-P3A">
-                    <rect key="frame" x="176" y="386" width="38" height="128"/>
+                    <rect key="frame" x="176" y="370" width="38" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="x3P-BI-P3A" secondAttribute="height" multiplier="0.29572" id="e7W-nl-pag"/>
@@ -51,14 +51,14 @@ recommendations.</string>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="x3P-BI-P3A" secondAttribute="bottom" constant="54" id="5Cu-9o-vsF"/>
+                <constraint firstAttribute="bottom" secondItem="x3P-BI-P3A" secondAttribute="bottom" constant="70" id="5Cu-9o-vsF"/>
                 <constraint firstItem="SOg-LC-hxt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="5Gf-3A-F2r"/>
                 <constraint firstAttribute="trailing" secondItem="SOg-LC-hxt" secondAttribute="trailing" id="AJk-Z8-2Rc"/>
                 <constraint firstItem="x3P-BI-P3A" firstAttribute="top" secondItem="dUR-sZ-9HA" secondAttribute="bottom" constant="60" id="Ol6-2D-Anq"/>
                 <constraint firstAttribute="centerX" secondItem="x3P-BI-P3A" secondAttribute="centerX" constant="-35" id="b0g-cm-ecN"/>
                 <constraint firstAttribute="centerX" secondItem="dUR-sZ-9HA" secondAttribute="centerX" id="pYR-5a-brh"/>
                 <constraint firstItem="SOg-LC-hxt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tS8-Sc-uzk"/>
-                <constraint firstAttribute="bottom" secondItem="SOg-LC-hxt" secondAttribute="bottom" constant="44" id="zVb-ag-Xhw"/>
+                <constraint firstAttribute="bottom" secondItem="SOg-LC-hxt" secondAttribute="bottom" constant="60" id="zVb-ag-Xhw"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
