@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" contentMode="scaleToFill" id="iN0-l3-epB" customClass="UserEducationFullOverlayView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view opaque="NO" alpha="0.875" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uHC-Cs-uzm" userLabel="Dimmed Background">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="Mqz-76-sPi" userLabel="Education Text">
+                    <rect key="frame" x="45" y="44" width="230" height="213"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <string key="text">Swipe left/right to see
+more information about
+a video.</string>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-left-right" translatesAutoresizingMaskIntoConstraints="NO" id="PVG-PA-ffC">
+                    <rect key="frame" x="51" y="265" width="218" height="39"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="39" id="9OO-qd-8mT"/>
+                        <constraint firstAttribute="width" constant="218" id="fD4-ZK-pFJ"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="PVG-PA-ffC" firstAttribute="top" secondItem="Mqz-76-sPi" secondAttribute="bottom" constant="8" symbolic="YES" id="1Nq-7Q-SdH"/>
+                <constraint firstItem="Mqz-76-sPi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="44" id="8HD-cE-z0C"/>
+                <constraint firstAttribute="bottom" secondItem="uHC-Cs-uzm" secondAttribute="bottom" id="KMQ-z8-GB2"/>
+                <constraint firstItem="uHC-Cs-uzm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Kia-vX-P1F"/>
+                <constraint firstAttribute="centerY" secondItem="PVG-PA-ffC" secondAttribute="centerY" id="ZcZ-Si-Quc"/>
+                <constraint firstAttribute="centerX" secondItem="Mqz-76-sPi" secondAttribute="centerX" id="gLl-yl-xpw"/>
+                <constraint firstItem="uHC-Cs-uzm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="iau-x3-VLw"/>
+                <constraint firstAttribute="centerX" secondItem="PVG-PA-ffC" secondAttribute="centerX" id="ljd-Rj-mpK"/>
+                <constraint firstAttribute="trailing" secondItem="uHC-Cs-uzm" secondAttribute="trailing" id="pHw-sY-G8X"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrow-left-right" width="218" height="39"/>
+    </resources>
+</document>

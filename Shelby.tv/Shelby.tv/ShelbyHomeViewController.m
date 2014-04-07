@@ -55,6 +55,12 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 @property (nonatomic, assign) BOOL shareVideoInProgress;
 
+// optionally keep track of the number of times a user has manually scrolled in video streams
+// while browsing (not playing video)
+@property (nonatomic) BOOL trackStreamScrollCount;
+@property (nonatomic) NSUInteger streamScrollCount;
+#define NUM_SCROLLS_BETWEEN_EDUCATION_OVERLAYS 2
+
 #define OVERLAY_ANIMATION_DURATION 0.2
 #define NAV_BUTTON_FADE_TIME 0.1
 #define AUTOADVANCE_INFO_PEEK_DURATION 5.0
@@ -76,6 +82,11 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    //if we're interested for user education purposes, keep track of how many times the user has manually scrolled while not playing
+    if (![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeTwoColumn] || ![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeLike]) {
+        self.trackStreamScrollCount = YES;
+    }
 
     // Setting background color to avoid seeing the phone's background
     self.view.backgroundColor = [UIColor blackColor];
@@ -879,6 +890,20 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                              withAction:kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode
                                     withNicknameAsLabel:YES];
+        //every few scrolled entries we may want to present some user education
+        if (self.trackStreamScrollCount) {
+            self.streamScrollCount += 1;
+            if (self.streamScrollCount % NUM_SCROLLS_BETWEEN_EDUCATION_OVERLAYS == 0) {
+                if (![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeTwoColumn]) {
+                    [self presentUserEducationFullOverlayViewForType:UserEducationFullOverlayViewTypeTwoColumn];
+
+                } else if(![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeLike]) {
+                    [self presentUserEducationFullOverlayViewForType:UserEducationFullOverlayViewTypeLike];
+                    // we've showed them all the education they need, don't need to keep track of scroll count anymore
+                    self.trackStreamScrollCount = NO;
+                }
+            }
+        }
     }
 }
 

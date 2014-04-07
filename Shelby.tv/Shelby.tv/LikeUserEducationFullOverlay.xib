@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Like User Education Full Overlay View" customClass="LikeUserEducationFullOverlayView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view opaque="NO" alpha="0.875" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOg-LC-hxt" userLabel="Dimmed Background">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="184" translatesAutoresizingMaskIntoConstraints="NO" id="dUR-sZ-9HA">
+                    <rect key="frame" x="68" y="249" width="184" height="77"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <attributedString key="attributedText">
+                        <fragment>
+                            <string key="content">Liking videos
+</string>
+                            <attributes>
+                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <font key="NSFont" size="22" name="HelveticaNeue"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                        <fragment>
+                            <string key="content">improves your
+recommendations.</string>
+                            <attributes>
+                                <color key="NSColor" red="0.43529412150382996" green="0.7450980544090271" blue="0.27843138575553894" alpha="1" colorSpace="calibratedRGB"/>
+                                <font key="NSFont" size="22" name="HelveticaNeue"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-like" translatesAutoresizingMaskIntoConstraints="NO" id="x3P-BI-P3A">
+                    <rect key="frame" x="176" y="386" width="38" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="x3P-BI-P3A" secondAttribute="height" multiplier="0.29572" id="e7W-nl-pag"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="x3P-BI-P3A" secondAttribute="bottom" constant="54" id="5Cu-9o-vsF"/>
+                <constraint firstItem="SOg-LC-hxt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="5Gf-3A-F2r"/>
+                <constraint firstAttribute="trailing" secondItem="SOg-LC-hxt" secondAttribute="trailing" id="AJk-Z8-2Rc"/>
+                <constraint firstItem="x3P-BI-P3A" firstAttribute="top" secondItem="dUR-sZ-9HA" secondAttribute="bottom" constant="60" id="Ol6-2D-Anq"/>
+                <constraint firstAttribute="centerX" secondItem="x3P-BI-P3A" secondAttribute="centerX" constant="-35" id="b0g-cm-ecN"/>
+                <constraint firstAttribute="centerX" secondItem="dUR-sZ-9HA" secondAttribute="centerX" id="pYR-5a-brh"/>
+                <constraint firstItem="SOg-LC-hxt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tS8-Sc-uzk"/>
+                <constraint firstAttribute="bottom" secondItem="SOg-LC-hxt" secondAttribute="bottom" constant="44" id="zVb-ag-Xhw"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <connections>
+                <outlet property="paragraphToImageVerticalSpaceConstraint" destination="Ol6-2D-Anq" id="z4X-Pg-n2G"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrow-like" width="38" height="128"/>
+    </resources>
+</document>
