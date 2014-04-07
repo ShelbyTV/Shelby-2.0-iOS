@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -19,13 +19,9 @@
                     <color key="progressTintColor" red="0.47450980392156861" green="0.792156862745098" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="trackTintColor" red="0.047058823529411764" green="0.36470588235294116" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                 </progressView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Follow a few curated channels for great video in your stream." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="X6w-KI-VjS">
-                    <rect key="frame" x="40" y="20" width="240" height="40"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For great content, follow a few of our curated channels." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="217" translatesAutoresizingMaskIntoConstraints="NO" id="X6w-KI-VjS">
+                    <rect key="frame" x="52" y="20" width="217" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="SiJ-Ko-Yax"/>
-                        <constraint firstAttribute="width" constant="240" id="xVb-CJ-nkw"/>
-                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -33,10 +29,10 @@
             </subviews>
             <color key="backgroundColor" red="0.066666666666666666" green="0.49411764705882355" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="X6w-KI-VjS" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="4em-Oa-6bP"/>
                 <constraint firstItem="fF6-mw-Bbd" firstAttribute="top" secondItem="X6w-KI-VjS" secondAttribute="bottom" constant="8" id="60m-wh-YsQ"/>
                 <constraint firstAttribute="trailing" secondItem="fF6-mw-Bbd" secondAttribute="trailing" constant="40" id="9mN-hk-c3u"/>
                 <constraint firstAttribute="bottom" secondItem="fF6-mw-Bbd" secondAttribute="bottom" constant="20" id="UZ5-Zx-ve1"/>
+                <constraint firstAttribute="centerX" secondItem="X6w-KI-VjS" secondAttribute="centerX" id="bHn-IA-TlQ"/>
                 <constraint firstItem="fF6-mw-Bbd" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="qOk-ph-1CX"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
