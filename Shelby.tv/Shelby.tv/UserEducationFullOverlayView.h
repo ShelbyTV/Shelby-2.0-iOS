@@ -13,7 +13,8 @@
 typedef NS_ENUM(NSInteger, UserEducationFullOverlayViewType) {
     UserEducationFullOverlayViewTypeStream,
     UserEducationFullOverlayViewTypeChannels,
-    UserEducationFullOverlayViewTypeTwoColumn
+    UserEducationFullOverlayViewTypeTwoColumn,
+    UserEducationFullOverlayViewTypeLike
 };
 
 @interface UserEducationFullOverlayView : UIView

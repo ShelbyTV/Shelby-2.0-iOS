@@ -477,12 +477,18 @@
 		3B473E3418EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */; };
 		3B473E3518EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */; };
 		3B473E3618EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */; };
+		3B5120E818F32F5A00904058 /* LikeUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5120E718F32F5A00904058 /* LikeUserEducationFullOverlayView.m */; };
+		3B5120E918F32F5A00904058 /* LikeUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5120E718F32F5A00904058 /* LikeUserEducationFullOverlayView.m */; };
+		3B5120EA18F32F5A00904058 /* LikeUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5120E718F32F5A00904058 /* LikeUserEducationFullOverlayView.m */; };
 		3B5985C718EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */; };
 		3B5985C818EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */; };
 		3B5985C918EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */; };
 		3B5E816E18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5E816D18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m */; };
 		3B5E816F18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5E816D18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m */; };
 		3B5E817018E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5E816D18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m */; };
+		3B74723E18F327390077B662 /* LikeUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B74723D18F327390077B662 /* LikeUserEducationFullOverlay.xib */; };
+		3B74723F18F327390077B662 /* LikeUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B74723D18F327390077B662 /* LikeUserEducationFullOverlay.xib */; };
+		3B74724018F327390077B662 /* LikeUserEducationFullOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B74723D18F327390077B662 /* LikeUserEducationFullOverlay.xib */; };
 		3B823B0D18BFFB1F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
 		3B823B0E18BFFB3E007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
 		3B823B0F18BFFB3F007D235B /* OneTimeUserEducator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */; };
@@ -1157,10 +1163,13 @@
 		3B0096F418E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyCustomNavBarButtoniPhone.h; sourceTree = "<group>"; };
 		3B0096F518E9F6DF00B41260 /* ShelbyCustomNavBarButtoniPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyCustomNavBarButtoniPhone.m; sourceTree = "<group>"; };
 		3B473E3318EEF5C500E7EFEE /* ChannelsUserEducationFullOverlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelsUserEducationFullOverlay.xib; sourceTree = "<group>"; };
+		3B5120E618F32F5A00904058 /* LikeUserEducationFullOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeUserEducationFullOverlayView.h; sourceTree = "<group>"; };
+		3B5120E718F32F5A00904058 /* LikeUserEducationFullOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeUserEducationFullOverlayView.m; sourceTree = "<group>"; };
 		3B5985C518EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelsUserEducationFullOverlayView.h; sourceTree = "<group>"; };
 		3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelsUserEducationFullOverlayView.m; sourceTree = "<group>"; };
 		3B5E816C18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbySignupiPhoneViewController.h; sourceTree = "<group>"; };
 		3B5E816D18E5C5DF00D7AFC1 /* ShelbySignupiPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbySignupiPhoneViewController.m; sourceTree = "<group>"; };
+		3B74723D18F327390077B662 /* LikeUserEducationFullOverlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LikeUserEducationFullOverlay.xib; sourceTree = "<group>"; };
 		3B823B0B18BFFB1F007D235B /* OneTimeUserEducator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTimeUserEducator.h; sourceTree = "<group>"; };
 		3B823B0C18BFFB1F007D235B /* OneTimeUserEducator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTimeUserEducator.m; sourceTree = "<group>"; };
 		3BA1952218DCA70D00167D63 /* AnimationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationUtilities.h; sourceTree = "<group>"; };
@@ -1776,6 +1785,7 @@
 		1CBF0934175CD69D001D471A /* Xib-iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				3B74723D18F327390077B662 /* LikeUserEducationFullOverlay.xib */,
 				3BF9D33218E47D910067AFF6 /* ShelbySignupView~iphone.xib */,
 				3BA603C318D8EDB00078B952 /* ShelbyEntranceView~iphone.xib */,
 				1CBF0935175CD6C7001D471A /* ShelbyHomeView.xib */,
@@ -2209,6 +2219,8 @@
 				3B5985C618EF35FD004F6218 /* ChannelsUserEducationFullOverlayView.m */,
 				3BF6B9A718EDBBD900DDC62B /* StreamUserEducationFullOverlayView.h */,
 				3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */,
+				3B5120E618F32F5A00904058 /* LikeUserEducationFullOverlayView.h */,
+				3B5120E718F32F5A00904058 /* LikeUserEducationFullOverlayView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2529,6 +2541,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B74723F18F327390077B662 /* LikeUserEducationFullOverlay.xib in Resources */,
 				1C8109BC16EE2CBF0030077C /* InfoPlist.strings in Resources */,
 				1CD8111F17CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14917BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
@@ -2667,6 +2680,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B74724018F327390077B662 /* LikeUserEducationFullOverlay.xib in Resources */,
 				1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */,
 				1CD8112017CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14A17BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
@@ -2822,6 +2836,7 @@
 				9103939018A131DC003B911D /* NoContentViews.xib in Resources */,
 				1C0C7DF51852328B008F5506 /* heart-icon-color@2x.png in Resources */,
 				91FCC6A7174BF118004255F5 /* Localizable.strings in Resources */,
+				3B74723E18F327390077B662 /* LikeUserEducationFullOverlay.xib in Resources */,
 				1CD8111217CCF6C0002FD84B /* play-airplay.png in Resources */,
 				1C56F13C17BABD8C00EE9206 /* Appirater.podspec in Resources */,
 				1CE5586E17DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
@@ -3094,6 +3109,7 @@
 				8E7024DB1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DE1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
 				8E7024E11715E71500E8DE46 /* OAPlaintextSignatureProvider.m in Sources */,
+				3B5120E918F32F5A00904058 /* LikeUserEducationFullOverlayView.m in Sources */,
 				910F5BFB18884F300069E380 /* VideoReelBackdropView.m in Sources */,
 				8E7024E41715E71500E8DE46 /* OAProblem.m in Sources */,
 				8E7024E71715E71500E8DE46 /* OARequestParameter.m in Sources */,
@@ -3263,6 +3279,7 @@
 				8E7024DC1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DF1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
 				8E7024E21715E71500E8DE46 /* OAPlaintextSignatureProvider.m in Sources */,
+				3B5120EA18F32F5A00904058 /* LikeUserEducationFullOverlayView.m in Sources */,
 				910F5BFC18884F300069E380 /* VideoReelBackdropView.m in Sources */,
 				8E7024E51715E71500E8DE46 /* OAProblem.m in Sources */,
 				8E7024E81715E71500E8DE46 /* OARequestParameter.m in Sources */,
@@ -3432,6 +3449,7 @@
 				8E7024DA1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DD1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
 				8E7024E01715E71500E8DE46 /* OAPlaintextSignatureProvider.m in Sources */,
+				3B5120E818F32F5A00904058 /* LikeUserEducationFullOverlayView.m in Sources */,
 				910F5BFA18884F300069E380 /* VideoReelBackdropView.m in Sources */,
 				8E7024E31715E71500E8DE46 /* OAProblem.m in Sources */,
 				8E7024E61715E71500E8DE46 /* OARequestParameter.m in Sources */,

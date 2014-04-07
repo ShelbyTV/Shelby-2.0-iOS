@@ -84,7 +84,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     [super viewDidLoad];
 
     //if we're interested for user education purposes, keep track of how many times the user has manually scrolled while not playing
-    if (![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeTwoColumn]) {
+    if (![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeTwoColumn] || ![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeLike]) {
         self.trackStreamScrollCount = YES;
     }
 
@@ -896,6 +896,9 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
             if (self.streamScrollCount % NUM_SCROLLS_BETWEEN_EDUCATION_OVERLAYS == 0) {
                 if (![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeTwoColumn]) {
                     [self presentUserEducationFullOverlayViewForType:UserEducationFullOverlayViewTypeTwoColumn];
+
+                } else if(![UserEducationFullOverlayView isUserEducatedForType:UserEducationFullOverlayViewTypeLike]) {
+                    [self presentUserEducationFullOverlayViewForType:UserEducationFullOverlayViewTypeLike];
                     // we've showed them all the education they need, don't need to keep track of scroll count anymore
                     self.trackStreamScrollCount = NO;
                 }
