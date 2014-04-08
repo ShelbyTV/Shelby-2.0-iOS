@@ -30,6 +30,8 @@
 NSString * const kShelbyShareVideoHasCompleted = @"kShelbyShareVideoHasCompleted";
 NSString * const kShelbyShareFrameIDKey = @"frameID";
 
+static NSDictionary *userEducationTypeToLocalyticsConstantMap;
+
 @interface ShelbyHomeViewController () {
     SettingsViewController *_settingsVC;
     BrowseChannelsTableViewController *_channelsVC;
@@ -75,6 +77,14 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     if (self) {
         _airPlayController = [[ShelbyAirPlayController alloc] init];
         _airPlayController.delegate = self;
+
+        userEducationTypeToLocalyticsConstantMap =
+        @{
+          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeStream] : kLocalyticsShowStreamEducationOverlayIPhone,
+          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeChannels] : kLocalyticsShowChannelsEducationOverlayIPhone,
+          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeTwoColumn] : kLocalyticsShowTwoColumnEducationOverlayIPhone,
+          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeLike] : kLocalyticsShowLikeEducationOverlayIPhone
+          };
     }
     return self;
 }
@@ -830,6 +840,10 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:userEducationView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0];
     NSLayoutConstraint *trailingConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:userEducationView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0];
     [self.view addConstraints:@[topConstraint, bottomConstraint, leadingConstraint, trailingConstraint]];
+
+    // track the showing of this view in our analytics system(s)
+    NSString *localyticsConstant = [userEducationTypeToLocalyticsConstantMap objectForKey:[NSNumber numberWithInteger:overlayViewType]];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:localyticsConstant];
 }
 
 #pragma mark - ShelbyStreamBrowseViewDelegate
