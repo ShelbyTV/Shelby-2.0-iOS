@@ -39,8 +39,8 @@
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description of the stuff goes right here" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="147" translatesAutoresizingMaskIntoConstraints="NO" id="jhC-4Q-bIa" userLabel="description label">
-                                                    <rect key="frame" x="8" y="37" width="147" height="33"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description of the stuff goes right here" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="129" translatesAutoresizingMaskIntoConstraints="NO" id="jhC-4Q-bIa" userLabel="description label">
+                                                    <rect key="frame" x="8" y="37" width="129" height="33"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
@@ -68,16 +68,17 @@
                                                 <constraint firstItem="4cj-YB-s8s" firstAttribute="leading" secondItem="jhC-4Q-bIa" secondAttribute="leading" id="4Vr-BE-WMi"/>
                                                 <constraint firstAttribute="height" constant="130" id="C8D-5S-0ap"/>
                                                 <constraint firstItem="4cj-YB-s8s" firstAttribute="leading" secondItem="p5K-Tg-DYk" secondAttribute="leading" constant="8" id="CL7-mu-5XP"/>
+                                                <constraint firstAttribute="trailing" secondItem="jhC-4Q-bIa" secondAttribute="trailing" constant="20" symbolic="YES" id="dWY-yO-T0i"/>
                                                 <constraint firstItem="4cj-YB-s8s" firstAttribute="top" secondItem="p5K-Tg-DYk" secondAttribute="top" constant="15" id="fN7-gq-irf"/>
                                                 <constraint firstAttribute="bottom" secondItem="Bmt-xu-Tig" secondAttribute="bottom" constant="12" id="iIN-G2-FT3"/>
                                                 <constraint firstItem="jhC-4Q-bIa" firstAttribute="top" secondItem="4cj-YB-s8s" secondAttribute="bottom" id="nD4-ir-uQp"/>
-                                                <constraint firstAttribute="width" constant="157" id="reE-cI-LeW"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4cj-YB-s8s" secondAttribute="trailing" id="rxQ-TO-2AD"/>
                                                 <constraint firstItem="Bmt-xu-Tig" firstAttribute="leading" secondItem="jhC-4Q-bIa" secondAttribute="leading" id="yL0-PM-6Uw"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="p5K-Tg-DYk" secondAttribute="trailing" id="GNT-uB-CCM"/>
                                         <constraint firstItem="cWU-5B-keq" firstAttribute="top" secondItem="ooG-WB-Osp" secondAttribute="top" constant="15" id="LFN-1Q-OEo"/>
                                         <constraint firstItem="p5K-Tg-DYk" firstAttribute="top" secondItem="ooG-WB-Osp" secondAttribute="top" id="fm6-uh-ymi"/>
                                         <constraint firstItem="cWU-5B-keq" firstAttribute="leading" secondItem="ooG-WB-Osp" secondAttribute="leading" constant="15" id="gAh-BN-D30"/>
