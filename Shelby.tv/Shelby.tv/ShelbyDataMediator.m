@@ -648,7 +648,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             [User sessionDidBecomeActive];
             [Intercom beginSessionForUserWithUserId:user.userID andEmail:user.email];
             [Intercom updateAttributes:@{@"ios" : @1,
-                                         @"name" : user.name}];
+                                         @"name" : user.name ? user.name : user.nickname}];
             [self userLoggedIn];
             NSError *err;
             [user.managedObjectContext save:&err];
