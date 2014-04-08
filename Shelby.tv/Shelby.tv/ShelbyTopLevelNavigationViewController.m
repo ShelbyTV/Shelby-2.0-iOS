@@ -74,7 +74,7 @@
     [super viewDidAppear:animated];
     
     if (self.shouldNavigateToUsersStreamOnAppear && self.currentUser) {
-        [self navigateToUsersStream];
+        [self navigateToUsersStream:NO];
         self.shouldNavigateToUsersStreamOnAppear = NO;
     }
 }
@@ -145,7 +145,7 @@
     
     if (indexPath.row == 0) {
         //Stream
-        [self navigateToUsersStream];
+        [self navigateToUsersStream:YES];
         
     } else if (indexPath.row == 1) {
         //Me
@@ -263,16 +263,15 @@
     [((ShelbyNavigationViewController *)self.navigationController).topContainerDelegate userProfileWasTapped:userID];
 }
 
-- (void)videoWasTapped:(NSString *)videoID
+- (void)videoWasTapped:(NSString *)dashboardEntryID
 {
-    [[ShelbyDataMediator sharedInstance] fetchDashboardEntryWithID:videoID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(DashboardEntry *fetchedDashboardEntry) {
+    [[ShelbyDataMediator sharedInstance] fetchDashboardEntryWithID:dashboardEntryID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(DashboardEntry *fetchedDashboardEntry) {
         
         if (fetchedDashboardEntry) {
-            DisplayChannel *displayChannel =  [DisplayChannel channelForTransientEntriesWithID:videoID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+            DisplayChannel *displayChannel =  [DisplayChannel channelForTransientEntriesWithID:fetchedDashboardEntry.dashboardEntryID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             displayChannel.dashboard = fetchedDashboardEntry.dashboard;
             displayChannel.shouldFetchRemoteEntries = NO;
-            ShelbyStreamInfoViewController *videoStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:displayChannel titleOverride:nil];
-            videoStreamVC.singleVideoEntry = @[fetchedDashboardEntry];
+            ShelbyStreamInfoViewController *videoStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:displayChannel singleVideoEntry:@[fetchedDashboardEntry] titleOverride:fetchedDashboardEntry.frame.video.title animated:YES];
             videoStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
         }
     }];
@@ -293,10 +292,10 @@
 
 #pragma mark - Navigation Helpers
 
-- (void)navigateToUsersStream
+- (void)navigateToUsersStream:(BOOL)animated
 {
     DisplayChannel *userStream =  [DisplayChannel fetchChannelWithDashboardID:self.currentUser.userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream titleOverride:nil showUserEducationSections:YES];
+    ShelbyStreamInfoViewController *userStreamVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:userStream titleOverride:nil showUserEducationSections:YES animated:animated];
     userStreamVC.userEducationVC = [ShelbyUserEducationViewController newStreamUserEducationViewController];
     userStreamVC.socialConnectDelegate = self;
 }
@@ -316,7 +315,7 @@
 {
     DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
                                                                           inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    ShelbyStreamInfoViewController *streamInfoVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel titleOverride:@"Explore"];
+    ShelbyStreamInfoViewController *streamInfoVC = [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel titleOverride:@"Explore" animated:YES];
     streamInfoVC.userEducationVC = [ShelbyUserEducationViewController newExploreUserEducationViewController];
 }
 

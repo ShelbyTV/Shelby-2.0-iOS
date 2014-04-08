@@ -108,9 +108,7 @@
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAISessionControl value:@"start"];
 
-    // TODO: Add Shelbytv URL Schema to Shelby.tv and Beta targets
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
-        // KP KP: TODO: Check for LaunchOptionsURL and open App accordingly
         NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
         if ([[url scheme] isEqualToString:@"shelbytv"]) {
             [self handleOpenURL:url];

@@ -1005,34 +1005,64 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)openSingleVideoViewWithFrameID:(NSString *)frameID
 {
-    ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView" bundle:nil];
-    singleVideoVC.masterDelegate = self;
-    
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while ([topViewController presentedViewController]) {
-        topViewController = [topViewController presentedViewController];
-    }
-    
-    [topViewController presentViewController:singleVideoVC animated:YES completion:nil];
-    
-    [[ShelbyDataMediator sharedInstance] fetchFrameWithID:frameID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(Frame *fetchedFrame) {
-        NSString *rollID = fetchedFrame.roll.rollID;
-        if (fetchedFrame) {
-            DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:rollID];
-            if (!rollChannel) {
-                rollChannel = [DisplayChannel channelForTransientEntriesWithID:rollID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    if (DEVICE_IPAD) {
+        //HACK - using a notification on iPad.  See below for discussion.
+        [[ShelbyDataMediator sharedInstance] fetchFrameWithID:frameID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(Frame *fetchedFrame) {
+            NSString *rollID = fetchedFrame.roll.rollID;
+            if (fetchedFrame) {
+                DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:rollID];
+                if (!rollChannel) {
+                    rollChannel = [DisplayChannel channelForTransientEntriesWithID:rollID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+                }
+                
+                rollChannel.roll = fetchedFrame.roll;
+                rollChannel.shouldFetchRemoteEntries = NO;
+                if (fetchedFrame.video.title) {
+                    rollChannel.titleOverride = fetchedFrame.video.title;
+                }
+                
+                //Discussion of the hack:
+                //Using a notification to trigger deeper actions in the app isn't necessarily wrong.
+                //Indeed, since this is coming from a URL, notification feels entirely okay.
+                //But this wasn't designed wholistically.  It's just bolted on; an afterthought...
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNavigateToSingleVideoEntryNotification
+                                                                    object:self userInfo:@{kShelbyNavigateToChannelKey: rollChannel,
+                                                                                           kShelbyNavigateToSingleVideoEntryArrayKey: @[fetchedFrame],
+                                                                                           kShelbyNavigateToTitleOverrideKey: rollChannel.titleOverride}];
             }
-            
-            rollChannel.roll = fetchedFrame.roll;
-            rollChannel.shouldFetchRemoteEntries = NO;
-            
-            singleVideoVC.channels = @[rollChannel];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
-                                                                object:self userInfo:@{kShelbyBrainChannelKey : rollChannel,
-                                                                                       kShelbyBrainChannelEntriesKey : @[fetchedFrame]}];
-            [singleVideoVC focusOnChannel:rollChannel];
+        }];
+        
+    } else {
+
+        ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView" bundle:nil];
+        singleVideoVC.masterDelegate = self;
+        
+        UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        while ([topViewController presentedViewController]) {
+            topViewController = [topViewController presentedViewController];
         }
-    }];
+        
+        [topViewController presentViewController:singleVideoVC animated:YES completion:nil];
+        
+        [[ShelbyDataMediator sharedInstance] fetchFrameWithID:frameID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(Frame *fetchedFrame) {
+            NSString *rollID = fetchedFrame.roll.rollID;
+            if (fetchedFrame) {
+                DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:rollID];
+                if (!rollChannel) {
+                    rollChannel = [DisplayChannel channelForTransientEntriesWithID:rollID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+                }
+                
+                rollChannel.roll = fetchedFrame.roll;
+                rollChannel.shouldFetchRemoteEntries = NO;
+                
+                singleVideoVC.channels = @[rollChannel];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                                    object:self userInfo:@{kShelbyBrainChannelKey : rollChannel,
+                                                                                           kShelbyBrainChannelEntriesKey : @[fetchedFrame]}];
+                [singleVideoVC focusOnChannel:rollChannel];
+            }
+        }];
+    }
 }
 
 // This method is going to be called from three (or more) protocols.. not that great. Need to have a nicer protocols.
