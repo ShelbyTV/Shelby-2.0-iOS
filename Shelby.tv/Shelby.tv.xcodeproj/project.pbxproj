@@ -3598,8 +3598,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shelby TV Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shelby TV Inc.";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
@@ -3646,8 +3646,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "Shelby.tv Beta";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "78701D4C-80F8-4B6D-ACF1-5B9A3E1CDCBE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "78701D4C-80F8-4B6D-ACF1-5B9A3E1CDCBE";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
@@ -3662,8 +3662,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shelby TV Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shelby TV Inc.";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
@@ -3712,8 +3712,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "Shelby.tv Beta";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "78701D4C-80F8-4B6D-ACF1-5B9A3E1CDCBE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "78701D4C-80F8-4B6D-ACF1-5B9A3E1CDCBE";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
