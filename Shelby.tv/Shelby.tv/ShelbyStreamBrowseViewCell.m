@@ -55,11 +55,14 @@ static id<ShelbyVideoContainer> _currentlyPlayingEntity;
         //parallax background - thumbnails are on top of each other in a parent view
         CGRect bgFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH_PORTRAIT, PARALLAX_BG_HEIGHT_PORTRAIT);
         _backgroundThumbnailsView = [[UIView alloc] initWithFrame:bgFrame];
-        _thumbnailRegularView = [[UIImageView alloc] initWithFrame:bgFrame];
-        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFit;
+
         _thumbnailBlurredView = [[UIImageView alloc] initWithFrame:bgFrame];
         _thumbnailBlurredView.contentMode = UIViewContentModeScaleAspectFill;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
+
+        _thumbnailRegularView = [[UIImageView alloc] initWithFrame:bgFrame];
+        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFill;
+        _thumbnailRegularView.clipsToBounds = YES;
         [_backgroundThumbnailsView addSubview:_thumbnailRegularView];
 
         //parallax for foreground and background (above)
@@ -89,22 +92,28 @@ static id<ShelbyVideoContainer> _currentlyPlayingEntity;
 
 - (void)resizeParallaxViews
 {
-    CGRect bgFrame, fullScreenFrame;
+    CGRect bgFrame, regularThumbnailFrame, fullScreenFrame;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         bgFrame = CGRectMake(-15, -20, PARALLAX_BG_WIDTH_LANDSCAPE, PARALLAX_BG_HEIGHT_LANDSCAPE);
+        regularThumbnailFrame = bgFrame;
         fullScreenFrame = CGRectMake(0, 0, kShelbyFullscreenHeight, kShelbyFullscreenWidth);
         _parallaxView.parallaxRatio = PARALLAX_RATIO_LANDSCAPE;
+        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFit;
     } else {
         bgFrame = CGRectMake(0, -20, PARALLAX_BG_WIDTH_PORTRAIT, PARALLAX_BG_HEIGHT_PORTRAIT);
+        CGFloat fullWidth = PARALLAX_BG_WIDTH_PORTRAIT;
+        CGFloat aspectAppropriateHeight = PARALLAX_BG_WIDTH_PORTRAIT / 1.8;
+        regularThumbnailFrame = CGRectMake(0, (kShelbyFullscreenHeight / 2.0) - (aspectAppropriateHeight / 2.0) + 20, fullWidth, aspectAppropriateHeight);
         fullScreenFrame = CGRectMake(0, 0, kShelbyFullscreenWidth, kShelbyFullscreenHeight);
         _parallaxView.parallaxRatio = PARALLAX_RATIO_PORTRAIT;
+        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFill;
     }
 
     [self.parallaxView updateFrame:fullScreenFrame];
     //when parallax updates it's frame, it updates the content's frame and content size as well.
     //foreground is fine, but background is not...
     _backgroundThumbnailsView.frame = bgFrame;
-    _thumbnailRegularView.frame = bgFrame;
+    _thumbnailRegularView.frame = regularThumbnailFrame;
     _thumbnailBlurredView.frame = bgFrame;
     _parallaxView.backgroundContent = _backgroundThumbnailsView;
 }

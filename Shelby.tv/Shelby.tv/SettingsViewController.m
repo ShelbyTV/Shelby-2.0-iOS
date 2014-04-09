@@ -186,7 +186,7 @@
         UserDetailsCell *cell = (UserDetailsCell *)[self.table dequeueReusableCellWithIdentifier:@"UserDetailsViewCell" forIndexPath:indexPath];
         cell.name.text = self.user.name;
         cell.userName.text = self.user.nickname;
-        [cell.avatar setImageWithURL:self.user.avatarURL placeholderImage:[UIImage imageNamed:@"settings-default-avatar"]];
+        [cell.avatar setImageWithURL:self.user.avatarURL placeholderImage:[UIImage imageNamed:@"blank-avatar-large"]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else if (indexPath.row == 5) {

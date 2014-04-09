@@ -13,6 +13,11 @@
 #import "ShelbyUserFollowingViewController.h"
 #import "ShelbyVideoContentBrowsingViewControllerProtocol.h"
 
+NSString * const kShelbyNavigateToSingleVideoEntryNotification = @"kShelbyNavigateToSingleVideoEntryNotification";
+NSString * const kShelbyNavigateToChannelKey = @"kShelbyNavigateToChannelKey";
+NSString * const kShelbyNavigateToSingleVideoEntryArrayKey = @"kShelbyNavigateToSingleVideoEntryArrayKey";
+NSString * const kShelbyNavigateToTitleOverrideKey = @"kShelbyNavigateToTitleOverrideKey";
+
 @interface ShelbyNavigationViewController ()
 @property (strong, nonatomic) UIViewController<ShelbyVideoContentBrowsingViewControllerProtocol> *currentlyOnVC;
 @end
@@ -39,6 +44,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(requestToShowCurrentlyOnNotification:)
                                                  name:kShelbyRequestToShowCurrentlyOnNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(navigateToSingleVideoEntryNotification:)
+                                                 name:kShelbyNavigateToSingleVideoEntryNotification
+                                               object:nil];
 }
 
 - (void)dealloc
@@ -132,18 +142,29 @@
     return followingVC;
 }
 
-- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride animated:(BOOL)animated
 {
-    return [self pushViewControllerForChannel:channel titleOverride:titleOverride showUserEducationSections:NO];
+    return [self pushViewControllerForChannel:channel titleOverride:titleOverride showUserEducationSections:NO animated:animated];
 }
 
-- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride showUserEducationSections:(BOOL)showUserEducationSections
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel singleVideoEntry:(NSArray *)singleVideoEntry titleOverride:(NSString *)titleOverride animated:(BOOL)animated
+{
+    ShelbyStreamInfoViewController *streamInfoVC = [self setupStreamInfoViewControllerWithChannel:channel];
+    streamInfoVC.title = titleOverride ? titleOverride : (channel.dashboard ? channel.dashboard.displayTitle : channel.roll.displayTitle);
+    streamInfoVC.mayShowFollowChannels = NO;
+    streamInfoVC.mayShowConnectSocial = NO;
+    streamInfoVC.singleVideoEntry = singleVideoEntry;
+    [self pushViewController:streamInfoVC animated:animated];
+    return streamInfoVC;
+}
+
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride showUserEducationSections:(BOOL)showUserEducationSections animated:(BOOL)animated
 {
     ShelbyStreamInfoViewController *streamInfoVC = [self setupStreamInfoViewControllerWithChannel:channel];
     streamInfoVC.title = titleOverride ? titleOverride : (channel.dashboard ? channel.dashboard.displayTitle : channel.roll.displayTitle);
     streamInfoVC.mayShowFollowChannels = showUserEducationSections;
     streamInfoVC.mayShowConnectSocial = showUserEducationSections;
-    [self pushViewController:streamInfoVC animated:YES];
+    [self pushViewController:streamInfoVC animated:animated];
     return streamInfoVC;
 }
 
@@ -190,6 +211,16 @@
     }
     
     [self.currentlyOnVC scrollCurrentlyPlayingIntoView];
+}
+
+- (void)navigateToSingleVideoEntryNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[kShelbyNavigateToChannelKey];
+    NSArray *videoEntry = userInfo[kShelbyNavigateToSingleVideoEntryArrayKey];
+    NSString *titleOverride = userInfo[kShelbyNavigateToTitleOverrideKey];
+    
+    [self pushViewControllerForChannel:channel singleVideoEntry:videoEntry titleOverride:titleOverride animated:YES];
 }
 
 #pragma mark - Helpers

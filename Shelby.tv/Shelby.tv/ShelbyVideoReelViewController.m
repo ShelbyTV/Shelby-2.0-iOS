@@ -71,6 +71,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didDismissModalViewNotification:)
                                                  name:kShelbyDidDismissModalViewNotification object:nil];
+    
+    //pause when backgrounded and not airplaying
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleWillResignActiveNotification:)
+                                                 name:kShelbyBrainWillResignActiveNotification object:nil];
 }
 
 -(void)dealloc
@@ -280,6 +285,15 @@
     if (self.wasPlayingBeforeModalViewWasPresented) {
         [self videoControlsPlayCurrentVideo:nil];
     }
+}
+
+- (void)handleWillResignActiveNotification:(NSNotification *)notification
+{
+    if (self.airPlayController.isAirPlayActive) {
+        //do not pause when air playing
+        return;
+    }
+    [self.videoReelCollectionVC pauseCurrentPlayer];
 }
 
 #pragma mark - custom gesture recognizers on video reel

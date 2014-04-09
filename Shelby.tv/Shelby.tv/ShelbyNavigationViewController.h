@@ -13,6 +13,11 @@
 #import "ShelbyVideoReelViewController.h"
 #import "User.h"
 
+extern NSString * const kShelbyNavigateToSingleVideoEntryNotification;
+extern NSString * const kShelbyNavigateToChannelKey;
+extern NSString * const kShelbyNavigateToSingleVideoEntryArrayKey;
+extern NSString * const kShelbyNavigateToTitleOverrideKey;
+
 @protocol ShelbyNavigationProtocol <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
@@ -27,6 +32,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController;
 - (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController;
-- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride;
-- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride showUserEducationSections:(BOOL)showUserEducationSections;
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride animated:(BOOL)animated;
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel singleVideoEntry:(NSArray *)singleVideoEntry titleOverride:(NSString *)titleOverride animated:(BOOL)animated;
+- (ShelbyStreamInfoViewController *)pushViewControllerForChannel:(DisplayChannel *)channel titleOverride:(NSString *)titleOverride showUserEducationSections:(BOOL)showUserEducationSections animated:(BOOL)animated;
 @end

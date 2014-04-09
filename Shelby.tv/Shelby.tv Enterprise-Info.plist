@@ -32,9 +32,17 @@
 				<string>fb115071338568035</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>shelbytv</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>b36</string>
+	<string>b37</string>
 	<key>FacebookAppID</key>
 	<string>115071338568035</string>
 	<key>LSRequiresIPhoneOS</key>

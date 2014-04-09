@@ -311,7 +311,6 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         email = facebookUser[@"email"];
         name = facebookUser[@"name"];
         nickname = facebookUser[@"username"];
-        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsAnonymousConvertViaFacebook];
     }
     
     [self removeSignupNotificationObservers];

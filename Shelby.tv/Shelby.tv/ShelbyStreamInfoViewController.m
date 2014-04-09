@@ -184,8 +184,8 @@ NSString * const kShelbyStreamConnectTwitterCell = @"StreamConnectTWT";
 {
     if (_followCount != followCount) {
         _followCount = followCount;
-        [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_ADD_CHANNELS] withRowAnimation:UITableViewRowAnimationFade];
     }
+    [self.entriesTable reloadSections:[NSIndexSet indexSetWithIndex:SECTION_FOR_ADD_CHANNELS] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)setCurrentUserHasFacebookConnected:(BOOL)currentUserHasFacebookConnected
@@ -247,9 +247,11 @@ NSString * const kShelbyStreamConnectTwitterCell = @"StreamConnectTWT";
 {
     if (self.mayShowFollowChannels || self.mayShowConnectSocial) {
         User *currentUser = self.currentUser;
+        [self.entriesTable beginUpdates];
         self.followCount = currentUser ? [currentUser rollFollowingCountIgnoringOwnRolls:YES] : 0;
         self.currentUserHasFacebookConnected = [currentUser isFacebookConnected];
         self.currentUserHasTwitterConnected = [currentUser isTwitterConnected];
+        [self.entriesTable endUpdates];
     }
 }
 

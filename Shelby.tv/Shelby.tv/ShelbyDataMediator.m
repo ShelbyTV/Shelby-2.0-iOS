@@ -648,7 +648,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             [User sessionDidBecomeActive];
             [Intercom beginSessionForUserWithUserId:user.userID andEmail:user.email];
             [Intercom updateAttributes:@{@"ios" : @1,
-                                         @"name" : user.name}];
+                                         @"name" : user.name ? user.name : user.nickname}];
             [self userLoggedIn];
             NSError *err;
             [user.managedObjectContext save:&err];
@@ -1063,6 +1063,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                             andBlock:^(id JSON, NSError *error) {
                                                 if(!error){
                                                     //user updated by API
+
+                                                    // if the user was previously an anonymous user, track that this was an anonymous user conversion via Facebook
+                                                    if ([user isAnonymousUser]) {
+                                                        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsAnonymousConvertViaFacebook];
+                                                    }
+
                                                     [user updateWithFacebookUser:facebookUser andJSON:JSON];
                                                     NSError *err;
                                                     [user.managedObjectContext save:&err];
