@@ -127,22 +127,34 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     if (self.notificationDashboardID) {
         NSString *dashboardEntryID = self.notificationDashboardID;
         if (currentUser) {
-            [self.homeVC presentNotificationCenterWithCompletionBlock:^{
+            shelby_home_complete_block_t showMediaBlock = ^{
                 [self openSingleVideoViewWithDashboardEntryID:dashboardEntryID];
-            }];
+            };
+            if (self.homeVC) {
+                [self.homeVC presentNotificationCenterWithCompletionBlock:showMediaBlock];
+            } else {
+                showMediaBlock();
+            }
+            
         } else {
-            [self openSingleVideoViewWithDashboardEntryID:dashboardEntryID];
+            //current notifications don't make sense if you're not logged in
         }
 
         self.notificationDashboardID = nil;
     } else if (self.notificationUserID) {
         NSString *userID = self.notificationUserID;
         if (currentUser) {
-            [self.homeVC presentNotificationCenterWithCompletionBlock:^{
+            shelby_home_complete_block_t showMediaBlock = ^{
                 [self userProfileWasTapped:userID];
-            }];
+            };
+            if (self.homeVC) {
+                [self.homeVC presentNotificationCenterWithCompletionBlock:showMediaBlock];
+            } else {
+                showMediaBlock();
+            }
+            
         } else {
-            [self userProfileWasTapped:self.notificationUserID];
+            //current notifications don't make sense if you're not logged in
         }
 
         self.notificationUserID = nil;
@@ -962,35 +974,65 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)openSingleVideoViewWithDashboardEntryID:(NSString *)dashboardID
 {
-    ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView" bundle:nil];
-    singleVideoVC.masterDelegate = self;
-    
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while ([topViewController presentedViewController]) {
-        topViewController = [topViewController presentedViewController];
-    }
-    
-    [topViewController presentViewController:singleVideoVC animated:YES completion:nil];
-    NSString *channelTitle = @"Video";
-    
-    [[ShelbyDataMediator sharedInstance] fetchDashboardEntryWithID:dashboardID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(DashboardEntry *fetchedDashboardEntry) {
-
-        if (fetchedDashboardEntry) {
-            DisplayChannel *displayChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForDashboardID:fetchedDashboardEntry.dashboard.dashboardID];
-            if (!displayChannel) {
-                displayChannel = [DisplayChannel channelForTransientEntriesWithID:dashboardID title:channelTitle inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    if (DEVICE_IPAD) {
+        //HACK - using a notification on iPad.  See below for discussion.
+        [[ShelbyDataMediator sharedInstance] fetchDashboardEntryWithID:dashboardID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(DashboardEntry *fetchedDashboard) {
+            NSString *rollID = fetchedDashboard.frame.roll.rollID;
+            if (fetchedDashboard) {
+                DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:rollID];
+                if (!rollChannel) {
+                    rollChannel = [DisplayChannel channelForTransientEntriesWithID:rollID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+                }
+                
+                rollChannel.roll = fetchedDashboard.frame.roll;
+                rollChannel.shouldFetchRemoteEntries = NO;
+                if (fetchedDashboard.frame.video.title) {
+                    rollChannel.titleOverride = fetchedDashboard.frame.video.title;
+                }
+                
+                //Discussion of the hack:
+                //Using a notification to trigger deeper actions in the app isn't necessarily wrong.
+                //Indeed, since this is coming from a URL, notification feels entirely okay.
+                //But this wasn't designed wholistically.  It's just bolted on; an afterthought...
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNavigateToSingleVideoEntryNotification
+                                                                    object:self userInfo:@{kShelbyNavigateToChannelKey: rollChannel,
+                                                                                           kShelbyNavigateToSingleVideoEntryArrayKey: @[fetchedDashboard],
+                                                                                           kShelbyNavigateToTitleOverrideKey: rollChannel.titleOverride}];
             }
-            
-            displayChannel.dashboard = fetchedDashboardEntry.dashboard;
-            displayChannel.shouldFetchRemoteEntries = NO;
-            
-            singleVideoVC.channels = @[displayChannel];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
-                                                                object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
-                                                                                kShelbyBrainChannelEntriesKey : @[fetchedDashboardEntry]}];
-            [singleVideoVC focusOnChannel:displayChannel];
+        }];
+        
+    } else {
+        
+        ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView" bundle:nil];
+        singleVideoVC.masterDelegate = self;
+        
+        UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        while ([topViewController presentedViewController]) {
+            topViewController = [topViewController presentedViewController];
         }
-    }];
+        
+        [topViewController presentViewController:singleVideoVC animated:YES completion:nil];
+        NSString *channelTitle = @"Video";
+        
+        [[ShelbyDataMediator sharedInstance] fetchDashboardEntryWithID:dashboardID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(DashboardEntry *fetchedDashboardEntry) {
+            
+            if (fetchedDashboardEntry) {
+                DisplayChannel *displayChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForDashboardID:fetchedDashboardEntry.dashboard.dashboardID];
+                if (!displayChannel) {
+                    displayChannel = [DisplayChannel channelForTransientEntriesWithID:dashboardID title:channelTitle inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+                }
+                
+                displayChannel.dashboard = fetchedDashboardEntry.dashboard;
+                displayChannel.shouldFetchRemoteEntries = NO;
+                
+                singleVideoVC.channels = @[displayChannel];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                                    object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
+                                                                                           kShelbyBrainChannelEntriesKey : @[fetchedDashboardEntry]}];
+                [singleVideoVC focusOnChannel:displayChannel];
+            }
+        }];
+    }
 }
 
 - (void)onNextBecomeActiveOpenNotificationCenterWithDashboardEntryID:(NSString *)dashboardEntryID
