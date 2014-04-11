@@ -30,7 +30,7 @@
 NSString * const kShelbyShareVideoHasCompleted = @"kShelbyShareVideoHasCompleted";
 NSString * const kShelbyShareFrameIDKey = @"frameID";
 
-static NSDictionary *userEducationTypeToLocalyticsConstantMap;
+static NSDictionary *userEducationTypeToLocalyticsAttributeMap;
 
 @interface ShelbyHomeViewController () {
     SettingsViewController *_settingsVC;
@@ -78,13 +78,13 @@ static NSDictionary *userEducationTypeToLocalyticsConstantMap;
         _airPlayController = [[ShelbyAirPlayController alloc] init];
         _airPlayController.delegate = self;
 
-        userEducationTypeToLocalyticsConstantMap =
+        userEducationTypeToLocalyticsAttributeMap =
         @{
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeStream] : kLocalyticsShowStreamEducationOverlayIPhone,
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeChannels] : kLocalyticsShowChannelsEducationOverlayIPhone,
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeTwoColumn] : kLocalyticsShowTwoColumnEducationOverlayIPhone,
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeLike] : kLocalyticsShowLikeEducationOverlayIPhone
-          };
+          @(UserEducationFullOverlayViewTypeStream) : @"stream",
+          @(UserEducationFullOverlayViewTypeChannels) : @"channels",
+          @(UserEducationFullOverlayViewTypeTwoColumn) : @"two column layout",
+          @(UserEducationFullOverlayViewTypeLike) : @"liking"
+        };
     }
     return self;
 }
@@ -842,8 +842,8 @@ static NSDictionary *userEducationTypeToLocalyticsConstantMap;
     [self.view addConstraints:@[topConstraint, bottomConstraint, leadingConstraint, trailingConstraint]];
 
     // track the showing of this view in our analytics system(s)
-    NSString *localyticsConstant = [userEducationTypeToLocalyticsConstantMap objectForKey:[NSNumber numberWithInteger:overlayViewType]];
-    [ShelbyAnalyticsClient sendLocalyticsEvent:localyticsConstant];
+    NSString *educationTopicAttributeValue = [userEducationTypeToLocalyticsAttributeMap objectForKey:@(overlayViewType)];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameShowUserEducation withAttributes:@{@"type" : @"iphone full overlay", @"topic" : educationTopicAttributeValue}];
 }
 
 #pragma mark - ShelbyStreamBrowseViewDelegate

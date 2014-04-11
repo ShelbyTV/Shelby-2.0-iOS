@@ -20,6 +20,8 @@ extern NSString * const kAnalyticsScreenUserProfile;
 extern NSString * const kAnalyticsScreenLikersList;
 
 // Localytics Constants
+extern NSString * const kLocalyticsEventNameShowUserEducation;
+
 extern NSString * const kLocalyticsAnonymousConvertViaEmail;
 extern NSString * const kLocalyticsAnonymousConvertViaFacebook;
 extern NSString * const kLocalyticsWatchVideo;
@@ -41,10 +43,6 @@ extern NSString * const kLocalyticsFollowUser;
 extern NSString * const kLocalyticsFollowingUser;
 extern NSString * const kLocalyticsFollowChannel;
 extern NSString * const kLocalyticsUnfollowChannel;
-extern NSString * const kLocalyticsShowChannelsEducationOverlayIPhone;
-extern NSString * const kLocalyticsShowLikeEducationOverlayIPhone;
-extern NSString * const kLocalyticsShowStreamEducationOverlayIPhone;
-extern NSString * const kLocalyticsShowTwoColumnEducationOverlayIPhone;
 extern NSString * const kLocalyticsTapAddChannelsInStream;
 extern NSString * const kLocalyticsTapConnectFacebookInStream;
 extern NSString * const kLocalyticsTapConnectTwitterInStream;
@@ -158,6 +156,9 @@ extern NSString * const kAnalyticsABTestRetention;
 
 //Localytics
 + (void)sendLocalyticsEvent:(NSString *)eventTag;
+
++ (void)sendLocalyticsEvent:(NSString *)eventTag
+             withAttributes:(NSDictionary *)attributes;
 
 //Google Analytics
 + (void)sendEventWithCategory:(NSString *)category

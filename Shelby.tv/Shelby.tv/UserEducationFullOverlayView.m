@@ -15,16 +15,16 @@ static NSDictionary *typeToNibMap;
 + (void)initialize {
     typeToNibMap =
         @{
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeStream] : @"StreamUserEducationFullOverlay",
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeChannels] : @"ChannelsUserEducationFullOverlay",
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeTwoColumn] : @"TwoColumnUserEducationFullOverlay",
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeLike] : @"LikeUserEducationFullOverlay"
-          };
+          @(UserEducationFullOverlayViewTypeStream) : @"StreamUserEducationFullOverlay",
+          @(UserEducationFullOverlayViewTypeChannels) : @"ChannelsUserEducationFullOverlay",
+          @(UserEducationFullOverlayViewTypeTwoColumn) : @"TwoColumnUserEducationFullOverlay",
+          @(UserEducationFullOverlayViewTypeLike) : @"LikeUserEducationFullOverlay"
+        };
 }
 
 + (UserEducationFullOverlayView *)viewForType:(UserEducationFullOverlayViewType)overlayViewType
 {
-    NSString *nibName = [typeToNibMap objectForKey:[NSNumber numberWithInteger:overlayViewType]];
+    NSString *nibName = [typeToNibMap objectForKey:@(overlayViewType)];
     if (nibName && ![UserEducationFullOverlayView isUserEducatedForType:overlayViewType]) {
         UserEducationFullOverlayView *view = [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil][0];
         view.overlayViewType = overlayViewType;
@@ -36,12 +36,12 @@ static NSDictionary *typeToNibMap;
 
 + (BOOL)isUserEducatedForType:(UserEducationFullOverlayViewType)overlayViewType
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, [NSNumber numberWithInteger:overlayViewType]]];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, @(overlayViewType)]];
 }
 
 + (void)setUserIsEducatedForType:(UserEducationFullOverlayViewType)overlayViewType
 {
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, [NSNumber numberWithInteger:overlayViewType]]];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[NSString stringWithFormat:@"%@%@", kShelbyUserEducationDefaultsKeyPrefix, @(overlayViewType)]];
 }
 
 - (id)initWithFrame:(CGRect)frame

@@ -26,6 +26,8 @@ NSString * const kAnalyticsScreenUserProfile                            = @"User
 NSString * const kAnalyticsScreenLikersList                             = @"Likers List";
 
 // Localytics Constants
+NSString * const kLocalyticsEventNameShowUserEducation                  = @"Show User Education";
+
 NSString * const kLocalyticsAnonymousConvertViaEmail                    = @"anonymous_convert_via_email";
 NSString * const kLocalyticsAnonymousConvertViaFacebook                 = @"anonymous_convert_via_facebook";
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
@@ -47,10 +49,6 @@ NSString * const kLocalyticsFollowUser                                  = @"did_
 NSString * const kLocalyticsFollowingUser                               = @"did_unfollow";
 NSString * const kLocalyticsFollowChannel                               = @"did_follow_channel";
 NSString * const kLocalyticsUnfollowChannel                             = @"did_unfollow_channel";
-NSString * const kLocalyticsShowChannelsEducationOverlayIPhone          = @"show_channels_user_education_iphone";
-NSString * const kLocalyticsShowLikeEducationOverlayIPhone              = @"show_like_user_education_iphone";
-NSString * const kLocalyticsShowStreamEducationOverlayIPhone            = @"show_stream_user_education_iphone";
-NSString * const kLocalyticsShowTwoColumnEducationOverlayIPhone         = @"show_two_column_user_education_iphone";
 NSString * const kLocalyticsTapAddChannelsInStream                      = @"tap_add_channels_in_stream";
 NSString * const kLocalyticsTapConnectFacebookInStream                  = @"tap_connect_facebook_in_stream";
 NSString * const kLocalyticsTapConnectTwitterInStream                   = @"tap_connect_twitter_in_stream";
@@ -170,9 +168,14 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
 }
 
 //Localytics
-+ (void)sendLocalyticsEvent:(id)eventTag
++ (void)sendLocalyticsEvent:(NSString *)eventTag
 {
     [[LocalyticsSession shared] tagEvent:eventTag];
+}
+
++ (void)sendLocalyticsEvent:(NSString *)eventTag withAttributes:(NSDictionary *)attributes
+{
+    [[LocalyticsSession shared] tagEvent:eventTag attributes:attributes];
 }
 
 //Google Analtyics
