@@ -635,6 +635,7 @@ static NSDictionary *userEducationTypeToLocalyticsAttributeMap;
     [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                          withAction:kAnalyticsUXTapNavBarButton
                                 withNicknameAsLabel:YES];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameStartSignup withAttributes:@{@"from origin" : @"iPhone nav bar button"}];
     [self dismissVideoReel];
     [self.masterDelegate presentUserSignup];
 }

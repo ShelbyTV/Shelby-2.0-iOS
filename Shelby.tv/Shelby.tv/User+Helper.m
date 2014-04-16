@@ -451,6 +451,24 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return self.userType && [self.userType intValue] != 1;
 }
 
+- (NSString *)userTypeStringForAnalytics
+{
+    switch (self.userType.intValue) {
+        case 0:
+            return @"real";
+        case 1:
+            return @"faux";
+        case 2:
+            return @"converted";
+        case 3:
+            return @"service";
+        case 4:
+            return @"anonymous";
+        default:
+            return @"unknown";
+    }
+}
+
 #pragma mark - View Helpers
 
 - (NSString *)nickname

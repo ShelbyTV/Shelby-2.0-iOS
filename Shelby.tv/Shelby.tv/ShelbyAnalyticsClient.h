@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "User+Helper.h"
 
 // Shared Constants
 //--Screens--
@@ -20,10 +21,25 @@ extern NSString * const kAnalyticsScreenUserProfile;
 extern NSString * const kAnalyticsScreenLikersList;
 
 // Localytics Constants
+//--User Education--
 extern NSString * const kLocalyticsEventNameShowUserEducation;
 
-extern NSString * const kLocalyticsAnonymousConvertViaEmail;
-extern NSString * const kLocalyticsAnonymousConvertViaFacebook;
+//--Signup--
+extern NSString * const kLocalyticsEventNameStartSignup;
+
+//--Connected Accounts--
+extern NSString * const kLocalyticsEventNameStartConnectingAccount;
+extern NSString * const kLocalyticsEventNameFinishConnectingAccount;
+extern NSString * const kLocalyticsAttributeValueAccountTypeFacebook;
+extern NSString * const kLocalyticsAttributeValueAccountTypeTwitter;
+extern NSString * const kLocalyticsAttributeValueAccountTypeEmail;
+extern NSString * const kLocalyticsAttributeValueFromOriginSettings;
+extern NSString * const kLocalyticsAttributeValueFromOriginSharePane;
+extern NSString * const kLocalyticsAttributeValueFromOriginSignup;
+extern NSString * const kLocalyticsAttributeValueFromOriginStreamCard;
+
+
+//--Not Yet Updated for Josh+Chris' revamping of Localytics--
 extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsWatchVideo25pct;
 extern NSString * const kLocalyticsLikeVideo;
@@ -33,8 +49,6 @@ extern NSString * const kLocalyticsEntranceStart;
 extern NSString * const kLocalyticsEntranceUserTapGetStarted;
 extern NSString * const kLocalyticsEntranceUserTapLogin;
 extern NSString * const kLocalyticsWelcomeStart;
-extern NSString * const kLocalyticsStartSignup;
-extern NSString * const kLocalyticsFinishSignup;
 extern NSString * const kLocalyticsDidLogin;
 extern NSString * const kLocalyticsDidLaunchAfterVideoPush;
 extern NSString * const kLocalyticsDidLaunchAfterUserPush;
@@ -44,8 +58,6 @@ extern NSString * const kLocalyticsFollowingUser;
 extern NSString * const kLocalyticsFollowChannel;
 extern NSString * const kLocalyticsUnfollowChannel;
 extern NSString * const kLocalyticsTapAddChannelsInStream;
-extern NSString * const kLocalyticsTapConnectFacebookInStream;
-extern NSString * const kLocalyticsTapConnectTwitterInStream;
 extern NSString * const kLocalyticsTapCardSharingUser;
 extern NSString * const kLocalyticsTapCardLikersList;
 extern NSString * const kLocalyticsTapCardLike;
@@ -54,14 +66,12 @@ extern NSString * const kLocalyticsTapCardPlay;
 extern NSString * const kLocalyticsTapHideFacebookInStream;
 extern NSString * const kLocalyticsTapHideTwitterInStream;
 extern NSString * const kLocalyticsTapLikerListLiker;
-extern NSString * const kLocalyticsTapTopNavSignup;
 extern NSString * const kLocalyticsTapPlayerControlsPlay;
 extern NSString * const kLocalyticsTapPlayerControlsLike;
 extern NSString * const kLocalyticsTapPlayerControlsUnlike;
 extern NSString * const kLocalyticsTapPlayerControlsExpand;
 extern NSString * const kLocalyticsTapPlayerControlsContract;
 extern NSString * const kLocalyticsTapUserProfileFromNotificationView;
-extern NSString * const kLocalyticsTapUserProfileSignup;
 extern NSString * const kLocalyticsTapVideoFromNotificationView;
 extern NSString * const kLocalyticsTapVideoPlayerOverlayPlay;
 
@@ -159,6 +169,10 @@ extern NSString * const kAnalyticsABTestRetention;
 
 + (void)sendLocalyticsEvent:(NSString *)eventTag
              withAttributes:(NSDictionary *)attributes;
+
++ (void)sendLocalyticsEventForStartConnectingAccountType:(NSString *)accountType fromOrigin:(NSString *)fromOrigin;
+
++ (void)sendLocalyticsEventForFinishConnectingAccountType:(NSString *)accountType;
 
 //Google Analytics
 + (void)sendEventWithCategory:(NSString *)category

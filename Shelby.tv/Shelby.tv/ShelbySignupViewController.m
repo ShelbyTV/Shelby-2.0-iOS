@@ -148,6 +148,9 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
                                           action:kAnalyticsSignupWithFacebookStart
                                            label:nil];
 
+    // Localytics event tracking for user trying to connect an account
+     [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeFacebook fromOrigin:kLocalyticsAttributeValueFromOriginSignup];
+
     [self.view endEditing:YES];
     [self.stepOneActivityIndicator startAnimating];
     self.stepOneView.userInteractionEnabled = NO;
@@ -163,14 +166,16 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [self.view endEditing:YES];
     [self.stepOneActivityIndicator startAnimating];
     self.view.userInteractionEnabled = NO;
-    
+
+    // Localytics event tracking for user trying to connect an account
+    [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeEmail fromOrigin:kLocalyticsAttributeValueFromOriginSignup];
+
     __weak ShelbySignupViewController *weakSelf = self;
     [[ShelbyDataMediator sharedInstance] updateUserWithName:nil nickname:self.stepOneNickname.text password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
         weakSelf.view.userInteractionEnabled = YES;
         [weakSelf.stepOneActivityIndicator stopAnimating];
         if (!error) {
             [weakSelf goToStepTwo];
-            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsAnonymousConvertViaEmail];
         } else {
             weakSelf.stepOneSignUpWithEmail.enabled = YES;
             NSString *errorMessage = nil;

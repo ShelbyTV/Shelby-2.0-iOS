@@ -410,6 +410,10 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     [self setTwitterName:name];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
+
+                        // localytics tracking for user connecting twitter account
+                        [ShelbyAnalyticsClient sendLocalyticsEventForFinishConnectingAccountType:kLocalyticsAttributeValueAccountTypeTwitter];
+
                         User *user = [User updateUserWithTwitterUsername:name andTwitterID:ID];
                         NSError *err;
                         [user.managedObjectContext save:&err];

@@ -26,10 +26,25 @@ NSString * const kAnalyticsScreenUserProfile                            = @"User
 NSString * const kAnalyticsScreenLikersList                             = @"Likers List";
 
 // Localytics Constants
+//--User Education--
 NSString * const kLocalyticsEventNameShowUserEducation                  = @"Show User Education";
 
-NSString * const kLocalyticsAnonymousConvertViaEmail                    = @"anonymous_convert_via_email";
-NSString * const kLocalyticsAnonymousConvertViaFacebook                 = @"anonymous_convert_via_facebook";
+//--Signup--
+NSString * const kLocalyticsEventNameStartSignup                        = @"Start Signup";
+
+//--Connected Accounts--
+NSString * const kLocalyticsEventNameStartConnectingAccount             = @"Start Connecting Account";
+NSString * const kLocalyticsEventNameFinishConnectingAccount            = @"Finish Connecting Account";
+NSString * const kLocalyticsAttributeValueAccountTypeFacebook           = @"facebook";
+NSString * const kLocalyticsAttributeValueAccountTypeTwitter            = @"twitter";
+NSString * const kLocalyticsAttributeValueAccountTypeEmail              = @"email";
+NSString * const kLocalyticsAttributeValueFromOriginSettings            = @"settings";
+NSString * const kLocalyticsAttributeValueFromOriginSharePane           = @"share pane";
+NSString * const kLocalyticsAttributeValueFromOriginSignup              = @"signup";
+NSString * const kLocalyticsAttributeValueFromOriginStreamCard          = @"stream card";
+
+
+//--Not Yet Updated for Josh+Chris' revamping of Localytics--
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
 NSString * const kLocalyticsWatchVideo25pct                             = @"watch_25_pct";
 NSString * const kLocalyticsLikeVideo                                   = @"like";
@@ -39,8 +54,6 @@ NSString * const kLocalyticsEntranceStart                               = @"entr
 NSString * const kLocalyticsEntranceUserTapGetStarted                   = @"entrance_get_started";
 NSString * const kLocalyticsEntranceUserTapLogin                        = @"entrance_login";
 NSString * const kLocalyticsWelcomeStart                                = @"welcome_start";
-NSString * const kLocalyticsStartSignup                                 = @"start_signup";
-NSString * const kLocalyticsFinishSignup                                = @"finish_signup";
 NSString * const kLocalyticsDidLogin                                    = @"did_login";
 NSString * const kLocalyticsDidLaunchAfterVideoPush                     = @"open_app_via_video_push";
 NSString * const kLocalyticsDidLaunchAfterUserPush                      = @"open_app_via_follow_push";
@@ -50,8 +63,6 @@ NSString * const kLocalyticsFollowingUser                               = @"did_
 NSString * const kLocalyticsFollowChannel                               = @"did_follow_channel";
 NSString * const kLocalyticsUnfollowChannel                             = @"did_unfollow_channel";
 NSString * const kLocalyticsTapAddChannelsInStream                      = @"tap_add_channels_in_stream";
-NSString * const kLocalyticsTapConnectFacebookInStream                  = @"tap_connect_facebook_in_stream";
-NSString * const kLocalyticsTapConnectTwitterInStream                   = @"tap_connect_twitter_in_stream";
 NSString * const kLocalyticsTapCardSharingUser                          = @"view_sharer_profile";
 NSString * const kLocalyticsTapCardLikersList                           = @"view_likers";
 NSString * const kLocalyticsTapCardLike                                 = @"tap_card_like";
@@ -60,14 +71,12 @@ NSString * const kLocalyticsTapCardPlay                                 = @"tap_
 NSString * const kLocalyticsTapHideFacebookInStream                     = @"tap_hide_facebook_in_stream";
 NSString * const kLocalyticsTapHideTwitterInStream                      = @"tap_hide_twitter_in_stream";
 NSString * const kLocalyticsTapLikerListLiker                           = @"view_liker";
-NSString * const kLocalyticsTapTopNavSignup                             = @"tap_top_nav_signup";
 NSString * const kLocalyticsTapPlayerControlsPlay                       = @"tap_player_controls_play";
 NSString * const kLocalyticsTapPlayerControlsLike                       = @"tap_player_controls_like";
 NSString * const kLocalyticsTapPlayerControlsUnlike                     = @"tap_player_controls_unlike";
 NSString * const kLocalyticsTapPlayerControlsExpand                     = @"tap_player_controls_expand";
 NSString * const kLocalyticsTapPlayerControlsContract                   = @"tap_player_controls_contract";
 NSString * const kLocalyticsTapUserProfileFromNotificationView          = @"view_profile_notification";
-NSString * const kLocalyticsTapUserProfileSignup                        = @"tap_user_profile_signup";
 NSString * const kLocalyticsTapVideoFromNotificationView                = @"view_video_notification";
 NSString * const kLocalyticsTapVideoPlayerOverlayPlay                   = @"tap_video_player_overlay_play";
 
@@ -178,6 +187,37 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     [[LocalyticsSession shared] tagEvent:eventTag attributes:attributes];
 }
 
++ (void)sendLocalyticsEventForStartConnectingAccountType:(NSString *)accountType fromOrigin:(NSString *)origin
+{
+    NSString *userType = @"unknown";
+    User *user = [ShelbyAnalyticsClient getCurrentUser];
+    if (user) {
+        userType = [user userTypeStringForAnalytics];
+    }
+    [self sendLocalyticsEvent:kLocalyticsEventNameStartConnectingAccount
+                                withAttributes:@{
+                                                 @"account type" : accountType,
+                                                 @"from origin" : origin,
+                                                 @"user type" : userType
+                                                 }];
+
+}
+
++ (void)sendLocalyticsEventForFinishConnectingAccountType:(NSString *)accountType
+{
+    // if the user was previously an anonymous user, this was a conversion, otherwise it was just connecting a new account
+    NSString *connectionType = @"unknown";
+    User *user = [ShelbyAnalyticsClient getCurrentUser];
+    if (user) {
+        connectionType = [user isAnonymousUser] ? @"conversion" : @"connection";
+    }
+    [self sendLocalyticsEvent:kLocalyticsEventNameFinishConnectingAccount
+                                withAttributes:@{
+                                                 @"account type" : accountType,
+                                                 @"connection type" : connectionType
+                                                 }];
+}
+
 //Google Analtyics
 + (void)sendEventWithCategory:(NSString *)category
                        action:(NSString *)action
@@ -192,16 +232,7 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
               nicknameAsLabel:(BOOL)nicknameAsLabel
 {
     if (nicknameAsLabel) {
-        User __block *user;
-        if ([NSThread isMainThread]) {
-            NSManagedObjectContext *moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
-            user = [User currentAuthenticatedUserInContext:moc];
-        } else {
-            DLog(@"ShelbyVC grabbing user on background thread... i don't LOVE this :-/");
-            [[ShelbyDataMediator sharedInstance] privateContextPerformBlockAndWait:^(NSManagedObjectContext *privateMOC) {
-                user = [User currentAuthenticatedUserInContext:privateMOC];
-            }];
-        }
+        User *user = [self getCurrentUser];
         if (user) {
             [self sendEventWithCategory:category action:action label:user.nickname];
         } else {
@@ -219,6 +250,22 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
 {
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:category action:action label:label value:value] build]];
+}
+
+//Private Utility Methods
++ (User *)getCurrentUser
+{
+    User __block *user;
+    if ([NSThread isMainThread]) {
+        NSManagedObjectContext *moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
+        user = [User currentAuthenticatedUserInContext:moc];
+    } else {
+        DLog(@"ShelbyVC grabbing user on background thread... i don't LOVE this :-/");
+        [[ShelbyDataMediator sharedInstance] privateContextPerformBlockAndWait:^(NSManagedObjectContext *privateMOC) {
+            user = [User currentAuthenticatedUserInContext:privateMOC];
+        }];
+    }
+    return user;
 }
 
 @end

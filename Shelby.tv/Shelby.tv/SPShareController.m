@@ -110,6 +110,8 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     if (selected) {
         if (facebook) {
             if (![[FacebookHandler sharedInstance] allowPublishActions]) {
+                [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeFacebook
+                                                                             fromOrigin:kLocalyticsAttributeValueFromOriginSharePane];
                 if (DEVICE_IPAD) {
                     [[ShelbyDataMediator sharedInstance] userAskForFacebookPublishPermissions];
                 } else {
@@ -118,6 +120,8 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                 return NO;
             }
         } else if (!currentUser.twitterNickname) {
+            [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeTwitter
+                                                                         fromOrigin:kLocalyticsAttributeValueFromOriginSharePane];
             if (DEVICE_IPAD) {
                 User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
                 NSString *token = nil;

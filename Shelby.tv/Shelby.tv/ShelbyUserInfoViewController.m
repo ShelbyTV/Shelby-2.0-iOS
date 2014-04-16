@@ -254,7 +254,7 @@
 #pragma mark - SignupHeaderDelegate
 - (void)signupUser
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapUserProfileSignup];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameStartSignup withAttributes:@{@"from origin" : @"user profile header"}];
     
     ShelbySignupViewController *signupVC = [[ShelbySignupiPadViewController alloc] initWithNibName:@"ShelbySignupView~ipad" bundle:nil];
     signupVC.modalPresentationStyle = UIModalPresentationPageSheet;

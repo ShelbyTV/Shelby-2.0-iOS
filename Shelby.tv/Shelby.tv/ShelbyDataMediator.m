@@ -1064,10 +1064,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                 if(!error){
                                                     //user updated by API
 
-                                                    // if the user was previously an anonymous user, track that this was an anonymous user conversion via Facebook
-                                                    if ([user isAnonymousUser]) {
-                                                        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsAnonymousConvertViaFacebook];
-                                                    }
+                                                    // localytics tracking for user connecting facebook account
+                                                    [ShelbyAnalyticsClient sendLocalyticsEventForFinishConnectingAccountType:kLocalyticsAttributeValueAccountTypeFacebook];
 
                                                     [user updateWithFacebookUser:facebookUser andJSON:JSON];
                                                     NSError *err;
