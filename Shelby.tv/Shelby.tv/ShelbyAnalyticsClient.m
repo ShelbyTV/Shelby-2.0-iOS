@@ -29,8 +29,9 @@ NSString * const kAnalyticsScreenLikersList                             = @"Like
 //--User Education--
 NSString * const kLocalyticsEventNameShowUserEducation                  = @"Show User Education";
 
-//--Signup--
+//--Signup Flow--
 NSString * const kLocalyticsEventNameStartSignup                        = @"Start Signup";
+NSString * const kLocalyticsEventNameUpdateUserInfo                     = @"Update User Info";
 
 //--Connected Accounts--
 NSString * const kLocalyticsEventNameStartConnectingAccount             = @"Start Connecting Account";
@@ -42,6 +43,7 @@ NSString * const kLocalyticsAttributeValueFromOriginSettings            = @"sett
 NSString * const kLocalyticsAttributeValueFromOriginSharePane           = @"share pane";
 NSString * const kLocalyticsAttributeValueFromOriginSignup              = @"signup";
 NSString * const kLocalyticsAttributeValueFromOriginStreamCard          = @"stream card";
+NSString * const kLocalyticsAttributeValueFromOriginUserProfile         = @"user profile";
 
 
 //--Not Yet Updated for Josh+Chris' revamping of Localytics--
@@ -216,6 +218,26 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
                                                  @"account type" : accountType,
                                                  @"connection type" : connectionType
                                                  }];
+}
+
++ (NSDictionary *)addUpdateDescriptionAttributeForEntityName:(NSString *)entityName
+                                                toAttributes:(NSDictionary *)attributes
+                                                    oldValue:(NSString *)oldValue
+                                                    newValue:(NSString *)newValue;
+{
+    NSString *propertyChange = @"not updated";
+    if (![newValue isEqualToString:oldValue]) {
+        if (!oldValue || ![oldValue length]) {
+            propertyChange = @"added";
+        } else {
+            propertyChange = @"updated";
+        }
+    }
+
+    NSMutableDictionary *newAttributes = [[NSMutableDictionary alloc] init];
+    [newAttributes setValue:propertyChange forKey:entityName];
+    [newAttributes addEntriesFromDictionary:attributes];
+    return newAttributes;
 }
 
 //Google Analtyics

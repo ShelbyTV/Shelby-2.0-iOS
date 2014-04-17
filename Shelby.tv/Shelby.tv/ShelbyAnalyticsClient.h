@@ -24,8 +24,9 @@ extern NSString * const kAnalyticsScreenLikersList;
 //--User Education--
 extern NSString * const kLocalyticsEventNameShowUserEducation;
 
-//--Signup--
+//--Signup Flow--
 extern NSString * const kLocalyticsEventNameStartSignup;
+extern NSString * const kLocalyticsEventNameUpdateUserInfo;
 
 //--Connected Accounts--
 extern NSString * const kLocalyticsEventNameStartConnectingAccount;
@@ -37,6 +38,7 @@ extern NSString * const kLocalyticsAttributeValueFromOriginSettings;
 extern NSString * const kLocalyticsAttributeValueFromOriginSharePane;
 extern NSString * const kLocalyticsAttributeValueFromOriginSignup;
 extern NSString * const kLocalyticsAttributeValueFromOriginStreamCard;
+extern NSString * const kLocalyticsAttributeValueFromOriginUserProfile;
 
 
 //--Not Yet Updated for Josh+Chris' revamping of Localytics--
@@ -173,6 +175,18 @@ extern NSString * const kAnalyticsABTestRetention;
 + (void)sendLocalyticsEventForStartConnectingAccountType:(NSString *)accountType fromOrigin:(NSString *)fromOrigin;
 
 + (void)sendLocalyticsEventForFinishConnectingAccountType:(NSString *)accountType;
+
+// This is used to add an event attribute describing whether or not a string property of something was changed
+// during the event and how
+// Let's say the property is called "username" and so you pass "username" for the entityName parameter,
+// then
+// --> if oldValue and newValue are the same, returns attributes with {@"username" : "not updated"} added
+// --> if oldValue and newValue are different, and oldValue is nil or an empty string, returns attributes with {@"username" : "added"} added
+// --> if oldValue and newValue are different, but oldValue is not nil or not an empty string, returns attributes with {@"username" : "updated"} added
++ (NSDictionary *)addUpdateDescriptionAttributeForEntityName:(NSString *)entityName
+                                                toAttributes:(NSDictionary *)attributes
+                                                    oldValue:(NSString *)oldValue
+                                                    newValue:(NSString *)newValue;
 
 //Google Analytics
 + (void)sendEventWithCategory:(NSString *)category
