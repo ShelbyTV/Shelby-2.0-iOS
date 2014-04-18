@@ -18,6 +18,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *notificationText;
 @property (nonatomic, weak) id<FollowNotificationDelegate>delegate;
 @property (nonatomic, strong) NSString *userID;
+@property (nonatomic, strong) NSString *userNickname;
 
 - (IBAction)viewUser:(id)sender;
 @end

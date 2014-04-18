@@ -498,12 +498,16 @@
 
 - (IBAction)goToUserProfile:(id)sender
 {
+    [self.delegate userProfileWasTapped:self.userID];
+
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                           action:kAnalyticsUXTapCardSharingUser
                                  nicknameAsLabel:YES];
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardSharingUser];
-    
-    [self.delegate userProfileWasTapped:self.userID];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCardOwner,
+                                                 @"username" : self.videoFrame.creator.nickname
+                                                 }];
 }
 
 - (void)processLikersAndSharers

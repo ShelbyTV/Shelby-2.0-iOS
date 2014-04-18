@@ -152,7 +152,7 @@
 {
     // KP KP: TODO: lets put error check
     if ([[url host] isEqualToString:@"user"]) {
-        [self.brain userProfileWasTapped:[url lastPathComponent]];
+        [self.brain userProfileWasTapped:[url lastPathComponent] andTrackWithOrigin:kLocalyticsAttributeValueFromOriginCustomUrl];
     } else if ([[url host] isEqualToString:@"frame"]) {
         [self.brain openSingleVideoViewWithFrameID:[url lastPathComponent]];
     }

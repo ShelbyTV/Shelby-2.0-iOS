@@ -46,13 +46,23 @@ NSString * const kLocalyticsAttributeValueAccountTypeFacebook           = @"face
 NSString * const kLocalyticsAttributeValueAccountTypeShelby             = @"shelby";
 NSString * const kLocalyticsAttributeValueAccountTypeTwitter            = @"twitter";
 
+//--User Profile--
+NSString * const kLocalyticsEventNameUserProfileView                    = @"User Profile View";
+
 //--Shared Event Attribute: from origin--
+NSString * const kLocalyticsAttributeValueFromOriginChannelsItem        = @"channels item";
+NSString * const kLocalyticsAttributeValueFromOriginCustomUrl           = @"custom url";
 NSString * const kLocalyticsAttributeValueFromOriginEntranceScreen      = @"entrance screen";
+NSString * const kLocalyticsAttributeValueFromOriginFollowedRollsItem   = @"followed rolls item";
+NSString * const kLocalyticsAttributeValueFromOriginLikerListItem       = @"liker list item";
+NSString * const kLocalyticsAttributeValueFromOriginNotifCenterActor    = @"notification center actor";
+NSString * const kLocalyticsAttributeValueFromOriginPushNotification    = @"push notification";
 NSString * const kLocalyticsAttributeValueFromOriginSettings            = @"settings";
 NSString * const kLocalyticsAttributeValueFromOriginSharePane           = @"share pane";
 NSString * const kLocalyticsAttributeValueFromOriginSignup              = @"signup";
 NSString * const kLocalyticsAttributeValueFromOriginStreamCard          = @"stream card";
 NSString * const kLocalyticsAttributeValueFromOriginUserProfile         = @"user profile";
+NSString * const kLocalyticsAttributeValueFromOriginVideoCardOwner      = @"video card owner";
 
 
 //--Not Yet Updated for Josh+Chris' revamping of Localytics--
@@ -72,20 +82,17 @@ NSString * const kLocalyticsFollowingUser                               = @"did_
 NSString * const kLocalyticsFollowChannel                               = @"did_follow_channel";
 NSString * const kLocalyticsUnfollowChannel                             = @"did_unfollow_channel";
 NSString * const kLocalyticsTapAddChannelsInStream                      = @"tap_add_channels_in_stream";
-NSString * const kLocalyticsTapCardSharingUser                          = @"view_sharer_profile";
 NSString * const kLocalyticsTapCardLikersList                           = @"view_likers";
 NSString * const kLocalyticsTapCardLike                                 = @"tap_card_like";
 NSString * const kLocalyticsTapCardUnlike                               = @"tap_card_unlike";
 NSString * const kLocalyticsTapCardPlay                                 = @"tap_card_play";
 NSString * const kLocalyticsTapHideFacebookInStream                     = @"tap_hide_facebook_in_stream";
 NSString * const kLocalyticsTapHideTwitterInStream                      = @"tap_hide_twitter_in_stream";
-NSString * const kLocalyticsTapLikerListLiker                           = @"view_liker";
 NSString * const kLocalyticsTapPlayerControlsPlay                       = @"tap_player_controls_play";
 NSString * const kLocalyticsTapPlayerControlsLike                       = @"tap_player_controls_like";
 NSString * const kLocalyticsTapPlayerControlsUnlike                     = @"tap_player_controls_unlike";
 NSString * const kLocalyticsTapPlayerControlsExpand                     = @"tap_player_controls_expand";
 NSString * const kLocalyticsTapPlayerControlsContract                   = @"tap_player_controls_contract";
-NSString * const kLocalyticsTapUserProfileFromNotificationView          = @"view_profile_notification";
 NSString * const kLocalyticsTapVideoFromNotificationView                = @"view_video_notification";
 NSString * const kLocalyticsTapVideoPlayerOverlayPlay                   = @"tap_video_player_overlay_play";
 

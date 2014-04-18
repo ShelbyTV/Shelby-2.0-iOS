@@ -273,8 +273,13 @@
         //there is no profile
         return;
     }
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardSharingUser];
     [self.delegate userProfileWasTapped:self.videoFrame.creator.userID];
+
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCardOwner,
+                                                 @"username" : self.videoFrame.creator.nickname
+                                                 }];
 }
 
 - (IBAction)openLikersView:(id)sender

@@ -183,7 +183,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.delegate userProfileWasTapped:self.rawRollFollowings[indexPath.row][@"creator_id"]];
+    id rollFollowing = self.rawRollFollowings[indexPath.row];
+    [self.delegate userProfileWasTapped:rollFollowing[@"creator_id"]];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginFollowedRollsItem,
+                                                 @"username" : rollFollowing[@"creator_nickname"]
+                                                 }];
 }
 
 @end

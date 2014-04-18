@@ -41,14 +41,24 @@ extern NSString * const kLocalyticsAttributeValueAccountTypeFacebook;
 extern NSString * const kLocalyticsAttributeValueAccountTypeShelby;
 extern NSString * const kLocalyticsAttributeValueAccountTypeTwitter;
 
+//--User Profile--
+extern NSString * const kLocalyticsEventNameUserProfileView;
+
 
 //--Shared Event Attribute: from origin--
+extern NSString * const kLocalyticsAttributeValueFromOriginChannelsItem;
+extern NSString * const kLocalyticsAttributeValueFromOriginCustomUrl;
 extern NSString * const kLocalyticsAttributeValueFromOriginEntranceScreen;
+extern NSString * const kLocalyticsAttributeValueFromOriginFollowedRollsItem;
+extern NSString * const kLocalyticsAttributeValueFromOriginLikerListItem;
+extern NSString * const kLocalyticsAttributeValueFromOriginNotifCenterActor;
+extern NSString * const kLocalyticsAttributeValueFromOriginPushNotification;
 extern NSString * const kLocalyticsAttributeValueFromOriginSettings;
 extern NSString * const kLocalyticsAttributeValueFromOriginSharePane;
 extern NSString * const kLocalyticsAttributeValueFromOriginSignup;
 extern NSString * const kLocalyticsAttributeValueFromOriginStreamCard;
 extern NSString * const kLocalyticsAttributeValueFromOriginUserProfile;
+extern NSString * const kLocalyticsAttributeValueFromOriginVideoCardOwner;
 
 
 //--Not Yet Updated for Josh+Chris' revamping of Localytics--
@@ -68,20 +78,17 @@ extern NSString * const kLocalyticsFollowingUser;
 extern NSString * const kLocalyticsFollowChannel;
 extern NSString * const kLocalyticsUnfollowChannel;
 extern NSString * const kLocalyticsTapAddChannelsInStream;
-extern NSString * const kLocalyticsTapCardSharingUser;
 extern NSString * const kLocalyticsTapCardLikersList;
 extern NSString * const kLocalyticsTapCardLike;
 extern NSString * const kLocalyticsTapCardUnlike;
 extern NSString * const kLocalyticsTapCardPlay;
 extern NSString * const kLocalyticsTapHideFacebookInStream;
 extern NSString * const kLocalyticsTapHideTwitterInStream;
-extern NSString * const kLocalyticsTapLikerListLiker;
 extern NSString * const kLocalyticsTapPlayerControlsPlay;
 extern NSString * const kLocalyticsTapPlayerControlsLike;
 extern NSString * const kLocalyticsTapPlayerControlsUnlike;
 extern NSString * const kLocalyticsTapPlayerControlsExpand;
 extern NSString * const kLocalyticsTapPlayerControlsContract;
-extern NSString * const kLocalyticsTapUserProfileFromNotificationView;
 extern NSString * const kLocalyticsTapVideoFromNotificationView;
 extern NSString * const kLocalyticsTapVideoPlayerOverlayPlay;
 

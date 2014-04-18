@@ -129,6 +129,12 @@
     } else {
         [self.delegate userProfileWasTapped:selectedChannel.roll.creatorID];
     }
+
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginChannelsItem,
+                                                 @"channel name" : selectedChannel.roll.displayTitle
+                                                 }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

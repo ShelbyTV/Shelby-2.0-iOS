@@ -54,6 +54,7 @@ extern NSString *const kShelbyDeviceToken;
 //- (void)handlePushNotification:(NSDictionary *)userInfo WithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 // KP KP: TODO: these two methods should not be exposed. Instead, we will have another method that check if user/frame is valid to prevent garbage input.
 - (void)userProfileWasTapped:(NSString *)userID;
+- (void)userProfileWasTapped:(NSString *)userID andTrackWithOrigin:(NSString *)fromOriginForLocalytics;
 - (void)openSingleVideoViewWithFrameID:(NSString *)frameID;
 
 - (void)onNextBecomeActiveOpenNotificationCenterWithDashboardEntryID:(NSString *)dashboardEntryID;
