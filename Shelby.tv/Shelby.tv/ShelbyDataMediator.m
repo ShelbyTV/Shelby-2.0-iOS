@@ -634,6 +634,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
 {
     [ShelbyAPIClient loginUserWithEmail:email password:password andBlock:^(id JSON, NSError *error) {
+        if (!error) {
+            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameLoginComplete
+                                        withAttributes:@{
+                                                         @"account type" : kLocalyticsAttributeValueAccountTypeShelby
+                                                         }];
+        }
         [self handleUserLoginWithJSON:JSON andError:error];
     }];
 }
@@ -973,6 +979,11 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                 if (error) {
                     // If there was a problem login with FB - clean FB session 
                     [self cleanupSession];
+                } else {
+                    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameLoginComplete
+                                                withAttributes:@{
+                                                                 @"account type" : kLocalyticsAttributeValueAccountTypeFacebook
+                                                                 }];
                 }
             }];
         } else {

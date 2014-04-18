@@ -167,7 +167,10 @@
 #pragma mark - Target-Action
 
 - (IBAction)getStartedTapped:(id)sender {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEntranceUserTapGetStarted];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameGetStarted
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginEntranceScreen
+                                                 }];
     
     [self.getStartedSpinner startAnimating];
     [self setButtonsEnabled:NO];
@@ -176,7 +179,10 @@
 }
 
 - (IBAction)loginTapped:(id)sender {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEntranceUserTapLogin];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameLoginStart
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginEntranceScreen
+                                                 }];
     
     [self.brain presentUserLogin];
 }

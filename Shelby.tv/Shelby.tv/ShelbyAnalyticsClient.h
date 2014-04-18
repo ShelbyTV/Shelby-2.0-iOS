@@ -21,6 +21,11 @@ extern NSString * const kAnalyticsScreenUserProfile;
 extern NSString * const kAnalyticsScreenLikersList;
 
 // Localytics Constants
+//--App Entry--
+extern NSString * const kLocalyticsEventNameGetStarted;
+extern NSString * const kLocalyticsEventNameLoginStart;
+extern NSString * const kLocalyticsEventNameLoginComplete;
+
 //--User Education--
 extern NSString * const kLocalyticsEventNameShowUserEducation;
 
@@ -31,9 +36,14 @@ extern NSString * const kLocalyticsEventNameUpdateUserInfo;
 //--Connected Accounts--
 extern NSString * const kLocalyticsEventNameStartConnectingAccount;
 extern NSString * const kLocalyticsEventNameFinishConnectingAccount;
-extern NSString * const kLocalyticsAttributeValueAccountTypeFacebook;
-extern NSString * const kLocalyticsAttributeValueAccountTypeTwitter;
 extern NSString * const kLocalyticsAttributeValueAccountTypeEmail;
+extern NSString * const kLocalyticsAttributeValueAccountTypeFacebook;
+extern NSString * const kLocalyticsAttributeValueAccountTypeShelby;
+extern NSString * const kLocalyticsAttributeValueAccountTypeTwitter;
+
+
+//--Shared Event Attribute: from origin--
+extern NSString * const kLocalyticsAttributeValueFromOriginEntranceScreen;
 extern NSString * const kLocalyticsAttributeValueFromOriginSettings;
 extern NSString * const kLocalyticsAttributeValueFromOriginSharePane;
 extern NSString * const kLocalyticsAttributeValueFromOriginSignup;
@@ -48,8 +58,6 @@ extern NSString * const kLocalyticsLikeVideo;
 extern NSString * const kLocalyticsShareComplete;
 extern NSString * const kLocalyticsShareCompleteAnonymousUser;
 extern NSString * const kLocalyticsEntranceStart;
-extern NSString * const kLocalyticsEntranceUserTapGetStarted;
-extern NSString * const kLocalyticsEntranceUserTapLogin;
 extern NSString * const kLocalyticsWelcomeStart;
 extern NSString * const kLocalyticsDidLogin;
 extern NSString * const kLocalyticsDidLaunchAfterVideoPush;

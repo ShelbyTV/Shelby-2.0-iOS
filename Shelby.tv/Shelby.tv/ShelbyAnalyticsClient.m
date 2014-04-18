@@ -26,6 +26,11 @@ NSString * const kAnalyticsScreenUserProfile                            = @"User
 NSString * const kAnalyticsScreenLikersList                             = @"Likers List";
 
 // Localytics Constants
+//--App Entry--
+NSString * const kLocalyticsEventNameGetStarted                         = @"Get Started";
+NSString * const kLocalyticsEventNameLoginStart                         = @"Login Start";
+NSString * const kLocalyticsEventNameLoginComplete                      = @"Login Complete";
+
 //--User Education--
 NSString * const kLocalyticsEventNameShowUserEducation                  = @"Show User Education";
 
@@ -36,9 +41,13 @@ NSString * const kLocalyticsEventNameUpdateUserInfo                     = @"Upda
 //--Connected Accounts--
 NSString * const kLocalyticsEventNameStartConnectingAccount             = @"Start Connecting Account";
 NSString * const kLocalyticsEventNameFinishConnectingAccount            = @"Finish Connecting Account";
-NSString * const kLocalyticsAttributeValueAccountTypeFacebook           = @"facebook";
-NSString * const kLocalyticsAttributeValueAccountTypeTwitter            = @"twitter";
 NSString * const kLocalyticsAttributeValueAccountTypeEmail              = @"email";
+NSString * const kLocalyticsAttributeValueAccountTypeFacebook           = @"facebook";
+NSString * const kLocalyticsAttributeValueAccountTypeShelby             = @"shelby";
+NSString * const kLocalyticsAttributeValueAccountTypeTwitter            = @"twitter";
+
+//--Shared Event Attribute: from origin--
+NSString * const kLocalyticsAttributeValueFromOriginEntranceScreen      = @"entrance screen";
 NSString * const kLocalyticsAttributeValueFromOriginSettings            = @"settings";
 NSString * const kLocalyticsAttributeValueFromOriginSharePane           = @"share pane";
 NSString * const kLocalyticsAttributeValueFromOriginSignup              = @"signup";
@@ -53,8 +62,6 @@ NSString * const kLocalyticsLikeVideo                                   = @"like
 NSString * const kLocalyticsShareComplete                               = @"share_complete";
 NSString * const kLocalyticsShareCompleteAnonymousUser                  = @"share_complete_anonymous_user";
 NSString * const kLocalyticsEntranceStart                               = @"entrance_start";
-NSString * const kLocalyticsEntranceUserTapGetStarted                   = @"entrance_get_started";
-NSString * const kLocalyticsEntranceUserTapLogin                        = @"entrance_login";
 NSString * const kLocalyticsWelcomeStart                                = @"welcome_start";
 NSString * const kLocalyticsDidLogin                                    = @"did_login";
 NSString * const kLocalyticsDidLaunchAfterVideoPush                     = @"open_app_via_video_push";
