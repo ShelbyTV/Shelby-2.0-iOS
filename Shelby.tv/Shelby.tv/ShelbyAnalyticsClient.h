@@ -68,8 +68,6 @@ extern NSString * const kLocalyticsLikeVideo;
 extern NSString * const kLocalyticsShareComplete;
 extern NSString * const kLocalyticsShareCompleteAnonymousUser;
 extern NSString * const kLocalyticsEntranceStart;
-extern NSString * const kLocalyticsWelcomeStart;
-extern NSString * const kLocalyticsDidLogin;
 extern NSString * const kLocalyticsDidLaunchAfterVideoPush;
 extern NSString * const kLocalyticsDidLaunchAfterUserPush;
 extern NSString * const kLocalyticsDidPreview;
