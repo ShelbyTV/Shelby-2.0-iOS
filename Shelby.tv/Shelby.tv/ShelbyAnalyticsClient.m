@@ -32,15 +32,15 @@ NSString * const kLocalyticsEventNameLoginStart                         = @"Logi
 NSString * const kLocalyticsEventNameLoginComplete                      = @"Login Complete";
 
 //--User Education--
-NSString * const kLocalyticsEventNameShowUserEducation                  = @"Show User Education";
+NSString * const kLocalyticsEventNameUserEducationView                  = @"User Education View";
 
 //--Signup Flow--
-NSString * const kLocalyticsEventNameStartSignup                        = @"Start Signup";
-NSString * const kLocalyticsEventNameUpdateUserInfo                     = @"Update User Info";
+NSString * const kLocalyticsEventNameSignupStart                        = @"Signup Start";
+NSString * const kLocalyticsEventNameUserInfoUpdate                     = @"User Info Update";
 
 //--Connected Accounts--
-NSString * const kLocalyticsEventNameStartConnectingAccount             = @"Start Connecting Account";
-NSString * const kLocalyticsEventNameFinishConnectingAccount            = @"Finish Connecting Account";
+NSString * const kLocalyticsEventNameAccountConnectStart                = @"Account Connect Start";
+NSString * const kLocalyticsEventNameAccountConnectComplete             = @"Account Connect Complete";
 NSString * const kLocalyticsAttributeValueAccountTypeEmail              = @"email";
 NSString * const kLocalyticsAttributeValueAccountTypeFacebook           = @"facebook";
 NSString * const kLocalyticsAttributeValueAccountTypeShelby             = @"shelby";
@@ -203,7 +203,7 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     if (user) {
         userType = [user userTypeStringForAnalytics];
     }
-    [self sendLocalyticsEvent:kLocalyticsEventNameStartConnectingAccount
+    [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectStart
                                 withAttributes:@{
                                                  @"account type" : accountType,
                                                  @"from origin" : origin,
@@ -220,7 +220,7 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     if (user) {
         connectionType = [user isAnonymousUser] ? @"conversion" : @"connection";
     }
-    [self sendLocalyticsEvent:kLocalyticsEventNameFinishConnectingAccount
+    [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectComplete
                                 withAttributes:@{
                                                  @"account type" : accountType,
                                                  @"connection type" : connectionType

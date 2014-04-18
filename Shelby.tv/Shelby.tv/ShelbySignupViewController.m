@@ -251,7 +251,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
                                                                            toAttributes:eventAttributes
                                                                                oldValue:self.userEmailBeforeUpdate newValue:self.stepTwoEmail.text];
 
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUpdateUserInfo
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserInfoUpdate
                                 withAttributes:eventAttributes];
 }
 

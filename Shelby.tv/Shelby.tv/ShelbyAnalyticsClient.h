@@ -27,15 +27,15 @@ extern NSString * const kLocalyticsEventNameLoginStart;
 extern NSString * const kLocalyticsEventNameLoginComplete;
 
 //--User Education--
-extern NSString * const kLocalyticsEventNameShowUserEducation;
+extern NSString * const kLocalyticsEventNameUserEducationView;
 
 //--Signup Flow--
-extern NSString * const kLocalyticsEventNameStartSignup;
-extern NSString * const kLocalyticsEventNameUpdateUserInfo;
+extern NSString * const kLocalyticsEventNameSignupStart;
+extern NSString * const kLocalyticsEventNameUserInfoUpdate;
 
 //--Connected Accounts--
-extern NSString * const kLocalyticsEventNameStartConnectingAccount;
-extern NSString * const kLocalyticsEventNameFinishConnectingAccount;
+extern NSString * const kLocalyticsEventNameAccountConnectStart;
+extern NSString * const kLocalyticsEventNameAccountConnectComplete;
 extern NSString * const kLocalyticsAttributeValueAccountTypeEmail;
 extern NSString * const kLocalyticsAttributeValueAccountTypeFacebook;
 extern NSString * const kLocalyticsAttributeValueAccountTypeShelby;

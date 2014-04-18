@@ -281,7 +281,7 @@
 
 - (void)signupUser
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameStartSignup withAttributes:@{@"from origin" : @"iPad left navigation header"}];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameSignupStart withAttributes:@{@"from origin" : @"iPad left navigation header"}];
     
     ShelbySignupViewController *signupVC = [[ShelbySignupiPadViewController alloc] initWithNibName:@"ShelbySignupView~ipad" bundle:nil];
     signupVC.modalPresentationStyle = UIModalPresentationPageSheet;
