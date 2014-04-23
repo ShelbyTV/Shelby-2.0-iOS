@@ -14,6 +14,7 @@
 #import "Video+Helper.h"
 #import "UIImageView+AFNetworking.h"
 #import "User+Helper.h"
+#import "ShelbyDataMediator.h"
 
 #define kShelbyInfoViewMargin 15
 #define kShelbyCaptionMargin 4
@@ -456,6 +457,13 @@
                                                  name:kShelbyShareVideoHasCompleted object:nil];
   
     [self.delegate shareVideoWasTapped];
+
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,
+                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 }];
 }
 
 - (void)resetShareButton:(NSNotification *)notification

@@ -11,6 +11,7 @@
 #import "Intercom.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "VideoControlsView.h"
+#import "ShelbyDataMediator.h"
 
 #define SCRUB_PCT_REQUIRED_BEFORE_SEEKING .02f
 #define HEIGHT_IN_PORTRAIT 88
@@ -435,6 +436,12 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     if (self.currentEntity &&
         [self.delegate respondsToSelector:@selector(videoControlsShareCurrentVideo:)]) {
         [self.delegate videoControlsShareCurrentVideo:self];
+        User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
+                                    withAttributes:@{
+                                                     @"from origin" : kLocalyticsAttributeValueFromOriginVideoControls,
+                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     }];
     }
 }
 

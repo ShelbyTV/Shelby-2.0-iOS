@@ -13,6 +13,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "User+Helper.h"
 #import "Video.h"
+#import "ShelbyDataMediator.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ShelbyStreamEntryCell()
@@ -253,6 +254,13 @@
 - (IBAction)shareVideo:(id)sender
 {
     [self.delegate shareVideoWasTappedForFrame:self.videoFrame];
+
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,
+                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 }];
 }
 
 - (IBAction)likeVideo:(id)sender

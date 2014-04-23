@@ -1173,11 +1173,6 @@ static NSDictionary *userEducationTypeToLocalyticsAttributeMap;
             [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                                  withAction:kAnalyticsUXShareFinish
                                         withNicknameAsLabel:YES];
-            if ([weakSelf.currentUser isAnonymousUser]) {
-                [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsShareCompleteAnonymousUser];
-            } else {
-                [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsShareComplete];
-            }
             
             // Appirater Event
             [Appirater userDidSignificantEvent:YES];

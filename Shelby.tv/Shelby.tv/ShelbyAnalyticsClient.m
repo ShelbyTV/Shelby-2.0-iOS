@@ -49,6 +49,11 @@ NSString * const kLocalyticsAttributeValueAccountTypeTwitter            = @"twit
 //--User Profile--
 NSString * const kLocalyticsEventNameUserProfileView                    = @"User Profile View";
 
+//--Actions on Videos--
+NSString * const kLocalyticsEventNameVideoShareStart                    = @"Video Share Start";
+NSString * const kLocalyticsEventNameVideoShareComplete                 = @"Video Share Complete";
+NSDictionary *activityTypeToShareDestinationStringMap;
+
 //--Shared Event Attribute: from origin--
 NSString * const kLocalyticsAttributeValueFromOriginChannelsItem        = @"channels item";
 NSString * const kLocalyticsAttributeValueFromOriginCustomUrl           = @"custom url";
@@ -62,15 +67,15 @@ NSString * const kLocalyticsAttributeValueFromOriginSharePane           = @"shar
 NSString * const kLocalyticsAttributeValueFromOriginSignup              = @"signup";
 NSString * const kLocalyticsAttributeValueFromOriginStreamCard          = @"stream card";
 NSString * const kLocalyticsAttributeValueFromOriginUserProfile         = @"user profile";
+NSString * const kLocalyticsAttributeValueFromOriginVideoCard           = @"video card";
 NSString * const kLocalyticsAttributeValueFromOriginVideoCardOwner      = @"video card owner";
+NSString * const kLocalyticsAttributeValueFromOriginVideoControls       = @"video controls";
 
 
 //--Not Yet Updated for Josh+Chris' revamping of Localytics--
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
 NSString * const kLocalyticsWatchVideo25pct                             = @"watch_25_pct";
 NSString * const kLocalyticsLikeVideo                                   = @"like";
-NSString * const kLocalyticsShareComplete                               = @"share_complete";
-NSString * const kLocalyticsShareCompleteAnonymousUser                  = @"share_complete_anonymous_user";
 NSString * const kLocalyticsEntranceStart                               = @"entrance_start";
 NSString * const kLocalyticsDidLaunchAfterVideoPush                     = @"open_app_via_video_push";
 NSString * const kLocalyticsDidLaunchAfterUserPush                      = @"open_app_via_follow_push";
@@ -180,6 +185,16 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
 @implementation ShelbyAnalyticsClient
 
 //Shared
++ (void)initialize {
+    activityTypeToShareDestinationStringMap = @{
+                                                UIActivityTypeMessage : @"text message",
+                                                UIActivityTypePostToFacebook : @"facebook native",
+                                                UIActivityTypePostToTwitter : @"twitter native",
+                                                UIActivityTypeAirDrop : @"air drop",
+                                                UIActivityTypeMail : @"email native"
+                                                };
+}
+
 + (void)trackScreen:(NSString *)screenName
 {
     //centralizing view tracking by going manual in GA (instead of implicit view tracking via self.screenName)
@@ -188,6 +203,16 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 
     [[LocalyticsSession shared] tagScreen:screenName];
+}
+
++ (NSString *)destinationStringForUIActivityType:(NSString *)activityType
+{
+    NSString *destinationString = [activityTypeToShareDestinationStringMap valueForKey:activityType];
+    if (destinationString)  {
+        return destinationString;
+    } else {
+        return activityType;
+    }
 }
 
 //Localytics

@@ -44,6 +44,10 @@ extern NSString * const kLocalyticsAttributeValueAccountTypeTwitter;
 //--User Profile--
 extern NSString * const kLocalyticsEventNameUserProfileView;
 
+//--Actions on Videos--
+NSString * const kLocalyticsEventNameVideoShareStart;
+NSString * const kLocalyticsEventNameVideoShareComplete;
+
 
 //--Shared Event Attribute: from origin--
 extern NSString * const kLocalyticsAttributeValueFromOriginChannelsItem;
@@ -58,15 +62,15 @@ extern NSString * const kLocalyticsAttributeValueFromOriginSharePane;
 extern NSString * const kLocalyticsAttributeValueFromOriginSignup;
 extern NSString * const kLocalyticsAttributeValueFromOriginStreamCard;
 extern NSString * const kLocalyticsAttributeValueFromOriginUserProfile;
+extern NSString * const kLocalyticsAttributeValueFromOriginVideoCard;
 extern NSString * const kLocalyticsAttributeValueFromOriginVideoCardOwner;
+extern NSString * const kLocalyticsAttributeValueFromOriginVideoControls;
 
 
 //--Not Yet Updated for Josh+Chris' revamping of Localytics--
 extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsWatchVideo25pct;
 extern NSString * const kLocalyticsLikeVideo;
-extern NSString * const kLocalyticsShareComplete;
-extern NSString * const kLocalyticsShareCompleteAnonymousUser;
 extern NSString * const kLocalyticsEntranceStart;
 extern NSString * const kLocalyticsDidLaunchAfterVideoPush;
 extern NSString * const kLocalyticsDidLaunchAfterUserPush;
@@ -178,6 +182,9 @@ extern NSString * const kAnalyticsABTestRetention;
 
 //Shared
 + (void)trackScreen:(NSString *)screenName;
+// translate Apple's techy-looking strings like com.apple.UIKit.activity.PostToTwitter to more readable strings
+// like "twitter native" to then be used as attribute values for events
++ (NSString *)destinationStringForUIActivityType:(NSString *)activityType;
 
 //Localytics
 + (void)sendLocalyticsEvent:(NSString *)eventTag;
@@ -200,6 +207,7 @@ extern NSString * const kAnalyticsABTestRetention;
                                                 toAttributes:(NSDictionary *)attributes
                                                     oldValue:(NSString *)oldValue
                                                     newValue:(NSString *)newValue;
+
 
 //Google Analytics
 + (void)sendEventWithCategory:(NSString *)category
