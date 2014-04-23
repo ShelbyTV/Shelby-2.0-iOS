@@ -358,7 +358,6 @@
     [ShelbyVideoReelViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                               withAction:kAnalyticsUXLike
                                      withNicknameAsLabel:YES];
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsLikeVideo];
     // Appirater Event
     [Appirater userDidSignificantEvent:YES];
 

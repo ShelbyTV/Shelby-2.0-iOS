@@ -414,8 +414,13 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 }
 
 - (IBAction)likeTapped:(id)sender {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapPlayerControlsLike];
-    
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoLike
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoControls,
+                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 }];
+
     if (self.currentEntity) {
         [self.delegate videoControlsLikeCurrentVideo:self];
         [self updateViewForCurrentEntity];
@@ -423,7 +428,12 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 }
 
 - (IBAction)unlikeTapped:(id)sender {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapPlayerControlsUnlike];
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoUnlike
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoControls,
+                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 }];
     
     if (self.currentEntity) {
         [self.delegate videoControlsUnlikeCurrentVideo:self];

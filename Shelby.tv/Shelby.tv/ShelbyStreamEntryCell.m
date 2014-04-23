@@ -265,13 +265,25 @@
 
 - (IBAction)likeVideo:(id)sender
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardLike];
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoLike
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,
+                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 }];
+
     [self.delegate likeFrame:self.videoFrame];
 }
 
 - (IBAction)unLikeVideo:(id)sender
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardUnlike];
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoUnlike
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,
+                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 }];
+
     [self.delegate unLikeFrame:self.videoFrame];
 }
 

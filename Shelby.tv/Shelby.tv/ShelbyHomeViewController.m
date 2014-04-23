@@ -1077,7 +1077,6 @@ static NSDictionary *userEducationTypeToLocalyticsAttributeMap;
 {
     // Analytics
     [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX withAction:kAnalyticsUXLike withNicknameAsLabel:YES];
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsLikeVideo];
     // Appirater Event
     [Appirater userDidSignificantEvent:YES];
     

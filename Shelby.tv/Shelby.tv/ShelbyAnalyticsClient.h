@@ -47,6 +47,8 @@ extern NSString * const kLocalyticsEventNameUserProfileView;
 //--Actions on Videos--
 NSString * const kLocalyticsEventNameVideoShareStart;
 NSString * const kLocalyticsEventNameVideoShareComplete;
+NSString * const kLocalyticsEventNameVideoLike;
+NSString * const kLocalyticsEventNameVideoUnlike;
 
 
 //--Shared Event Attribute: from origin--
@@ -70,7 +72,6 @@ extern NSString * const kLocalyticsAttributeValueFromOriginVideoControls;
 //--Not Yet Updated for Josh+Chris' revamping of Localytics--
 extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsWatchVideo25pct;
-extern NSString * const kLocalyticsLikeVideo;
 extern NSString * const kLocalyticsEntranceStart;
 extern NSString * const kLocalyticsDidLaunchAfterVideoPush;
 extern NSString * const kLocalyticsDidLaunchAfterUserPush;
@@ -81,14 +82,10 @@ extern NSString * const kLocalyticsFollowChannel;
 extern NSString * const kLocalyticsUnfollowChannel;
 extern NSString * const kLocalyticsTapAddChannelsInStream;
 extern NSString * const kLocalyticsTapCardLikersList;
-extern NSString * const kLocalyticsTapCardLike;
-extern NSString * const kLocalyticsTapCardUnlike;
 extern NSString * const kLocalyticsTapCardPlay;
 extern NSString * const kLocalyticsTapHideFacebookInStream;
 extern NSString * const kLocalyticsTapHideTwitterInStream;
 extern NSString * const kLocalyticsTapPlayerControlsPlay;
-extern NSString * const kLocalyticsTapPlayerControlsLike;
-extern NSString * const kLocalyticsTapPlayerControlsUnlike;
 extern NSString * const kLocalyticsTapPlayerControlsExpand;
 extern NSString * const kLocalyticsTapPlayerControlsContract;
 extern NSString * const kLocalyticsTapVideoFromNotificationView;
