@@ -255,7 +255,7 @@
 {
     [self.delegate shareVideoWasTappedForFrame:self.videoFrame];
 
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];;
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
                                 withAttributes:@{
                                                  @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,
@@ -265,7 +265,7 @@
 
 - (IBAction)likeVideo:(id)sender
 {
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoLike
                                 withAttributes:@{
                                                  @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,
@@ -277,7 +277,7 @@
 
 - (IBAction)unLikeVideo:(id)sender
 {
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoUnlike
                                 withAttributes:@{
                                                  @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,

@@ -226,7 +226,7 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
 + (void)sendLocalyticsEventForStartConnectingAccountType:(NSString *)accountType fromOrigin:(NSString *)origin
 {
     NSString *userType = @"unknown";
-    User *user = [ShelbyAnalyticsClient getCurrentUser];
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     if (user) {
         userType = [user userTypeStringForAnalytics];
     }
@@ -243,7 +243,7 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
 {
     // if the user was previously an anonymous user, this was a conversion, otherwise it was just connecting a new account
     NSString *connectionType = @"unknown";
-    User *user = [ShelbyAnalyticsClient getCurrentUser];
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     if (user) {
         connectionType = [user isAnonymousUser] ? @"conversion" : @"connection";
     }
@@ -288,7 +288,16 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
               nicknameAsLabel:(BOOL)nicknameAsLabel
 {
     if (nicknameAsLabel) {
-        User *user = [self getCurrentUser];
+        User __block *user;
+        if ([NSThread isMainThread]) {
+            NSManagedObjectContext *moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
+            user = [User currentAuthenticatedUserInContext:moc];
+        } else {
+            DLog(@"ShelbyVC grabbing user on background thread... i don't LOVE this :-/");
+            [[ShelbyDataMediator sharedInstance] privateContextPerformBlockAndWait:^(NSManagedObjectContext *privateMOC) {
+                user = [User currentAuthenticatedUserInContext:privateMOC];
+            }];
+        }
         if (user) {
             [self sendEventWithCategory:category action:action label:user.nickname];
         } else {
@@ -306,22 +315,6 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
 {
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:category action:action label:label value:value] build]];
-}
-
-//Private Utility Methods
-+ (User *)getCurrentUser
-{
-    User __block *user;
-    if ([NSThread isMainThread]) {
-        NSManagedObjectContext *moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
-        user = [User currentAuthenticatedUserInContext:moc];
-    } else {
-        DLog(@"ShelbyVC grabbing user on background thread... i don't LOVE this :-/");
-        [[ShelbyDataMediator sharedInstance] privateContextPerformBlockAndWait:^(NSManagedObjectContext *privateMOC) {
-            user = [User currentAuthenticatedUserInContext:privateMOC];
-        }];
-    }
-    return user;
 }
 
 @end

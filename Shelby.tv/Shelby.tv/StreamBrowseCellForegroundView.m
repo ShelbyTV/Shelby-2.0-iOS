@@ -458,7 +458,7 @@
   
     [self.delegate shareVideoWasTapped];
 
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
                                 withAttributes:@{
                                                  @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,

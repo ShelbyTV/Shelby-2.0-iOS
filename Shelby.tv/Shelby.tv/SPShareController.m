@@ -40,8 +40,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 @property (nonatomic, strong) SPShareCompletionHandler completionHandler;
 @property (nonatomic, strong) UIPopoverController *popoverVC;
 
-@property (nonatomic, strong) User *sharingUser;
-
 @end
 
 @implementation SPShareController
@@ -144,9 +142,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 #pragma mark - Action Methods (Private)
 - (void)shareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link
 {
-    self.sharingUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
    
-    if (self.sharingUser && ![self.sharingUser isAnonymousUser] && ![self.sharingUser.userID isEqualToString:frame.creator.userID]) {
+    if (user && ![user isAnonymousUser] && ![user.userID isEqualToString:frame.creator.userID]) {
         NSString *shareNibName = DEVICE_IPAD ? @"ShelbyShareView-iPad" : @"ShelbyShareView";
         self.shelbyShare = [[ShelbyShareViewController alloc] initWithNibName:shareNibName bundle:nil];
         [self.shelbyShare setupShareWith:frame link:link andShareController:self];
@@ -190,9 +188,11 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
          if (completed) {
              [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyiOSNativeShareDone object:nil];
+
+             User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
              [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
                                          withAttributes:@{
-                                                          @"user type" : [self.sharingUser userTypeStringForAnalytics],
+                                                          @"user type" : [user userTypeStringForAnalytics],
                                                           @"title" : frame.video.title,
                                                           @"destinations" : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
                                                           }];
@@ -224,9 +224,10 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyDidDismissModalViewNotification object:self];
         
         if (completed) {
+            User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
             [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
                                         withAttributes:@{
-                                                         @"user type" : [self.sharingUser userTypeStringForAnalytics],
+                                                         @"user type" : [user userTypeStringForAnalytics],
                                                          @"title" : frame.video.title,
                                                          @"destinations" : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
                                                          }];
@@ -291,7 +292,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                   [self shareComplete:YES];
                                   [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
                                                               withAttributes:@{
-                                                                               @"user type" : [self.sharingUser userTypeStringForAnalytics],
+                                                                               @"user type" : [user userTypeStringForAnalytics],
                                                                                @"title" : newFrameDict[@"video"][@"title"],
                                                                                @"destinations" : shareDestinationsForLocalytics
                                                                                }];
