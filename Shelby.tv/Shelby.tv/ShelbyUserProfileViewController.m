@@ -167,7 +167,12 @@
         [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                              withAction:kAnalyticsUXFollow
                                     withNicknameAsLabel:YES];
-        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFollowUser];
+        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
+                                    withAttributes:@{
+                                                     @"from origin" : kLocalyticsAttributeValueFromOriginUserProfile,
+                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     }];
 
         [self.masterDelegate followRoll:self.profileUser.publicRollID];
         [self updateFollowButtonToShowFollowing:YES];
@@ -175,7 +180,12 @@
         [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                              withAction:kAnalyticsUXFollowing
                                     withNicknameAsLabel:YES];
-        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFollowingUser];
+        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
+                                    withAttributes:@{
+                                                     @"from origin" : kLocalyticsAttributeValueFromOriginUserProfile,
+                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     }];
 
         [self.masterDelegate unfollowRoll:self.profileUser.publicRollID];
         [self updateFollowButtonToShowFollowing:NO];

@@ -55,6 +55,8 @@ NSString * const kLocalyticsEventNameVideoShareComplete                 = @"Vide
 NSDictionary *activityTypeToShareDestinationStringMap;
 NSString * const kLocalyticsEventNameVideoLike                          = @"Video Like";
 NSString * const kLocalyticsEventNameVideoUnlike                        = @"Video Unlike";
+NSString * const kLocalyticsEventNameFollow                             = @"Follow";
+NSString * const kLocalyticsEventNameUnfollow                           = @"Unfollow";
 
 //--Shared Event Attribute: from origin--
 NSString * const kLocalyticsAttributeValueFromOriginChannelsItem        = @"channels item";
@@ -79,12 +81,7 @@ NSString * const kLocalyticsWatchVideo                                  = @"watc
 NSString * const kLocalyticsWatchVideo25pct                             = @"watch_25_pct";
 NSString * const kLocalyticsEntranceStart                               = @"entrance_start";
 NSString * const kLocalyticsDidLaunchAfterVideoPush                     = @"open_app_via_video_push";
-NSString * const kLocalyticsDidLaunchAfterUserPush                      = @"open_app_via_follow_push";
 NSString * const kLocalyticsDidPreview                                  = @"did_preview";
-NSString * const kLocalyticsFollowUser                                  = @"did_follow";
-NSString * const kLocalyticsFollowingUser                               = @"did_unfollow";
-NSString * const kLocalyticsFollowChannel                               = @"did_follow_channel";
-NSString * const kLocalyticsUnfollowChannel                             = @"did_unfollow_channel";
 NSString * const kLocalyticsTapAddChannelsInStream                      = @"tap_add_channels_in_stream";
 NSString * const kLocalyticsTapCardLikersList                           = @"view_likers";
 NSString * const kLocalyticsTapCardPlay                                 = @"tap_card_play";

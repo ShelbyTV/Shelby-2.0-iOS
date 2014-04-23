@@ -49,6 +49,8 @@ NSString * const kLocalyticsEventNameVideoShareStart;
 NSString * const kLocalyticsEventNameVideoShareComplete;
 NSString * const kLocalyticsEventNameVideoLike;
 NSString * const kLocalyticsEventNameVideoUnlike;
+NSString * const kLocalyticsEventNameFollow;
+NSString * const kLocalyticsEventNameUnfollow;
 
 
 //--Shared Event Attribute: from origin--
@@ -74,12 +76,7 @@ extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsWatchVideo25pct;
 extern NSString * const kLocalyticsEntranceStart;
 extern NSString * const kLocalyticsDidLaunchAfterVideoPush;
-extern NSString * const kLocalyticsDidLaunchAfterUserPush;
 extern NSString * const kLocalyticsDidPreview;
-extern NSString * const kLocalyticsFollowUser;
-extern NSString * const kLocalyticsFollowingUser;
-extern NSString * const kLocalyticsFollowChannel;
-extern NSString * const kLocalyticsUnfollowChannel;
 extern NSString * const kLocalyticsTapAddChannelsInStream;
 extern NSString * const kLocalyticsTapCardLikersList;
 extern NSString * const kLocalyticsTapCardPlay;

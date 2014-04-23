@@ -218,8 +218,22 @@
 
     if (isFollowing) {
         [[ShelbyDataMediator sharedInstance] unfollowRoll:self.user.publicRollID];
+
+        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
+                                    withAttributes:@{
+                                                     @"from origin" : kLocalyticsAttributeValueFromOriginUserProfile,
+                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     }];
     } else {
         [[ShelbyDataMediator sharedInstance] followRoll:self.user.publicRollID];
+
+        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
+                                    withAttributes:@{
+                                                     @"from origin" : kLocalyticsAttributeValueFromOriginUserProfile,
+                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     }];
     }
 
 }

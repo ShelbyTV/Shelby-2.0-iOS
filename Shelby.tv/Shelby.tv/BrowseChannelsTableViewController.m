@@ -173,8 +173,13 @@
 
 - (void)doFollow:(DisplayChannel *)channelToFollow
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFollowChannel];
-    
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginChannelsItem,
+                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 }];
+
     [[ShelbyDataMediator sharedInstance] followRoll:channelToFollow.roll.rollID];
     //fire and forget (although actual request will update this correctly)
     [self.currentUser didFollowRoll:channelToFollow.roll.rollID];
@@ -185,7 +190,12 @@
 
 - (void)doUnfollow:(DisplayChannel *)channelToUnfollow
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsUnfollowChannel];
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
+                                withAttributes:@{
+                                                 @"from origin" : kLocalyticsAttributeValueFromOriginChannelsItem,
+                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 }];
     
     [[ShelbyDataMediator sharedInstance] unfollowRoll:channelToUnfollow.roll.rollID];
     //fire and forget (although actual request will update this correctly)

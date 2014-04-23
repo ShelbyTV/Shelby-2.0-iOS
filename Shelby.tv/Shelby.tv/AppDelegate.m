@@ -318,7 +318,6 @@
         [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPush
                                               action:kAnalyticsPushAfterUserPush
                                      nicknameAsLabel:YES];
-        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidLaunchAfterUserPush];
         
         [self.brain onNextBecomeActiveOpenNotificationCenterWithUserID:userInfo[@"user_id"]];
     } else if (userInfo[@"dashboard_entry_id"]) {
