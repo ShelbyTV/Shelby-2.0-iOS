@@ -10,6 +10,7 @@
 #import "ShelbyAlert.h"
 #import "ShelbyAnalyticsClient.h"
 #import "SPVideoPlayer.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface ShelbyAirPlayController()
 @property (nonatomic, strong) Frame *currentFrame;
@@ -122,6 +123,29 @@
     }
 
     self.videoPlayer = notedPlayer;
+    self.videoPlayer.queueModeEnabled = YES;
+
+    NSLog(@"Before we start there are %lu items", (unsigned long)[self.videoPlayer queueLength]);
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Create some player items and put them into the queue to see if we can get continuous playback in the background working
+        AVPlayerItem *newItem =[AVPlayerItem playerItemWithURL:[NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"]];
+        NSLog(@"Can I append this? %d", [self.videoPlayer canAppendPlayerItemToQueue:newItem]);
+        [self.videoPlayer appendPlayerItemToQueue:newItem];
+
+        newItem =[AVPlayerItem playerItemWithURL:[NSURL URLWithString:@"https://ia600204.us.archive.org/2/items/Pbtestfilemp4videotestmp4/video_test.mp4"]];
+        NSLog(@"Can I append this? %d", [self.videoPlayer canAppendPlayerItemToQueue:newItem]);
+        [self.videoPlayer appendPlayerItemToQueue:newItem];
+
+        newItem =[AVPlayerItem playerItemWithURL:[NSURL URLWithString:@"http://www.auby.no/files/video_tests/h264_720p_hp_5.1_6mbps_ac3_planet.mp4"]];
+        NSLog(@"Can I append this? %d", [self.videoPlayer canAppendPlayerItemToQueue:newItem]);
+        [self.videoPlayer appendPlayerItemToQueue:newItem];
+
+        newItem =[AVPlayerItem playerItemWithURL:[NSURL URLWithString:@"http://www.ist.rit.edu/~jxs/test/HTML5/mobileDemo.mp4"]];
+        NSLog(@"Can I append this? %d", [self.videoPlayer canAppendPlayerItemToQueue:newItem]);
+        [self.videoPlayer appendPlayerItemToQueue:newItem];
+    });
+
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     [self.delegate airPlayControllerDidBeginAirPlay:self];
     self.currentFrame = self.videoPlayer.videoFrame;
@@ -131,8 +155,17 @@
                                  nicknameAsLabel:YES];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+
+    NSLog(@"Changes %@ %@", keyPath, change);
+
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
 - (void)airplayDidEnd:(NSNotification *)note
 {
+    self.videoPlayer.queueModeEnabled = NO;
     [self.videoPlayer resetPlayer];
     self.videoPlayer = nil;
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];

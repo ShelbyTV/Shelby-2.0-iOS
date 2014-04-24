@@ -55,6 +55,9 @@ static NSString * const kRefererURL = @"http://vimeo.com/m/%@";
                                             parameters:nil];
 
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+    [op setShouldExecuteAsBackgroundTaskWithExpirationHandler:^{
+        NSLog(@"Didn't have enough time for Vimeo Extraction");
+    }];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (_isCancelled) {
             return;

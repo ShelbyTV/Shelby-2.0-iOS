@@ -507,6 +507,9 @@
 		3BCC07CB18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
 		3BCC07CC18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
 		3BCC07CD18C12892006501BA /* ExploreUserEducationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */; };
+		3BF0792E18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF0792D18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m */; };
+		3BF0792F18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF0792D18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m */; };
+		3BF0793018FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF0792D18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m */; };
 		3BF6B9A918EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */; };
 		3BF6B9AA18EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */; };
 		3BF6B9AB18EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */; };
@@ -1179,6 +1182,8 @@
 		3BA23BB518E376C1005FE081 /* UserEducationFullOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserEducationFullOverlayView.m; sourceTree = "<group>"; };
 		3BA603C318D8EDB00078B952 /* ShelbyEntranceView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyEntranceView~iphone.xib"; sourceTree = "<group>"; };
 		3BCC07CA18C12892006501BA /* ExploreUserEducationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreUserEducationView.xib; sourceTree = "<group>"; };
+		3BF0792C18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyStreamBrowseCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		3BF0792D18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyStreamBrowseCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		3BF6B9A718EDBBD900DDC62B /* StreamUserEducationFullOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamUserEducationFullOverlayView.h; sourceTree = "<group>"; };
 		3BF6B9A818EDBBD900DDC62B /* StreamUserEducationFullOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamUserEducationFullOverlayView.m; sourceTree = "<group>"; };
 		3BF6B9AC18EE0C0900DDC62B /* TwoColumnUserEducationFullOverlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoColumnUserEducationFullOverlay.xib; sourceTree = "<group>"; };
@@ -2157,6 +2162,8 @@
 		8EF5C351162F41BA0075C35F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3BF0792C18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.h */,
+				3BF0792D18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m */,
 				91A3626C1790684F00381218 /* Signup Views */,
 				1CBF0934175CD69D001D471A /* Xib-iPhone */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
@@ -3108,6 +3115,7 @@
 				8E7024D81715E71500E8DE46 /* OADataFetcher.m in Sources */,
 				8E7024DB1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DE1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
+				3BF0792F18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m in Sources */,
 				8E7024E11715E71500E8DE46 /* OAPlaintextSignatureProvider.m in Sources */,
 				3B5120E918F32F5A00904058 /* LikeUserEducationFullOverlayView.m in Sources */,
 				910F5BFB18884F300069E380 /* VideoReelBackdropView.m in Sources */,
@@ -3278,6 +3286,7 @@
 				8E7024D91715E71500E8DE46 /* OADataFetcher.m in Sources */,
 				8E7024DC1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DF1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
+				3BF0793018FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m in Sources */,
 				8E7024E21715E71500E8DE46 /* OAPlaintextSignatureProvider.m in Sources */,
 				3B5120EA18F32F5A00904058 /* LikeUserEducationFullOverlayView.m in Sources */,
 				910F5BFC18884F300069E380 /* VideoReelBackdropView.m in Sources */,
@@ -3448,6 +3457,7 @@
 				8E7024D71715E71500E8DE46 /* OADataFetcher.m in Sources */,
 				8E7024DA1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DD1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
+				3BF0792E18FDB46C0062318A /* ShelbyStreamBrowseCollectionViewFlowLayout.m in Sources */,
 				8E7024E01715E71500E8DE46 /* OAPlaintextSignatureProvider.m in Sources */,
 				3B5120E818F32F5A00904058 /* LikeUserEducationFullOverlayView.m in Sources */,
 				910F5BFA18884F300069E380 /* VideoReelBackdropView.m in Sources */,

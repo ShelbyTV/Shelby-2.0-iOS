@@ -90,6 +90,9 @@ static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
                                             parameters:queryParams];
 
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+    [op setShouldExecuteAsBackgroundTaskWithExpirationHandler:^{
+        NSLog(@"Didn't have enough time for Youtube Extraction");
+    }];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (_isCancelled) {
             return;

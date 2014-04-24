@@ -14,6 +14,8 @@
 extern NSString * const kShelbySPVideoAirplayDidBegin;
 extern NSString * const kShelbySPVideoAirplayDidEnd;
 
+@class AVPlayerItem;
+
 @class SPVideoPlayer;
 
 @protocol SPVideoPlayerDelegate <NSObject>
@@ -38,6 +40,7 @@ extern NSString * const kShelbySPVideoAirplayDidEnd;
 @property (readonly) BOOL isPlayable;
 @property (assign, atomic) BOOL shouldAutoplay;
 @property (nonatomic, weak) id<SPVideoPlayerDelegate> videoPlayerDelegate;
+@property (nonatomic) BOOL queueModeEnabled;
 
 // Initialization
 - (id)initWithVideoFrame:(Frame *)videoFrame;
@@ -70,5 +73,9 @@ extern NSString * const kShelbySPVideoAirplayDidEnd;
 - (void)beginScrubbing;
 - (void)endScrubbing;
 - (void)scrubToPct:(CGFloat)scrubPct;
+
+- (void)appendPlayerItemToQueue:(AVPlayerItem *)playerItem;
+- (BOOL)canAppendPlayerItemToQueue:(AVPlayerItem *)playerItem;
+- (NSUInteger *)queueLength;
 
 @end

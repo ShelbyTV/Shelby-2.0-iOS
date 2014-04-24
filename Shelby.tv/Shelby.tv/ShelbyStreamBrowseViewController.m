@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyStreamBrowseViewController.h"
+#import "ShelbyStreamBrowseCollectionViewFlowLayout.h"
 #import "DashboardEntry.h"
 #import "DisplayChannel+Helper.h"
 #import "DeduplicationUtility.h"
@@ -23,7 +24,6 @@
 }
 @property (nonatomic, strong) NSArray *entries;
 
-@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshSpinner;
 
 //hang on to these to keep parallax in sync
@@ -32,6 +32,9 @@
 
 @property (nonatomic, strong) NoContentViewController *noContentVC;
 @property (nonatomic, assign) BOOL hasNoContent;
+
+@property (nonatomic) NSUInteger preRotationScrollPage;
+
 @end
 
 @implementation ShelbyStreamBrowseViewController
@@ -146,31 +149,52 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
     if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && UIInterfaceOrientationIsLandscape(_currentlyPresentedInterfaceOrientation)) {
         //don't need to do anything if we didn't change! (this happens b/c upside phone isn't supported)
         return;
     }
 
+    // the cells above and below the currently visible cell don't need to pop into
+    // view momentarily during the animation, so we hide them, to be made visible again
+    // after the rotation
+    NSArray *indexPathsForVisibleItems = self.collectionView.indexPathsForVisibleItems;
+    NSLog(@"Visible items before: %lu", (unsigned long)[indexPathsForVisibleItems count]);
+    if ([indexPathsForVisibleItems count]) {
+        NSIndexPath *indexPathForFirstVisibleItem = [indexPathsForVisibleItems firstObject];
+
+        ShelbyStreamBrowseCollectionViewFlowLayout *flowLayout = (ShelbyStreamBrowseCollectionViewFlowLayout *) self.collectionView.collectionViewLayout;
+        flowLayout.indexPathsToBeShown = @[indexPathForFirstVisibleItem];
+    }
+
     // Need collection view to reload our cells (b/c that's where we size them).
     // But must call this before -didRotate; -reloadData invalidates the view layout.  If we wait until
     // -didRotate, the collectionView is already resized but the cells aren't and iOS logs the glitch.
-    [self.collectionView reloadData];
+//    [self.collectionView reloadData];
 
     //We track how our views are currently configured so we can adjust when moving to a parent VC that may be in
     //a different orientation than we were when we were last actively part of a parent VC
     _currentlyPresentedInterfaceOrientation = toInterfaceOrientation;
 
-    CGPoint preRotationContentOffset = self.collectionView.contentOffset;
-    NSUInteger preRotationScrollPage = preRotationContentOffset.y / self.collectionView.frame.size.height;
-    NSUInteger postRotationContentOffsetY = preRotationScrollPage * self.collectionView.frame.size.width;
+    self.preRotationScrollPage = self.collectionView.contentOffset.y / self.collectionView.frame.size.height;
 
+    [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
     //need to set content size (it's too small when going landscape -> portrait; contentOffset can't be set if post rotation Y > current height)
-    self.collectionView.contentSize = CGSizeMake(self.collectionView.frame.size.height, self.collectionView.frame.size.width * [self.deduplicatedEntries count]);
+    self.collectionView.contentSize = CGSizeMake(self.collectionView.bounds.size.width, self.collectionView.bounds.size.height * [self.deduplicatedEntries count]);
     //our browseViewDelegate relies on our frame being correct when -viewDidScroll calls into it.
     //We update contentOffset in -willRotateToInterfaceOrientation: to make sure context is set up properly for delegate
-    [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, postRotationContentOffsetY)];
+    [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.preRotationScrollPage * self.collectionView.bounds.size.height) animated:NO];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    ShelbyStreamBrowseCollectionViewFlowLayout *flowLayout = (ShelbyStreamBrowseCollectionViewFlowLayout *) self.collectionView.collectionViewLayout;
+    flowLayout.indexPathsToBeShown = @[];
+
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)scrollToTop

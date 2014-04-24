@@ -86,9 +86,11 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
         if(alreadyExtractedURL){
             if(completionBlock){
+                NSLog(@"Already have the URL, execute the completion block");
                 completionBlock(alreadyExtractedURL, nil);
             }
         } else {
+            NSLog(@"Don't have the URL, have to make a network call");
             NSDictionary *extractionDict = @{kSPVideoExtractorVideoKey: video,
                                              kSPVideoExtractorBlockKey: completionBlock};
             if(jumpQueue){

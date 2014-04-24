@@ -32,7 +32,7 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 @property (nonatomic) UIActivityIndicatorView *videoLoadingIndicator;
 @property (nonatomic, strong) VideoPlayerThumbnailOverlayView *thumbnailView;
 
-@property (nonatomic) AVPlayer *player;
+@property (nonatomic) AVQueuePlayer *player;
 //on reset, this is set to NO which prevents from loading (is reset by -prepareFor...Playback)
 @property (assign, atomic) BOOL canBecomePlayable;
 @property (assign, nonatomic) BOOL isPlayable;
@@ -40,6 +40,8 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 @property (assign, nonatomic) BOOL isScrubbing;
 @property (assign, nonatomic) CMTime lastPlayheadPosition;
 @property (strong, nonatomic) id playerTimeObserver;
+
+@property (nonatomic) UIBackgroundTaskIdentifier bgTaskIdentifier;
 
 //constraints for re-positioning by parent
 @property (nonatomic, strong) NSLayoutConstraint *constrainLeading;
@@ -77,6 +79,13 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     }
     
     return self;
+}
+
+#pragma mark - Getters and Setters
+- (void)setQueueModeEnabled:(BOOL)queueModeEnabled
+{
+    _queueModeEnabled = queueModeEnabled;
+    self.player.actionAtItemEnd = queueModeEnabled ? AVPlayerActionAtItemEndAdvance : AVPlayerActionAtItemEndPause;
 }
 
 #pragma mark - View Lifecycle Methods
@@ -196,12 +205,12 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
     } else {
         //new player
-        self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+        self.player = [[AVQueuePlayer alloc] initWithPlayerItem:playerItem];
         [self addAllObservers];
 
         //to maintain connection as best as possible w/ AirPlay (mirroring or not)
         self.player.usesExternalPlaybackWhileExternalScreenIsActive = YES;
-        self.player.actionAtItemEnd = AVPlayerActionAtItemEndPause;
+        self.player.actionAtItemEnd = self.queueModeEnabled ? AVPlayerActionAtItemEndAdvance : AVPlayerActionAtItemEndPause;
 
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
@@ -230,22 +239,29 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
 - (void)playerItemReplaced:(NSDictionary *)change
 {
+    NSLog(@"Playing the new item upon replacement");
     AVPlayerItem *oldPlayerItem = change[NSKeyValueChangeOldKey];
     if ((id)oldPlayerItem != [NSNull null]) {
+        NSLog(@"Removing old observers");
         [self removePlayerItemObservers:oldPlayerItem];
     }
 
     AVPlayerItem *newPlayerItem = change[NSKeyValueChangeNewKey];
     if ((id)newPlayerItem != [NSNull null]) {
+        NSLog(@"Adding new observers");
         [self addPlayerItemObservers];
+        NSLog(@"Maybe we'll autoplay");
         if (self.shouldAutoplay) {
+        NSLog(@"We played fine");
             [self play];
         }
     } else {
         //This happens when an unplayable AVAsset is set on the player
         //it gets removed and replaced with NSNull
         self.isPlayable = NO;
+        NSLog(@"Maybe we'll autoplay");
         if (self.shouldAutoplay) {
+            NSLog(@"Asset failed");
             [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
         }
     }
@@ -294,6 +310,8 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
                                              selector:@selector(itemPlaybackStalled:)
                                                  name:AVPlayerItemPlaybackStalledNotification
                                                object:self.player.currentItem];
+
+    NSLog(@"Added player item observers");
 }
 
 - (void)removeAllObservers
@@ -324,6 +342,8 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     }
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    NSLog(@"Remvoed player item observers");
 }
 
 - (CMTime)elapsedTime
@@ -365,7 +385,9 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     [self videoLoadingIndicatorShouldAnimate:YES];
     
     //no retain cycle b/c the block's owner (SPVideoExtractor) is not self
+    NSLog(@"Get the video URL Locally or through extraction!");
     [[SPVideoExtractor sharedInstance] URLForVideo:self.videoFrame.video usingBlock:^(NSString *videoURL, NSError *error) {
+        NSLog(@"Playing the video!");
         if (!self.canBecomePlayable) {
             //Zombie discussion
             // This video player was reset (and observers removed) while we were waiting
@@ -381,7 +403,9 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
             if (hadExistingPlayer) {
                 //don't play until async item replacement happens, see -[playerItemReplaced]
             } else {
+                NSLog(@"We might autoplay with no existing player");
                 if (self.shouldAutoplay) {
+                    NSLog(@"We're autoplaying with no existing player");
                     [self play];
                 }
             }
@@ -516,18 +540,35 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     }
 }
 
+- (void)appendPlayerItemToQueue:(AVPlayerItem *)playerItem
+{
+    [self.player insertItem:playerItem afterItem:nil];
+}
+
+- (BOOL)canAppendPlayerItemToQueue:(AVPlayerItem *)playerItem
+{
+    return [self.player canInsertItem:playerItem afterItem:nil];
+}
+
+- (NSUInteger *)queueLength
+{
+    return [self.player.items count];
+}
+
 - (void)itemDidFinishPlaying:(NSNotification *)notification
 {
-    if (_player.currentItem != notification.object) {
-        STVDebugAssert(_player.currentItem == notification.object, @"should only get notified for our player item");
-        return;
-    }
+    if (!self.queueModeEnabled) {
+        if (_player.currentItem != notification.object) {
+            STVDebugAssert(_player.currentItem == notification.object, @"should only get notified for our player item");
+            return;
+        }
 
-    if (self.isPlaying && self.player.currentItem.status == AVPlayerItemStatusReadyToPlay) {
-        //actionAtItemEnd is set to "pause" when we create player.  track that:
-        self.isPlaying = NO;
-        [self sendWatchToAPIFrom:_lastPlaybackUpdateIntervalEnd to:self.duration complete:YES];
-        [self.videoPlayerDelegate videoDidFinishPlayingForPlayer:self];
+        if (self.isPlaying && self.player.currentItem.status == AVPlayerItemStatusReadyToPlay) {
+            //actionAtItemEnd is set to "pause" when we create player.  track that:
+            self.isPlaying = NO;
+            [self sendWatchToAPIFrom:_lastPlaybackUpdateIntervalEnd to:self.duration complete:YES];
+            [self.videoPlayerDelegate videoDidFinishPlayingForPlayer:self];
+        }
     }
 }
 
