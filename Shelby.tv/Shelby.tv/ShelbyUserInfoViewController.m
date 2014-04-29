@@ -222,8 +222,8 @@
         User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
                                     withAttributes:@{
-                                                     @"from origin" : kLocalyticsAttributeValueFromOriginUserProfile,
-                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile,
+                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                      }];
     } else {
         [[ShelbyDataMediator sharedInstance] followRoll:self.user.publicRollID];
@@ -231,8 +231,8 @@
         User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
                                     withAttributes:@{
-                                                     @"from origin" : kLocalyticsAttributeValueFromOriginUserProfile,
-                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile,
+                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                      }];
     }
 
@@ -268,7 +268,7 @@
 #pragma mark - SignupHeaderDelegate
 - (void)signupUser
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameSignupStart withAttributes:@{@"from origin" : @"user profile header"}];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameSignupStart withAttributes:@{kLocalyticsAttributeNameFromOrigin : @"user profile header"}];
     
     ShelbySignupViewController *signupVC = [[ShelbySignupiPadViewController alloc] initWithNibName:@"ShelbySignupView~ipad" bundle:nil];
     signupVC.modalPresentationStyle = UIModalPresentationPageSheet;

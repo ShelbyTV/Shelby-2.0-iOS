@@ -142,8 +142,8 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
                                      nicknameAsLabel:YES];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                     withAttributes:@{
-                                                     @"from origin" : kLocalyticsAttributeValueFromOriginNotifCenterActor,
-                                                     @"username" : cell.userNickname
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginNotifCenterActor,
+                                                     kLocalyticsAttributeNameUsername : cell.userNickname
                                                      }];
     }
 }

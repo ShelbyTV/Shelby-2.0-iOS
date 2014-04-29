@@ -58,6 +58,18 @@ NSString * const kLocalyticsEventNameVideoUnlike                        = @"Vide
 NSString * const kLocalyticsEventNameFollow                             = @"Follow";
 NSString * const kLocalyticsEventNameUnfollow                           = @"Unfollow";
 
+//--Event Attribute Names--
+NSString * const kLocalyticsAttributeNameAccountType                    = @"account type";
+NSString * const kLocalyticsAttributeNameConnectionType                 = @"connection type";
+NSString * const kLocalyticsAttributeNameChannelName                    = @"channel name";
+NSString * const kLocalyticsAttributeNameDestinations                   = @"destinations";
+NSString * const kLocalyticsAttributeNameFromOrigin                     = @"from origin";
+NSString * const kLocalyticsAttributeNameTitle                          = @"title";
+NSString * const kLocalyticsAttributeNameTopic                          = @"topic";
+NSString * const kLocalyticsAttributeNameType                           = @"type";
+NSString * const kLocalyticsAttributeNameUsername                       = @"username";
+NSString * const kLocalyticsAttributeNameUserType                       = @"user type";
+
 //--Shared Event Attribute: from origin--
 NSString * const kLocalyticsAttributeValueFromOriginChannelsItem        = @"channels item";
 NSString * const kLocalyticsAttributeValueFromOriginCustomUrl           = @"custom url";
@@ -229,9 +241,9 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     }
     [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectStart
                                 withAttributes:@{
-                                                 @"account type" : accountType,
-                                                 @"from origin" : origin,
-                                                 @"user type" : userType
+                                                 kLocalyticsAttributeNameAccountType : accountType,
+                                                 kLocalyticsAttributeNameFromOrigin : origin,
+                                                 kLocalyticsAttributeNameUserType : userType
                                                  }];
 
 }
@@ -246,8 +258,8 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     }
     [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectComplete
                                 withAttributes:@{
-                                                 @"account type" : accountType,
-                                                 @"connection type" : connectionType
+                                                 kLocalyticsAttributeNameAccountType : accountType,
+                                                 kLocalyticsAttributeNameConnectionType : connectionType
                                                  }];
 }
 

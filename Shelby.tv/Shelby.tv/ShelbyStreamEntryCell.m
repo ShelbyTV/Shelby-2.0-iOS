@@ -258,8 +258,8 @@
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];;
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,
-                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard,
+                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                  }];
 }
 
@@ -268,8 +268,8 @@
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoLike
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,
-                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard,
+                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                  }];
 
     [self.delegate likeFrame:self.videoFrame];
@@ -280,8 +280,8 @@
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoUnlike
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCard,
-                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard,
+                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                  }];
 
     [self.delegate unLikeFrame:self.videoFrame];
@@ -297,8 +297,8 @@
 
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoCardOwner,
-                                                 @"username" : self.videoFrame.creator.nickname
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCardOwner,
+                                                 kLocalyticsAttributeNameUsername : self.videoFrame.creator.nickname
                                                  }];
 }
 

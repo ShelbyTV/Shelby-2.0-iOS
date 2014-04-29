@@ -240,7 +240,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
 
 - (void)trackEventForSaveProfile
 {
-    NSDictionary *eventAttributes = @{@"from origin" : self.originForAnalytics};
+    NSDictionary *eventAttributes = @{kLocalyticsAttributeNameFromOrigin : self.originForAnalytics};
     eventAttributes = [ShelbyAnalyticsClient addUpdateDescriptionAttributeForEntityName:@"bio"
                                                                            toAttributes:eventAttributes
                                                                                oldValue:self.userBioBeforeUpdate newValue:self.stepTwoBio.text];

@@ -170,8 +170,8 @@
         User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
                                     withAttributes:@{
-                                                     @"from origin" : kLocalyticsAttributeValueFromOriginUserProfile,
-                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile,
+                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                      }];
 
         [self.masterDelegate followRoll:self.profileUser.publicRollID];
@@ -183,8 +183,8 @@
         User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
                                     withAttributes:@{
-                                                     @"from origin" : kLocalyticsAttributeValueFromOriginUserProfile,
-                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile,
+                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                      }];
 
         [self.masterDelegate unfollowRoll:self.profileUser.publicRollID];

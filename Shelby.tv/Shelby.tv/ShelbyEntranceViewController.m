@@ -169,7 +169,7 @@
 - (IBAction)getStartedTapped:(id)sender {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameGetStarted
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginEntranceScreen
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginEntranceScreen
                                                  }];
     
     [self.getStartedSpinner startAnimating];
@@ -181,7 +181,7 @@
 - (IBAction)loginTapped:(id)sender {
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameLoginStart
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginEntranceScreen
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginEntranceScreen
                                                  }];
     
     [self.brain presentUserLogin];

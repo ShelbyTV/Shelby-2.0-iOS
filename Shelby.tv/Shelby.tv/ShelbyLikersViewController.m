@@ -149,8 +149,8 @@
     
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginLikerListItem,
-                                                 @"username" : user.nickname
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginLikerListItem,
+                                                 kLocalyticsAttributeNameUsername : user.nickname
                                                  }];
 }
 

@@ -637,7 +637,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         if (!error) {
             [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameLoginComplete
                                         withAttributes:@{
-                                                         @"account type" : kLocalyticsAttributeValueAccountTypeShelby
+                                                         kLocalyticsAttributeNameAccountType : kLocalyticsAttributeValueAccountTypeShelby
                                                          }];
         }
         [self handleUserLoginWithJSON:JSON andError:error];
@@ -982,7 +982,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                 } else {
                     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameLoginComplete
                                                 withAttributes:@{
-                                                                 @"account type" : kLocalyticsAttributeValueAccountTypeFacebook
+                                                                 kLocalyticsAttributeNameAccountType : kLocalyticsAttributeValueAccountTypeFacebook
                                                                  }];
                 }
             }];

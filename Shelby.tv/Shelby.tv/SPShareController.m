@@ -192,9 +192,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
              User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
              [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
                                          withAttributes:@{
-                                                          @"user type" : [user userTypeStringForAnalytics],
-                                                          @"title" : frame.video.title,
-                                                          @"destinations" : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
+                                                          kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics],
+                                                          kLocalyticsAttributeNameTitle : frame.video.title,
+                                                          kLocalyticsAttributeNameDestinations : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
                                                           }];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyiOSNativeShareCancelled object:nil];
@@ -227,9 +227,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
             User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
             [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
                                         withAttributes:@{
-                                                         @"user type" : [user userTypeStringForAnalytics],
-                                                         @"title" : frame.video.title,
-                                                         @"destinations" : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
+                                                         kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics],
+                                                         kLocalyticsAttributeNameTitle : frame.video.title,
+                                                         kLocalyticsAttributeNameDestinations : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
                                                          }];
         }
     }];
@@ -292,9 +292,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                   [self shareComplete:YES];
                                   [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
                                                               withAttributes:@{
-                                                                               @"user type" : [user userTypeStringForAnalytics],
-                                                                               @"title" : newFrameDict[@"video"][@"title"],
-                                                                               @"destinations" : shareDestinationsForLocalytics
+                                                                               kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics],
+                                                                               kLocalyticsAttributeNameTitle : newFrameDict[@"video"][@"title"],
+                                                                               kLocalyticsAttributeNameDestinations : shareDestinationsForLocalytics
                                                                                }];
                               } else {
                                   [self shareComplete:NO];

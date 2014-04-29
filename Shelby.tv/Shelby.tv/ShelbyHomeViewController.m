@@ -635,7 +635,7 @@ static NSDictionary *userEducationTypeToLocalyticsAttributeMap;
     [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                          withAction:kAnalyticsUXTapNavBarButton
                                 withNicknameAsLabel:YES];
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameSignupStart withAttributes:@{@"from origin" : @"iPhone nav bar button"}];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameSignupStart withAttributes:@{kLocalyticsAttributeNameFromOrigin : @"iPhone nav bar button"}];
     [self dismissVideoReel];
     [self.masterDelegate presentUserSignup];
 }
@@ -844,7 +844,11 @@ static NSDictionary *userEducationTypeToLocalyticsAttributeMap;
 
     // track the showing of this view in our analytics system(s)
     NSString *educationTopicAttributeValue = [userEducationTypeToLocalyticsAttributeMap objectForKey:@(overlayViewType)];
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserEducationView withAttributes:@{@"type" : @"iphone full overlay", @"topic" : educationTopicAttributeValue}];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserEducationView
+                                withAttributes:@{
+                                                 kLocalyticsAttributeNameType : @"iphone full overlay",
+                                                 kLocalyticsAttributeNameTopic : educationTopicAttributeValue
+                                                 }];
 }
 
 #pragma mark - ShelbyStreamBrowseViewDelegate

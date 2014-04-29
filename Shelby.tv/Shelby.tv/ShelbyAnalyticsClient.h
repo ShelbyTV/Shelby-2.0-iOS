@@ -52,6 +52,17 @@ NSString * const kLocalyticsEventNameVideoUnlike;
 NSString * const kLocalyticsEventNameFollow;
 NSString * const kLocalyticsEventNameUnfollow;
 
+//--Event Attribute Names--
+extern NSString * const kLocalyticsAttributeNameAccountType;
+extern NSString * const kLocalyticsAttributeNameChannelName;
+extern NSString * const kLocalyticsAttributeNameConnectionType;
+extern NSString * const kLocalyticsAttributeNameDestinations;
+extern NSString * const kLocalyticsAttributeNameFromOrigin;
+extern NSString * const kLocalyticsAttributeNameTitle;
+extern NSString * const kLocalyticsAttributeNameTopic;
+extern NSString * const kLocalyticsAttributeNameType;
+extern NSString * const kLocalyticsAttributeNameUsername;
+extern NSString * const kLocalyticsAttributeNameUserType;
 
 //--Shared Event Attribute: from origin--
 extern NSString * const kLocalyticsAttributeValueFromOriginChannelsItem;

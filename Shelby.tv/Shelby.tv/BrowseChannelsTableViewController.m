@@ -132,8 +132,8 @@
 
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginChannelsItem,
-                                                 @"channel name" : selectedChannel.roll.displayTitle
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginChannelsItem,
+                                                 kLocalyticsAttributeNameChannelName : selectedChannel.roll.displayTitle
                                                  }];
 }
 
@@ -176,8 +176,8 @@
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginChannelsItem,
-                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginChannelsItem,
+                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                  }];
 
     [[ShelbyDataMediator sharedInstance] followRoll:channelToFollow.roll.rollID];
@@ -193,8 +193,8 @@
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginChannelsItem,
-                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginChannelsItem,
+                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                  }];
     
     [[ShelbyDataMediator sharedInstance] unfollowRoll:channelToUnfollow.roll.rollID];

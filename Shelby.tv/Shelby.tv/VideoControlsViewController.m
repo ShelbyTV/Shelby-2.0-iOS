@@ -417,8 +417,8 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoLike
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoControls,
-                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls,
+                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                  }];
 
     if (self.currentEntity) {
@@ -431,8 +431,8 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoUnlike
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginVideoControls,
-                                                 @"user type" : [user userTypeStringForAnalytics]
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls,
+                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                  }];
     
     if (self.currentEntity) {
@@ -449,8 +449,8 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
         User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
                                     withAttributes:@{
-                                                     @"from origin" : kLocalyticsAttributeValueFromOriginVideoControls,
-                                                     @"user type" : [user userTypeStringForAnalytics]
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls,
+                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
                                                      }];
     }
 }

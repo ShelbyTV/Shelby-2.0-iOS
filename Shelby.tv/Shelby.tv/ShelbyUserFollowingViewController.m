@@ -187,8 +187,8 @@
     [self.delegate userProfileWasTapped:rollFollowing[@"creator_id"]];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                 withAttributes:@{
-                                                 @"from origin" : kLocalyticsAttributeValueFromOriginFollowedRollsItem,
-                                                 @"username" : rollFollowing[@"creator_nickname"]
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginFollowedRollsItem,
+                                                 kLocalyticsAttributeNameUsername : rollFollowing[@"creator_nickname"]
                                                  }];
 }
 
