@@ -143,7 +143,7 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                     withAttributes:@{
                                                      kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginNotifCenterActor,
-                                                     kLocalyticsAttributeNameUsername : cell.userNickname
+                                                     kLocalyticsAttributeNameUsername : cell.userNickname ?: @"unknown"
                                                      }];
     }
 }

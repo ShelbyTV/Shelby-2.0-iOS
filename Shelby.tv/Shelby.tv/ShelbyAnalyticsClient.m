@@ -217,7 +217,7 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     if (destinationString)  {
         return destinationString;
     } else {
-        return activityType;
+        return activityType ?: @"unknown";
     }
 }
 

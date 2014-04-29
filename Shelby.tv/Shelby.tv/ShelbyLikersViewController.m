@@ -150,7 +150,7 @@
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                 withAttributes:@{
                                                  kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginLikerListItem,
-                                                 kLocalyticsAttributeNameUsername : user.nickname
+                                                 kLocalyticsAttributeNameUsername : user.nickname ?: @"unknown"
                                                  }];
 }
 

@@ -847,7 +847,7 @@ static NSDictionary *userEducationTypeToLocalyticsAttributeMap;
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserEducationView
                                 withAttributes:@{
                                                  kLocalyticsAttributeNameType : @"iphone full overlay",
-                                                 kLocalyticsAttributeNameTopic : educationTopicAttributeValue
+                                                 kLocalyticsAttributeNameTopic : educationTopicAttributeValue ?: @"unknown"
                                                  }];
 }
 

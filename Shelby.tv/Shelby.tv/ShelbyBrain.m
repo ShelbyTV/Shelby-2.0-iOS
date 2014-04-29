@@ -1175,7 +1175,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
             [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                         withAttributes:@{
                                                          kLocalyticsAttributeNameFromOrigin : fromOriginForLocalytics,
-                                                         kLocalyticsAttributeNameUsername : fetchedUser.nickname
+                                                         kLocalyticsAttributeNameUsername : fetchedUser.nickname ?: @"unknown"
                                                          }];
         }
     }];
