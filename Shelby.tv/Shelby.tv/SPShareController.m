@@ -193,7 +193,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
              [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
                                          withAttributes:@{
                                                           kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics],
-                                                          kLocalyticsAttributeNameTitle : frame.video.title,
+                                                          kLocalyticsAttributeNameTitle : frame.video.title ?: @"unknown",
                                                           kLocalyticsAttributeNameDestinations : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
                                                           }];
         } else {
@@ -228,7 +228,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
             [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
                                         withAttributes:@{
                                                          kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics],
-                                                         kLocalyticsAttributeNameTitle : frame.video.title,
+                                                         kLocalyticsAttributeNameTitle : frame.video.title ?: @"unknown",
                                                          kLocalyticsAttributeNameDestinations : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
                                                          }];
         }
@@ -293,7 +293,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                   [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
                                                               withAttributes:@{
                                                                                kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics],
-                                                                               kLocalyticsAttributeNameTitle : newFrameDict[@"video"][@"title"],
+                                                                               kLocalyticsAttributeNameTitle : newFrameDict[@"video"][@"title"] ?: @"unknown",
                                                                                kLocalyticsAttributeNameDestinations : shareDestinationsForLocalytics
                                                                                }];
                               } else {

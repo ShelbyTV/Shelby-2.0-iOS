@@ -514,7 +514,7 @@
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                 withAttributes:@{
                                                  kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCardOwner,
-                                                 kLocalyticsAttributeNameUsername : self.videoFrame.creator.nickname
+                                                 kLocalyticsAttributeNameUsername : self.videoFrame.creator.nickname ?: @"unknown"
                                                  }];
 }
 

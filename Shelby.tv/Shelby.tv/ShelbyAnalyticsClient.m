@@ -241,8 +241,8 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     }
     [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectStart
                                 withAttributes:@{
-                                                 kLocalyticsAttributeNameAccountType : accountType,
-                                                 kLocalyticsAttributeNameFromOrigin : origin,
+                                                 kLocalyticsAttributeNameAccountType : accountType ?: @"unknown",
+                                                 kLocalyticsAttributeNameFromOrigin : origin ?: @"unknown",
                                                  kLocalyticsAttributeNameUserType : userType
                                                  }];
 
@@ -258,7 +258,7 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     }
     [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectComplete
                                 withAttributes:@{
-                                                 kLocalyticsAttributeNameAccountType : accountType,
+                                                 kLocalyticsAttributeNameAccountType : accountType ?: @"unknown",
                                                  kLocalyticsAttributeNameConnectionType : connectionType
                                                  }];
 }

@@ -188,7 +188,7 @@
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                 withAttributes:@{
                                                  kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginFollowedRollsItem,
-                                                 kLocalyticsAttributeNameUsername : rollFollowing[@"creator_nickname"]
+                                                 kLocalyticsAttributeNameUsername : rollFollowing[@"creator_nickname"] ?: @"unknown"
                                                  }];
 }
 

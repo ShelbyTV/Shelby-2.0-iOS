@@ -133,7 +133,7 @@
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
                                 withAttributes:@{
                                                  kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginChannelsItem,
-                                                 kLocalyticsAttributeNameChannelName : selectedChannel.roll.displayTitle
+                                                 kLocalyticsAttributeNameChannelName : selectedChannel.roll.displayTitle ?: @"unknown"
                                                  }];
 }
 
