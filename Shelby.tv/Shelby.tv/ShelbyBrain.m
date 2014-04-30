@@ -145,7 +145,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         NSString *userID = self.notificationUserID;
         if (currentUser) {
             shelby_home_complete_block_t showMediaBlock = ^{
-                [self userProfileWasTapped:userID];
+                [self userProfileWasTapped:userID andTrackWithOrigin:kLocalyticsAttributeValueFromOriginPushNotification];
             };
             if (self.homeVC) {
                 [self.homeVC presentNotificationCenterWithCompletionBlock:showMediaBlock];
@@ -513,7 +513,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 - (void)loginUserDidComplete
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidLogin];
         [self userWasUpdated];
         [User sessionDidBecomeActive];
         [self dismissLoginVCCompletion:^{
@@ -1110,6 +1109,11 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 // This method is going to be called from three (or more) protocols.. not that great. Need to have a nicer protocols.
 - (void)userProfileWasTapped:(NSString *)userID
 {
+    [self userProfileWasTapped:userID andTrackWithOrigin:nil];
+}
+
+- (void)userProfileWasTapped:(NSString *)userID andTrackWithOrigin:(NSString *)fromOriginForLocalytics
+{
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     ShelbyUserProfileViewController *userProfileVC = nil;
     __block ShelbyUserInfoViewController *userInfoVC = nil;
@@ -1162,6 +1166,17 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
                                                                                            kShelbyBrainChannelEntriesKey : entries,
                                                                                            kShelbyBrainFetchedUserKey : fetchedUser}];
             }];
+        }
+
+        // if we didn't know the user's nickname at the time we called the parent method,
+        // we could have passed a fromOriginForLocalytics to wait until we had that username to
+        // do event tracking - if so, do the event tracking now
+        if (fromOriginForLocalytics) {
+            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                        withAttributes:@{
+                                                         kLocalyticsAttributeNameFromOrigin : fromOriginForLocalytics,
+                                                         kLocalyticsAttributeNameUsername : fetchedUser.nickname ?: @"unknown"
+                                                         }];
         }
     }];
 }

@@ -110,6 +110,8 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     if (selected) {
         if (facebook) {
             if (![[FacebookHandler sharedInstance] allowPublishActions]) {
+                [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeFacebook
+                                                                             fromOrigin:kLocalyticsAttributeValueFromOriginSharePane];
                 if (DEVICE_IPAD) {
                     [[ShelbyDataMediator sharedInstance] userAskForFacebookPublishPermissions];
                 } else {
@@ -118,6 +120,8 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                 return NO;
             }
         } else if (!currentUser.twitterNickname) {
+            [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeTwitter
+                                                                         fromOrigin:kLocalyticsAttributeValueFromOriginSharePane];
             if (DEVICE_IPAD) {
                 User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
                 NSString *token = nil;
@@ -183,7 +187,13 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
          if (completed) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyiOSNativeShareDone object:nil];
+             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyiOSNativeShareDone object:nil];
+
+             [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
+                              withUserTypeAndAttributes:@{
+                                                          kLocalyticsAttributeNameTitle : frame.video.title ?: @"unknown",
+                                                          kLocalyticsAttributeNameDestinations : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
+                                                          }];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyiOSNativeShareCancelled object:nil];
         }
@@ -211,9 +221,13 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyDidDismissModalViewNotification object:self];
         
-//        if (completed) {
-//            [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
-//        }
+        if (completed) {
+            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
+                             withUserTypeAndAttributes:@{
+                                                         kLocalyticsAttributeNameTitle : frame.video.title ?: @"unknown",
+                                                         kLocalyticsAttributeNameDestinations : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
+                                                         }];
+        }
     }];
 
 //    if (DEVICE_IPAD) {
@@ -256,11 +270,14 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                               if (newFrameDict && newFrameDict[@"id"]) {
                                   NSString *newFrameID = newFrameDict[@"id"];
                                   NSMutableArray *destinations = [@[] mutableCopy];
+                                  NSString *shareDestinationsForLocalytics = @"shelby";
                                   if (shareOnTwitter) {
                                       [destinations addObject:kShelbyShareDestinationTwitter];
+                                      shareDestinationsForLocalytics = [shareDestinationsForLocalytics stringByAppendingString:@", twitter"];
                                   }
                                   if (shareOnFacebook) {
                                       [destinations addObject:kShelbyShareDestinationFacebook];
+                                      shareDestinationsForLocalytics = [shareDestinationsForLocalytics stringByAppendingString:@", facebook"];
                                   }
                                   if ([destinations count]){
                                       [ShelbyAPIClient shareFrame:newFrameID
@@ -269,6 +286,12 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                                      andAuthToken:user.token];
                                   }
                                   [self shareComplete:YES];
+                                  [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
+                                                              withAttributes:@{
+                                                                               kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics],
+                                                                               kLocalyticsAttributeNameTitle : newFrameDict[@"video"][@"title"] ?: @"unknown",
+                                                                               kLocalyticsAttributeNameDestinations : shareDestinationsForLocalytics
+                                                                               }];
                               } else {
                                   [self shareComplete:NO];
                               }

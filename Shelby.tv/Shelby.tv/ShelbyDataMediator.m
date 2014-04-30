@@ -634,6 +634,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
 {
     [ShelbyAPIClient loginUserWithEmail:email password:password andBlock:^(id JSON, NSError *error) {
+        if (!error) {
+            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameLoginComplete
+                                        withAttributes:@{
+                                                         kLocalyticsAttributeNameAccountType : kLocalyticsAttributeValueAccountTypeShelby
+                                                         }];
+        }
         [self handleUserLoginWithJSON:JSON andError:error];
     }];
 }
@@ -973,6 +979,11 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                 if (error) {
                     // If there was a problem login with FB - clean FB session 
                     [self cleanupSession];
+                } else {
+                    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameLoginComplete
+                                                withAttributes:@{
+                                                                 kLocalyticsAttributeNameAccountType : kLocalyticsAttributeValueAccountTypeFacebook
+                                                                 }];
                 }
             }];
         } else {
@@ -1064,10 +1075,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                 if(!error){
                                                     //user updated by API
 
-                                                    // if the user was previously an anonymous user, track that this was an anonymous user conversion via Facebook
-                                                    if ([user isAnonymousUser]) {
-                                                        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsAnonymousConvertViaFacebook];
-                                                    }
+                                                    // localytics tracking for user connecting facebook account
+                                                    [ShelbyAnalyticsClient sendLocalyticsEventForFinishConnectingAccountType:kLocalyticsAttributeValueAccountTypeFacebook];
 
                                                     [user updateWithFacebookUser:facebookUser andJSON:JSON];
                                                     NSError *err;

@@ -129,6 +129,12 @@
     } else {
         [self.delegate userProfileWasTapped:selectedChannel.roll.creatorID];
     }
+
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                withAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginChannelsItem,
+                                                 kLocalyticsAttributeNameChannelName : selectedChannel.roll.displayTitle ?: @"unknown"
+                                                 }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -167,8 +173,11 @@
 
 - (void)doFollow:(DisplayChannel *)channelToFollow
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFollowChannel];
-    
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginChannelsItem
+                                                 }];
+
     [[ShelbyDataMediator sharedInstance] followRoll:channelToFollow.roll.rollID];
     //fire and forget (although actual request will update this correctly)
     [self.currentUser didFollowRoll:channelToFollow.roll.rollID];
@@ -179,8 +188,11 @@
 
 - (void)doUnfollow:(DisplayChannel *)channelToUnfollow
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsUnfollowChannel];
-    
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginChannelsItem
+                                                 }];
+
     [[ShelbyDataMediator sharedInstance] unfollowRoll:channelToUnfollow.roll.rollID];
     //fire and forget (although actual request will update this correctly)
     [self.currentUser didUnfollowRoll:channelToUnfollow.roll.rollID];

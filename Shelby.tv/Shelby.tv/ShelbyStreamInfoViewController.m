@@ -435,12 +435,12 @@ NSString * const kShelbyStreamConnectTwitterCell = @"StreamConnectTWT";
         channelsVC.userEducationVC = [ShelbyUserEducationViewController newChannelsUserEducationViewController];
         
     } else if (indexPath.section == SECTION_FOR_CONNECT_FACEBOOK) {
-        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapConnectFacebookInStream];
+        [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeFacebook fromOrigin:kLocalyticsAttributeValueFromOriginStreamCard];
         [self.socialConnectDelegate connectToFacebook];
         [tableView cellForRowAtIndexPath:indexPath].selected = NO;
     
     } else if (indexPath.section == SECTION_FOR_CONNECT_TWITTER) {
-        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapConnectTwitterInStream];
+        [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeTwitter fromOrigin:kLocalyticsAttributeValueFromOriginStreamCard];
         [self.socialConnectDelegate connectToTwitter];
         [tableView cellForRowAtIndexPath:indexPath].selected = NO;
     

@@ -136,12 +136,15 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
 - (void)viewUserInNotificationCell:(FollowNotificationViewCell *)cell
 {
     if (cell.userID) {
+        [self.delegate userProfileWasTapped:cell.userID];
         [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                               action:kAnalyticsUXTapUserProfileFromNotificationView
                                      nicknameAsLabel:YES];
-        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapUserProfileFromNotificationView];
-        
-        [self.delegate userProfileWasTapped:cell.userID];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                    withAttributes:@{
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginNotifCenterActor,
+                                                     kLocalyticsAttributeNameUsername : cell.userNickname ?: @"unknown"
+                                                     }];
     }
 }
 
@@ -198,7 +201,8 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
         DashboardEntryType dashboardEntryType = [dashboardEntry typeOfEntry];
         
         NSString *likerName = dashboardEntry.actor.name;
-        NSString *actorID = actorID = dashboardEntry.actor.userID;
+        NSString *actorID = dashboardEntry.actor.userID;
+        NSString *actorNickname = dashboardEntry.actor.nickname;
         if (!likerName) {
             likerName = @"Somebody";
         }
@@ -207,6 +211,7 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
             FollowNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FollowNotificationCell" forIndexPath:indexPath];
             cell.notificationText.text = [NSString stringWithFormat:@"%@ started following you", likerName];
             cell.userID = actorID;
+            cell.userNickname = actorNickname;
             cell.delegate = self;
             [self fetchAvatarForCell:cell withAvatarURL:[dashboardEntry.actor avatarURL]];
             
@@ -214,6 +219,7 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
         } else {
             LikeNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeNotificationCell" forIndexPath:indexPath];
             cell.userID = actorID;
+            cell.userNickname = actorNickname;
             cell.dashboardID = dashboardEntry.dashboardEntryID;
             cell.delegate = self;
             

@@ -11,6 +11,7 @@
 #import "Intercom.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "VideoControlsView.h"
+#import "ShelbyDataMediator.h"
 
 #define SCRUB_PCT_REQUIRED_BEFORE_SEEKING .02f
 #define HEIGHT_IN_PORTRAIT 88
@@ -413,8 +414,11 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 }
 
 - (IBAction)likeTapped:(id)sender {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapPlayerControlsLike];
-    
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoLike
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls
+                                                 }];
+
     if (self.currentEntity) {
         [self.delegate videoControlsLikeCurrentVideo:self];
         [self updateViewForCurrentEntity];
@@ -422,8 +426,11 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 }
 
 - (IBAction)unlikeTapped:(id)sender {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapPlayerControlsUnlike];
-    
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoUnlike
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls
+                                                 }];
+
     if (self.currentEntity) {
         [self.delegate videoControlsUnlikeCurrentVideo:self];
         [self updateViewForCurrentEntity];
@@ -435,6 +442,10 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     if (self.currentEntity &&
         [self.delegate respondsToSelector:@selector(videoControlsShareCurrentVideo:)]) {
         [self.delegate videoControlsShareCurrentVideo:self];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
+                         withUserTypeAndAttributes:@{
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls
+                                                     }];
     }
 }
 

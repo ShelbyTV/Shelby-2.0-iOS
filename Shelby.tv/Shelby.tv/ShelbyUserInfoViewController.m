@@ -218,8 +218,18 @@
 
     if (isFollowing) {
         [[ShelbyDataMediator sharedInstance] unfollowRoll:self.user.publicRollID];
+
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
+                         withUserTypeAndAttributes:@{
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile
+                                                     }];
     } else {
         [[ShelbyDataMediator sharedInstance] followRoll:self.user.publicRollID];
+
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
+                         withUserTypeAndAttributes:@{
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile
+                                                     }];
     }
 
 }
@@ -254,7 +264,7 @@
 #pragma mark - SignupHeaderDelegate
 - (void)signupUser
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapUserProfileSignup];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameSignupStart withAttributes:@{kLocalyticsAttributeNameFromOrigin : @"user profile header"}];
     
     ShelbySignupViewController *signupVC = [[ShelbySignupiPadViewController alloc] initWithNibName:@"ShelbySignupView~ipad" bundle:nil];
     signupVC.modalPresentationStyle = UIModalPresentationPageSheet;

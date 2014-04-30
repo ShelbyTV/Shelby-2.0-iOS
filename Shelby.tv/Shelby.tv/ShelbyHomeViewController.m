@@ -30,7 +30,7 @@
 NSString * const kShelbyShareVideoHasCompleted = @"kShelbyShareVideoHasCompleted";
 NSString * const kShelbyShareFrameIDKey = @"frameID";
 
-static NSDictionary *userEducationTypeToLocalyticsConstantMap;
+static NSDictionary *userEducationTypeToLocalyticsAttributeMap;
 
 @interface ShelbyHomeViewController () {
     SettingsViewController *_settingsVC;
@@ -78,13 +78,13 @@ static NSDictionary *userEducationTypeToLocalyticsConstantMap;
         _airPlayController = [[ShelbyAirPlayController alloc] init];
         _airPlayController.delegate = self;
 
-        userEducationTypeToLocalyticsConstantMap =
+        userEducationTypeToLocalyticsAttributeMap =
         @{
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeStream] : kLocalyticsShowStreamEducationOverlayIPhone,
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeChannels] : kLocalyticsShowChannelsEducationOverlayIPhone,
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeTwoColumn] : kLocalyticsShowTwoColumnEducationOverlayIPhone,
-          [NSNumber numberWithInteger:UserEducationFullOverlayViewTypeLike] : kLocalyticsShowLikeEducationOverlayIPhone
-          };
+          @(UserEducationFullOverlayViewTypeStream) : @"stream",
+          @(UserEducationFullOverlayViewTypeChannels) : @"channels",
+          @(UserEducationFullOverlayViewTypeTwoColumn) : @"two column layout",
+          @(UserEducationFullOverlayViewTypeLike) : @"liking"
+        };
     }
     return self;
 }
@@ -635,6 +635,7 @@ static NSDictionary *userEducationTypeToLocalyticsConstantMap;
     [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                          withAction:kAnalyticsUXTapNavBarButton
                                 withNicknameAsLabel:YES];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameSignupStart withAttributes:@{kLocalyticsAttributeNameFromOrigin : @"iPhone nav bar button"}];
     [self dismissVideoReel];
     [self.masterDelegate presentUserSignup];
 }
@@ -842,8 +843,12 @@ static NSDictionary *userEducationTypeToLocalyticsConstantMap;
     [self.view addConstraints:@[topConstraint, bottomConstraint, leadingConstraint, trailingConstraint]];
 
     // track the showing of this view in our analytics system(s)
-    NSString *localyticsConstant = [userEducationTypeToLocalyticsConstantMap objectForKey:[NSNumber numberWithInteger:overlayViewType]];
-    [ShelbyAnalyticsClient sendLocalyticsEvent:localyticsConstant];
+    NSString *educationTopicAttributeValue = [userEducationTypeToLocalyticsAttributeMap objectForKey:@(overlayViewType)];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserEducationView
+                                withAttributes:@{
+                                                 kLocalyticsAttributeNameType : @"iphone full overlay",
+                                                 kLocalyticsAttributeNameTopic : educationTopicAttributeValue ?: @"unknown"
+                                                 }];
 }
 
 #pragma mark - ShelbyStreamBrowseViewDelegate
@@ -1076,7 +1081,6 @@ static NSDictionary *userEducationTypeToLocalyticsConstantMap;
 {
     // Analytics
     [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX withAction:kAnalyticsUXLike withNicknameAsLabel:YES];
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsLikeVideo];
     // Appirater Event
     [Appirater userDidSignificantEvent:YES];
     
@@ -1172,11 +1176,6 @@ static NSDictionary *userEducationTypeToLocalyticsConstantMap;
             [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                                  withAction:kAnalyticsUXShareFinish
                                         withNicknameAsLabel:YES];
-            if ([weakSelf.currentUser isAnonymousUser]) {
-                [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsShareCompleteAnonymousUser];
-            } else {
-                [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsShareComplete];
-            }
             
             // Appirater Event
             [Appirater userDidSignificantEvent:YES];

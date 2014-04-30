@@ -14,6 +14,7 @@
 #import "Video+Helper.h"
 #import "UIImageView+AFNetworking.h"
 #import "User+Helper.h"
+#import "ShelbyDataMediator.h"
 
 #define kShelbyInfoViewMargin 15
 #define kShelbyCaptionMargin 4
@@ -456,6 +457,11 @@
                                                  name:kShelbyShareVideoHasCompleted object:nil];
   
     [self.delegate shareVideoWasTapped];
+
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard
+                                                 }];
 }
 
 - (void)resetShareButton:(NSNotification *)notification
@@ -498,12 +504,16 @@
 
 - (IBAction)goToUserProfile:(id)sender
 {
+    [self.delegate userProfileWasTapped:self.userID];
+
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                           action:kAnalyticsUXTapCardSharingUser
                                  nicknameAsLabel:YES];
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardSharingUser];
-    
-    [self.delegate userProfileWasTapped:self.userID];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                withAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCardOwner,
+                                                 kLocalyticsAttributeNameUsername : self.videoFrame.creator.nickname ?: @"unknown"
+                                                 }];
 }
 
 - (void)processLikersAndSharers

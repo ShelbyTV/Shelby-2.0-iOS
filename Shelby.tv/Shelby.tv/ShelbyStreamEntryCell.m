@@ -13,6 +13,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "User+Helper.h"
 #import "Video.h"
+#import "ShelbyDataMediator.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ShelbyStreamEntryCell()
@@ -253,17 +254,30 @@
 - (IBAction)shareVideo:(id)sender
 {
     [self.delegate shareVideoWasTappedForFrame:self.videoFrame];
+
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard
+                                                 }];
 }
 
 - (IBAction)likeVideo:(id)sender
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardLike];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoLike
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard
+                                                 }];
+
     [self.delegate likeFrame:self.videoFrame];
 }
 
 - (IBAction)unLikeVideo:(id)sender
 {
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardUnlike];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoUnlike
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard
+                                                 }];
+
     [self.delegate unLikeFrame:self.videoFrame];
 }
 
@@ -273,8 +287,13 @@
         //there is no profile
         return;
     }
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardSharingUser];
     [self.delegate userProfileWasTapped:self.videoFrame.creator.userID];
+
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                withAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCardOwner,
+                                                 kLocalyticsAttributeNameUsername : self.videoFrame.creator.nickname ?: @"unknown"
+                                                 }];
 }
 
 - (IBAction)openLikersView:(id)sender

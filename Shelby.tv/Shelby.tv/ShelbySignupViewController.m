@@ -41,6 +41,12 @@
 
 @property (nonatomic, strong) User *currentUser;
 
+// for Localytics
+@property (nonatomic, strong) NSString *originForAnalytics;
+@property (nonatomic, strong) NSString *userBioBeforeUpdate;
+@property (nonatomic, strong) NSString *userEmailBeforeUpdate;
+@property (nonatomic, strong) NSString *userNameBeforeUpdate;
+
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signupWithFacebook:(id)sender;
 - (IBAction)signupWithEmail:(id)sender;
@@ -81,6 +87,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         self.stepOneSignUpWithEmail.enabled = [self stepOneFieldsValid];
         self.stepOneEmail.text = self.currentUser.email;
         self.stepOneNickname.text = @"";
+        self.originForAnalytics = kLocalyticsAttributeValueFromOriginSignup;
     } else {
         self.stepOneView.hidden = YES;
         self.stepTwoEmail.text = self.currentUser.email;
@@ -90,6 +97,7 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         self.stepTwoTitle.hidden = YES;
         self.signupNavigationItem.title = @"Edit Profile";
         [self doStepTwoCustomSetupForNavItem:self.signupNavigationItem];
+        self.originForAnalytics = kLocalyticsAttributeValueFromOriginUserProfile;
     }
     
     UIImage *textFieldBackground = [[UIImage imageNamed:@"textfield-outline-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
@@ -148,6 +156,9 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
                                           action:kAnalyticsSignupWithFacebookStart
                                            label:nil];
 
+    // Localytics event tracking for user trying to connect an account
+    [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeFacebook fromOrigin:kLocalyticsAttributeValueFromOriginSignup];
+
     [self.view endEditing:YES];
     [self.stepOneActivityIndicator startAnimating];
     self.stepOneView.userInteractionEnabled = NO;
@@ -163,14 +174,16 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [self.view endEditing:YES];
     [self.stepOneActivityIndicator startAnimating];
     self.view.userInteractionEnabled = NO;
-    
+
+    // Localytics event tracking for user trying to connect an account
+    [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeEmail fromOrigin:kLocalyticsAttributeValueFromOriginSignup];
+
     __weak ShelbySignupViewController *weakSelf = self;
     [[ShelbyDataMediator sharedInstance] updateUserWithName:nil nickname:self.stepOneNickname.text password:self.stepOnePassword.text email:self.stepOneEmail.text avatar:nil rolls:nil completion:^(NSError *error) {
         weakSelf.view.userInteractionEnabled = YES;
         [weakSelf.stepOneActivityIndicator stopAnimating];
         if (!error) {
             [weakSelf goToStepTwo];
-            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsAnonymousConvertViaEmail];
         } else {
             weakSelf.stepOneSignUpWithEmail.enabled = YES;
             NSString *errorMessage = nil;
@@ -200,6 +213,15 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
     [self doStepTwoCustomActionsOnSaveProfile];
 
     [self addObserversForUpdateType:UserUpdateTypeProfile];
+
+    // for comparing old values to new values for analytics after the data update
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    if (user) {
+        self.userBioBeforeUpdate = user.bio;
+        self.userNameBeforeUpdate = user.name;
+        self.userEmailBeforeUpdate = user.email;
+    }
+
     __weak ShelbySignupViewController *weakSelf = self;
     [[ShelbyDataMediator sharedInstance] updateUserWithName:self.stepTwoName.text nickname:self.stepTwoUsername.text password:self.stepTwoPassword.text email:self.stepTwoEmail.text avatar:self.avatarImage.image bio:self.stepTwoBio.text completion:^(NSError *error) {
         weakSelf.stepOneSignUpWithEmail.enabled = YES;
@@ -209,10 +231,28 @@ typedef NS_ENUM(NSInteger, UserUpdateType) {
         weakSelf.stepTwoSaveProfile.enabled = YES;
         if (!error) {
             [weakSelf closeViewController];
+            [self trackEventForSaveProfile];
         } else {
             // KP KP
         }
     }];
+}
+
+- (void)trackEventForSaveProfile
+{
+    NSDictionary *eventAttributes = @{kLocalyticsAttributeNameFromOrigin : self.originForAnalytics};
+    eventAttributes = [ShelbyAnalyticsClient addUpdateDescriptionAttributeForEntityName:@"bio"
+                                                                           toAttributes:eventAttributes
+                                                                               oldValue:self.userBioBeforeUpdate newValue:self.stepTwoBio.text];
+    eventAttributes = [ShelbyAnalyticsClient addUpdateDescriptionAttributeForEntityName:@"full name"
+                                                                           toAttributes:eventAttributes
+                                                                               oldValue:self.userNameBeforeUpdate newValue:self.stepTwoName.text];
+    eventAttributes = [ShelbyAnalyticsClient addUpdateDescriptionAttributeForEntityName:@"email"
+                                                                           toAttributes:eventAttributes
+                                                                               oldValue:self.userEmailBeforeUpdate newValue:self.stepTwoEmail.text];
+
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserInfoUpdate
+                                withAttributes:eventAttributes];
 }
 
 - (void)closeViewController
