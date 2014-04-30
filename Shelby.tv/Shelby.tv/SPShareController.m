@@ -189,10 +189,8 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
          if (completed) {
              [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyiOSNativeShareDone object:nil];
 
-             User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
              [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
-                                         withAttributes:@{
-                                                          kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics],
+                              withUserTypeAndAttributes:@{
                                                           kLocalyticsAttributeNameTitle : frame.video.title ?: @"unknown",
                                                           kLocalyticsAttributeNameDestinations : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
                                                           }];
@@ -224,10 +222,8 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyDidDismissModalViewNotification object:self];
         
         if (completed) {
-            User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
             [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareComplete
-                                        withAttributes:@{
-                                                         kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics],
+                             withUserTypeAndAttributes:@{
                                                          kLocalyticsAttributeNameTitle : frame.video.title ?: @"unknown",
                                                          kLocalyticsAttributeNameDestinations : [ShelbyAnalyticsClient destinationStringForUIActivityType:activityType]
                                                          }];

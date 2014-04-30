@@ -167,11 +167,9 @@
         [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                              withAction:kAnalyticsUXFollow
                                     withNicknameAsLabel:YES];
-        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
-                                    withAttributes:@{
-                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile,
-                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                         withUserTypeAndAttributes:@{
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile
                                                      }];
 
         [self.masterDelegate followRoll:self.profileUser.publicRollID];
@@ -180,11 +178,9 @@
         [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                              withAction:kAnalyticsUXFollowing
                                     withNicknameAsLabel:YES];
-        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
-                                    withAttributes:@{
-                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile,
-                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                         withUserTypeAndAttributes:@{
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile
                                                      }];
 
         [self.masterDelegate unfollowRoll:self.profileUser.publicRollID];

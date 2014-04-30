@@ -255,21 +255,17 @@
 {
     [self.delegate shareVideoWasTappedForFrame:self.videoFrame];
 
-    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];;
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
-                                withAttributes:@{
-                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard,
-                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard
                                                  }];
 }
 
 - (IBAction)likeVideo:(id)sender
 {
-    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoLike
-                                withAttributes:@{
-                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard,
-                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard
                                                  }];
 
     [self.delegate likeFrame:self.videoFrame];
@@ -277,11 +273,9 @@
 
 - (IBAction)unLikeVideo:(id)sender
 {
-    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoUnlike
-                                withAttributes:@{
-                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard,
-                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoCard
                                                  }];
 
     [self.delegate unLikeFrame:self.videoFrame];

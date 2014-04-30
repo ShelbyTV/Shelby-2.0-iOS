@@ -414,11 +414,9 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 }
 
 - (IBAction)likeTapped:(id)sender {
-    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoLike
-                                withAttributes:@{
-                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls,
-                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls
                                                  }];
 
     if (self.currentEntity) {
@@ -428,13 +426,11 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
 }
 
 - (IBAction)unlikeTapped:(id)sender {
-    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoUnlike
-                                withAttributes:@{
-                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls,
-                                                 kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                     withUserTypeAndAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls
                                                  }];
-    
+
     if (self.currentEntity) {
         [self.delegate videoControlsUnlikeCurrentVideo:self];
         [self updateViewForCurrentEntity];
@@ -446,11 +442,9 @@ NSString * const kShelbyRequestSmallscreenPlaybackNotification = @"kShelbyReques
     if (self.currentEntity &&
         [self.delegate respondsToSelector:@selector(videoControlsShareCurrentVideo:)]) {
         [self.delegate videoControlsShareCurrentVideo:self];
-        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameVideoShareStart
-                                    withAttributes:@{
-                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls,
-                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                         withUserTypeAndAttributes:@{
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginVideoControls
                                                      }];
     }
 }

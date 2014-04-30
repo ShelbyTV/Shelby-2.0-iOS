@@ -197,6 +197,9 @@ extern NSString * const kAnalyticsABTestRetention;
 + (void)sendLocalyticsEvent:(NSString *)eventTag
              withAttributes:(NSDictionary *)attributes;
 
++ (void)sendLocalyticsEvent:(NSString *)eventTag
+  withUserTypeAndAttributes:(NSDictionary *)attributes;
+
 + (void)sendLocalyticsEventForStartConnectingAccountType:(NSString *)accountType fromOrigin:(NSString *)fromOrigin;
 
 + (void)sendLocalyticsEventForFinishConnectingAccountType:(NSString *)accountType;

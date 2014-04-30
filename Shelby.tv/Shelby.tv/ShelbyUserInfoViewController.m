@@ -219,20 +219,16 @@
     if (isFollowing) {
         [[ShelbyDataMediator sharedInstance] unfollowRoll:self.user.publicRollID];
 
-        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUnfollow
-                                    withAttributes:@{
-                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile,
-                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                         withUserTypeAndAttributes:@{
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile
                                                      }];
     } else {
         [[ShelbyDataMediator sharedInstance] followRoll:self.user.publicRollID];
 
-        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameFollow
-                                    withAttributes:@{
-                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile,
-                                                     kLocalyticsAttributeNameUserType : [user userTypeStringForAnalytics]
+                         withUserTypeAndAttributes:@{
+                                                     kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginUserProfile
                                                      }];
     }
 

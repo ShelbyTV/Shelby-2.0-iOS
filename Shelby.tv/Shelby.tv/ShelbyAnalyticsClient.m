@@ -232,20 +232,27 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     [[LocalyticsSession shared] tagEvent:eventTag attributes:attributes];
 }
 
-+ (void)sendLocalyticsEventForStartConnectingAccountType:(NSString *)accountType fromOrigin:(NSString *)origin
++ (void)sendLocalyticsEvent:(NSString *)eventTag withUserTypeAndAttributes:(NSDictionary *)attributes
 {
     NSString *userType = @"unknown";
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     if (user) {
         userType = [user userTypeStringForAnalytics];
     }
-    [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectStart
-                                withAttributes:@{
-                                                 kLocalyticsAttributeNameAccountType : accountType ?: @"unknown",
-                                                 kLocalyticsAttributeNameFromOrigin : origin ?: @"unknown",
-                                                 kLocalyticsAttributeNameUserType : userType
-                                                 }];
 
+    NSMutableDictionary *attributesPlusUserType = [[NSMutableDictionary alloc] initWithDictionary:attributes];
+    [attributesPlusUserType setValue:userType forKey:kLocalyticsAttributeNameUserType];
+
+    [self sendLocalyticsEvent:eventTag withAttributes:attributesPlusUserType];
+}
+
++ (void)sendLocalyticsEventForStartConnectingAccountType:(NSString *)accountType fromOrigin:(NSString *)origin
+{
+    [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectStart
+    withUserTypeAndAttributes:@{
+                                kLocalyticsAttributeNameAccountType : accountType ?: @"unknown",
+                                kLocalyticsAttributeNameFromOrigin : origin ?: @"unknown"
+                                }];
 }
 
 + (void)sendLocalyticsEventForFinishConnectingAccountType:(NSString *)accountType
