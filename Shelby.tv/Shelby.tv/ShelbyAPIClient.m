@@ -11,6 +11,7 @@
 #import "Frame+Helper.h"
 #import "ShelbyDataMediator.h"
 #import "UIImage+Scale.h"
+#import "ShelbyAnalyticsClient.h"
 
 #ifdef DEBUG
     NSString * const kShelbyAPIBaseURL =                    @"https://api.shelby.tv/";
@@ -218,6 +219,14 @@ static AFHTTPClient *httpClient = nil;
                                       shouldAddAuth:NO];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        // if the user succesfully added an email address for the first time, track that in Localytics
+        if ((!user.email || ![user.email length])) {
+            NSString *newEmail = [params valueForKey:kShelbyAPIParamEmail];
+            if (newEmail && [newEmail length]) {
+                [ShelbyAnalyticsClient sendLocalyticsEventForFinishConnectingAccountType:kLocalyticsAttributeValueAccountTypeEmail];
+            }
+        }
+
         completionBlock(JSON, nil);
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         if (JSON) { // Backend passing error

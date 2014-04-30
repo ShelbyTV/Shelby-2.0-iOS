@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "User+Helper.h"
 
 // Shared Constants
 //--Screens--
@@ -20,50 +21,81 @@ extern NSString * const kAnalyticsScreenUserProfile;
 extern NSString * const kAnalyticsScreenLikersList;
 
 // Localytics Constants
-extern NSString * const kLocalyticsAnonymousConvertViaEmail;
-extern NSString * const kLocalyticsAnonymousConvertViaFacebook;
+//--App Entry--
+extern NSString * const kLocalyticsEventNameGetStarted;
+extern NSString * const kLocalyticsEventNameLoginStart;
+extern NSString * const kLocalyticsEventNameLoginComplete;
+
+//--User Education--
+extern NSString * const kLocalyticsEventNameUserEducationView;
+
+//--Signup Flow--
+extern NSString * const kLocalyticsEventNameSignupStart;
+extern NSString * const kLocalyticsEventNameUserInfoUpdate;
+
+//--Connected Accounts--
+extern NSString * const kLocalyticsEventNameAccountConnectStart;
+extern NSString * const kLocalyticsEventNameAccountConnectComplete;
+extern NSString * const kLocalyticsAttributeValueAccountTypeEmail;
+extern NSString * const kLocalyticsAttributeValueAccountTypeFacebook;
+extern NSString * const kLocalyticsAttributeValueAccountTypeShelby;
+extern NSString * const kLocalyticsAttributeValueAccountTypeTwitter;
+
+//--User Profile--
+extern NSString * const kLocalyticsEventNameUserProfileView;
+
+//--Actions on Videos--
+NSString * const kLocalyticsEventNameVideoShareStart;
+NSString * const kLocalyticsEventNameVideoShareComplete;
+NSString * const kLocalyticsEventNameVideoLike;
+NSString * const kLocalyticsEventNameVideoUnlike;
+NSString * const kLocalyticsEventNameFollow;
+NSString * const kLocalyticsEventNameUnfollow;
+
+//--Event Attribute Names--
+extern NSString * const kLocalyticsAttributeNameAccountType;
+extern NSString * const kLocalyticsAttributeNameChannelName;
+extern NSString * const kLocalyticsAttributeNameConnectionType;
+extern NSString * const kLocalyticsAttributeNameDestinations;
+extern NSString * const kLocalyticsAttributeNameFromOrigin;
+extern NSString * const kLocalyticsAttributeNameTitle;
+extern NSString * const kLocalyticsAttributeNameTopic;
+extern NSString * const kLocalyticsAttributeNameType;
+extern NSString * const kLocalyticsAttributeNameUsername;
+extern NSString * const kLocalyticsAttributeNameUserType;
+
+//--Shared Event Attribute: from origin--
+extern NSString * const kLocalyticsAttributeValueFromOriginChannelsItem;
+extern NSString * const kLocalyticsAttributeValueFromOriginCustomUrl;
+extern NSString * const kLocalyticsAttributeValueFromOriginEntranceScreen;
+extern NSString * const kLocalyticsAttributeValueFromOriginFollowedRollsItem;
+extern NSString * const kLocalyticsAttributeValueFromOriginLikerListItem;
+extern NSString * const kLocalyticsAttributeValueFromOriginNotifCenterActor;
+extern NSString * const kLocalyticsAttributeValueFromOriginPushNotification;
+extern NSString * const kLocalyticsAttributeValueFromOriginSettings;
+extern NSString * const kLocalyticsAttributeValueFromOriginSharePane;
+extern NSString * const kLocalyticsAttributeValueFromOriginSignup;
+extern NSString * const kLocalyticsAttributeValueFromOriginStreamCard;
+extern NSString * const kLocalyticsAttributeValueFromOriginUserProfile;
+extern NSString * const kLocalyticsAttributeValueFromOriginVideoCard;
+extern NSString * const kLocalyticsAttributeValueFromOriginVideoCardOwner;
+extern NSString * const kLocalyticsAttributeValueFromOriginVideoControls;
+
+
+//--Not Yet Updated for Josh+Chris' revamping of Localytics--
 extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsWatchVideo25pct;
-extern NSString * const kLocalyticsLikeVideo;
-extern NSString * const kLocalyticsShareComplete;
-extern NSString * const kLocalyticsShareCompleteAnonymousUser;
 extern NSString * const kLocalyticsEntranceStart;
-extern NSString * const kLocalyticsEntranceUserTapGetStarted;
-extern NSString * const kLocalyticsEntranceUserTapLogin;
-extern NSString * const kLocalyticsWelcomeStart;
-extern NSString * const kLocalyticsStartSignup;
-extern NSString * const kLocalyticsFinishSignup;
-extern NSString * const kLocalyticsDidLogin;
 extern NSString * const kLocalyticsDidLaunchAfterVideoPush;
-extern NSString * const kLocalyticsDidLaunchAfterUserPush;
 extern NSString * const kLocalyticsDidPreview;
-extern NSString * const kLocalyticsFollowUser;
-extern NSString * const kLocalyticsFollowingUser;
-extern NSString * const kLocalyticsFollowChannel;
-extern NSString * const kLocalyticsUnfollowChannel;
-extern NSString * const kLocalyticsShowChannelsEducationOverlayIPhone;
-extern NSString * const kLocalyticsShowLikeEducationOverlayIPhone;
-extern NSString * const kLocalyticsShowStreamEducationOverlayIPhone;
-extern NSString * const kLocalyticsShowTwoColumnEducationOverlayIPhone;
 extern NSString * const kLocalyticsTapAddChannelsInStream;
-extern NSString * const kLocalyticsTapConnectFacebookInStream;
-extern NSString * const kLocalyticsTapConnectTwitterInStream;
-extern NSString * const kLocalyticsTapCardSharingUser;
 extern NSString * const kLocalyticsTapCardLikersList;
-extern NSString * const kLocalyticsTapCardLike;
-extern NSString * const kLocalyticsTapCardUnlike;
 extern NSString * const kLocalyticsTapCardPlay;
 extern NSString * const kLocalyticsTapHideFacebookInStream;
 extern NSString * const kLocalyticsTapHideTwitterInStream;
-extern NSString * const kLocalyticsTapLikerListLiker;
-extern NSString * const kLocalyticsTapTopNavSignup;
 extern NSString * const kLocalyticsTapPlayerControlsPlay;
-extern NSString * const kLocalyticsTapPlayerControlsLike;
-extern NSString * const kLocalyticsTapPlayerControlsUnlike;
 extern NSString * const kLocalyticsTapPlayerControlsExpand;
 extern NSString * const kLocalyticsTapPlayerControlsContract;
-extern NSString * const kLocalyticsTapUserProfileFromNotificationView;
-extern NSString * const kLocalyticsTapUserProfileSignup;
 extern NSString * const kLocalyticsTapVideoFromNotificationView;
 extern NSString * const kLocalyticsTapVideoPlayerOverlayPlay;
 
@@ -155,9 +187,35 @@ extern NSString * const kAnalyticsABTestRetention;
 
 //Shared
 + (void)trackScreen:(NSString *)screenName;
+// translate Apple's techy-looking strings like com.apple.UIKit.activity.PostToTwitter to more readable strings
+// like "twitter native" to then be used as attribute values for events
++ (NSString *)destinationStringForUIActivityType:(NSString *)activityType;
 
 //Localytics
 + (void)sendLocalyticsEvent:(NSString *)eventTag;
+
++ (void)sendLocalyticsEvent:(NSString *)eventTag
+             withAttributes:(NSDictionary *)attributes;
+
++ (void)sendLocalyticsEvent:(NSString *)eventTag
+  withUserTypeAndAttributes:(NSDictionary *)attributes;
+
++ (void)sendLocalyticsEventForStartConnectingAccountType:(NSString *)accountType fromOrigin:(NSString *)fromOrigin;
+
++ (void)sendLocalyticsEventForFinishConnectingAccountType:(NSString *)accountType;
+
+// This is used to add an event attribute describing whether or not a string property of something was changed
+// during the event and how
+// Let's say the property is called "username" and so you pass "username" for the entityName parameter,
+// then
+// --> if oldValue and newValue are the same, returns attributes with {@"username" : "not updated"} added
+// --> if oldValue and newValue are different, and oldValue is nil or an empty string, returns attributes with {@"username" : "added"} added
+// --> if oldValue and newValue are different, but oldValue is not nil or not an empty string, returns attributes with {@"username" : "updated"} added
++ (NSDictionary *)addUpdateDescriptionAttributeForEntityName:(NSString *)entityName
+                                                toAttributes:(NSDictionary *)attributes
+                                                    oldValue:(NSString *)oldValue
+                                                    newValue:(NSString *)newValue;
+
 
 //Google Analytics
 + (void)sendEventWithCategory:(NSString *)category

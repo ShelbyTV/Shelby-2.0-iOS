@@ -26,50 +26,82 @@ NSString * const kAnalyticsScreenUserProfile                            = @"User
 NSString * const kAnalyticsScreenLikersList                             = @"Likers List";
 
 // Localytics Constants
-NSString * const kLocalyticsAnonymousConvertViaEmail                    = @"anonymous_convert_via_email";
-NSString * const kLocalyticsAnonymousConvertViaFacebook                 = @"anonymous_convert_via_facebook";
+//--App Entry--
+NSString * const kLocalyticsEventNameGetStarted                         = @"Get Started";
+NSString * const kLocalyticsEventNameLoginStart                         = @"Login Start";
+NSString * const kLocalyticsEventNameLoginComplete                      = @"Login Complete";
+
+//--User Education--
+NSString * const kLocalyticsEventNameUserEducationView                  = @"User Education View";
+
+//--Signup Flow--
+NSString * const kLocalyticsEventNameSignupStart                        = @"Signup Start";
+NSString * const kLocalyticsEventNameUserInfoUpdate                     = @"User Info Update";
+
+//--Connected Accounts--
+NSString * const kLocalyticsEventNameAccountConnectStart                = @"Account Connect Start";
+NSString * const kLocalyticsEventNameAccountConnectComplete             = @"Account Connect Complete";
+NSString * const kLocalyticsAttributeValueAccountTypeEmail              = @"email";
+NSString * const kLocalyticsAttributeValueAccountTypeFacebook           = @"facebook";
+NSString * const kLocalyticsAttributeValueAccountTypeShelby             = @"shelby";
+NSString * const kLocalyticsAttributeValueAccountTypeTwitter            = @"twitter";
+
+//--User Profile--
+NSString * const kLocalyticsEventNameUserProfileView                    = @"User Profile View";
+
+//--Actions on Videos--
+NSString * const kLocalyticsEventNameVideoShareStart                    = @"Video Share Start";
+NSString * const kLocalyticsEventNameVideoShareComplete                 = @"Video Share Complete";
+NSDictionary *activityTypeToShareDestinationStringMap;
+NSString * const kLocalyticsEventNameVideoLike                          = @"Video Like";
+NSString * const kLocalyticsEventNameVideoUnlike                        = @"Video Unlike";
+NSString * const kLocalyticsEventNameFollow                             = @"Follow";
+NSString * const kLocalyticsEventNameUnfollow                           = @"Unfollow";
+
+//--Event Attribute Names--
+NSString * const kLocalyticsAttributeNameAccountType                    = @"account type";
+NSString * const kLocalyticsAttributeNameConnectionType                 = @"connection type";
+NSString * const kLocalyticsAttributeNameChannelName                    = @"channel name";
+NSString * const kLocalyticsAttributeNameDestinations                   = @"destinations";
+NSString * const kLocalyticsAttributeNameFromOrigin                     = @"from origin";
+NSString * const kLocalyticsAttributeNameTitle                          = @"title";
+NSString * const kLocalyticsAttributeNameTopic                          = @"topic";
+NSString * const kLocalyticsAttributeNameType                           = @"type";
+NSString * const kLocalyticsAttributeNameUsername                       = @"username";
+NSString * const kLocalyticsAttributeNameUserType                       = @"user type";
+
+//--Shared Event Attribute: from origin--
+NSString * const kLocalyticsAttributeValueFromOriginChannelsItem        = @"channels item";
+NSString * const kLocalyticsAttributeValueFromOriginCustomUrl           = @"custom url";
+NSString * const kLocalyticsAttributeValueFromOriginEntranceScreen      = @"entrance screen";
+NSString * const kLocalyticsAttributeValueFromOriginFollowedRollsItem   = @"followed rolls item";
+NSString * const kLocalyticsAttributeValueFromOriginLikerListItem       = @"liker list item";
+NSString * const kLocalyticsAttributeValueFromOriginNotifCenterActor    = @"notification center actor";
+NSString * const kLocalyticsAttributeValueFromOriginPushNotification    = @"push notification";
+NSString * const kLocalyticsAttributeValueFromOriginSettings            = @"settings";
+NSString * const kLocalyticsAttributeValueFromOriginSharePane           = @"share pane";
+NSString * const kLocalyticsAttributeValueFromOriginSignup              = @"signup";
+NSString * const kLocalyticsAttributeValueFromOriginStreamCard          = @"stream card";
+NSString * const kLocalyticsAttributeValueFromOriginUserProfile         = @"user profile";
+NSString * const kLocalyticsAttributeValueFromOriginVideoCard           = @"video card";
+NSString * const kLocalyticsAttributeValueFromOriginVideoCardOwner      = @"video card owner";
+NSString * const kLocalyticsAttributeValueFromOriginVideoControls       = @"video controls";
+
+
+//--Not Yet Updated for Josh+Chris' revamping of Localytics--
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
 NSString * const kLocalyticsWatchVideo25pct                             = @"watch_25_pct";
-NSString * const kLocalyticsLikeVideo                                   = @"like";
-NSString * const kLocalyticsShareComplete                               = @"share_complete";
-NSString * const kLocalyticsShareCompleteAnonymousUser                  = @"share_complete_anonymous_user";
 NSString * const kLocalyticsEntranceStart                               = @"entrance_start";
-NSString * const kLocalyticsEntranceUserTapGetStarted                   = @"entrance_get_started";
-NSString * const kLocalyticsEntranceUserTapLogin                        = @"entrance_login";
-NSString * const kLocalyticsWelcomeStart                                = @"welcome_start";
-NSString * const kLocalyticsStartSignup                                 = @"start_signup";
-NSString * const kLocalyticsFinishSignup                                = @"finish_signup";
-NSString * const kLocalyticsDidLogin                                    = @"did_login";
 NSString * const kLocalyticsDidLaunchAfterVideoPush                     = @"open_app_via_video_push";
-NSString * const kLocalyticsDidLaunchAfterUserPush                      = @"open_app_via_follow_push";
 NSString * const kLocalyticsDidPreview                                  = @"did_preview";
-NSString * const kLocalyticsFollowUser                                  = @"did_follow";
-NSString * const kLocalyticsFollowingUser                               = @"did_unfollow";
-NSString * const kLocalyticsFollowChannel                               = @"did_follow_channel";
-NSString * const kLocalyticsUnfollowChannel                             = @"did_unfollow_channel";
-NSString * const kLocalyticsShowChannelsEducationOverlayIPhone          = @"show_channels_user_education_iphone";
-NSString * const kLocalyticsShowLikeEducationOverlayIPhone              = @"show_like_user_education_iphone";
-NSString * const kLocalyticsShowStreamEducationOverlayIPhone            = @"show_stream_user_education_iphone";
-NSString * const kLocalyticsShowTwoColumnEducationOverlayIPhone         = @"show_two_column_user_education_iphone";
 NSString * const kLocalyticsTapAddChannelsInStream                      = @"tap_add_channels_in_stream";
-NSString * const kLocalyticsTapConnectFacebookInStream                  = @"tap_connect_facebook_in_stream";
-NSString * const kLocalyticsTapConnectTwitterInStream                   = @"tap_connect_twitter_in_stream";
-NSString * const kLocalyticsTapCardSharingUser                          = @"view_sharer_profile";
 NSString * const kLocalyticsTapCardLikersList                           = @"view_likers";
-NSString * const kLocalyticsTapCardLike                                 = @"tap_card_like";
-NSString * const kLocalyticsTapCardUnlike                               = @"tap_card_unlike";
 NSString * const kLocalyticsTapCardPlay                                 = @"tap_card_play";
 NSString * const kLocalyticsTapHideFacebookInStream                     = @"tap_hide_facebook_in_stream";
 NSString * const kLocalyticsTapHideTwitterInStream                      = @"tap_hide_twitter_in_stream";
-NSString * const kLocalyticsTapLikerListLiker                           = @"view_liker";
-NSString * const kLocalyticsTapTopNavSignup                             = @"tap_top_nav_signup";
 NSString * const kLocalyticsTapPlayerControlsPlay                       = @"tap_player_controls_play";
-NSString * const kLocalyticsTapPlayerControlsLike                       = @"tap_player_controls_like";
-NSString * const kLocalyticsTapPlayerControlsUnlike                     = @"tap_player_controls_unlike";
 NSString * const kLocalyticsTapPlayerControlsExpand                     = @"tap_player_controls_expand";
 NSString * const kLocalyticsTapPlayerControlsContract                   = @"tap_player_controls_contract";
-NSString * const kLocalyticsTapUserProfileFromNotificationView          = @"view_profile_notification";
-NSString * const kLocalyticsTapUserProfileSignup                        = @"tap_user_profile_signup";
 NSString * const kLocalyticsTapVideoFromNotificationView                = @"view_video_notification";
 NSString * const kLocalyticsTapVideoPlayerOverlayPlay                   = @"tap_video_player_overlay_play";
 
@@ -159,6 +191,16 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
 @implementation ShelbyAnalyticsClient
 
 //Shared
++ (void)initialize {
+    activityTypeToShareDestinationStringMap = @{
+                                                UIActivityTypeMessage : @"text message",
+                                                UIActivityTypePostToFacebook : @"facebook native",
+                                                UIActivityTypePostToTwitter : @"twitter native",
+                                                UIActivityTypeAirDrop : @"air drop",
+                                                UIActivityTypeMail : @"email native"
+                                                };
+}
+
 + (void)trackScreen:(NSString *)screenName
 {
     //centralizing view tracking by going manual in GA (instead of implicit view tracking via self.screenName)
@@ -169,10 +211,83 @@ NSString * const kAnalyticsABTestRetention                              = @"rete
     [[LocalyticsSession shared] tagScreen:screenName];
 }
 
++ (NSString *)destinationStringForUIActivityType:(NSString *)activityType
+{
+    NSString *destinationString = [activityTypeToShareDestinationStringMap valueForKey:activityType];
+    if (destinationString)  {
+        return destinationString;
+    } else {
+        return activityType ?: @"unknown";
+    }
+}
+
 //Localytics
-+ (void)sendLocalyticsEvent:(id)eventTag
++ (void)sendLocalyticsEvent:(NSString *)eventTag
 {
     [[LocalyticsSession shared] tagEvent:eventTag];
+}
+
++ (void)sendLocalyticsEvent:(NSString *)eventTag withAttributes:(NSDictionary *)attributes
+{
+    [[LocalyticsSession shared] tagEvent:eventTag attributes:attributes];
+}
+
++ (void)sendLocalyticsEvent:(NSString *)eventTag withUserTypeAndAttributes:(NSDictionary *)attributes
+{
+    NSString *userType = @"unknown";
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    if (user) {
+        userType = [user userTypeStringForAnalytics];
+    }
+
+    NSMutableDictionary *attributesPlusUserType = [[NSMutableDictionary alloc] initWithDictionary:attributes];
+    [attributesPlusUserType setValue:userType forKey:kLocalyticsAttributeNameUserType];
+
+    [self sendLocalyticsEvent:eventTag withAttributes:attributesPlusUserType];
+}
+
++ (void)sendLocalyticsEventForStartConnectingAccountType:(NSString *)accountType fromOrigin:(NSString *)origin
+{
+    [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectStart
+    withUserTypeAndAttributes:@{
+                                kLocalyticsAttributeNameAccountType : accountType ?: @"unknown",
+                                kLocalyticsAttributeNameFromOrigin : origin ?: @"unknown"
+                                }];
+}
+
++ (void)sendLocalyticsEventForFinishConnectingAccountType:(NSString *)accountType
+{
+    // if the user was previously an anonymous user, this was a conversion, otherwise it was just connecting a new account
+    NSString *connectionType = @"unknown";
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    if (user) {
+        connectionType = [user isAnonymousUser] ? @"conversion" : @"connection";
+    }
+    [self sendLocalyticsEvent:kLocalyticsEventNameAccountConnectComplete
+                                withAttributes:@{
+                                                 kLocalyticsAttributeNameAccountType : accountType ?: @"unknown",
+                                                 kLocalyticsAttributeNameConnectionType : connectionType
+                                                 }];
+}
+
++ (NSDictionary *)addUpdateDescriptionAttributeForEntityName:(NSString *)entityName
+                                                toAttributes:(NSDictionary *)attributes
+                                                    oldValue:(NSString *)oldValue
+                                                    newValue:(NSString *)newValue;
+{
+    NSString *propertyChange = @"not updated";
+    if (![newValue isEqualToString:oldValue]) {
+        if (!oldValue || ![oldValue length]) {
+            propertyChange = @"added";
+        } else {
+            propertyChange = @"updated";
+        }
+    }
+
+    NSMutableDictionary *newAttributes = [[NSMutableDictionary alloc] init];
+    [newAttributes setValue:propertyChange forKey:entityName];
+    [newAttributes addEntriesFromDictionary:attributes];
+    return newAttributes;
 }
 
 //Google Analtyics

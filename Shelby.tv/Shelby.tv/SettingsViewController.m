@@ -132,6 +132,7 @@
 - (IBAction)connectoToFacebook:(id)sender
 {
     if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(connectToFacebook)]) {
+        [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeFacebook fromOrigin:kLocalyticsAttributeValueFromOriginSettings];
         [self.delegate connectToFacebook];
     }
 }
@@ -139,6 +140,7 @@
 - (IBAction)connectoToTwitter:(id)sender
 {
     if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(connectToTwitter)]) {
+        [ShelbyAnalyticsClient sendLocalyticsEventForStartConnectingAccountType:kLocalyticsAttributeValueAccountTypeTwitter fromOrigin:kLocalyticsAttributeValueFromOriginSettings];
         [self.delegate connectToTwitter];
     }
 }

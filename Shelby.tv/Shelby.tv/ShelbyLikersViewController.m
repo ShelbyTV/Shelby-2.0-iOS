@@ -147,7 +147,11 @@
                                           action:kAnalyticsUXTapLikerListLiker
                                  nicknameAsLabel:YES];
     
-    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapLikerListLiker];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsEventNameUserProfileView
+                                withAttributes:@{
+                                                 kLocalyticsAttributeNameFromOrigin : kLocalyticsAttributeValueFromOriginLikerListItem,
+                                                 kLocalyticsAttributeNameUsername : user.nickname ?: @"unknown"
+                                                 }];
 }
 
 @end

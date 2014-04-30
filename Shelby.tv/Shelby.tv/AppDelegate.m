@@ -152,7 +152,7 @@
 {
     // KP KP: TODO: lets put error check
     if ([[url host] isEqualToString:@"user"]) {
-        [self.brain userProfileWasTapped:[url lastPathComponent]];
+        [self.brain userProfileWasTapped:[url lastPathComponent] andTrackWithOrigin:kLocalyticsAttributeValueFromOriginCustomUrl];
     } else if ([[url host] isEqualToString:@"frame"]) {
         [self.brain openSingleVideoViewWithFrameID:[url lastPathComponent]];
     }
@@ -318,7 +318,6 @@
         [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPush
                                               action:kAnalyticsPushAfterUserPush
                                      nicknameAsLabel:YES];
-        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidLaunchAfterUserPush];
         
         [self.brain onNextBecomeActiveOpenNotificationCenterWithUserID:userInfo[@"user_id"]];
     } else if (userInfo[@"dashboard_entry_id"]) {
