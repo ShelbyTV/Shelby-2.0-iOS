@@ -98,4 +98,17 @@ NSString * const kShelbyCoreDataEntityVideoIDPredicate = @"videoID == %@";
     }
 }
 
+- (NSString *)permalinkAtSource
+{
+    if ([self.providerName isEqualToString:@"youtube"]) {
+        return [NSString stringWithFormat:@"http://www.youtube.com/watch?v=%@&LongLiveShelby=1&LoveSpinosa=1", self.providerID];
+    } else if ([self.providerName isEqualToString:@"dailymotion"]) {
+        return [NSString stringWithFormat:@"http://www.dailymotion.com/video/%@?LongLiveShelby=1&LoveSpinosa=1", self.providerID];
+    } else if ([self.providerName isEqualToString:@"vimeo"]) {
+        return [NSString stringWithFormat:@"http://vimeo.com/%@?LongLiveShelby=1&LoveSpinosa=1", self.providerID];
+    }
+    
+    return [NSString stringWithFormat:@"%@/%@", self.providerName, self.providerID];
+}
+
 @end

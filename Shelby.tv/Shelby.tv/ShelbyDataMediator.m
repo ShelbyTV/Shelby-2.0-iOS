@@ -482,6 +482,15 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                         with:cachedFrames
                                                    fromCache:YES];
         }
+        
+        //we never set frame.rollID, so only this will work for cached stuff...
+        NSSet *altFrames = roll.frame;
+        if(altFrames && [altFrames count]){
+            //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+            [self.delegate fetchEntriesDidCompleteForChannel:channel
+                                                        with:[altFrames allObjects]
+                                                   fromCache:YES];
+        }
     }
 
     //2) fetch remotely NB: AFNetworking returns us to the main thread
@@ -534,9 +543,18 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                                     inContext:mainMOC];
         if(cachedDashboardEntries && [cachedDashboardEntries count]){
             //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-            [self.delegate fetchEntriesDidCompleteForChannel:channel
-                                                        with:cachedDashboardEntries
-                                                   fromCache:YES];
+            //hack for iPad timing
+            if ([ShelbyAPIClient isHeadOnly]) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.delegate fetchEntriesDidCompleteForChannel:channel
+                                                                with:cachedDashboardEntries
+                                                           fromCache:YES];
+                });
+            } else {
+                [self.delegate fetchEntriesDidCompleteForChannel:channel
+                                                            with:cachedDashboardEntries
+                                                       fromCache:YES];
+            }
         }
     }
 

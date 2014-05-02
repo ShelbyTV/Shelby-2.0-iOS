@@ -16,6 +16,8 @@
 #import "ShelbyAnalyticsClient.h"
 #import "ShelbyDataMediator.h"
 
+#import "ShelbyAPIClient.h"
+
 @interface SettingsViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *faceookButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
@@ -179,6 +181,10 @@
 #pragma mark - UITableViewDataSource Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([ShelbyAPIClient isHeadOnly]) {
+        //don't show logout
+        return 6;
+    }
     return 7;
 }
 

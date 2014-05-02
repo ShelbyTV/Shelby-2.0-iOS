@@ -29,6 +29,9 @@
 #import "SPVideoExtractor.h"
 #import "User+Helper.h"
 
+//head only
+#import "ShelbyAPIClient.h"
+
 #define kShelbyChannelsStaleTime -600 //10 minutes
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
 
@@ -749,6 +752,11 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)showErrorView:(NSError *)error
 {
+    if ([ShelbyAPIClient isHeadOnly]) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSString *errorMessage = nil;
     if ([ShelbyErrorUtility isConnectionError:error]) {
         errorMessage = @"Please make sure you are connected to the Internet.";

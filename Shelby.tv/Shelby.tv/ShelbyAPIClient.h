@@ -22,6 +22,10 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 
 @interface ShelbyAPIClient : NSObject
 
+// --Head Only
+// shutdown mode
++ (BOOL)isHeadOnly;
+
 // -- Session
 // Cancels pending operations, clears cookies and hits the logout route.
 // Works even if user isn't authenticated

@@ -20,6 +20,7 @@
 #import "StreamConnectFacebookTableViewCell.h"
 #import "StreamConnectTwitterTableViewCell.h"
 #import "User+Helper.h"
+#import "ShelbyAPIClient.h"
 
 #define LOAD_MORE_ACTIVATION_HEIGHT 200
 #define NOT_LOADING_MORE -1
@@ -497,6 +498,11 @@ NSString * const kShelbyStreamConnectTwitterCell = @"StreamConnectTWT";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if ([ShelbyAPIClient isHeadOnly]) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     STVAssert(scrollView == self.entriesTable);
     
     if (self.moreEntriesMayBeAvailable &&

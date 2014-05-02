@@ -9,6 +9,7 @@
 #import "ShelbyAPIClient.h"
 #import "AFNetworking.h"
 #import "Frame+Helper.h"
+#import "Video+Helper.h"
 #import "ShelbyDataMediator.h"
 #import "UIImage+Scale.h"
 #import "ShelbyAnalyticsClient.h"
@@ -83,9 +84,16 @@ NSString * const kShelbyAPIMultivariateTests =              @"v1/client_configur
 @implementation ShelbyAPIClient
 
 static AFHTTPClient *httpClient = nil;
+static BOOL headOnly = YES;
 
 + (void)initialize {
     httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kShelbyAPIBaseURL]];
+}
+
+//XXX TODO: Make this determination programatically, not hard coded
++ (BOOL)isHeadOnly
+{
+    return headOnly;
 }
 
 + (NSURLRequest *)requestWithMethod:(NSString *)method
@@ -116,6 +124,11 @@ static AFHTTPClient *httpClient = nil;
 
 + (void)synchronousLogout
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     [[httpClient operationQueue] cancelAllOperations];
 
     NSURLRequest *request = [self requestWithMethod:GET
@@ -136,6 +149,11 @@ static AFHTTPClient *httpClient = nil;
 // that return after signout.  So we clear cookies on sigup and signin.
 + (void)clearAllCookies
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSHTTPCookieStorage *cookieStore = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (NSHTTPCookie *cookie in cookieStore.cookies) {
         [cookieStore deleteCookie:cookie];
@@ -146,6 +164,11 @@ static AFHTTPClient *httpClient = nil;
 + (void)postSignupWithUserParams:(NSDictionary *)userParams
                         andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     [self clearAllCookies];
     
     NSURLRequest *request = [self requestWithMethod:POST
@@ -173,6 +196,11 @@ static AFHTTPClient *httpClient = nil;
                      email:(NSString *)email
                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSDictionary *userParams = @{@"user": @{@"name": name,
                                             @"nickname": nickname,
                                             @"password": password,
@@ -186,6 +214,11 @@ static AFHTTPClient *httpClient = nil;
                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSDictionary *userParams = @{@"user": @{@"name": name,
                                             @"primary_email": email},
                                  @"generate_temporary_nickname_and_password" : @"1",
@@ -195,6 +228,11 @@ static AFHTTPClient *httpClient = nil;
 
 + (void)postCreateAnonymousUser:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSDictionary *userParams = @{@"anonymous": @(YES)};
     [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
@@ -202,6 +240,11 @@ static AFHTTPClient *httpClient = nil;
 + (void)putUserWithParams:(NSDictionary *)params
                  andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
 
     if (!user) {
@@ -242,6 +285,11 @@ static AFHTTPClient *httpClient = nil;
 + (void)putSessionVisitForUser:(User *)user
                      withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     STVAssert(user, @"must include user");
 
     NSMutableDictionary *userParams = [@{@"platform":@"ios",
@@ -273,6 +321,11 @@ static AFHTTPClient *httpClient = nil;
 
 + (void)uploadUserAvatar:(UIImage *)avatar andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
 
     if (!user) {
@@ -314,6 +367,11 @@ static AFHTTPClient *httpClient = nil;
                   password:(NSString *)password
                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     STVAssert(email && password, @"required arguments email and password cannot be nil");
     
     [self clearAllCookies];
@@ -334,6 +392,11 @@ static AFHTTPClient *httpClient = nil;
 + (void)fetchUserForUserID:(NSString *)userID
                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     if (!userID) {
         return;
     }
@@ -355,6 +418,11 @@ static AFHTTPClient *httpClient = nil;
 
 + (void)putGoogleAnalyticsClientID:(NSString *)clientID forUser:(User *)user
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     if (!clientID || [clientID isEqualToString:@""]) {
         return;
     }
@@ -378,6 +446,11 @@ static AFHTTPClient *httpClient = nil;
 #pragma mark - ABTest
 + (void)fetchABTestWithBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSURLRequest *request = [self requestWithMethod:GET
                                             forPath:kShelbyAPIMultivariateTests
                                 withQueryParameters:nil
@@ -395,6 +468,11 @@ static AFHTTPClient *httpClient = nil;
 #pragma mark - Video
 + (void)markUnplayableVideo:(NSString *)videoID
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSURLRequest *request = [self requestWithMethod:PUT
                                             forPath:[NSString stringWithFormat:kShelbyAPIPutUnplayableVideoPath, videoID]
                                 withQueryParameters:nil
@@ -411,6 +489,11 @@ static AFHTTPClient *httpClient = nil;
 
 + (void)fetchAllLikersOfVideo:(NSString *)videoID withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSURLRequest *request = [self requestWithMethod:GET
                                             forPath:[NSString stringWithFormat:kShelbyAPIGetAllLikersOfVideo, videoID]
                                 withQueryParameters:nil
@@ -428,6 +511,17 @@ static AFHTTPClient *httpClient = nil;
 #pragma mark - Channels
 + (void)fetchGlobalChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Fake");
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:[@"{\"status\": 200,	\"result\": [{\"category_title\":\"iPhone Lineup\",\"rolls\":[],\"user_channels\":[{\"display_title\":\"Community\",\"user_id\":\"515d83ecb415cc0d1a025bfe\",\"display_description\":\"An old channel...\",\"display_thumbnail_ipad_src\":\"\",\"display_channel_color\":\"6FBE47\",\"include_in\":{\"iphone_standard\":true}},{\"display_title\":\"Featured\",\"user_id\":\"521264b4b415cc44c9000001\",\"display_description\":\"Featured members of the Shelby community\",\"display_thumbnail_ipad_src\":\"\",\"display_channel_color\":\"6FBE47\",\"include_in\":{\"iphone_standard\":true}}]}]}" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                 options:0
+                                                                   error:nil];
+            completionBlock(JSON, nil);
+        });
+        return;
+    }
+    
     static NSString *segmentForGlobalChannels = @"iphone_standard";
     NSDictionary *channelsParams = @{kShelbyAPIParamChannelsSegment:segmentForGlobalChannels
                                      };
@@ -446,6 +540,11 @@ static AFHTTPClient *httpClient = nil;
 
 + (void)fetchFeaturedChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     static NSString *segmentForFeaturedChannels = @"onboarding";
     NSDictionary *channelsParams = @{kShelbyAPIParamChannelsSegment:segmentForFeaturedChannels
                                      };
@@ -467,6 +566,12 @@ static AFHTTPClient *httpClient = nil;
                               withAuthToken:(NSString *)authToken
                                    andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        completionBlock(nil, nil);
+        return;
+    }
+    
     NSMutableDictionary *params = [@{kShelbyAPIParamLimit: @"50",
                                      kShelbyAPIParamTriggerRecommendations: @"true",
                                      kShelbyAPIParamRecommendationsVersion: @"2"} mutableCopy];
@@ -495,6 +600,11 @@ static AFHTTPClient *httpClient = nil;
                      withAuthToken:(NSString *)authToken
                           andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSMutableDictionary *params = [@{} mutableCopy];
     if (authToken) {
         params[kShelbyAPIParamAuthToken] = authToken;
@@ -518,6 +628,11 @@ static AFHTTPClient *httpClient = nil;
      withAuthToken:(NSString *)authToken
           andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSMutableDictionary *params = [@{} mutableCopy];
     if (authToken) {
         params[kShelbyAPIParamAuthToken] = authToken;
@@ -541,6 +656,11 @@ static AFHTTPClient *httpClient = nil;
        withAuthToken:(NSString *)authToken
             andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSMutableDictionary *params = [@{} mutableCopy];
     if (authToken) {
         params[kShelbyAPIParamAuthToken] = authToken;
@@ -564,6 +684,11 @@ static AFHTTPClient *httpClient = nil;
 + (void)fetchFrameForFrameID:(NSString *)frameID
                    withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSURLRequest *request = [self requestWithMethod:GET
                                             forPath:[NSString stringWithFormat:kShelbyAPIGetFramePath, frameID]
                                 withQueryParameters:nil
@@ -583,6 +708,11 @@ static AFHTTPClient *httpClient = nil;
 + (void)fetchDashboardEntryForDashboardID:(NSString *)dashboardID
                                  withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSURLRequest *request = [self requestWithMethod:GET
                                             forPath:[NSString stringWithFormat:kShelbyAPIGetDashboardPath, dashboardID]
                                 withQueryParameters:nil
@@ -603,6 +733,12 @@ static AFHTTPClient *httpClient = nil;
                   sinceEntry:(Frame *)sinceFrame
                    withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Fake");
+        completionBlock(nil, nil);
+        return;
+    }
+    
     NSMutableDictionary *params = [@{} mutableCopy];
     if (sinceFrame) {
         params[kShelbyAPIParamSinceId] = sinceFrame.frameID;
@@ -625,6 +761,11 @@ static AFHTTPClient *httpClient = nil;
              withAuthToken:(NSString *)authToken
                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSDictionary *params = nil;
     if (authToken) {
         params = @{kShelbyAPIParamAuthToken: authToken};
@@ -648,6 +789,11 @@ static AFHTTPClient *httpClient = nil;
                         from:(NSString *)fromTimeInSeconds
                           to:(NSString *)toTimeInSeconds
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSMutableDictionary *params = [@{} mutableCopy];
     if (completeWatch) {
         params[@"complete"] = @"1";
@@ -677,6 +823,11 @@ static AFHTTPClient *httpClient = nil;
       withAuthToken:(NSString *)authToken
            andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSDictionary *params = nil;
     if (authToken) {
         params = @{kShelbyAPIParamAuthToken: authToken};
@@ -699,6 +850,16 @@ static AFHTTPClient *httpClient = nil;
                allowFallback:(BOOL)shouldFallbackToLongLink
                    withBlock:(shelby_api_shortlink_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Fake");
+        if (shouldFallbackToLongLink && completionBlock) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionBlock([frame.video permalinkAtSource], YES);
+            });
+        }
+        return;
+    }
+    
     NSURLRequest *request = [self requestWithMethod:GET
                                             forPath:[NSString stringWithFormat:kShelbyAPIGetShortLinkPath, frame.frameID]
                                 withQueryParameters:nil
@@ -728,6 +889,11 @@ static AFHTTPClient *httpClient = nil;
         authToken:(NSString *)authToken
          andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSDictionary *params = @{kShelbyAPIParamFrameId: frameID,
                              kShelbyAPIParamText: message,
                              kShelbyAPIParamAuthToken: authToken};
@@ -758,6 +924,11 @@ toExternalDestinations:(NSArray *)destinations
        withMessage:(NSString *)message
       andAuthToken:(NSString *)authToken
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSDictionary *params = @{kShelbyAPIParamDestinationArray: destinations,
                              kShelbyAPIParamText: message,
                              kShelbyAPIParamAuthToken: authToken};
@@ -781,6 +952,11 @@ toExternalDestinations:(NSArray *)destinations
                         oauthToken:(NSString *)token
                           andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     if (!accountID || !token) {
         return;
     }
@@ -798,6 +974,11 @@ toExternalDestinations:(NSArray *)destinations
                          oauthToken:(NSString *)token
                            andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     if (!accountID || !token) {
         return;
     }
@@ -820,6 +1001,11 @@ toExternalDestinations:(NSArray *)destinations
             shelbyAuthToken:(NSString *)authToken
                    andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     if (!provider || !accountID || !token || !authToken) {
         return;
     }
@@ -842,6 +1028,11 @@ toExternalDestinations:(NSArray *)destinations
 + (void)postThirdPartyTokenWithDictionary:(NSDictionary *)params
                                  andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     NSURLRequest *request = [self requestWithMethod:POST
                                             forPath:kShelbyAPIPostThirdPartyTokenPath
                                 withQueryParameters:params
@@ -880,6 +1071,11 @@ toExternalDestinations:(NSArray *)destinations
                  andBlock:(shelby_api_request_complete_block_t)completionBlock
 
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     [ShelbyAPIClient sendDeviceToken:token forUser:user withRequestMethod:DELETE andBlock:completionBlock];
 }
 
@@ -887,6 +1083,11 @@ toExternalDestinations:(NSArray *)destinations
                 forUser:(User *)user
                andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     [ShelbyAPIClient sendDeviceToken:token forUser:user withRequestMethod:POST andBlock:completionBlock];
 }
 
@@ -895,6 +1096,11 @@ toExternalDestinations:(NSArray *)destinations
       withRequestMethod:(NSString *)requestMethod
                andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    if (headOnly) {
+        DLog(@"Head Only NOOP");
+        return;
+    }
+    
     if (!token || !user.token || !user.userID) {
         return;
     }

@@ -17,4 +17,6 @@
 
 - (NSURL *)maxResThumbnailURL;
 
+- (NSString *)permalinkAtSource;
+
 @end
