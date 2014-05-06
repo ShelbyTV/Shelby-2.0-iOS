@@ -243,10 +243,12 @@
     [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     
     // Agressive re-crash prevention
-    if([[BITHockeyManager sharedHockeyManager].crashManager didCrashInLastSession]){
-        DLog(@"Due to crash in last session, destroying Core Data backing file...");
-        [[ShelbyDataMediator sharedInstance] nuclearCleanup];
-    }
+    // *** disabled for head only mode ***
+    // don't want to log users out when they can't log back in
+//    if([[BITHockeyManager sharedHockeyManager].crashManager didCrashInLastSession]){
+//        DLog(@"Due to crash in last session, destroying Core Data backing file...");
+//        [[ShelbyDataMediator sharedInstance] nuclearCleanup];
+//    }
 }
 
 - (void)setupAppirater
