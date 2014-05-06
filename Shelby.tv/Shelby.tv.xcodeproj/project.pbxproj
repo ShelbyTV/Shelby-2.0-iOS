@@ -918,6 +918,9 @@
 		91D1C81A1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D1C8191778DD5B00CAC1E9 /* STVParallaxView.m */; };
 		91D1C81B1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D1C8191778DD5B00CAC1E9 /* STVParallaxView.m */; };
 		91D1C81C1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D1C8191778DD5B00CAC1E9 /* STVParallaxView.m */; };
+		91D443E419191DA2005CC4FB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D443E319191DA2005CC4FB /* Reachability.m */; };
+		91D443E519191DA2005CC4FB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D443E319191DA2005CC4FB /* Reachability.m */; };
+		91D443E619191DA2005CC4FB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D443E319191DA2005CC4FB /* Reachability.m */; };
 		91E4FF3618CF4C5800005650 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91E4FF3118CF4C5800005650 /* Ubuntu-B.ttf */; };
 		91E4FF3718CF4C5800005650 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91E4FF3118CF4C5800005650 /* Ubuntu-B.ttf */; };
 		91E4FF3818CF4C5800005650 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91E4FF3118CF4C5800005650 /* Ubuntu-B.ttf */; };
@@ -1445,6 +1448,8 @@
 		91D03F74173321AC008131D2 /* Messages+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Messages+Helper.m"; sourceTree = "<group>"; };
 		91D1C8181778DD5B00CAC1E9 /* STVParallaxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVParallaxView.h; sourceTree = "<group>"; };
 		91D1C8191778DD5B00CAC1E9 /* STVParallaxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVParallaxView.m; sourceTree = "<group>"; };
+		91D443E219191DA2005CC4FB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		91D443E319191DA2005CC4FB /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		91E4FF3118CF4C5800005650 /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
 		91E4FF3218CF4C5800005650 /* Ubuntu-C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-C.ttf"; sourceTree = "<group>"; };
 		91E4FF3318CF4C5800005650 /* Ubuntu-L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-L.ttf"; sourceTree = "<group>"; };
@@ -2301,6 +2306,8 @@
 			isa = PBXGroup;
 			children = (
 				8E888986166FB0B40040D28D /* ShelbyAPIClient.h */,
+				91D443E219191DA2005CC4FB /* Reachability.h */,
+				91D443E319191DA2005CC4FB /* Reachability.m */,
 				8E888987166FB0B40040D28D /* ShelbyAPIClient.m */,
 				914FEA65175E365000903FEA /* ShelbyDVRController.h */,
 				914FEA66175E365000903FEA /* ShelbyDVRController.m */,
@@ -3217,6 +3224,7 @@
 				1CDB0C3417A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3A17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				1C836DD517F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
+				91D443E519191DA2005CC4FB /* Reachability.m in Sources */,
 				3BF9D33E18E4C3220067AFF6 /* ShelbySignupiPadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3387,6 +3395,7 @@
 				1CDB0C3517A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3B17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				1C836DD617F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
+				91D443E619191DA2005CC4FB /* Reachability.m in Sources */,
 				3BF9D33F18E4C3220067AFF6 /* ShelbySignupiPadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3557,6 +3566,7 @@
 				1CDB0C3317A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3917AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				1C836DD417F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
+				91D443E419191DA2005CC4FB /* Reachability.m in Sources */,
 				3BF9D33D18E4C3220067AFF6 /* ShelbySignupiPadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

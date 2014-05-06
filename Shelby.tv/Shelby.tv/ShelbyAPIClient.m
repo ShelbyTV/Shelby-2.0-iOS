@@ -14,6 +14,8 @@
 #import "UIImage+Scale.h"
 #import "ShelbyAnalyticsClient.h"
 
+#import "Reachability.h"
+
 #ifdef DEBUG
     NSString * const kShelbyAPIBaseURL =                    @"https://api.shelby.tv/";
     //live API: "https://api.shelby.tv/"
@@ -88,9 +90,18 @@ static BOOL headOnly = YES;
 
 + (void)initialize {
     httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kShelbyAPIBaseURL]];
+    
+    Reachability *reacher = [Reachability reachabilityWithHostName:@"api.shelby.tv"];
+    NetworkStatus netStatus = [reacher currentReachabilityStatus];
+    if (netStatus == NotReachable) {
+        headOnly = YES;
+        DLog(@"*** api.shelby.tv is unreachable; going HEAD ONLY ***");
+    } else {
+        headOnly = NO;
+        DLog(@"*** api.shelby.tv seems fine; staying ONLINE ***");
+    }
 }
 
-//XXX TODO: Make this determination programatically, not hard coded
 + (BOOL)isHeadOnly
 {
     return headOnly;
